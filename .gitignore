@@ -1,0 +1,20 @@
+/.nuxt/
+/out/
+/build/
+.vercel/
+/node_modules/
+/cypress/videos/
+yarn-error.log*
+yarn-debug.log*
+
+# local env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+todo.md
+
+# local files
+.idea/
+.DS_Store
+*.pem
