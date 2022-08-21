@@ -1,8 +1,7 @@
-<script
-  setup
-  lang="ts"
->
-const { data } = await useFetch("https://backend.eawork.org/api/jobs");
+<script setup lang="ts">
+  import { CFlex, CBox, CBadge, CIcon, CText } from "@chakra-ui/vue-next";
+
+  const { data } = await useFetch("https://backend.eawork.org/api/jobs");
 </script>
 
 <template>
@@ -12,5 +11,7 @@ const { data } = await useFetch("https://backend.eawork.org/api/jobs");
     <ul>
       <li v-for="job in data">{{ job.title }}</li>
     </ul>
+    
+    <CBox w="100%" shadow="md" rounded="lg" p="5">Test</CBox>
   </div>
 </template>

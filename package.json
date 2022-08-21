@@ -13,6 +13,8 @@
     "dependencies": {
         "nuxt": "npm:nuxt3@latest",
         "@chakra-ui/vue-next": "^1.0.0-alpha.15",
+        "@chakra-ui/nuxt-next": "^0.1.0-alpha.8",
+        "vue": "^3.2.37",
         "axios": "^0.24"
     },
     "devDependencies": {

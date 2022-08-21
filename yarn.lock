@@ -501,6 +501,11 @@
   dependencies:
     "@chakra-ui/vue-system" "0.1.0-alpha.12"
 
+"@chakra-ui/nuxt-next@^0.1.0-alpha.8":
+  version "0.1.0-alpha.8"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/nuxt-next/-/nuxt-next-0.1.0-alpha.8.tgz#722f9eb430c9656f442e955b47187ee4a801206b"
+  integrity sha512-+y7dMi99eYgB1tHHnkzDLtTKd+bUi70n2wYXoqK8/DLrTd9YqcZheOsV7xnpZnCD9uo2e+MoJ4N0qNdDfOuwbg==
+
 "@chakra-ui/styled-system@^1.16.0":
   version "1.19.0"
   resolved "https://registry.yarnpkg.com/@chakra-ui/styled-system/-/styled-system-1.19.0.tgz#102fadaefc1a2dfd8e0c4837eafa660531a08419"
