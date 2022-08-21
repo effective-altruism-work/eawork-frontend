@@ -22,10 +22,10 @@
 
     <CFlex>
       <CBox w="56px" h="56px" bg="gray.200"></CBox>
-      <CHeading>{{ job.title }}</CHeading>
+      <CHeading>{{ props.job.title }}</CHeading>
     </CFlex>
 
-    <CBox font-size="lg">{{ job.description }}</CBox>
+    <CBox font-size="lg">{{ props.job.description }}</CBox>
 
   </CBox>
 </template>

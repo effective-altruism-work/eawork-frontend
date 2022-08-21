@@ -4,8 +4,6 @@ import { useFetch, useHead } from "#app";
   import JobCard from "~/components/job-card.vue";
 
   const { data } = await useFetch("https://backend.eawork.org/api/jobs");
-  
-  useHead({ title: 'EA Work' });
 </script>
 
 <template>
