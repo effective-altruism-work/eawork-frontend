@@ -1,8 +1,9 @@
 <script setup lang="ts">
+  import { CContainer } from "@chakra-ui/vue-next";
 </script>
 
 <template>
-  <div>
+  <CContainer>
     <NuxtPage />
-  </div>
+  </CContainer>
 </template>

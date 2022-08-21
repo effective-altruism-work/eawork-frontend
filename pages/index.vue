@@ -1,17 +1,17 @@
 <script setup lang="ts">
-  import { CFlex, CBox, CBadge, CIcon, CText } from "@chakra-ui/vue-next";
+import { useFetch, useHead } from "#app";
+  import { CFlex, CBox, CBadge, CIcon, CText, CHeading } from "@chakra-ui/vue-next";
+  import JobCard from "~/components/job-card.vue";
 
   const { data } = await useFetch("https://backend.eawork.org/api/jobs");
+  
+  useHead({ title: 'EA Work' });
 </script>
 
 <template>
-  <div>
-    <h1>EA Work</h1>
+  <CHeading mt="6">EA Work</CHeading>
 
-    <ul>
-      <li v-for="job in data">{{ job.title }}</li>
-    </ul>
-    
-    <CBox w="100%" shadow="md" rounded="lg" p="5">Test</CBox>
-  </div>
+  <CBox mt="12">
+    <JobCard v-for="job in data" :job="job" />
+  </CBox>
 </template>
