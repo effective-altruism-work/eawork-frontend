@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { useFetch } from "#app";
+  import { useFetch, useRuntimeConfig } from "#app";
   import { CFlex, CBox, CBadge, CIcon, CText, CHeading } from "@chakra-ui/vue-next";
   
   const props = defineProps<{ job: Job }>();
