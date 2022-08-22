@@ -4,7 +4,7 @@ import { formatDistance } from "date-fns";
 
 const props = defineProps<{ job: Job }>();
 
-const space = 3;
+const space = 6;
 
 interface Job {
   objectID: string;
@@ -18,6 +18,7 @@ interface Job {
 
   company_logo_url: string;
   company_name: string;
+  company_url: string;
 }
 </script>
 
@@ -25,15 +26,17 @@ interface Job {
   <CBox mb="12" :key="job.objectID" display="block">
     <CBox display="block">
       <CFlex>
-        <chakra.img
-          :src="job.company_logo_url"
-          max-w="56px"
-          max-h="56px"
-          bg="gray.200"
-          border="1px solid #E2E8F0"
-        />
+        <CLink :href="job.company_url">
+          <chakra.img
+            :src="job.company_logo_url"
+            max-w="60px"
+            max-h="60px"
+            bg="gray.200"
+            border="1px solid #E2E8F0"
+          />
+        </CLink>
 
-        <CFlex ml="6" mt="1" mb="1" justiy="space-between" direction="column">
+        <CFlex ml="3" mt="1" mb="1" justiy="space-between" direction="column">
           <CText font-size="lg" font-weight="bold" line-height="1">
             <ais-snippet :hit="job" attribute="title" />
           </CText>
@@ -46,15 +49,22 @@ interface Job {
         </CFlex>
       </CFlex>
 
-      <CBox :mt="space">
+      <CBox :mt="space / 2">
         <ais-snippet :hit="job" attribute="description" />
       </CBox>
     </CBox>
 
     <CFlex mt="3" justify="space-between" align="baseline">
-      <CLink :href="job.url_external" target="_blank">
-        <CButton size="sm" right-icon="arrow-up">Open</CButton>
-      </CLink>
+      <CFlex :gap="space">
+        <CLink :href="job.url_external" target="_blank">
+          <CButton size="sm" right-icon="arrow-up" color-scheme="blue" variant="outline"
+            >Open</CButton
+          >
+        </CLink>
+
+        <CButton size="sm" variant="link">Claim</CButton>
+        <CButton size="sm" variant="link">Flag</CButton>
+      </CFlex>
 
       <CFlex gap="3" align="center">
         <CText v-if="props.job.closes_at" mt="1" color="gray.500" font-size="sm"
