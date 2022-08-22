@@ -6,7 +6,9 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
-      apiBase: 'https://backend.eawork.org/api',
+      apiBase: "https://backend.eawork.org/api",
     },
   },
+  ssr: false,
+  srcDir: "src/"
 });
