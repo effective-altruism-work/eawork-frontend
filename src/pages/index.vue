@@ -13,7 +13,7 @@ const space = 6;
 </script>
 
 <template>
-  <CHeading mt="12">Jobs</CHeading>
+  <CHeading mt="12">Effective Altruism Jobs</CHeading>
 
   <AisInstantSearch :search-client="searchClient" index-name="jobs_prod">
     <CFlex :mt="space * 2" :mb="space * 4">
