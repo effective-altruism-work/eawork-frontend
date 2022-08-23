@@ -15,8 +15,8 @@ const searchClient = algoliasearch("S2T38ZKE0P", "b0e9cd27b37d64ac5bbb0b0671e1e8
 
 const space = 6;
 const indexName = "jobs_prod";
-let query = ref(null);
-let queryRaw = ref(null);
+let queryJson = ref<any>(null);
+let queryString = ref<string | null>(null);
 
 const routing = {
   router: history(),
@@ -33,8 +33,8 @@ const routing = {
 };
 
 function getIndexStateWithoutConfigure(uiState: any): any {
-  query.value = uiState;
-  queryRaw.value = decodeURI(window.location.search);
+  queryJson.value = uiState;
+  queryString.value = decodeURI(window.location.search);
   const { configure, ...trackedUiState } = uiState;
   return trackedUiState;
 }
@@ -133,7 +133,7 @@ function getIndexStateWithoutConfigure(uiState: any): any {
 
       <CFlex direction="column">
         <CFlex justify="flex-end" :gap="space">
-          <CreateAlertBtn :query="query" :queryRaw="queryRaw" />
+          <CreateAlertBtn :query-json="queryJson" :query-string="queryString" />
 
           <CButton color-scheme="blue" variant="outline">Post Job</CButton>
         </CFlex>

@@ -6,7 +6,7 @@ import axios from "axios";
 import { ref } from "vue";
 import { config } from "~/theme/config";
 
-const props = defineProps<{ query: any; queryRaw: string }>();
+const props = defineProps<{ queryJson: any; queryString: string }>();
 const nuxtConfig = useRuntimeConfig();
 
 const state = {
@@ -22,10 +22,11 @@ async function createJobAlert() {
   state.isSuccess.value = null;
   state.isError.value = false;
   try {
+    
     const res = await axios.post(`${nuxtConfig.public.apiBase}/jobs/subscribe/`, {
       email: state.email.value,
-      query: props.query,
-      queryRaw: props.queryRaw,
+      query_json: props.queryJson?.value,
+      query_string: props.queryString,
     });
     if (res.data.success) {
       state.isSuccess.value = true;
@@ -55,7 +56,7 @@ async function createJobAlert() {
       bottom="0"
       right="0"
       left="0"
-      max-w="380px"
+      max-w="390px"
       max-h="fit-content"
       m="auto"
       :gap="config.spaces.md"
@@ -64,21 +65,24 @@ async function createJobAlert() {
       bg="white"
       border-radius="md"
     >
-      <CFlex direction="column">
-        <CText w="fit-content">Receive emails for your current search query.</CText>
-        
-      </CFlex>
-      <CInput v-model="state.email.value" type="email" placeholder="joe@example.com"/>
+      <CText v-if="props.queryString" w="fit-content">Subscribe to new jobs that match your query:</CText>
+      <CText v-else w="fit-content">Subscribe to all new job posts, because your search query is unspecified.</CText>
+      
+      <CText v-if="props.queryString" bg="gray.100" border-radius="md" py="3" px="4" mt="-1" font-size="xs">{{props.queryString?.slice(1)}}</CText>
+      
+      <CInput v-model="state.email.value" type="email" name="email" placeholder="joe@example.com"/>
       <CButton
         @click="createJobAlert()"
         :is-loading="state.isSubmitting.value"
-        mt="-3"
         max-w="fit-content"
+        align-self="flex-end"
         color-scheme="blue"
       >
         Subscribe
       </CButton>
-      <CText mt="-0.5" w="fit-content" color="gray.400" font-size="sm">You can unsubscribe anytime.</CText>
+      
+      <CText v-if="state.isSuccess.value" color="green.500">Subscribed!</CText>
+      <CText v-if="state.isError.value" color="red.500">An error occured</CText>
     </CFlex>
   </VueFinalModal>
 </template>
