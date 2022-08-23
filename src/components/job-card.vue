@@ -62,7 +62,7 @@ interface Job {
           >
         </CLink>
 
-        <CButton size="sm" variant="link">Claim</CButton>
+        <CButton size="sm" variant="link">Edit</CButton>
         <CButton size="sm" variant="link">Flag</CButton>
       </CFlex>
 

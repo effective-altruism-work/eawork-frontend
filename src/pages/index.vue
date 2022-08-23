@@ -1,19 +1,43 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
 import { CFlex, CHeading, CButton, CInput, CBox } from "@chakra-ui/vue-next";
-import { simple } from "instantsearch.js/es/lib/stateMappings";
 import algoliasearch from "algoliasearch";
+import { ref } from "vue";
 import RefinementList from "~/components/aloglia/refinement-list.vue";
 import AlgoliaLogo from "~/components/aloglia/algolia-logo.vue";
+import CreateAlertBtn from "~/components/create-alert-btn.vue";
 import JobCard from "~/components/job-card.vue";
+import { history } from "instantsearch.js/es/lib/routers";
 
 const config = useRuntimeConfig();
 
 const searchClient = algoliasearch("S2T38ZKE0P", "b0e9cd27b37d64ac5bbb0b0671e1e84b");
 
 const space = 6;
+const indexName = "jobs_prod";
+let query = ref(null);
+let queryRaw = ref(null);
 
-const routing = { stateMapping: simple() };
+const routing = {
+  router: history(),
+  stateMapping: {
+    stateToRoute(uiState) {
+      return getIndexStateWithoutConfigure(uiState[indexName] || {});
+    },
+    routeToState(routeState = {}) {
+      return {
+        [indexName]: getIndexStateWithoutConfigure(routeState),
+      };
+    },
+  },
+};
+
+function getIndexStateWithoutConfigure(uiState: any): any {
+  query.value = uiState;
+  queryRaw.value = decodeURI(window.location.search);
+  const { configure, ...trackedUiState } = uiState;
+  return trackedUiState;
+}
 </script>
 
 <template>
@@ -108,11 +132,9 @@ const routing = { stateMapping: simple() };
       </CFlex>
 
       <CFlex direction="column">
-        <CFlex justify="space-between">
-          <CFlex>
-            <CInput max-w="300px" placeholder="joe@gmail.com" border-right-radius="0" />
-            <CButton border-left-radius="0" px="7" color-scheme="blue">Subscribe</CButton>
-          </CFlex>
+        <CFlex justify="flex-end" :gap="space">
+          <CreateAlertBtn :query="query" :queryRaw="queryRaw" />
+
           <CButton color-scheme="blue" variant="outline">Post Job</CButton>
         </CFlex>
 

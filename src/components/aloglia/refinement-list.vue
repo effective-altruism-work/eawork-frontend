@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CBox, CHeading, CButton } from "@chakra-ui/vue-next";
+import { CBox, CHeading, CButton, CInput } from "@chakra-ui/vue-next";
 
 const props = defineProps<{ label: string; attribute: string }>();
 </script>

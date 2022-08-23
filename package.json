@@ -20,6 +20,7 @@
         "nuxt": "npm:nuxt3@latest",
         "oh-vue-icons": "^1.0.0-rc3",
         "vue": "^3.2.37",
+        "vue-final-modal": "^3.4.4",
         "vue-instantsearch": "^4.4.2"
     },
     "devDependencies": {
