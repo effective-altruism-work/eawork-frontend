@@ -5,6 +5,7 @@ import algoliasearch from "algoliasearch";
 import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns";
 import { ref } from "vue";
 import RefinementList from "~/components/aloglia/refinement-list.vue";
+import Pagination from "~/components/aloglia/pagination";
 import CreateAlertBtn from "~/components/create-alert-btn.vue";
 import JobCard from "~/components/job-card.vue";
 import { history } from "instantsearch.js/es/lib/routers";
@@ -168,18 +169,26 @@ function searchFunction(helper) {
           </CFlex>
 
           <CBox mt="12">
+
             <AisStateResults>
               <template v-slot="{ state: { query }, results: { hits } }">
-                <AisInfiniteHits>
+                <AisHits>
                   <template v-slot:item="{ item, index, insights }">
                     <JobCard :job="item" />
                   </template>
-                </AisInfiniteHits>
+                </AisHits>
               </template>
             </AisStateResults>
+            
+            <Pagination/>
+
           </CBox>
         </CFlex>
       </CFlex>
     </AisInstantSearch>
   </CBox>
 </template>
+
+<style>
+
+</style>
