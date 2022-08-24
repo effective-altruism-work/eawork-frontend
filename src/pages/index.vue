@@ -1,47 +1,50 @@
 <script setup lang="ts">
-import { useRuntimeConfig } from "#app";
 import { CFlex, CHeading, CButton, CBox } from "@chakra-ui/vue-next";
 import algoliasearch from "algoliasearch";
 import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns";
 import { ref } from "vue";
+import CurrentRefinements from "~/components/aloglia/current-refinements.vue";
 import RefinementList from "~/components/aloglia/refinement-list.vue";
-import Pagination from "~/components/aloglia/pagination";
+import SearchBox from "~/components/aloglia/search-box.vue";
 import CreateAlertBtn from "~/components/create-alert-btn.vue";
 import JobCard from "~/components/job-card.vue";
 import { history } from "instantsearch.js/es/lib/routers";
 import { singleIndex } from "instantsearch.js/es/lib/stateMappings";
-
-const config = useRuntimeConfig();
+import Pagination from "~/components/aloglia/pagination";
 
 const searchClient = algoliasearch("S2T38ZKE0P", "b0e9cd27b37d64ac5bbb0b0671e1e84b");
 
-const space = 6;
-const indexName = "jobs_prod";
 const queryJson = ref<any>(null);
 
-const routing = {
-  router: history(),
-  stateMapping: singleIndex(indexName),
-};
+const space = 6;
+const indexName = "jobs_prod";
 
 function searchFunction(helper) {
-  const query = helper.state.query;
-  const facetsRaw: Map<string, string[]> = helper.state.disjunctiveFacetsRefinements;
+  saveQueryJson(helper.state);
+  helper.search();
+}
+
+function saveQueryJson(state: {
+  query: string;
+  disjunctiveFacetsRefinements: Map<string, string[]>;
+}) {
+  const queryString = state.query;
+  const facetsRaw: Map<string, string[]> = state.disjunctiveFacetsRefinements;
   const facetFilters: string[] = [];
   for (const [facetName, facetValueArr] of Object.entries(facetsRaw)) {
     for (const facetValue of facetValueArr) {
       facetFilters.push(`${facetName}:${facetValue}`);
     }
   }
-  if (query || facetFilters.length) {
+  const isQuerySpecified = queryString || facetFilters.length;
+  if (isQuerySpecified) {
     queryJson.value = {
-      query: query,
+      query: queryString,
       facetFilters: facetFilters,
     };
   } else {
     queryJson.value = null;
   }
-  helper.search();
 }
 </script>
 
@@ -50,49 +53,25 @@ function searchFunction(helper) {
     <CHeading mt="12">Effective Altruism Jobs</CHeading>
 
     <AisInstantSearch
-      :routing="routing"
+      show-loading-indicator
+      :routing="{
+        router: history(),
+        stateMapping: singleIndex(indexName),
+      }"
       :search-client="searchClient"
       :search-function="searchFunction"
-      index-name="jobs_prod"
+      :index-name="indexName"
     >
       <CFlex :mt="space * 2" :mb="space * 4">
         <CFlex direction="column" min-w="31%" pr="12" position="sticky">
-          <AisSearchBox />
+          <SearchBox />
 
           <CBox :mt="space / 2">
-            <ais-current-refinements>
-              <template v-slot="{ items, createURL }">
-                <ul>
-                  <li v-for="item in items" :key="item.attribute">
-                    {{ item.label }}:
-                    <ul>
-                      <li
-                        v-for="refinement in item.refinements"
-                        :key="
-                          [
-                            refinement.attribute,
-                            refinement.type,
-                            refinement.value,
-                            refinement.operator,
-                          ].join(':')
-                        "
-                      >
-                        <a
-                          :href="createURL(refinement)"
-                          @click.prevent="item.refine(refinement)"
-                        >
-                          {{ refinement.label }} X
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </template>
-            </ais-current-refinements>
+            <CurrentRefinements />
           </CBox>
-          
+
           <CBox>
-            <CHeading size="sm">Posted at</CHeading>
+            <CHeading size="sm" :mt="space">Posted at</CHeading>
             <ais-numeric-menu
               attribute="posted_at"
               :items="[
@@ -109,41 +88,31 @@ function searchFunction(helper) {
           <RefinementList attribute="tags_area" label="Areas" />
           <RefinementList attribute="tags_role_type" label="Roles" />
           <RefinementList attribute="tags_degree_required" label="Roles" />
-
-          <CBox mt="6">
-            <CHeading size="sm">Country</CHeading>
-            <AisRefinementList
-              attribute="tags_country"
-              :limit="6"
-              :show-more-limit="20"
-              :searchable="true"
-            />
-          </CBox>
-
-          <CBox mt="6">
-            <CHeading size="sm">City</CHeading>
-            <AisRefinementList
-              attribute="tags_city"
-              :limit="6"
-              :show-more-limit="20"
-              :searchable="true"
-            />
-          </CBox>
-
-          <CBox mt="6">
-            <CHeading size="sm">Company</CHeading>
-            <AisRefinementList
-              attribute="company_name"
-              :limit="6"
-              :show-more-limit="20"
-              :searchable="true"
-            />
-          </CBox>
-
+          <RefinementList
+            attribute="tags_country"
+            label="Country"
+            :limit="6"
+            :show-more-limit="20"
+            :searchable="true"
+          />
+          <RefinementList
+            attribute="tags_city"
+            label="City"
+            :limit="6"
+            :show-more-limit="20"
+            :searchable="true"
+          />
+          <RefinementList
+            attribute="company_name"
+            label="Company"
+            :limit="6"
+            :show-more-limit="20"
+            :searchable="true"
+          />
           <RefinementList attribute="tags_location_type" label="Type" />
           <RefinementList attribute="tags_skill" label="Skills" />
           <RefinementList attribute="tags_generic" label="Tags" />
-          
+
           <CBox :mt="space">
             <CHeading size="sm">Closes in</CHeading>
             <ais-numeric-menu
@@ -158,7 +127,6 @@ function searchFunction(helper) {
               ]"
             />
           </CBox>
-
         </CFlex>
 
         <CFlex direction="column">
@@ -169,7 +137,6 @@ function searchFunction(helper) {
           </CFlex>
 
           <CBox mt="12">
-
             <AisStateResults>
               <template v-slot="{ state: { query }, results: { hits } }">
                 <AisHits>
@@ -179,16 +146,11 @@ function searchFunction(helper) {
                 </AisHits>
               </template>
             </AisStateResults>
-            
-            <Pagination/>
 
+            <Pagination />
           </CBox>
         </CFlex>
       </CFlex>
     </AisInstantSearch>
   </CBox>
 </template>
-
-<style>
-
-</style>

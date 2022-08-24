@@ -1,13 +1,25 @@
 <script setup lang="ts">
 import { CBox, CHeading, CButton, CInput } from "@chakra-ui/vue-next";
 
-const props = defineProps<{ label: string; attribute: string }>();
+const props = defineProps<{
+  label: string;
+  attribute: string;
+  searchable?: boolean;
+  limit?: number;
+  showMoreLimit?: number;
+}>();
 </script>
 
 <template>
   <CBox mt="6">
     <CHeading size="sm">{{ props.label }}</CHeading>
-    <AisRefinementList :attribute="props.attribute">
+
+    <AisRefinementList
+      :attribute="props.attribute"
+      :searchable="props.searchable"
+      :limit="props.limit"
+      :show-more-limit="props.showMoreLimit"
+    >
       <template
         v-slot="{
           items,

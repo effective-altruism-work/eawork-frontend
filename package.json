@@ -24,6 +24,8 @@
         "vue-instantsearch": "^4.4.2"
     },
     "devDependencies": {
+        "sass": "^1.54.5",
+        "sass-loader": "^13.0.2",
         "@nuxt/kit": "^3.0.0-rc.8",
         "@nuxt/ui": "^0.3.1",
         "@typescript-eslint/eslint-plugin": "^5.33.1",
