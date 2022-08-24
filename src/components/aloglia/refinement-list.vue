@@ -21,7 +21,11 @@ const props = defineProps<{ label: string; attribute: string }>();
           sendEvent,
         }"
       >
-        <CInput v-if="isFromSearch" size="sm" @input="searchForItems($event.currentTarget.value)" />
+        <CInput
+          v-if="isFromSearch"
+          size="sm"
+          @input="searchForItems($event.currentTarget.value)"
+        />
         <ul>
           <li v-if="isFromSearch && !items.length">No results.</li>
           <li v-for="item in items" :key="item.value">
