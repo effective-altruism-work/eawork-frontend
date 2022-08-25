@@ -1,5 +1,5 @@
 export type TagTypeName =
-  | "tags_role"
+  | "tags_role_type"
   | "tags_skill"
   | "tags_country"
   | "tags_city"

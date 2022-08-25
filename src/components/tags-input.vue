@@ -6,6 +6,7 @@ import { ref, watch } from "vue";
 import "@formkit/themes/genesis";
 import VueTagsInput from "@sipec/vue3-tags-input";
 import { debounce } from "vue-debounce";
+import { theme } from "~/theme/theme";
 import { useState } from "~/utils/structs";
 import { Tag, TagTypeName } from "~/utils/types";
 
@@ -53,7 +54,6 @@ const state = useState(() => {
     }, 250),
   };
 });
-
 watch(state.tag, (newTag: string) => state.autocompleteDebounce(newTag));
 
 function onTagsChanged(newTags: Array<Tag>) {
@@ -63,14 +63,15 @@ function onTagsChanged(newTags: Array<Tag>) {
 </script>
 
 <template>
-  <CBox>
+  <CBox :mt="theme.spaces.md" w="100%">
     <CText>{{ props.typeLabel }}</CText>
-    <CBox>
+    <CBox :mt="theme.spaces.md / 3">
       <VueTagsInput
         v-model="state.tag.value"
         :tags="state.tags.value"
         :add-on-key="[13, ',', ';']"
         :separators="[';', ',']"
+        :placeholder="`Add ${props.typeLabel.toLocaleLowerCase()}`"
         :autocomplete-items="state.autocompleteItems.value"
         @tags-changed="onTagsChanged"
       >
@@ -83,3 +84,9 @@ function onTagsChanged(newTags: Array<Tag>) {
     </CBox>
   </CBox>
 </template>
+
+<style lang="scss">
+.vue-tags-input {
+  max-width: 100% !important;
+}
+</style>

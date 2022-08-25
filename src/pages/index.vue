@@ -139,7 +139,9 @@ function saveQueryJson(state: {
           <CFlex justify="flex-end" :gap="space">
             <CreateAlertBtn :query-json="queryJson" />
 
-            <CButton color-scheme="blue" variant="outline">Post Job</CButton>
+            <NuxtLink href="/post-job">
+              <CButton color-scheme="blue" variant="outline">Post Job</CButton>
+            </NuxtLink>
           </CFlex>
 
           <CBox mt="12">
