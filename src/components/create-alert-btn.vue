@@ -3,7 +3,7 @@ import { useRuntimeConfig } from "#app";
 import { CFlex, CButton, CInput, CText } from "@chakra-ui/vue-next";
 import axios from "axios";
 import { ref } from "vue";
-import { config } from "~/theme/config";
+import { theme } from "~/theme/theme";
 
 const props = defineProps<{
   queryJson: null | {
@@ -61,8 +61,8 @@ async function createJobAlert() {
       max-w="390px"
       max-h="fit-content"
       m="auto"
-      :gap="config.spaces.md"
-      :p="config.spaces.md"
+      :gap="theme.spaces.md"
+      :p="theme.spaces.md"
       direction="column"
       bg="white"
       border-radius="md"

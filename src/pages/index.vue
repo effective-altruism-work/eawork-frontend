@@ -58,8 +58,6 @@ function saveQueryJson(state: {
 
 <template>
   <CBox>
-    <CHeading mt="12">Effective Altruism Jobs</CHeading>
-
     <AisInstantSearch
       show-loading-indicator
       :routing="{
@@ -70,7 +68,7 @@ function saveQueryJson(state: {
       :search-function="searchFunction"
       :index-name="indexName"
     >
-      <CFlex :mt="space * 2" :mb="space * 4">
+      <CFlex :mb="space * 4">
         <CFlex direction="column" min-w="31%" pr="12" position="sticky">
           <SearchBox />
 
