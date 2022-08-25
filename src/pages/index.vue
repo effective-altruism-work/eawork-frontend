@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useRuntimeConfig } from "#app";
 import { CFlex, CHeading, CButton, CBox } from "@chakra-ui/vue-next";
 import algoliasearch from "algoliasearch";
 import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns";
@@ -12,9 +13,16 @@ import { history } from "instantsearch.js/es/lib/routers";
 import { singleIndex } from "instantsearch.js/es/lib/stateMappings";
 import Pagination from "~/components/aloglia/pagination";
 
-const searchClient = algoliasearch("S2T38ZKE0P", "b0e9cd27b37d64ac5bbb0b0671e1e84b");
+const config = useRuntimeConfig();
+const searchClient = algoliasearch(
+  config.public.algoliaApplicationId,
+  config.public.algoliaApiKey,
+);
 
-const queryJson = ref<any>(null);
+const queryJson = ref<null | {
+  query: string;
+  facetFilters: string[];
+}>(null);
 
 const space = 6;
 const indexName = "jobs_prod";
