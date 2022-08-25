@@ -12,7 +12,6 @@ useHead({ title: "About" });
 
 <template>
   <CBox max-w="2xl">
-    <CHeading size="lg">About</CHeading>
     <CText :mt="theme.spaces.md">
       This is an MVP of a job board that daily imports
       <CLink href="https://80000hours.org/job-board/" is-external text-decoration="underline"
@@ -26,11 +25,15 @@ useHead({ title: "About" });
         href="https://github.com/orgs/effective-altruism-work/repositories/"
         is-external
         text-decoration="underline"
-        >GitHub</CLink
-      >
+        >GitHub</CLink>.
     </CText>
     <CText :mt="theme.spaces.md">
-      For inquires please feel free to reach out to support@eawork.org.
+      For inquires please feel free to reach out to
+      <CLink
+        href="mailto:support@eawork.org"
+        is-external
+        text-decoration="underline"
+      >support@eawork.org</CLink>.
     </CText>
   </CBox>
 </template>
