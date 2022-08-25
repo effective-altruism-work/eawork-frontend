@@ -2,6 +2,8 @@
 import { useRuntimeConfig } from "#app";
 import { CFlex, CButton, CInput, CText } from "@chakra-ui/vue-next";
 import axios from "axios";
+import { addIcons, OhVueIcon } from "oh-vue-icons";
+import { MdAddalertRound } from "oh-vue-icons/icons";
 import { ref } from "vue";
 import { theme } from "~/theme/theme";
 
@@ -11,6 +13,9 @@ const props = defineProps<{
     facetFilters: string[];
   };
 }>();
+
+addIcons(MdAddalertRound);
+
 const nuxtConfig = useRuntimeConfig();
 
 const state = {
@@ -44,7 +49,10 @@ async function createJobAlert() {
 </script>
 
 <template>
-  <CButton color-scheme="blue" @click="state.isShowModal.value = true">Create Alert</CButton>
+  <CButton color-scheme="blue" @click="state.isShowModal.value = true">
+    <OhVueIcon name="md-addalert-round" scale="1" color="white" />
+    <CText ml="2">Setup Alert</CText>
+  </CButton>
 
   <VueFinalModal
     v-model="state.isShowModal.value"
@@ -54,8 +62,7 @@ async function createJobAlert() {
   >
     <CFlex
       pos="absolute"
-      top="0"
-      bottom="0"
+      top="44"
       right="0"
       left="0"
       max-w="390px"
