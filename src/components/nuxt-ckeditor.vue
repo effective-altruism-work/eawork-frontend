@@ -1,45 +1,63 @@
-<script lang="ts">
+<script lang="ts" setup>
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import CKEditor from "@ckeditor/ckeditor5-vue";
+import { ref, computed } from "vue";
 
-export default {
-  name: "App",
-  components: {
-    ckeditor: CKEditor.component,
+const props = defineProps<{ modelValue: string; toolbarItems?: string[] }>();
+
+const CKEditorVue = CKEditor.component;
+const editor = ref(ClassicEditor);
+
+const editorConfig = ref({
+  toolbar: props.toolbarItems ?? [
+    "heading",
+    "|",
+    "bold",
+    "italic",
+    "link",
+    "bulletedList",
+    "numberedList",
+    "blockQuote",
+    "insertTable",
+    "|",
+    "undo",
+    "redo",
+  ],
+});
+const emit = defineEmits(["update:modelValue"]);
+
+const value = computed({
+  get() {
+    return props.modelValue;
   },
-  data() {
-    return {
-      editor: ClassicEditor,
-      editorData: "<p>Content of the editor.</p>",
-      editorConfig: {
-        toolbar: [
-          "heading",
-          "|",
-          "bold",
-          "italic",
-          "link",
-          "bulletedList",
-          "numberedList",
-          "|",
-          "insertTable",
-          "|",
-          "blockQuote",
-          "|",
-          "insertImage",
-          "undo",
-          "redo",
-        ],
-      },
-    };
+  set(value) {
+    emit("update:modelValue", value);
   },
-};
+});
 </script>
 
 <template>
-  <ckeditor :editor="editor" v-model="editorData" :config="editorConfig" />
+  <CKEditorVue :editor="editor" v-model="value" :config="editorConfig" />
 </template>
 
 <style lang="scss">
+:root {
+  --ck-resizer-border-radius: var(--radii-md);
+  --ck-color-base-border: var(--colors-gray-200);
+  --ck-color-base-foreground: var(--colors-gray-50);
+}
+
+.ck.ck-toolbar.ck-toolbar_grouping {
+  border-radius: var(--radii-md) !important;
+  border-bottom-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+.ck.ck-content.ck-editor__editable {
+  border-radius: var(--radii-md) !important;
+  border-top-right-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+}
+
 .ck-content {
   h2 {
     font-size: 1.8rem;

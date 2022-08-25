@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useHead } from "#app";
-import { CBox, CHeading, CText, CLink } from "@chakra-ui/vue-next";
+import { CBox, CText, CLink } from "@chakra-ui/vue-next";
 import { addIcons } from "oh-vue-icons";
 import { BiGithub } from "oh-vue-icons/icons";
 import { theme } from "~/theme/theme";
@@ -25,15 +25,14 @@ useHead({ title: "About" });
         href="https://github.com/orgs/effective-altruism-work/repositories/"
         is-external
         text-decoration="underline"
-        >GitHub</CLink>.
+        >GitHub</CLink
+      >.
     </CText>
     <CText :mt="theme.spaces.md">
       For inquires please feel free to reach out to
-      <CLink
-        href="mailto:support@eawork.org"
-        is-external
-        text-decoration="underline"
-      >support@eawork.org</CLink>.
+      <CLink href="mailto:support@eawork.org" is-external text-decoration="underline"
+        >support@eawork.org</CLink
+      >.
     </CText>
   </CBox>
 </template>
