@@ -16,14 +16,14 @@ import { CFlex, CButton, CLink } from "@chakra-ui/vue-next";
     >
       <CFlex gap="3">
         <CLink :href="createURL(0)" @click.prevent="refine(0)">
-          <CButton size="sm" :is-disabled="isFirstPage">‹‹</CButton>
+          <CButton variant="outline" size="sm" :is-disabled="isFirstPage">‹‹</CButton>
         </CLink>
 
         <CLink
           :href="createURL(currentRefinement - 1)"
           @click.prevent="refine(currentRefinement - 1)"
         >
-          <CButton size="sm" :is-disabled="isFirstPage">‹</CButton>
+          <CButton variant="outline" size="sm" :is-disabled="isFirstPage">‹</CButton>
         </CLink>
 
         <CLink
@@ -32,20 +32,24 @@ import { CFlex, CButton, CLink } from "@chakra-ui/vue-next";
           :href="createURL(page)"
           @click.prevent="refine(page)"
         >
-          <CButton size="sm" :is-disabled="page === currentRefinement">{{
-            page + 1
-          }}</CButton>
+          <CButton
+            variant="outline"
+            size="sm"
+            :is-disabled="page === currentRefinement"
+          >
+            {{ page + 1 }}
+          </CButton>
         </CLink>
 
         <CLink
           :href="createURL(currentRefinement + 1)"
           @click.prevent="refine(currentRefinement + 1)"
         >
-          <CButton size="sm" :is-disabled="isLastPage">›</CButton>
+          <CButton variant="outline" size="sm" :is-disabled="isLastPage">›</CButton>
         </CLink>
 
         <CLink :href="createURL(nbPages)" @click.prevent="refine(nbPages)">
-          <CButton size="sm" :is-disabled="isLastPage">››</CButton>
+          <CButton variant="outline" size="sm" :is-disabled="isLastPage">››</CButton>
         </CLink>
       </CFlex>
     </template>
