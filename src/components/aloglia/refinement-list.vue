@@ -9,6 +9,16 @@ const props = defineProps<{
   limit?: number;
   showMoreLimit?: number;
 }>();
+
+function shortenTagName(tagName: string) {
+  switch (tagName) {
+    case "Biosecurity & pandemic preparedness":
+      return "Biosecurity & pandemic prep";
+    case "International security & cooperation":
+      return "International security & cooperation";
+  }
+  return tagName;
+}
 </script>
 
 <template>
@@ -42,7 +52,7 @@ const props = defineProps<{
           mb="1"
           border-radius="md"
         />
-        <ul>
+        <chakra.ul mt="1px">
           <li v-if="isFromSearch && !items.length">No results.</li>
           <li v-for="item in items" :key="item.value">
             <Checkbox
@@ -50,14 +60,15 @@ const props = defineProps<{
               @update:model-value="() => refine(item.value)"
             >
               <CText font-size="0.95rem" :_hover="{ color: 'blue.500' }">
-                <ais-highlight attribute="item" :hit="item" />
-                <CBadge ml="1" mt="-2px" font-weight="normal">{{
+                <ais-highlight v-if="props.searchable" attribute="item" :hit="item" />
+                <span v-else>{{ shortenTagName(item.value) }}</span>
+                <CBadge ml="1" mt="0" font-weight="normal" font-size="0.6rem">{{
                   item.count.toLocaleString()
                 }}</CBadge>
               </CText>
             </Checkbox>
           </li>
-        </ul>
+        </chakra.ul>
         <CButton size="sm" v-if="canToggleShowMore" @click="toggleShowMore">
           {{ !isShowingMore ? "Show more" : "Show less" }}
         </CButton>

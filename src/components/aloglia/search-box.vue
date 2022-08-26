@@ -15,7 +15,7 @@ import { CBox } from "@chakra-ui/vue-next";
   .ais-SearchBox {
     .ais-SearchBox-form {
       display: flex;
-  
+
       .ais-SearchBox-input {
         @include chakra-input;
       }

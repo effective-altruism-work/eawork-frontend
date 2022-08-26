@@ -18,6 +18,11 @@ const theme = extendTheme({
       defaultProps: {
         colorScheme: "blue",
       },
+      variants: {
+        solid: {
+          fontWeight: "normal",
+        },
+      }
     },
     FormLabel: {
       baseStyle: {

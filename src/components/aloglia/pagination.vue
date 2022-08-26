@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CFlex, CButton } from "@chakra-ui/vue-next";
+import { CFlex, CButton, CLink } from "@chakra-ui/vue-next";
 </script>
 <template>
   <ais-pagination>

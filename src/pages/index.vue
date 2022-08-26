@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
-import { CFlex, CHeading, CButton, CBox } from "@chakra-ui/vue-next";
+import { CFlex, CHeading, CButton, CBox, CText } from "@chakra-ui/vue-next";
 import algoliasearch from "algoliasearch";
 import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns";
+import { OhVueIcon } from "oh-vue-icons";
 import { ref } from "vue";
 import CurrentRefinements from "~/components/aloglia/current-refinements.vue";
 import RefinementList from "~/components/aloglia/refinement-list.vue";
@@ -18,7 +19,6 @@ const searchClient = algoliasearch(
   config.public.algoliaApplicationId,
   config.public.algoliaApiKey,
 );
-
 const queryJson = ref<null | {
   query: string;
   facetFilters: string[];
@@ -78,7 +78,10 @@ function saveQueryJson(state: {
 
           <RefinementList attribute="tags_area" label="Areas" />
           <RefinementList attribute="tags_role_type" label="Roles" />
-          <RefinementList attribute="tags_degree_required" label="Roles" />
+          <RefinementList
+            attribute="tags_degree_required"
+            label="Educational requirements"
+          />
           <RefinementList
             attribute="tags_country"
             label="Country"
@@ -100,7 +103,7 @@ function saveQueryJson(state: {
             :show-more-limit="20"
             :searchable="true"
           />
-          <RefinementList attribute="tags_location_type" label="Type" />
+          <RefinementList attribute="tags_location_type" label="Location" />
           <RefinementList attribute="tags_skill" label="Skills" />
           <RefinementList attribute="tags_generic" label="Tags" />
 
@@ -140,20 +143,25 @@ function saveQueryJson(state: {
             <CreateAlertBtn :query-json="queryJson" />
 
             <NuxtLink href="/post-job">
-              <CButton color-scheme="blue" variant="outline">Post Job</CButton>
+              <CButton color-scheme="blue" variant="outline">
+                <OhVueIcon name="hi-solid-plus" scale="1" color="var(--colors-blue-600)" />
+                <CText ml="2">Post Job</CText>
+              </CButton>
             </NuxtLink>
           </CFlex>
 
           <CBox mt="12">
-            <AisStateResults>
-              <template v-slot="{ state: { query }, results: { hits } }">
-                <AisHits>
-                  <template v-slot:item="{ item, index, insights }">
-                    <JobCard :job="item" />
-                  </template>
-                </AisHits>
-              </template>
-            </AisStateResults>
+            <CBox min-h="100vh">
+              <AisStateResults>
+                <template v-slot="{ state: { query }, results: { hits } }">
+                  <AisHits>
+                    <template v-slot:item="{ item, index, insights }">
+                      <JobCard :job="item" />
+                    </template>
+                  </AisHits>
+                </template>
+              </AisStateResults>
+            </CBox>
 
             <Pagination />
           </CBox>

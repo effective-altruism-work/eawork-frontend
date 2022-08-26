@@ -44,3 +44,7 @@ $input-border-color: var(--colors-gray-200);
   line-height: var(--lineHeights-normal);
   font-size: 0.8rem;
 }
+
+*:focus {
+  box-shadow: none !important;
+}

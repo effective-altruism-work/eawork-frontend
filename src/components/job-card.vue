@@ -38,7 +38,13 @@ interface Job {
           />
         </CLink>
 
-        <CFlex :ml="job.company_logo_url ? 3 : 0" mt="1" mb="1" justiy="space-between" direction="column">
+        <CFlex
+          :ml="job.company_logo_url ? 3 : 0"
+          mt="1"
+          mb="1"
+          justiy="space-between"
+          direction="column"
+        >
           <CText font-size="lg" font-weight="bold" line-height="1">
             <ais-snippet :hit="job" attribute="title" />
           </CText>
@@ -58,7 +64,11 @@ interface Job {
 
     <CFlex mt="3" justify="space-between" align="baseline">
       <CFlex :gap="space">
-        <CLink :href="job.url_external" target="_blank" :_hover="{textDecoration: 'none !important'}">
+        <CLink
+          :href="job.url_external"
+          target="_blank"
+          :_hover="{ textDecoration: 'none !important' }"
+        >
           <CButton size="sm" color-scheme="blue" variant="outline">
             Open
             <OhVueIcon

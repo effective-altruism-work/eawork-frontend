@@ -65,7 +65,6 @@ useHead({ title: "Post Job" });
 
 <template>
   <CBox :mb="theme.spaces.md * 10">
-
     <FormKit type="form" submit-label="Post" @submit="postJob">
       <FormKit
         name="email"
@@ -166,10 +165,13 @@ useHead({ title: "Post Job" });
     </FormKit>
 
     <CFlex :gap="theme.spaces.md * 2" justify="flex-end">
-      <CFlex w="50%"/>
+      <CFlex w="50%" />
       <CAlert v-if="state.isSuccess.value" status="success" border-radius="md" w="50%">
         <CAlertIcon />
-        <CAlertDescription>Submitted successfully and will be reviewed within several days.</CAlertDescription>
+        <CAlertDescription>
+          Submitted successfully and will be reviewed within several
+          days.
+        </CAlertDescription>
       </CAlert>
     </CFlex>
   </CBox>
