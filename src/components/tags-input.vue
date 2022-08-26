@@ -6,10 +6,10 @@ import { onMounted, ref, watch } from "vue";
 import "@formkit/themes/genesis";
 import VueTagsInput from "@sipec/vue3-tags-input";
 import { debounce } from "vue-debounce";
-import FormHelperText from "~/components/form-helper-text.vue";
 import { theme } from "~/theme/theme";
 import { useState } from "~/utils/structs";
 import { Tag, TagTypeName } from "~/utils/types";
+import FormHelperText from "~/components/chakra/form-helper-text.vue";
 
 const props = defineProps<{
   typeLabel: string;

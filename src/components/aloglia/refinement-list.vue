@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { CBox, CHeading, CButton, CInput } from "@chakra-ui/vue-next";
+import { CBox, CText, CButton, CBadge, CInput, CFormLabel } from "@chakra-ui/vue-next";
+import Checkbox from "~/components/chakra/checkbox.vue";
 
 const props = defineProps<{
   label: string;
@@ -12,7 +13,7 @@ const props = defineProps<{
 
 <template>
   <CBox mt="6">
-    <CHeading size="sm">{{ props.label }}</CHeading>
+    <CFormLabel mb="1">{{ props.label }}</CFormLabel>
 
     <AisRefinementList
       :attribute="props.attribute"
@@ -41,14 +42,17 @@ const props = defineProps<{
         <ul>
           <li v-if="isFromSearch && !items.length">No results.</li>
           <li v-for="item in items" :key="item.value">
-            <a
-              :href="createURL(item)"
-              :style="{ fontWeight: item.isRefined ? 'bold' : '' }"
-              @click.prevent="refine(item.value)"
+            <Checkbox
+              :model-value="item.isRefined"
+              @update:model-value="() => refine(item.value)"
             >
-              <ais-highlight attribute="item" :hit="item" />
-              ({{ item.count.toLocaleString() }})
-            </a>
+              <CText font-size="0.95rem" :_hover="{ color: 'blue.500' }">
+                <ais-highlight attribute="item" :hit="item" />
+                <CBadge ml="1" mt="-2px" font-weight="normal">{{
+                  item.count.toLocaleString()
+                }}</CBadge>
+              </CText>
+            </Checkbox>
           </li>
         </ul>
         <CButton size="sm" v-if="canToggleShowMore" @click="toggleShowMore">

@@ -12,11 +12,11 @@ import { FormKitNode } from "@formkit/core";
 import axios from "axios";
 import { ref } from "vue";
 import "@formkit/themes/genesis";
-import FormHelperText from "~/components/form-helper-text.vue";
 import TagsInput from "~/components/tags-input.vue";
 import { theme } from "~/theme/theme";
 import { Tag, TagTypeName } from "~/utils/types";
 import NuxtCkeditor from "~/components/nuxt-ckeditor.vue";
+import FormHelperText from "~/components/chakra/form-helper-text.vue";
 
 const state = {
   email: ref(""),

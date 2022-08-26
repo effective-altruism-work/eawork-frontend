@@ -76,21 +76,6 @@ function saveQueryJson(state: {
             <CurrentRefinements />
           </CBox>
 
-          <CBox>
-            <CHeading size="sm" :mt="space">Posted at</CHeading>
-            <ais-numeric-menu
-              attribute="posted_at"
-              :items="[
-                { label: 'Anytime' },
-                { label: 'Today', start: getUnixTime(subDays(new Date(), 1)) },
-                { label: 'A week ago', start: getUnixTime(subDays(new Date(), 7)) },
-                { label: '30d ago', start: getUnixTime(subDays(new Date(), 30)) },
-                { label: '3m ago', start: getUnixTime(subDays(new Date(), 91)) },
-                { label: 'This year', start: getUnixTime(startOfYear(new Date())) },
-              ]"
-            />
-          </CBox>
-
           <RefinementList attribute="tags_area" label="Areas" />
           <RefinementList attribute="tags_role_type" label="Roles" />
           <RefinementList attribute="tags_degree_required" label="Roles" />
@@ -118,6 +103,21 @@ function saveQueryJson(state: {
           <RefinementList attribute="tags_location_type" label="Type" />
           <RefinementList attribute="tags_skill" label="Skills" />
           <RefinementList attribute="tags_generic" label="Tags" />
+
+          <CBox>
+            <CHeading size="sm" :mt="space">Posted at</CHeading>
+            <ais-numeric-menu
+              attribute="posted_at"
+              :items="[
+                { label: 'Anytime' },
+                { label: 'Today', start: getUnixTime(subDays(new Date(), 1)) },
+                { label: 'A week ago', start: getUnixTime(subDays(new Date(), 7)) },
+                { label: '30d ago', start: getUnixTime(subDays(new Date(), 30)) },
+                { label: '3m ago', start: getUnixTime(subDays(new Date(), 91)) },
+                { label: 'This year', start: getUnixTime(startOfYear(new Date())) },
+              ]"
+            />
+          </CBox>
 
           <CBox :mt="space">
             <CHeading size="sm">Closes in</CHeading>
