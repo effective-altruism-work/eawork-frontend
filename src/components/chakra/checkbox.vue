@@ -65,6 +65,12 @@ const value = computed({
   align-items: center;
   vertical-align: top;
   position: relative;
+  
+  &:hover {
+    .chakra-checkbox__control {
+      border-color: var(--colors-blue-100);
+    }
+  }
 
   .chakra-checkbox__input {
     border: 0;
@@ -84,7 +90,6 @@ const value = computed({
     transition-duration: var(--transition-duration-normal);
     border-width: 2px;
     border-style: solid;
-    border-image: initial;
     border-radius: var(--radii-sm);
     border-color: inherit;
     color: var(--colors-white);

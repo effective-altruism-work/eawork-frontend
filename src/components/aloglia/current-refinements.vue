@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { CButton, CBox, CIcon } from "@chakra-ui/vue-next";
+import { theme } from "~/theme/theme";
 </script>
 
 <template>
   <ais-current-refinements>
     <template v-slot="{ items, createURL }">
-      <CBox v-for="item in items" :key="item.attribute">
+      <CBox v-for="item in items" :key="item.attribute" :mt="theme.spaces.md / 2">
         <CBox
           v-for="refinement in item.refinements"
           :key="

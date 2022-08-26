@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useHead } from "#app";
-import { CContainer, CFlex, CBox, CHeading, CLink } from "@chakra-ui/vue-next";
+import { CContainer, CFlex, CBox, CHeading, CLink, chakra } from "@chakra-ui/vue-next";
 import { OhVueIcon } from "oh-vue-icons";
 import { theme } from "~/theme/theme";
 
@@ -12,7 +12,7 @@ useHead({
 
 <template>
   <CBox>
-    <CBox :py="theme.spaces.md * 2" bg="blue.50">
+    <CBox :py="theme.spaces.md" bg="gray.50">
       <CContainer
         max-w="6xl"
         align-itmes="baseline"
@@ -22,17 +22,37 @@ useHead({
         align-items="center"
       >
         <NuxtLink href="/">
-          <CHeading line-height="0.7">EA Work</CHeading>
+          <CFlex align="baseline">
+            <chakra.img my="auto" src="public/logo-ea.svg" h="30px" />
+            <CHeading
+              :ml="4"
+              as="h2"
+              font-size="1.5rem"
+              color="gray.700"
+            >
+              EA Work
+            </CHeading>
+          </CFlex>
         </NuxtLink>
 
-        <CFlex :gap="theme.spaces.md" align-items="center">
-          <CFlex align-items="center">
-            <NuxtLink to="/about"> About </NuxtLink>
-          </CFlex>
+        <CFlex :gap="theme.spaces.md + 1" align="center">
+          <NuxtLink to="/about">
+            <CLink>
+              About
+            </CLink>
+          </NuxtLink>
+
+          <CLink
+            href="https://github.com/effective-altruism-work/eawork-backend/discussions/categories/feature-requests"
+            is-external
+          >
+            Feature Requests
+          </CLink>
 
           <CLink
             href="https://github.com/orgs/effective-altruism-work/repositories/"
             is-external
+            :_hover="{'.ov-icon': {color: 'var(--colors-gray-600)'}}"
           >
             <OhVueIcon name="bi-github" scale="1.6" color="var(--colors-gray-500)" />
           </CLink>
@@ -40,7 +60,7 @@ useHead({
       </CContainer>
     </CBox>
 
-    <CContainer max-w="6xl" :pt="theme.spaces.md * 2">
+    <CContainer max-w="6xl" :pt="theme.spaces.md + 1">
       <NuxtPage />
     </CContainer>
   </CBox>

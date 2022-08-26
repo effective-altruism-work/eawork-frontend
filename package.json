@@ -30,6 +30,7 @@
             "axios": "^0.24",
         "vue-final-modal": "^3.4.4",
         "vue-debounce": "^4.0.0",
+        "floating-vue": "^2.0.0-beta.19",
         "@ckeditor/ckeditor5-vue": "^4.0.1",
             "@ckeditor/ckeditor5-build-classic": "^35.0.1"
     },
