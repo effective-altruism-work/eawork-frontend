@@ -21,7 +21,7 @@ const value = computed({
 </script>
 
 <template>
-  <label class="chakra-checkbox" :for="state.id.value">
+  <label class="chakra-checkbox" :for="state.id.value" :_hover="{}">
     <input
       class="chakra-checkbox__input"
       type="checkbox"
@@ -58,7 +58,7 @@ const value = computed({
   </label>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .chakra-checkbox {
   cursor: pointer;
   display: inline-flex;
@@ -109,3 +109,4 @@ const value = computed({
   }
 }
 </style>
+

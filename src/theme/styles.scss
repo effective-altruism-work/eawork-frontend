@@ -2,7 +2,7 @@ $space: var(--space-3);
 $placeholder-color: var(--colors-gray-400);
 $input-border-color: var(--colors-gray-200);
 
-.chakra-input {
+@mixin chakra-input {
   height: var(--sizes-10);
   border: 1px solid $input-border-color;
   width: 100%;
@@ -28,7 +28,7 @@ $input-border-color: var(--colors-gray-200);
   }
 }
 
-.chakra-label {
+@mixin chakra-label {
   display: block;
   font-size: var(--fontSizes-md);
   margin-right: var(--space-3);

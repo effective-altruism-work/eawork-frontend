@@ -19,7 +19,6 @@ import NuxtCkeditor from "~/components/nuxt-ckeditor.vue";
 import FormHelperText from "~/components/chakra/form-helper-text.vue";
 
 const state = {
-  email: ref(""),
   description: ref(""),
   description_short: ref(""),
   tags: ref({} as { [Property in keyof TagTypeName]: string }),
@@ -43,7 +42,6 @@ async function postJob(
     const res = await axios.post(`${state.config.public.apiBase}/jobs/create`, {
       ...data,
       ...state.tags.value,
-      email: state.email.value,
       description: state.description.value,
       description_short: state.description_short.value,
     });
@@ -205,7 +203,7 @@ useHead({ title: "Post Job" });
     box-shadow: none;
 
     .formkit-input {
-      @extend .chakra-input;
+      @include chakra-input;
     }
   }
 

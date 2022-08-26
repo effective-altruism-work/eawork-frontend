@@ -101,7 +101,7 @@ function onTagsChanged(newTags: Array<Tag>) {
   max-width: 100% !important;
 
   .ti-input {
-    @extend .chakra-input;
+    @include chakra-input;
     padding-inline-start: 6px;
 
     .ti-new-tag-input {
