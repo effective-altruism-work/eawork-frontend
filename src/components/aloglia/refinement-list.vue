@@ -35,9 +35,12 @@ const props = defineProps<{
         }"
       >
         <CInput
-          v-if="isFromSearch"
+          v-if="props.searchable"
+          placeholder="Filter..."
           size="sm"
           @input="searchForItems($event.currentTarget.value)"
+          mb="1"
+          border-radius="md"
         />
         <ul>
           <li v-if="isFromSearch && !items.length">No results.</li>
