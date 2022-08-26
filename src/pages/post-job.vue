@@ -192,7 +192,7 @@ useHead({ title: "Post Job" });
     max-width: 100%;
 
     .formkit-label {
-      @extend .chakra-label;
+      @include chakra-label;
       padding-bottom: 0;
     }
   }
