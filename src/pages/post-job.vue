@@ -65,12 +65,6 @@ useHead({ title: "Post Job" });
 
 <template>
   <CBox :mb="theme.spaces.md * 10">
-    <CAlert status="info" border-radius="md" :mb="theme.spaces.md * 2" bg="gray.500">
-      <CAlertIcon />
-      <CAlertDescription
-        >You post will be reviewed and published within several days.</CAlertDescription
-      >
-    </CAlert>
 
     <FormKit type="form" submit-label="Post" @submit="postJob">
       <FormKit
@@ -171,9 +165,13 @@ useHead({ title: "Post Job" });
       </CFlex>
     </FormKit>
 
-    <CFlex v-if="state.isSuccess.value" justify-content="flex-end" color="green.500"
-      >Submitted successfully!</CFlex
-    >
+    <CFlex :gap="theme.spaces.md * 2" justify="flex-end">
+      <CFlex w="50%"/>
+      <CAlert v-if="state.isSuccess.value" status="success" border-radius="md" w="50%">
+        <CAlertIcon />
+        <CAlertDescription>Submitted successfully and will be reviewed within several days.</CAlertDescription>
+      </CAlert>
+    </CFlex>
   </CBox>
 </template>
 
@@ -211,6 +209,7 @@ useHead({ title: "Post Job" });
     display: flex;
     justify-self: flex-end;
     margin-left: auto;
+    margin-right: 0;
     background: var(--colors-blue-500);
     font-size: 1.1rem;
     &:hover {
