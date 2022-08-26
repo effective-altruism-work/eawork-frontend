@@ -78,7 +78,7 @@ function onTagsChanged(newTags: Array<Tag>) {
         :tags="state.tags.value"
         :add-on-key="[13, ',', ';']"
         :separators="[';', ',']"
-        :placeholder="`Add ${props.typeLabel.toLocaleLowerCase()}`"
+        :placeholder="`Add items`"
         :autocomplete-items="state.autocompleteItems.value"
         :autocomplete-min-length="0"
         @tags-changed="onTagsChanged"
@@ -116,6 +116,11 @@ function onTagsChanged(newTags: Array<Tag>) {
     .ti-selected-item {
       background: var(--colors-blue-500);
     }
+  }
+  .ti-valid.ti-tag {
+    background: var(--colors-blue-500);
+    border-radius: var(--radii-md);
+    padding-left: 9px;
   }
 }
 </style>

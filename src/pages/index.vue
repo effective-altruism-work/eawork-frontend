@@ -69,7 +69,7 @@ function saveQueryJson(state: {
       :index-name="indexName"
     >
       <CFlex :mb="space * 4">
-        <CFlex direction="column" min-w="31%" pr="12" position="sticky">
+        <CFlex direction="column" min-w="31%" max-w="31%" pr="12" position="sticky">
           <SearchBox />
 
           <CBox :mt="space / 2">
@@ -135,7 +135,7 @@ function saveQueryJson(state: {
           </CBox>
         </CFlex>
 
-        <CFlex direction="column">
+        <CFlex direction="column" min-w="69%">
           <CFlex justify="flex-end" :gap="space">
             <CreateAlertBtn :query-json="queryJson" />
 

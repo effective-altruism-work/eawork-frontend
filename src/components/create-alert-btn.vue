@@ -31,7 +31,7 @@ async function createJobAlert() {
   state.isSuccess.value = null;
   state.isError.value = false;
   try {
-    const res = await axios.post(`${nuxtConfig.public.apiBase}/jobs/subscribe/`, {
+    const res = await axios.post(`${nuxtConfig.public.apiBase}/jobs/subscribe`, {
       email: state.email.value,
       query_json: props.queryJson,
       query_string: window.location.search,

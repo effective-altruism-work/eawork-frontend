@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useHead, useRuntimeConfig } from "#app";
 import {
   CBox,
   CFlex,
@@ -7,26 +8,61 @@ import {
   CAlertIcon,
   CAlertDescription,
 } from "@chakra-ui/vue-next";
+import { FormKitNode } from "@formkit/core";
+import axios from "axios";
 import { ref } from "vue";
 import "@formkit/themes/genesis";
 import FormHelperText from "~/components/form-helper-text.vue";
 import TagsInput from "~/components/tags-input.vue";
 import { theme } from "~/theme/theme";
 import { Tag, TagTypeName } from "~/utils/types";
-import NuxtCkeditor from "~/components/nuxt-ckeditor";
+import NuxtCkeditor from "~/components/nuxt-ckeditor.vue";
 
 const state = {
   email: ref(""),
   description: ref(""),
   description_short: ref(""),
-  tags: ref({} as { [Property in keyof TagTypeName]: Tag[] }),
+  tags: ref({} as { [Property in keyof TagTypeName]: string }),
+  config: useRuntimeConfig(),
+  isSuccess: ref(false),
 };
 
-async function postJob(data: { email: string; title: string }) {}
+async function postJob(
+  data: {
+    email: string;
+    title: string;
+    company_logo_url?: string;
+    url_external: string;
+  },
+  node: FormKitNode,
+) {
+  state.isSuccess.value = false;
+  const errorMsg =
+    "An error occurred, our team has been notified. Please try again or contact support at support@eawork.org.";
+  try {
+    const res = await axios.post(`${state.config.public.apiBase}/jobs/create`, {
+      ...data,
+      ...state.tags.value,
+      email: state.email.value,
+      description: state.description.value,
+      description_short: state.description_short.value,
+    });
+    if (res.data.success === true) {
+      state.isSuccess.value = true;
+      node.reset();
+    } else {
+      node.setErrors([errorMsg]);
+    }
+  } catch (e) {
+    node.setErrors([errorMsg]);
+  }
+}
 
 function tagsChanged(tagTypeName: TagTypeName, tagsNew: Tag[]) {
-  state.tags.value[tagTypeName] = tagsNew;
+  state.tags.value[tagTypeName] = tagsNew.map((tag) => tag.text);
 }
+
+useHead({ title: "Post Job" });
 </script>
 
 <template>
@@ -34,7 +70,7 @@ function tagsChanged(tagTypeName: TagTypeName, tagsNew: Tag[]) {
     <CAlert status="info" border-radius="md" :mb="theme.spaces.md * 2" bg="gray.500">
       <CAlertIcon />
       <CAlertDescription
-        >You changes will be reviewed and published within several days.</CAlertDescription
+        >You post will be reviewed and published within several days.</CAlertDescription
       >
     </CAlert>
 
@@ -50,7 +86,6 @@ function tagsChanged(tagTypeName: TagTypeName, tagsNew: Tag[]) {
         <FormKit
           name="company_logo_url"
           label="Company logo URL"
-          validation="required|url"
           placeholder="https://img.com/image.jpg"
         />
       </CFlex>
@@ -58,7 +93,7 @@ function tagsChanged(tagTypeName: TagTypeName, tagsNew: Tag[]) {
       <FormKit
         name="url_external"
         label="Application form URL"
-        validation="required|url"
+        validation="required"
         placeholder="https://comapny.com/careers/role"
       />
 
@@ -109,7 +144,7 @@ function tagsChanged(tagTypeName: TagTypeName, tagsNew: Tag[]) {
           type-label="Immigration support"
           type-name="tags_immigration"
           @tags-changed="tagsChanged"
-          help-text="Full, Possible, For US-relaxed countries only, etc"
+          help-text="Complete support, Potential, For US-relaxed countries only, etc"
         />
       </CFlex>
 
@@ -137,6 +172,10 @@ function tagsChanged(tagTypeName: TagTypeName, tagsNew: Tag[]) {
         />
       </CFlex>
     </FormKit>
+
+    <CFlex v-if="state.isSuccess.value" justify-content="flex-end" color="green.500"
+      >Submitted successfully!</CFlex
+    >
   </CBox>
 </template>
 
