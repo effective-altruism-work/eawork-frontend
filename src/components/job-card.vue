@@ -58,7 +58,7 @@ interface Job {
       </CFlex>
 
       <CBox :mt="space / 2">
-        <ais-snippet :hit="job" attribute="description" />
+        <ais-snippet :hit="job" attribute="description_short" />
       </CBox>
     </CBox>
 
@@ -85,23 +85,23 @@ interface Job {
       </CFlex>
 
       <CFlex gap="3" align="center">
-        <CText v-if="props.job.closes_at" mt="1" color="gray.500" font-size="sm"
-          >Closes
+        <CText v-if="props.job.closes_at" mt="1" color="gray.500" font-size="sm">
+          Closes
           {{
             formatDistance(new Date(props.job.closes_at * 1000), new Date(), {
               addSuffix: true,
             })
-          }}</CText
-        >
+          }}
+        </CText>
         <CBox v-if="props.job.closes_at" w="3px" h="3px" mt="5px" bg="gray.300" />
-        <CText mt="1" color="gray.500" font-size="sm"
-          >Posted
+        <CText mt="1" color="gray.500" font-size="sm">
+          Posted
           {{
             formatDistance(new Date(props.job.posted_at * 1000), new Date(), {
               addSuffix: true,
             })
-          }}</CText
-        >
+          }}
+        </CText>
       </CFlex>
     </CFlex>
   </CBox>
