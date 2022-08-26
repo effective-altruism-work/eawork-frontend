@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import { useHead } from "#app";
 import { CContainer, CFlex, CBox, CHeading, CLink } from "@chakra-ui/vue-next";
-import { addIcons, OhVueIcon } from "oh-vue-icons";
-import { BiGithub } from "oh-vue-icons/icons";
+import { OhVueIcon } from "oh-vue-icons";
 import { theme } from "~/theme/theme";
-
-addIcons(BiGithub);
 
 useHead({
   titleTemplate: (titleChunk) => (titleChunk ? `${titleChunk} - EA Work` : "EA Work"),

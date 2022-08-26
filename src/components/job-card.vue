@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { CFlex, CBox, CButton, CLink, CText } from "@chakra-ui/vue-next";
 import { formatDistance } from "date-fns";
+import { OhVueIcon } from "oh-vue-icons";
 
 const props = defineProps<{ job: Job }>();
 
@@ -28,22 +29,23 @@ interface Job {
       <CFlex>
         <CLink :href="job.company_url">
           <chakra.img
+            v-if="job.company_logo_url"
             :src="job.company_logo_url"
-            max-w="60px"
-            max-h="60px"
+            w="56px"
+            h="56px"
             bg="gray.200"
             border="1px solid #E2E8F0"
           />
         </CLink>
 
-        <CFlex ml="3" mt="1" mb="1" justiy="space-between" direction="column">
+        <CFlex :ml="job.company_logo_url ? 3 : 0" mt="1" mb="1" justiy="space-between" direction="column">
           <CText font-size="lg" font-weight="bold" line-height="1">
             <ais-snippet :hit="job" attribute="title" />
           </CText>
 
           <CFlex mt="5px" gap="3" align="center" display="flex">
             <CText><ais-snippet :hit="job" attribute="company_name" /></CText>
-            <CBox w="3px" h="3px" mt="2px" bg="gray.300" />
+            <CBox v-if="job.tags_city[0]" w="3px" h="3px" mt="2px" bg="gray.300" />
             <CText v-if="job.tags_city[0]">{{ job.tags_city[0] }}</CText>
           </CFlex>
         </CFlex>
@@ -56,10 +58,16 @@ interface Job {
 
     <CFlex mt="3" justify="space-between" align="baseline">
       <CFlex :gap="space">
-        <CLink :href="job.url_external" target="_blank">
-          <CButton size="sm" right-icon="arrow-up" color-scheme="blue" variant="outline"
-            >Open</CButton
-          >
+        <CLink :href="job.url_external" target="_blank" :_hover="{textDecoration: 'none !important'}">
+          <CButton size="sm" color-scheme="blue" variant="outline">
+            Open
+            <OhVueIcon
+              name="ri-external-link-line"
+              scale="0.8"
+              color="var(--colors-blue-500)"
+              style="margin-left: 5px; margin-bottom: 1px"
+            />
+          </CButton>
         </CLink>
 
         <CButton size="sm" variant="link">Edit</CButton>
