@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
-import { CFlex, CButton, CInput, CText } from "@chakra-ui/vue-next";
+import { CFlex, CButton, CInput, CText, CBox } from "@chakra-ui/vue-next";
 import axios from "axios";
 import { addIcons, OhVueIcon } from "oh-vue-icons";
 import { MdAddalertRound } from "oh-vue-icons/icons";

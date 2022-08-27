@@ -2,8 +2,15 @@
 import { CFlex, CBox, CButton, CLink, CText } from "@chakra-ui/vue-next";
 import { formatDistance } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
+import { ref } from "vue";
+import JobDetails from "~/components/job-details.vue";
+import { theme } from "~/theme/theme";
 
 const props = defineProps<{ job: Job }>();
+
+const state = {
+  isShowModal: ref(false),
+};
 
 const space = 6;
 
@@ -65,16 +72,26 @@ interface Job {
     <CFlex mt="3" justify="space-between" align="baseline">
       <CFlex :gap="space">
 
-        <CButton size="sm" color-scheme="blue" variant="outline">
-          <OhVueIcon
-            name="oi-eye"
-            scale="1"
-            color="var(--colors-blue-500)"
-            style="margin-right: 5px;"
-          />
-          View
-        </CButton>
-        
+        <CLink
+          :href="`/jobs/${props.job.objectID}`"
+          @click.left.prevent="state.isShowModal.value = true"
+          :_hover="{textDecoration: none}"
+        >
+          <CButton
+            size="sm"
+            color-scheme="blue"
+            variant="outline"
+          >
+            <OhVueIcon
+              name="oi-eye"
+              scale="1"
+              color="var(--colors-blue-500)"
+              style="margin-right: 5px;"
+            />
+            View
+          </CButton>
+        </CLink>
+      
         <CLink
           :href="job.url_external"
           is-external
@@ -117,5 +134,30 @@ interface Job {
         </CText>
       </CFlex>
     </CFlex>
+    
+    <VueFinalModal
+      v-model="state.isShowModal.value"
+      :lock-scroll="false"
+      :click-to-close="true"
+      :esc-to-close="true"
+    >
+      <CFlex
+        pos="absolute"
+        top="44"
+        right="0"
+        left="0"
+        max-w="6xl"
+        max-h="fit-content"
+        m="auto"
+        :gap="theme.spaces.md"
+        :p="theme.spaces.md"
+        direction="column"
+        bg="white"
+        border-radius="md"
+      >
+        <JobDetails :job-pk="props.job.objectID"/>
+      </CFlex>
+    </VueFinalModal>
+
   </CBox>
 </template>

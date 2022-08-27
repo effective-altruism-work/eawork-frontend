@@ -23,7 +23,7 @@ useHead({
       >
         <NuxtLink href="/">
           <CFlex align="baseline">
-            <chakra.img my="auto" src="logo-ea.svg" h="30px" />
+            <chakra.img my="auto" src="/logo-ea.svg" h="30px" />
             <CHeading
               :ml="4"
               as="h2"
