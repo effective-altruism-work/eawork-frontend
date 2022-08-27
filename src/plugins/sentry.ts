@@ -13,7 +13,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       integrations: [
         new Integrations.BrowserTracing({
           routingInstrumentation: Sentry.vueRouterInstrumentation(nuxtApp.$router),
-          tracingOrigins: ["localhost", "eawork.org", /^\//],
+          tracingOrigins: ["localhost", "eawork.org", "backend.eawork.org", /^\//],
         }),
       ],
       tracesSampleRate: 1.0,
