@@ -39,8 +39,10 @@ interface Job {
   experience_avg: number | null;
   salary_min: number | null;
   salary_max: number | null;
-  
+
   post: {
+    id_external_80_000_hours?: string;
+
     company: {
       name: string;
       logo_url: string | null;
@@ -49,7 +51,7 @@ interface Job {
       updated_at: string;
     };
   };
-  
+
   tags_area: TagRaw[];
   tags_degree_required: TagRaw[];
   tags_country: TagRaw[];
@@ -99,7 +101,7 @@ interface TagRaw { pk: number; name: string; }
         </CFlex>
   
         <CBox :mt="space / 2">
-          {{ state.job.value.description_short }}
+          {{ state.job.value.description_short }}<span v-if="state.job.value.post.id_external_80_000_hours"> [...]</span>
         </CBox>
   
         <CBox v-if="state.job.value.description" :mt="space / 2" v-html="state.job.value.description"/>

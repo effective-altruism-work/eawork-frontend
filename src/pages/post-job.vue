@@ -64,7 +64,7 @@ useHead({ title: "Post Job" });
 </script>
 
 <template>
-  <CBox :mb="theme.spaces.md * 10">
+  <CBox :mb="theme.spaces.md * 4">
     <FormKit type="form" submit-label="Post" @submit="postJob">
       <FormKit
         name="email"
