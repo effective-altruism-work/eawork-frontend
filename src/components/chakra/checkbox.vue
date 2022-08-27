@@ -41,7 +41,7 @@ const value = computed({
           style="
             fill: none;
             stroke-width: 2;
-            stroke: currentcolor;
+            stroke: currentColor;
             stroke-dasharray: 16;
             opacity: 1;
             stroke-dashoffset: 0;

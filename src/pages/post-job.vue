@@ -72,7 +72,7 @@ useHead({ title: "Post Job" });
         validation="required|email"
         placeholder="joe@example.com"
       />
-      <CFlex :gap="theme.spaces.md">
+      <CFlex :gap="theme.spaces.md * 2">
         <FormKit name="company_name" label="Company name" validation="required" />
         <FormKit
           name="company_logo_url"
@@ -88,7 +88,13 @@ useHead({ title: "Post Job" });
         placeholder="https://comapny.com/careers/role"
       />
 
-      <FormKit name="description_short" label="Intro" validation="required" type="textarea" />
+      <FormKit
+        name="description_short"
+        placeholder="Intro for this job's search card"
+        label="Intro"
+        validation="required"
+        type="textarea"
+      />
 
       <CBox :mt="theme.spaces.md">
         <CFormLabel size="lg" font-weight="normal">Description</CFormLabel>
@@ -180,6 +186,7 @@ useHead({ title: "Post Job" });
 .formkit-outer {
   max-width: 100%;
   width: 100%;
+  margin-bottom: var(--space-6);
 
   .formkit-wrapper {
     max-width: 100%;

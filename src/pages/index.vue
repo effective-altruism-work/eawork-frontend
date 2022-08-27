@@ -72,7 +72,9 @@ function saveQueryJson(state: {
         <CFlex direction="column" min-w="31%" max-w="31%" pr="12" position="sticky">
           <SearchBox />
 
-          <CurrentRefinements />
+          <CBox mt="12">
+            <CurrentRefinements />
+          </CBox>
 
           <RefinementList attribute="tags_area" label="Areas" />
           <RefinementList attribute="tags_role_type" label="Roles" />

@@ -53,6 +53,7 @@ const value = computed({
   border-bottom-left-radius: 0 !important;
 }
 .ck.ck-content.ck-editor__editable {
+  height: 150px;
   border-radius: var(--radii-md) !important;
   border-top-right-radius: 0 !important;
   border-top-left-radius: 0 !important;
