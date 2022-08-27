@@ -10,12 +10,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     Sentry.init({
       app: [nuxtApp.vueApp],
       dsn: "https://dd139303defc491b9710df6eac619379@o1376636.ingest.sentry.io/6685828",
-      integrations: [
-        new Integrations.BrowserTracing({
-          routingInstrumentation: Sentry.vueRouterInstrumentation(nuxtApp.$router),
-          tracingOrigins: ["localhost", "eawork.org", "backend.eawork.org", /^\//],
-        }),
-      ],
       tracesSampleRate: 1.0,
       environment: nuxtApp.$config.public.env ?? "prod",
     });
