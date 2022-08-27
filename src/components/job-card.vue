@@ -156,7 +156,7 @@ interface Job {
         bg="white"
         border-radius="md"
       >
-        <JobDetails :job-pk="props.job.objectID"/>
+        <JobDetails :job-pk="props.job.objectID" :is-visible="state.isShowModal.value" />
       </CFlex>
     </VueFinalModal>
 

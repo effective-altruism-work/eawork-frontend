@@ -13,6 +13,6 @@ const jobPostPk = route.params.pk;
 
 <template>
   <CBox>
-    <JobDetails :jobPk="jobPostPk"/>
+    <JobDetails :jobPk="jobPostPk" :is-visible="true" />
   </CBox>
 </template>
