@@ -20,7 +20,6 @@ import FormHelperText from "~/components/chakra/form-helper-text.vue";
 
 const state = {
   description: ref(""),
-  description_short: ref(""),
   tags: ref({} as { [Property in keyof TagTypeName]: string }),
   config: useRuntimeConfig(),
   isSuccess: ref(false),
@@ -30,8 +29,10 @@ async function postJob(
   data: {
     email: string;
     title: string;
+    company_name: string;
     company_logo_url?: string;
     url_external: string;
+    description_short: string;
   },
   node: FormKitNode,
 ) {
@@ -43,7 +44,6 @@ async function postJob(
       ...data,
       ...state.tags.value,
       description: state.description.value,
-      description_short: state.description_short.value,
     });
     if (res.data.success === true) {
       state.isSuccess.value = true;
@@ -88,14 +88,7 @@ useHead({ title: "Post Job" });
         placeholder="https://comapny.com/careers/role"
       />
 
-      <CBox :mt="theme.spaces.md">
-        <CFormLabel size="lg" font-weight="normal">Intro</CFormLabel>
-        <NuxtCkeditor
-          v-model="state.description_short.value"
-          :toolbar-items="['bold', 'italic', 'link']"
-        />
-        <FormHelperText text="Both intro and description will be searchable on the board." />
-      </CBox>
+      <FormKit name="description_short" label="Intro" validation="required" type="textarea" />
 
       <CBox :mt="theme.spaces.md">
         <CFormLabel size="lg" font-weight="normal">Description</CFormLabel>
