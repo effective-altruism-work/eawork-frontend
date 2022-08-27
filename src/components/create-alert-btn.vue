@@ -74,12 +74,11 @@ async function createJobAlert() {
       bg="white"
       border-radius="md"
     >
-      <CText v-if="props.queryJson" w="fit-content"
-        >Subscribe to new jobs that match your query:</CText
-      >
-      <CText v-else w="fit-content"
-        >Subscribe to all new job posts, because your search query is unspecified.</CText
-      >
+      <CText v-if="props.queryJson" w="fit-content">Subscribe to new jobs that match your query:</CText>
+      <CBox v-else>
+        <CText w="fit-content">Subscribe to all new job posts.</CText>
+        <CText w="fit-content" color="gray.500" font-size="sm">(because your search query is unspecified)</CText>
+      </CBox>
 
       <CText
         v-if="props.queryJson"

@@ -22,6 +22,12 @@ const theme = extendTheme({
         solid: {
           fontWeight: "normal",
         },
+        outline: {
+          fontWeight: "normal",
+        },
+        link: {
+          fontWeight: "normal",
+        },
       }
     },
     FormLabel: {

@@ -64,18 +64,31 @@ interface Job {
 
     <CFlex mt="3" justify="space-between" align="baseline">
       <CFlex :gap="space">
+
+        <CButton size="sm" color-scheme="blue" variant="outline">
+          <OhVueIcon
+            name="oi-eye"
+            scale="1"
+            color="var(--colors-blue-500)"
+            style="margin-right: 5px;"
+          />
+          View
+        </CButton>
+        
         <CLink
           :href="job.url_external"
-          target="_blank"
+          is-external
           :_hover="{ textDecoration: 'none !important' }"
+          display="flex"
+          align-items="center"
         >
-          <CButton size="sm" color-scheme="blue" variant="outline">
-            Open
+          <CButton size="sm" color-scheme="blue" variant="link">
+            Apply
             <OhVueIcon
               name="ri-external-link-line"
-              scale="0.8"
+              scale="0.7"
               color="var(--colors-blue-500)"
-              style="margin-left: 5px; margin-bottom: 1px"
+              style="margin-left: 5px; margin-top: 1px;"
             />
           </CButton>
         </CLink>

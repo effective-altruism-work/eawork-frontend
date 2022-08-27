@@ -23,7 +23,7 @@ useHead({
       >
         <NuxtLink href="/">
           <CFlex align="baseline">
-            <chakra.img my="auto" src="public/logo-ea.svg" h="30px" />
+            <chakra.img my="auto" src="logo-ea.svg" h="30px" />
             <CHeading
               :ml="4"
               as="h2"
@@ -36,8 +36,12 @@ useHead({
         </NuxtLink>
 
         <CFlex :gap="theme.spaces.md + 1" align="center">
+
           <NuxtLink to="/about">
-            <CLink>
+            <CLink
+              color="gray.500"
+              :_hover="{color: 'blue.900', textDecoration: 'none'}"
+            >
               About
             </CLink>
           </NuxtLink>
@@ -45,6 +49,8 @@ useHead({
           <CLink
             href="https://github.com/effective-altruism-work/eawork-backend/discussions/categories/feature-requests"
             is-external
+            color="gray.500"
+            :_hover="{color: 'blue.900'}"
           >
             Feature Requests
           </CLink>
@@ -56,6 +62,7 @@ useHead({
           >
             <OhVueIcon name="bi-github" scale="1.6" color="var(--colors-gray-500)" />
           </CLink>
+
         </CFlex>
       </CContainer>
     </CBox>

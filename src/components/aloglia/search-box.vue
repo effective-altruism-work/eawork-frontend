@@ -3,7 +3,7 @@ import { CBox } from "@chakra-ui/vue-next";
 </script>
 
 <template>
-  <CBox class="algolia-search-box-main">
+  <CBox min-h="40px" class="algolia-search-box-main">
     <AisSearchBox />
   </CBox>
 </template>
