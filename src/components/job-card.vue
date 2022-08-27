@@ -75,7 +75,7 @@ interface Job {
         <CLink
           :href="`/jobs/${props.job.objectID}`"
           @click.left.prevent="state.isShowModal.value = true"
-          :_hover="{textDecoration: none}"
+          :_hover="{textDecoration: 'none'}"
         >
           <CButton
             size="sm"
@@ -140,6 +140,7 @@ interface Job {
       :lock-scroll="false"
       :click-to-close="true"
       :esc-to-close="true"
+      :key="props.job.objectID"
     >
       <CFlex
         pos="absolute"
