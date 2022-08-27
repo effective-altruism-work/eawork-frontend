@@ -6,7 +6,12 @@ import { theme } from "~/theme/theme";
 <template>
   <ais-current-refinements>
     <template v-slot="{ items, createURL }">
-      <CFlex wrap="wrap" gap="2" v-for="item in items" :key="item.attribute">
+      <CFlex
+        v-for="item in items"
+        :key="item.attribute"
+        wrap="wrap"
+        gap="2"
+      >
         <CFlex
           v-for="refinement in item.refinements"
           :key="
@@ -36,9 +41,13 @@ import { theme } from "~/theme/theme";
 </template>
 
 <style lang="scss">
-.ais-CurrentRefinements {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
+  .ais-CurrentRefinements {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+    &.ais-CurrentRefinements--noRefinement {
+      margin-bottom: 0;
+    }
+  }
 </style>

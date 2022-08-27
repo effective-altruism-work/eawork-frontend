@@ -72,11 +72,11 @@ function saveQueryJson(state: {
         <CFlex direction="column" min-w="31%" max-w="31%" pr="12" position="sticky">
           <SearchBox />
 
-          <CBox mt="12">
+          <CBox mt="6">
             <CurrentRefinements />
           </CBox>
 
-          <RefinementList attribute="tags_area" label="Areas" />
+          <RefinementList attribute="tags_area" label="Areas" :mt="0" />
           <RefinementList attribute="tags_role_type" label="Roles" />
           <RefinementList
             attribute="tags_degree_required"
@@ -150,7 +150,7 @@ function saveQueryJson(state: {
             </NuxtLink>
           </CFlex>
 
-          <CBox mt="12">
+          <CBox :mt="space">
             <CBox min-h="100vh">
               <AisStateResults>
                 <template v-slot="{ state: { query }, results: { hits } }">

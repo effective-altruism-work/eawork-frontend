@@ -67,7 +67,7 @@ useHead({
       </CContainer>
     </CBox>
 
-    <CContainer max-w="6xl" :pt="theme.spaces.md + 1">
+    <CContainer max-w="6xl" :pt="theme.spaces.md">
       <NuxtPage />
     </CContainer>
   </CBox>

@@ -63,7 +63,7 @@ interface TagRaw { pk: number; name: string; }
 </script>
 
 <template>
-  <CFlex align="center" justify="center" :h="state.job.value ? 'initial' : '312px'">
+  <CFlex align="center" justify="center" :h="state.job.value ? 'initial' : '264px'">
     <CBox display="block" v-if="state.job.value">
   
       <CBox display="block">

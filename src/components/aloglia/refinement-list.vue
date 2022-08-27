@@ -8,6 +8,7 @@ const props = defineProps<{
   searchable?: boolean;
   limit?: number;
   showMoreLimit?: number;
+  mt?: number | string;
 }>();
 
 function shortenTagName(tagName: string) {
@@ -22,8 +23,8 @@ function shortenTagName(tagName: string) {
 </script>
 
 <template>
-  <CBox mt="6">
-    <CFormLabel mb="1">{{ props.label }}</CFormLabel>
+  <CBox :mt="props.mt ?? 6">
+    <CFormLabel mb="2" line-height="1">{{ props.label }}</CFormLabel>
 
     <AisRefinementList
       :attribute="props.attribute"
