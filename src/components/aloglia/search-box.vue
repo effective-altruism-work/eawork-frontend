@@ -5,6 +5,11 @@ import { CBox } from "@chakra-ui/vue-next";
 <template>
   <CBox min-h="40px" class="algolia-search-box-main">
     <AisSearchBox />
+    <AisStats>
+      <template v-slot="{ nbHits }">
+        {{nbHits}} jobs
+      </template>
+    </AisStats>
   </CBox>
 </template>
 
@@ -12,6 +17,8 @@ import { CBox } from "@chakra-ui/vue-next";
 @import "~/theme/styles.scss";
 
 .algolia-search-box-main {
+  position: relative;
+
   .ais-SearchBox {
     .ais-SearchBox-form {
       display: flex;
@@ -26,6 +33,14 @@ import { CBox } from "@chakra-ui/vue-next";
         display: none;
       }
     }
+  }
+  
+  .ais-Stats {
+    position: absolute;
+    color: var(--colors-gray-400);
+    font-size: 0.7rem;
+    right: 0;
+    padding-top: 3px;
   }
 }
 </style>
