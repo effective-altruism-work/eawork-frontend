@@ -13,12 +13,16 @@ const state = {
   config: useRuntimeConfig(),
 };
 
-onUpdated(async () => {
+onUpdated(loadJob);
+
+onMounted(loadJob);
+
+async function loadJob() {
   if (props.isVisible && !state.job.value) {
     const jobPostVersionRes = await axios.get(`${state.config.public.apiBase}/jobs/${props.jobPk}`);
     state.job.value = jobPostVersionRes.data;
   }
-})
+}
 
 const space = 6;
 
