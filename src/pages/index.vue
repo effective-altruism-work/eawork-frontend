@@ -8,11 +8,12 @@ import { ref } from "vue";
 import CurrentRefinements from "~/components/aloglia/current-refinements.vue";
 import RefinementList from "~/components/aloglia/refinement-list.vue";
 import SearchBox from "~/components/aloglia/search-box.vue";
-import CreateAlertBtn from "~/components/create-alert-btn.vue";
+import Pagination from "~/components/aloglia/pagination";
+import BtnJobsAlert from "~/components/btn-jobs-alert.vue";
 import JobCard from "~/components/job-card.vue";
 import { history } from "instantsearch.js/es/lib/routers";
 import { singleIndex } from "instantsearch.js/es/lib/stateMappings";
-import Pagination from "~/components/aloglia/pagination";
+import { urls } from "~/constants";
 
 const config = useRuntimeConfig();
 const searchClient = algoliasearch(
@@ -139,9 +140,9 @@ function saveQueryJson(state: {
 
         <CFlex direction="column" min-w="69%">
           <CFlex justify="flex-end" :gap="space">
-            <CreateAlertBtn :query-json="queryJson" />
+            <BtnJobsAlert :query-json="queryJson" />
 
-            <NuxtLink href="/post-job">
+            <NuxtLink :href="urls.jobs.post">
               <CButton color-scheme="blue" variant="outline">
                 <OhVueIcon name="hi-solid-plus" scale="1" color="var(--colors-blue-600)" />
                 <CText ml="2">Post Job</CText>

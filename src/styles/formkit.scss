@@ -32,6 +32,11 @@
     .formkit-input {
       @include chakra-input;
     }
+    textarea.formkit-input {
+      @include chakra-input;
+      line-height: 1.3;
+      height: initial;
+    }
   }
 
   .formkit-input[type="submit"] {

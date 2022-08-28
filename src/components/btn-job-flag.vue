@@ -13,8 +13,8 @@ import { FormKitNode } from "@formkit/core";
 import axios from "axios";
 import { ref } from "vue";
 import { msg } from "~/constants";
-import { JobAlgolia } from "~/interfaces";
 import { theme } from "~/styles/theme";
+import { JobAlgolia } from "~/utils/types";
 
 const props = defineProps<{ job: JobAlgolia }>();
 

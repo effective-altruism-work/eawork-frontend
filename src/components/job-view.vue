@@ -4,11 +4,12 @@ import { CFlex, CBox, CButton, CLink, CText, CSpinner } from "@chakra-ui/vue-nex
 import algoliasearch from "algoliasearch";
 import { OhVueIcon } from "oh-vue-icons";
 import { onMounted, onUpdated, ref, watch } from "vue";
-import FlagBtn from "~/components/flag-btn.vue";
-import { JobAlgolia } from "~/interfaces";
+import FlagBtn from "~/components/btn-job-flag.vue";
 import { useStateVar } from "~/utils/structs";
+import { JobAlgolia } from "~/utils/types";
+import { urls } from "~/constants";
 
-const props = defineProps<{ jobPk: number | string, isVisible: boolean; }>();
+const props = defineProps<{ jobPk: number | string, isVisible: boolean; job?: JobAlgolia; }>();
 
 const state = useStateVar(() => {
   const config = useRuntimeConfig();
@@ -31,6 +32,8 @@ onMounted(loadJob);
 async function loadJob() {
   if (props.isVisible && !state.job.value) {
     state.job.value = await state.searchIndex.getObject(props.jobPk as string);
+  } else if (props.job) {
+    state.job.value = props.job;
   }
 }
 
@@ -103,7 +106,14 @@ interface TagRaw { pk: number; name: string; }
             </CButton>
           </CLink>
   
-          <CButton size="sm" variant="link">Edit</CButton>
+          <CFlex align="center">
+            <NuxtLink :to="urls.jobs.edit(props.job.post_pk)">
+              <CButton size="sm" variant="link">
+                Edit
+              </CButton>
+            </NuxtLink>
+          </CFlex>
+
           <FlagBtn :job="state.job.value"/>
         </CFlex>
   

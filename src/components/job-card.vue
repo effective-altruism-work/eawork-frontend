@@ -3,17 +3,17 @@ import { CFlex, CBox, CButton, CLink, CText } from "@chakra-ui/vue-next";
 import { formatDistance } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
 import { ref } from "vue";
-import JobDetails from "~/components/job-details.vue";
-import FlagBtn from "~/components/flag-btn.vue";
-import { JobAlgolia } from "~/interfaces";
+import JobView from "~/components/job-view.vue";
+import BtnJobFlag from "~/components/btn-job-flag.vue";
 import { theme } from "~/styles/theme";
+import { urls } from "~/constants";
+import { JobAlgolia } from "~/utils/types";
 
 const props = defineProps<{ job: JobAlgolia }>();
 
 const state = {
   isShowModal: ref(false),
 };
-
 const space = 6;
 
 </script>
@@ -61,7 +61,7 @@ const space = 6;
       <CFlex :gap="space">
 
         <CLink
-          :href="`/jobs/${props.job.objectID}`"
+          :href="urls.jobs.view(props.job.post_pk)"
           @click.left.prevent="state.isShowModal.value = true"
           :_hover="{textDecoration: 'none'}"
         >
@@ -97,9 +97,16 @@ const space = 6;
             />
           </CButton>
         </CLink>
+        
+        <CFlex align="center">
+          <NuxtLink :to="urls.jobs.edit(props.job.post_pk)">
+            <CButton size="sm" variant="link">
+              Edit
+            </CButton>
+          </NuxtLink>
+        </CFlex>
 
-        <CButton size="sm" variant="link">Edit</CButton>
-        <FlagBtn :job="props.job" />
+        <BtnJobFlag :job="props.job" />
       </CFlex>
 
       <CFlex gap="3" align="center">
@@ -144,7 +151,11 @@ const space = 6;
         bg="white"
         border-radius="md"
       >
-        <JobDetails :job-pk="props.job.objectID" :is-visible="state.isShowModal.value" />
+        <JobView
+          :job-pk="props.job.objectID"
+          :job="props.job"
+          :is-visible="state.isShowModal.value"
+        />
       </CFlex>
     </VueFinalModal>
 

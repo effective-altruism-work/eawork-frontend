@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useFetch, useHead, useRoute, useRuntimeConfig } from "#app";
-import { JobDetails } from "#components";
+import { JobView } from "#components";
 import { CBox, CText, CLink } from "@chakra-ui/vue-next";
 
 useHead({ title: "Job" });
@@ -13,6 +13,6 @@ const jobPostPk = route.params.pk;
 
 <template>
   <CBox>
-    <JobDetails :jobPk="jobPostPk" :is-visible="true" />
+    <JobView :jobPk="jobPostPk" :is-visible="true" />
   </CBox>
 </template>

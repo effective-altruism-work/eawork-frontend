@@ -2,6 +2,7 @@
 import { useHead } from "#app";
 import { CContainer, CFlex, CBox, CHeading, CLink, chakra } from "@chakra-ui/vue-next";
 import { OhVueIcon } from "oh-vue-icons";
+import { urls } from "~/constants";
 import { theme } from "~/styles/theme";
 
 useHead({
@@ -41,7 +42,7 @@ useHead({
 
         <CFlex :gap="theme.spaces.md + 1" align="center">
 
-          <NuxtLink to="/about">
+          <NuxtLink :to="urls.about">
             <CLink
               color="gray.500"
               :_hover="{color: 'blue.900', textDecoration: 'none'}"
