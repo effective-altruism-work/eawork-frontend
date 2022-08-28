@@ -7,7 +7,7 @@ import "@formkit/themes/genesis";
 import VueTagsInput from "@sipec/vue3-tags-input";
 import { debounce } from "vue-debounce";
 import { theme } from "~/styles/theme";
-import { useState } from "~/utils/structs";
+import { useStateVar } from "~/utils/structs";
 import { Tag, TagTypeName } from "~/utils/types";
 import FormHelperText from "~/components/chakra/form-helper-text.vue";
 
@@ -22,7 +22,7 @@ const emit = defineEmits<{
   (e: "tagsChanged", tagName: TagTypeName, tagsNew: Array<Tag>): void;
 }>();
 
-const state = useState(() => {
+const state = useStateVar(() => {
   const config = useRuntimeConfig();
   const searchClient = algoliasearch(
     config.public.algoliaApplicationId,

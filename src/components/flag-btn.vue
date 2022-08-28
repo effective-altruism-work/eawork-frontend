@@ -105,7 +105,4 @@ async function submit(data: { message: string; email?: string }, node: FormKitNo
 <style lang="scss">
 @import "~/styles/formkit.scss";
 
-.flag-btn {
-  
-}
 </style>

@@ -1,17 +1,28 @@
 <script setup lang="ts">
 import { useFetch, useHead, useRuntimeConfig } from "#app";
 import { CFlex, CBox, CButton, CLink, CText, CSpinner } from "@chakra-ui/vue-next";
+import algoliasearch from "algoliasearch";
 import { OhVueIcon } from "oh-vue-icons";
 import { onMounted, onUpdated, ref, watch } from "vue";
-import axios from "axios";
+import FlagBtn from "~/components/flag-btn.vue";
+import { JobAlgolia } from "~/interfaces";
+import { useStateVar } from "~/utils/structs";
 
 const props = defineProps<{ jobPk: number | string, isVisible: boolean; }>();
 
-const state = {
-  job: ref<Job | null>(null),
-  isVisible: ref(false),
-  config: useRuntimeConfig(),
-};
+const state = useStateVar(() => {
+  const config = useRuntimeConfig();
+  const searchClient = algoliasearch(
+    config.public.algoliaApplicationId,
+    config.public.algoliaApiKey,
+  );
+  return {
+    config,
+    job: ref<JobAlgolia | null>(null),
+    isVisible: ref(false),
+    searchIndex: searchClient.initIndex(config.public.algoliaJobsIndex),
+  }
+});
 
 onUpdated(loadJob);
 
@@ -19,47 +30,11 @@ onMounted(loadJob);
 
 async function loadJob() {
   if (props.isVisible && !state.job.value) {
-    const jobPostVersionRes = await axios.get(`${state.config.public.apiBase}/jobs/${props.jobPk}`);
-    state.job.value = jobPostVersionRes.data;
+    state.job.value = await state.searchIndex.getObject(props.jobPk as string);
   }
 }
 
 const space = 6;
-
-interface Job {
-  title: string;
-  description_short: string;
-  description: string;
-  url_external: string;
-
-  created_at: string;
-  posted_at: string;
-  closes_at: string | null;
-  experience_min: number | null;
-  experience_avg: number | null;
-  salary_min: number | null;
-  salary_max: number | null;
-
-  post: {
-    id_external_80_000_hours?: string;
-
-    company: {
-      name: string;
-      logo_url: string | null;
-      url: string;
-      created_at: string;
-      updated_at: string;
-    };
-  };
-
-  tags_area: TagRaw[];
-  tags_degree_required: TagRaw[];
-  tags_country: TagRaw[];
-  tags_city: TagRaw[];
-  tags_role_type: TagRaw[];
-  tags_location_type: TagRaw[];
-  tags_skill: TagRaw[];
-}
 
 interface TagRaw { pk: number; name: string; }
 </script>
@@ -70,10 +45,10 @@ interface TagRaw { pk: number; name: string; }
   
       <CBox display="block">
         <CFlex>
-          <CLink :href="state.job.value.post.company.url">
+          <CLink :href="state.job.value.company_url">
             <chakra.img
-              v-if="state.job.value.post.company.logo_url"
-              :src="state.job.value.post.company.logo_url"
+              v-if="state.job.value.company_logo_url"
+              :src="state.job.value.company_logo_url"
               w="56px"
               h="56px"
               bg="gray.200"
@@ -82,7 +57,7 @@ interface TagRaw { pk: number; name: string; }
           </CLink>
   
           <CFlex
-            :ml="state.job.value.post.company.logo_url ? 3 : 0"
+            :ml="state.job.value.company_logo_url ? 3 : 0"
             mt="1"
             mb="1"
             justiy="space-between"
@@ -93,15 +68,15 @@ interface TagRaw { pk: number; name: string; }
             </CText>
   
             <CFlex mt="5px" gap="3" align="center" display="flex">
-              <CText>{{state.job.value.post.company.name}}</CText>
+              <CText>{{state.job.value.company_name}}</CText>
               <CBox v-if="state.job.value.tags_city[0]" w="3px" h="3px" mt="2px" bg="gray.300" />
-              <CText v-if="state.job.value.tags_city[0]">{{ state.job.value.tags_city[0].name }}</CText>
+              <CText v-if="state.job.value.tags_city[0]">{{ state.job.value.tags_city[0] }}</CText>
             </CFlex>
           </CFlex>
         </CFlex>
   
         <CBox :mt="space / 2">
-          {{ state.job.value.description_short }}<span v-if="state.job.value.post.id_external_80_000_hours"> [...]</span>
+          {{ state.job.value.description_short }}<span v-if="state.job.value.id_external_80_000_hours"> [...]</span>
         </CBox>
   
         <CBox v-if="state.job.value.description" :mt="space / 2" v-html="state.job.value.description"/>
@@ -129,7 +104,7 @@ interface TagRaw { pk: number; name: string; }
           </CLink>
   
           <CButton size="sm" variant="link">Edit</CButton>
-          <CButton size="sm" variant="link">Flag</CButton>
+          <FlagBtn :job="state.job.value"/>
         </CFlex>
   
         <CFlex gap="3" align="center">
