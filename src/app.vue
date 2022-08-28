@@ -2,7 +2,7 @@
 import { useHead } from "#app";
 import { CContainer, CFlex, CBox, CHeading, CLink, chakra } from "@chakra-ui/vue-next";
 import { OhVueIcon } from "oh-vue-icons";
-import { theme } from "~/theme/theme";
+import { theme } from "~/styles/theme";
 
 useHead({
   titleTemplate: (titleChunk) => (titleChunk ? `${titleChunk} - EA Work` : "EA Work"),
@@ -22,17 +22,21 @@ useHead({
         align-items="center"
       >
         <NuxtLink href="/">
-          <CFlex align="baseline">
-            <chakra.img my="auto" src="/logo-ea.svg" h="30px" />
-            <CHeading
-              :ml="4"
-              as="h2"
-              font-size="1.5rem"
-              color="gray.700"
-            >
-              EA Work
-            </CHeading>
-          </CFlex>
+          <CLink
+            color="gray.700"
+            :_hover="{color: 'blue.500'}"
+          >
+            <CFlex align="baseline">
+              <chakra.img my="auto" src="/logo-ea.svg" h="30px" />
+              <CHeading
+                :ml="4"
+                as="h2"
+                font-size="1.5rem"
+              >
+                EA Work
+              </CHeading>
+            </CFlex>
+          </CLink>
         </NuxtLink>
 
         <CFlex :gap="theme.spaces.md + 1" align="center">
