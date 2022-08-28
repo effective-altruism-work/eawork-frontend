@@ -1,0 +1,48 @@
+@import "./chakra-ui.scss";
+
+.formkit-actions {
+  margin-top: var(--space-6);
+  .formkit-outer[data-type=submit] {
+    margin-bottom: 0;
+  }
+}
+
+.formkit-outer {
+  max-width: 100%;
+  width: 100%;
+  margin-bottom: var(--space-6);
+  &[data-type="textarea"], &[data-type="text"] {
+    margin-bottom: var(--space-6);
+  }
+
+  .formkit-wrapper {
+    max-width: 100%;
+
+    .formkit-label {
+      @include chakra-label;
+      padding-bottom: 0;
+    }
+  }
+  .formkit-help {
+    @extend .chakra-form-help-text;
+  }
+  .formkit-inner {
+    box-shadow: none;
+
+    .formkit-input {
+      @include chakra-input;
+    }
+  }
+
+  .formkit-input[type="submit"] {
+    @include chakra-button-solid;
+    
+    display: flex;
+    margin-left: auto;
+    margin-right: 0;
+  }
+}
+
+:root {
+  --fk-border-radius: var(--radii-md);
+}

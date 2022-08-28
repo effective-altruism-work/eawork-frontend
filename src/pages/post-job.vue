@@ -13,7 +13,8 @@ import axios from "axios";
 import { ref } from "vue";
 import "@formkit/themes/genesis";
 import TagsInput from "~/components/tags-input.vue";
-import { theme } from "~/theme/theme";
+import { msg } from "~/constants";
+import { theme } from "~/styles/theme";
 import { Tag, TagTypeName } from "~/utils/types";
 import NuxtCkeditor from "~/components/nuxt-ckeditor.vue";
 import FormHelperText from "~/components/chakra/form-helper-text.vue";
@@ -37,8 +38,6 @@ async function postJob(
   node: FormKitNode,
 ) {
   state.isSuccess.value = false;
-  const errorMsg =
-    "An error occurred, our team has been notified. Please try again or contact support at support@eawork.org.";
   try {
     const res = await axios.post(`${state.config.public.apiBase}/jobs/create`, {
       ...data,
@@ -49,10 +48,10 @@ async function postJob(
       state.isSuccess.value = true;
       node.reset();
     } else {
-      node.setErrors([errorMsg]);
+      node.setErrors([msg.error]);
     }
   } catch (e) {
-    node.setErrors([errorMsg]);
+    node.setErrors([msg.error]);
   }
 }
 
@@ -64,7 +63,7 @@ useHead({ title: "Post Job" });
 </script>
 
 <template>
-  <CBox :mb="theme.spaces.md * 4">
+  <CBox :mb="theme.spaces.md * 4" pt="0.5">
     <FormKit type="form" submit-label="Post" @submit="postJob">
       <FormKit
         name="email"
@@ -177,53 +176,5 @@ useHead({ title: "Post Job" });
 </template>
 
 <style lang="scss">
-@import "~/theme/styles.scss";
-
-.formkit-actions {
-  margin-top: var(--space-6);
-}
-
-.formkit-outer {
-  max-width: 100%;
-  width: 100%;
-  margin-bottom: var(--space-6);
-
-  .formkit-wrapper {
-    max-width: 100%;
-
-    .formkit-label {
-      @include chakra-label;
-      padding-bottom: 0;
-    }
-  }
-  .formkit-help {
-    @extend .chakra-form-help-text;
-  }
-  .formkit-inner {
-    box-shadow: none;
-
-    .formkit-input {
-      @include chakra-input;
-    }
-  }
-
-  .formkit-input[type="submit"] {
-    display: flex;
-    justify-self: flex-end;
-    margin-left: auto;
-    margin-right: 0;
-    background: var(--colors-blue-500);
-    font-size: 1.1rem;
-    &:hover {
-      background: var(--colors-blue-600);
-    }
-    &:active {
-      background: var(--colors-blue-700);
-    }
-  }
-}
-
-:root {
-  --fk-border-radius: var(--radii-md);
-}
+@import "~/styles/formkit.scss";
 </style>

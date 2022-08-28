@@ -4,9 +4,11 @@ import { formatDistance } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
 import { ref } from "vue";
 import JobDetails from "~/components/job-details.vue";
-import { theme } from "~/theme/theme";
+import FlagBtn from "~/components/flag-btn.vue";
+import { JobAlgolia } from "~/interfaces";
+import { theme } from "~/styles/theme";
 
-const props = defineProps<{ job: Job }>();
+const props = defineProps<{ job: JobAlgolia }>();
 
 const state = {
   isShowModal: ref(false),
@@ -14,20 +16,6 @@ const state = {
 
 const space = 6;
 
-interface Job {
-  objectID: string;
-  title: string;
-  location: string;
-  description: string;
-  url_external: string;
-  tags_city: string[];
-
-  created_at: number;
-
-  company_logo_url: string;
-  company_name: string;
-  company_url: string;
-}
 </script>
 
 <template>
@@ -111,7 +99,7 @@ interface Job {
         </CLink>
 
         <CButton size="sm" variant="link">Edit</CButton>
-        <CButton size="sm" variant="link">Flag</CButton>
+        <FlagBtn :job="props.job" />
       </CFlex>
 
       <CFlex gap="3" align="center">

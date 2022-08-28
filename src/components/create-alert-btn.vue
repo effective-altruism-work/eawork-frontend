@@ -5,7 +5,7 @@ import axios from "axios";
 import { addIcons, OhVueIcon } from "oh-vue-icons";
 import { MdAddalertRound } from "oh-vue-icons/icons";
 import { ref } from "vue";
-import { theme } from "~/theme/theme";
+import { theme } from "~/styles/theme";
 
 const props = defineProps<{
   queryJson: null | {

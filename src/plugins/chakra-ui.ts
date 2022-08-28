@@ -30,6 +30,19 @@ const theme = extendTheme({
         },
       }
     },
+    Link: {
+      baseStyle: {
+        color: "blue.500",
+        _hover: {
+          color: "blue.700",
+          textDecoration: "none",
+        },
+        _active: {
+          color: "blue.800",
+        }
+      },
+      colorScheme: "blue",
+    },
     FormLabel: {
       baseStyle: {
         fontWeight: "normal",

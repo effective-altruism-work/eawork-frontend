@@ -14,7 +14,7 @@ import { CBox } from "@chakra-ui/vue-next";
 </template>
 
 <style lang="scss">
-@import "~/theme/styles.scss";
+@import "~/styles/chakra-ui.scss";
 
 .algolia-search-box-main {
   position: relative;

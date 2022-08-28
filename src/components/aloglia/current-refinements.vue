@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { CButton, CBox, CFlex, CIcon } from "@chakra-ui/vue-next";
-import { theme } from "~/theme/theme";
+import { theme } from "~/styles/theme";
 </script>
 
 <template>

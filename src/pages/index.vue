@@ -25,7 +25,6 @@ const queryJson = ref<null | {
 }>(null);
 
 const space = 6;
-const indexName = "jobs_prod";
 
 function searchFunction(helper) {
   saveQueryJson(helper.state);
@@ -62,11 +61,11 @@ function saveQueryJson(state: {
       show-loading-indicator
       :routing="{
         router: history(),
-        stateMapping: singleIndex(indexName),
+        stateMapping: singleIndex(config.public.algoliaJobsIndex),
       }"
       :search-client="searchClient"
       :search-function="searchFunction"
-      :index-name="indexName"
+      :index-name="config.public.algoliaJobsIndex"
     >
       <CFlex :mb="space * 4">
         <CFlex direction="column" min-w="31%" max-w="31%" pr="12" position="sticky">
