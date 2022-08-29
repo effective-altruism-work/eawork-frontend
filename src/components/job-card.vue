@@ -22,10 +22,10 @@ const space = 6;
 onMounted(() => {
   setTimeout(() => {
     state.isMountModal.value = true;
-  }, 700);
+  }, 750);
   setTimeout(() => {
     state.isMountFlagBtn.value = true;
-  }, 1400);
+  }, 1500);
 });
 
 </script>
@@ -120,7 +120,7 @@ onMounted(() => {
           </NuxtLink>
         </CFlex>
 
-        <BtnJobFlag v-if="state.isMountFlagBtn" :job="props.job" />
+        <BtnJobFlag v-if="state.isMountFlagBtn.value" :job="props.job" />
       </CFlex>
 
       <CFlex gap="3" align="center" justify="center" h="100%" pt="0.5">
