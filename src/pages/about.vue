@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useHead } from "#app";
-import { CBox, CText, CLink } from "@chakra-ui/vue-next";
+import { CBox, CText, CLink, CUnorderedList, CListItem } from "@chakra-ui/vue-next";
 import { addIcons } from "oh-vue-icons";
 import { BiGithub } from "oh-vue-icons/icons";
 import { theme } from "~/styles/theme";
@@ -26,6 +26,15 @@ useHead({ title: "About" });
         >GitHub</CLink
       >.
     </CText>
+    <CText :mt="theme.spaces.md / 1.5">
+      Features:
+    </CText>
+    <CUnorderedList>
+      <CListItem>80k import + possibility to post full details</CListItem>
+      <CListItem>Customizable email alerts</CListItem>
+      <CListItem>Job posts versioning (for managing multiple edit proposals)</CListItem>
+      <CListItem>Extra fields + stackoverflow-like tagging system (salary, skills, workload type, generic tagging, etc)</CListItem>
+    </CUnorderedList>
     <CText :mt="theme.spaces.md / 1.5">
       For inquires please feel free to reach out to
       <CLink href="mailto:support@eawork.org" is-external>support@eawork.org</CLink>.
