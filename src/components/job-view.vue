@@ -78,10 +78,12 @@ interface TagRaw { pk: number; name: string; }
           </CFlex>
         </CFlex>
   
+        <JobSkills :job="props.job"/>
+        
         <CBox :mt="space / 2">
           {{ state.job.value.description_short }}<span v-if="state.job.value.id_external_80_000_hours"> [...]</span>
         </CBox>
-  
+        
         <CBox v-if="state.job.value.description" :mt="space / 2" v-html="state.job.value.description"/>
       </CBox>
   

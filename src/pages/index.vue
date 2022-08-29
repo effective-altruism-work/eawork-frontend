@@ -6,6 +6,7 @@ import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns"
 import { OhVueIcon } from "oh-vue-icons";
 import { ref } from "vue";
 import CurrentRefinements from "~/components/aloglia/current-refinements.vue";
+import ExperienceRangeInput from "~/components/aloglia/experience-range-input.vue";
 import RefinementList from "~/components/aloglia/refinement-list.vue";
 import SearchBox from "~/components/aloglia/search-box.vue";
 import Pagination from "~/components/aloglia/pagination";
@@ -82,6 +83,9 @@ function saveQueryJson(state: {
             attribute="tags_degree_required"
             label="Educational requirements"
           />
+
+          <ExperienceRangeInput/>
+
           <RefinementList
             attribute="tags_country"
             label="Country"

@@ -7,12 +7,10 @@ useHead({ title: "Job" });
 
 const route = useRoute();
 
-const jobPostPk = route.params.pk;
-
 </script>
 
 <template>
   <CBox>
-    <JobView :jobPk="jobPostPk" :is-visible="true" />
+    <JobView :jobPk="route.params.pk" :is-visible="true" />
   </CBox>
 </template>

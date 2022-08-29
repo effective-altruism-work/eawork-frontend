@@ -17,7 +17,7 @@ export type Tag = { pk?: number; text: string; count?: number };
 
 export type AlgoliaTagFields = { [Property in keyof TagTypeName]: string[] };
 
-export interface JobAlgolia extends AlgoliaTagFields {
+export interface JobAlgolia {
   objectID: string;
   post_pk: number;
   id_external_80_000_hours: string | "";
@@ -45,4 +45,15 @@ export interface JobAlgolia extends AlgoliaTagFields {
   company_url: string;
   company_career_page_url: string;
   company_description: string;
+  
+  tags_role_type: string[];
+  tags_skill: string[];
+  tags_country: string[];
+  tags_city: string[];
+  tags_workload: string[];
+  tags_area: string[];
+  tags_degree_required: string[];
+  tags_immigration: string[];
+  tags_location_type: string[];
+  tags_generic: string[];
 }

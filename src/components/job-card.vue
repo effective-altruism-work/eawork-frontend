@@ -4,6 +4,7 @@ import { formatDistance } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
 import { ref } from "vue";
 import JobView from "~/components/job-view.vue";
+import JobSkills from "~/components/job-skills.vue";
 import BtnJobFlag from "~/components/btn-job-flag.vue";
 import { theme } from "~/styles/theme";
 import { urls } from "~/constants";
@@ -15,7 +16,6 @@ const state = {
   isShowModal: ref(false),
 };
 const space = 6;
-
 </script>
 
 <template>
@@ -51,13 +51,15 @@ const space = 6;
           </CFlex>
         </CFlex>
       </CFlex>
+      
+      <JobSkills :job="props.job"/>
 
       <CBox :mt="space / 2">
         <ais-snippet :hit="job" attribute="description_short" />
       </CBox>
     </CBox>
 
-    <CFlex mt="3" justify="space-between" align="baseline">
+    <CFlex mt="3" justify="space-between" align="center">
       <CFlex :gap="space">
 
         <CLink
@@ -109,8 +111,8 @@ const space = 6;
         <BtnJobFlag :job="props.job" />
       </CFlex>
 
-      <CFlex gap="3" align="center">
-        <CText v-if="props.job.closes_at" mt="1" color="gray.500" font-size="sm">
+      <CFlex gap="3" align="center" justify="center" h="100%" pt="0.5">
+        <CText v-if="props.job.closes_at" color="gray.500" font-size="sm">
           Closes
           {{
             formatDistance(new Date(props.job.closes_at * 1000), new Date(), {
@@ -118,8 +120,8 @@ const space = 6;
             })
           }}
         </CText>
-        <CBox v-if="props.job.closes_at" w="3px" h="3px" mt="5px" bg="gray.300" />
-        <CText mt="1" color="gray.500" font-size="sm">
+        <CBox v-if="props.job.closes_at" w="3px" h="3px" mt="3px" bg="gray.300" />
+        <CText color="gray.500" font-size="sm">
           Posted
           {{
             formatDistance(new Date(props.job.posted_at * 1000), new Date(), {
@@ -128,6 +130,7 @@ const space = 6;
           }}
         </CText>
       </CFlex>
+
     </CFlex>
     
     <VueFinalModal
