@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { CBox } from "@chakra-ui/vue-next";
+import AlgoliaLogo from "~/components/aloglia/algolia-logo.vue";
 </script>
 
 <template>
@@ -10,6 +11,7 @@ import { CBox } from "@chakra-ui/vue-next";
         {{nbHits}} jobs
       </template>
     </AisStats>
+    <AlgoliaLogo/>
   </CBox>
 </template>
 
@@ -36,6 +38,8 @@ import { CBox } from "@chakra-ui/vue-next";
   }
   
   .ais-Stats {
+    display: none;
+    
     position: absolute;
     color: var(--colors-gray-400);
     font-size: 0.7rem;
