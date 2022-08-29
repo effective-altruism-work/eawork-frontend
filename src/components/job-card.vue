@@ -2,7 +2,7 @@
 import { CFlex, CBox, CButton, CLink, CText } from "@chakra-ui/vue-next";
 import { formatDistance } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import JobView from "~/components/job-view.vue";
 import JobSkills from "~/components/job-skills.vue";
 import BtnJobFlag from "~/components/btn-job-flag.vue";
@@ -14,8 +14,20 @@ const props = defineProps<{ job: JobAlgolia }>();
 
 const state = {
   isShowModal: ref(false),
+  isMountModal: ref(false),
+  isMountFlagBtn: ref(false),
 };
 const space = 6;
+
+onMounted(() => {
+  setTimeout(() => {
+    state.isMountModal.value = true;
+  }, 700);
+  setTimeout(() => {
+    state.isMountFlagBtn.value = true;
+  }, 1400);
+});
+
 </script>
 
 <template>
@@ -108,7 +120,7 @@ const space = 6;
           </NuxtLink>
         </CFlex>
 
-        <BtnJobFlag :job="props.job" />
+        <BtnJobFlag v-if="state.isMountFlagBtn" :job="props.job" />
       </CFlex>
 
       <CFlex gap="3" align="center" justify="center" h="100%" pt="0.5">
@@ -134,6 +146,7 @@ const space = 6;
     </CFlex>
     
     <VueFinalModal
+      v-if="state.isMountModal.value"
       v-model="state.isShowModal.value"
       :lock-scroll="false"
       :click-to-close="true"
