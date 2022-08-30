@@ -78,7 +78,7 @@ interface TagRaw { pk: number; name: string; }
           </CFlex>
         </CFlex>
   
-        <JobSkills :job="props.job"/>
+        <JobSkills :job="state.job.value"/>
         
         <CBox :mt="space / 2">
           {{ state.job.value.description_short }}<span v-if="state.job.value.id_external_80_000_hours"> [...]</span>
@@ -109,7 +109,7 @@ interface TagRaw { pk: number; name: string; }
           </CLink>
   
           <CFlex align="center">
-            <NuxtLink :to="urls.jobs.edit(props.job.post_pk)">
+            <NuxtLink :to="urls.jobs.edit(state.job.value.post_pk)">
               <CButton size="sm" variant="link">
                 Edit
               </CButton>
