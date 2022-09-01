@@ -22,7 +22,7 @@ useHead({
         display="flex"
         align-items="center"
       >
-        <NuxtLink href="/">
+        <NuxtLink to="/">
           <CLink
             color="gray.700"
             :_hover="{color: 'blue.500'}"

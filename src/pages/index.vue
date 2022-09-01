@@ -146,7 +146,7 @@ function saveQueryJson(state: {
           <CFlex justify="flex-end" :gap="space">
             <BtnJobsAlert :query-json="queryJson" />
 
-            <NuxtLink :href="urls.jobs.post">
+            <NuxtLink :to="urls.jobs.post">
               <CButton color-scheme="blue" variant="outline">
                 <OhVueIcon name="hi-solid-plus" scale="1" color="var(--colors-blue-600)" />
                 <CText ml="2">Post Job</CText>
@@ -160,7 +160,7 @@ function saveQueryJson(state: {
                 <template v-slot="{ state: { query }, results: { hits } }">
                   <AisHits>
                     <template v-slot:item="{ item, index, insights }">
-                      <JobCard :job="item" />
+                      <JobCard :job="item" :is-has-text-query="queryJson?.query" />
                     </template>
                   </AisHits>
                 </template>

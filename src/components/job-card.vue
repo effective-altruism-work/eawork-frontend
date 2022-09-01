@@ -2,7 +2,7 @@
 import { CFlex, CBox, CButton, CLink, CText } from "@chakra-ui/vue-next";
 import { formatDistance } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import JobView from "~/components/job-view.vue";
 import JobSkills from "~/components/job-skills.vue";
 import BtnJobFlag from "~/components/btn-job-flag.vue";
@@ -10,7 +10,7 @@ import { theme } from "~/styles/theme";
 import { urls } from "~/constants";
 import { JobAlgolia } from "~/utils/types";
 
-const props = defineProps<{ job: JobAlgolia }>();
+const props = defineProps<{ job: JobAlgolia; isHasTextQuery?: boolean | string | null; }>();
 
 const state = {
   isShowModal: ref(false),
@@ -66,7 +66,7 @@ onMounted(() => {
       
       <JobSkills :job="props.job"/>
 
-      <CBox :mt="space / 2">
+      <CBox v-if="props.isHasTextQuery" :mt="space / 2">
         <ais-snippet :hit="job" attribute="description_short" />
       </CBox>
     </CBox>
