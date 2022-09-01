@@ -69,6 +69,14 @@ $input-border-color: var(--colors-gray-200);
   &:active {
     background: var(--colors-blue-700);
   }
+  
+  &[size="sm"] {
+    height: var(--sizes-8);
+    min-width: var(--sizes-8);
+    padding-inline-start: var(--space-3);
+    padding-inline-end: var(--space-3);
+    font-size: var(--fontSizes-sm);
+  }
 }
 
 *:focus {

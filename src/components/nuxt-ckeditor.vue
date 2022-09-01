@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import BalloonBlockEditor from "@ckeditor/ckeditor5-build-balloon-block";
 import CKEditor from "@ckeditor/ckeditor5-vue";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, onBeforeMount } from "vue";
 
-const props = defineProps<{ modelValue: string; toolbarItems?: string[] }>();
+const props = defineProps<{ modelValue: string; toolbarItems?: string[]; height?: string; }>();
 
 const CKEditorVue = CKEditor.component;
-const editor = ref(ClassicEditor);
+const editor = ref(BalloonBlockEditor);
 
 const editorConfig = ref({
   toolbar: props.toolbarItems ?? [
@@ -37,7 +37,12 @@ const value = computed({
 </script>
 
 <template>
-  <CKEditorVue :editor="editor" v-model="value" :config="editorConfig" />
+  <CKEditorVue
+    :editor="editor"
+    v-model="value"
+    :config="editorConfig"
+    :style="{'min-height': props.height === 'lg' ? '172px' : 'initial'}"
+  />
 </template>
 
 <style lang="scss">
@@ -53,10 +58,8 @@ const value = computed({
   border-bottom-left-radius: 0 !important;
 }
 .ck.ck-content.ck-editor__editable {
-  height: 150px;
   border-radius: var(--radii-md) !important;
-  border-top-right-radius: 0 !important;
-  border-top-left-radius: 0 !important;
+  border: 1px solid var(--colors-gray-200);
 }
 
 .ck-content {

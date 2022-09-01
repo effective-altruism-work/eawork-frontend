@@ -57,3 +57,18 @@ export interface JobAlgolia {
   tags_location_type: string[];
   tags_generic: string[];
 }
+
+export interface Comment {
+  pk: number;
+  parent: number;
+  post: number;
+  author: { 
+    email: string;
+    first_name: string;
+    last_name: string;
+  };
+  content: string;
+  children: Array<Comment> | null;
+  updated_at: string;
+  created_at: string;
+}

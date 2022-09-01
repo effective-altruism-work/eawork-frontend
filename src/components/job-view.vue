@@ -122,6 +122,8 @@ interface TagRaw { pk: number; name: string; }
         <CFlex gap="3" align="center">
         </CFlex>
       </CFlex>
+      
+      <JobComments :job-pk="state.job.value.post_pk" :is-should-load="true"/>
   
     </CBox>
     <CSpinner v-else></CSpinner>

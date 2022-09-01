@@ -158,7 +158,7 @@ function tagsChanged(tagTypeName: TagTypeName, tagsNew: Tag[]) {
 
       <CBox :mt="theme.spaces.md">
         <CFormLabel size="lg" font-weight="normal">Description</CFormLabel>
-        <NuxtCkeditor v-model="state.form.description.value" />
+        <NuxtCkeditor v-model="state.form.description.value" height="lg" />
       </CBox>
 
       <CFlex :gap="theme.spaces.md * 2">
