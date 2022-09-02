@@ -1,25 +1,45 @@
 <script setup lang="ts">
+import { useRuntimeConfig } from "#app";
 import { CBox, CText, CButton, CBadge, CInput, CFormLabel } from "@chakra-ui/vue-next";
-import Checkbox from "~/components/chakra/checkbox.vue";
+import axios from "axios";
+import { onMounted, ref } from "vue";
+import RefinementListFacets from "~/components/aloglia/refinement-list-facets.vue";
+import { TagDjango, TagTypeName } from "~/utils/types";
 
 const props = defineProps<{
   label: string;
-  attribute: string;
+  attribute: string | TagTypeName;
   searchable?: boolean;
   limit?: number;
   showMoreLimit?: number;
   mt?: number | string;
 }>();
 
-function shortenTagName(tagName: string) {
-  switch (tagName) {
-    case "Biosecurity & pandemic preparedness":
-      return "Biosecurity & pandemic prep";
-    case "International security & cooperation":
-      return "International security & cooperation";
-  }
-  return tagName;
+const state = {
+  tagsFeatured: ref<TagDjango[]>([]),
+  tagsFeaturedNames: ref<string[]>([]),
+  config: useRuntimeConfig(),
 }
+
+onMounted(async () => {
+  if (props.attribute === "tags_area") {
+    const res = await axios.get(`${state.config.public.apiBase}/tags/?is_featured=true`);
+    state.tagsFeatured.value = res.data;
+    state.tagsFeaturedNames.value = res.data.map(tag => tag.name);
+  }
+})
+
+function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other") {
+  if (props.attribute === "tags_area") {
+    if (section === "featured") {
+      return items.filter(item => state.tagsFeaturedNames.value.includes(item.value));
+    } else if (section === "other") {
+      return items.filter(item => !state.tagsFeaturedNames.value.includes(item.value));
+    }
+  }
+  return items;
+}
+
 </script>
 
 <template>
@@ -45,6 +65,7 @@ function shortenTagName(tagName: string) {
           sendEvent,
         }"
       >
+
         <CInput
           v-if="props.searchable"
           placeholder="Filter..."
@@ -53,23 +74,48 @@ function shortenTagName(tagName: string) {
           mb="1"
           border-radius="md"
         />
+
+        <CText
+          v-if="props.attribute === 'tags_area'"
+          mt="3"
+          font-weight="bold"
+          font-size="sm"
+          color="gray.500"
+        >
+          Top recommended problems
+        </CText>
+
         <chakra.ul mt="1px">
           <li v-if="isFromSearch && !items.length">No results.</li>
-          <li v-for="item in items" :key="item.value">
-            <Checkbox
-              :model-value="item.isRefined"
-              @update:model-value="() => refine(item.value)"
-            >
-              <CText font-size="0.95rem" mt="1px" :_hover="{ color: 'blue.500' }">
-                <ais-highlight v-if="props.searchable" attribute="item" :hit="item" />
-                <span v-else>{{ shortenTagName(item.value) }}</span>
-                <CBadge ml="1" mt="0" font-weight="normal" font-size="0.6rem">{{
-                  item.count.toLocaleString()
-                }}</CBadge>
-              </CText>
-            </Checkbox>
-          </li>
+          <RefinementListFacets
+            :items="filterFacetValuesIfNeeded(items, 'featured')"
+            :refine="refine"
+            :searchable="props.searchable"
+          />
         </chakra.ul>
+
+        <CText
+          v-if="props.attribute === 'tags_area'"
+          mt="3"
+          font-weight="bold"
+          font-size="sm"
+          color="gray.500"
+        >
+          Other pressing problems
+        </CText>
+        
+        <chakra.ul
+          v-if="props.attribute === 'tags_area'"
+          mt="1px"
+        >
+          <li v-if="isFromSearch && !items.length">No results.</li>
+          <RefinementListFacets
+            :items="filterFacetValuesIfNeeded(items, 'other')"
+            :refine="refine"
+            :searchable="props.searchable"
+          />
+        </chakra.ul>
+
         <CButton size="sm" v-if="canToggleShowMore" @click="toggleShowMore">
           {{ !isShowingMore ? "Show more" : "Show less" }}
         </CButton>

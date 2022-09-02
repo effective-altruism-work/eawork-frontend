@@ -13,7 +13,9 @@ export const tagTypes = [
 
 export type TagTypeName = typeof tagTypes[number];
 
-export type Tag = { pk?: number; text: string; count?: number };
+export type Tag = { pk?: number; text: string; count?: number; is_featured?: boolean };
+
+export type TagDjango = { pk?: number; name: string; count?: number; is_featured: boolean };
 
 export type AlgoliaTagFields = { [Property in keyof TagTypeName]: string[] };
 
