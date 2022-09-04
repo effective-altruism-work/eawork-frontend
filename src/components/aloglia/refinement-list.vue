@@ -94,27 +94,27 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
           />
         </chakra.ul>
 
-        <CText
-          v-if="props.attribute === 'tags_area'"
-          mt="3"
-          font-weight="bold"
-          font-size="sm"
-          color="gray.500"
-        >
-          Other pressing problems
-        </CText>
-        
-        <chakra.ul
-          v-if="props.attribute === 'tags_area'"
-          mt="1px"
-        >
-          <li v-if="isFromSearch && !items.length">No results.</li>
-          <RefinementListFacets
-            :items="filterFacetValuesIfNeeded(items, 'other')"
-            :refine="refine"
-            :searchable="props.searchable"
-          />
-        </chakra.ul>
+        <CBox v-if="props.attribute === 'tags_area'">
+
+          <CText
+            mt="3"
+            font-weight="bold"
+            font-size="sm"
+            color="gray.500"
+          >
+            Other pressing problems
+          </CText>
+          
+          <chakra.ul mt="1px">
+            <li v-if="isFromSearch && !items.length">No results.</li>
+            <RefinementListFacets
+              :items="items"
+              :refine="refine"
+              :searchable="props.searchable"
+            />
+          </chakra.ul>
+
+        </CBox>
 
         <CButton size="sm" v-if="canToggleShowMore" @click="toggleShowMore">
           {{ !isShowingMore ? "Show more" : "Show less" }}

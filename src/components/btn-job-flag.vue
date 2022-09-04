@@ -54,6 +54,7 @@ async function submit(data: { message: string; email?: string }, node: FormKitNo
     </CButton>
 
     <VueFinalModal
+      v-if="state.isShowModal.value"
       v-model="state.isShowModal.value"
       :lock-scroll="false"
       :click-to-close="true"

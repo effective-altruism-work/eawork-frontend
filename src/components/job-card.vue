@@ -14,19 +14,9 @@ const props = defineProps<{ job: JobAlgolia; isHasTextQuery?: boolean | string |
 
 const state = {
   isShowModal: ref(false),
-  isMountModal: ref(false),
-  isMountFlagBtn: ref(false),
 };
 const space = 6;
 
-onMounted(() => {
-  setTimeout(() => {
-    state.isMountModal.value = true;
-  }, 750);
-  setTimeout(() => {
-    state.isMountFlagBtn.value = true;
-  }, 1500);
-});
 
 </script>
 
@@ -42,6 +32,7 @@ onMounted(() => {
             h="56px"
             bg="gray.200"
             border="1px solid #E2E8F0"
+            loading="lazy"
           />
         </CLink>
 
@@ -120,7 +111,7 @@ onMounted(() => {
           </NuxtLink>
         </CFlex>
 
-        <BtnJobFlag v-if="state.isMountFlagBtn.value" :job="props.job" />
+        <BtnJobFlag :job="props.job" />
       </CFlex>
 
       <CFlex gap="3" align="center" justify="center" h="100%" pt="0.5">
@@ -146,7 +137,7 @@ onMounted(() => {
     </CFlex>
     
     <VueFinalModal
-      v-if="state.isMountModal.value"
+      v-if="state.isShowModal.value"
       v-model="state.isShowModal.value"
       :lock-scroll="false"
       :click-to-close="true"

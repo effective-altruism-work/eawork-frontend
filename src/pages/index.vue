@@ -160,7 +160,7 @@ function saveQueryJson(state: {
                 <template v-slot="{ state: { query }, results: { hits } }">
                   <AisHits>
                     <template v-slot:item="{ item, index, insights }">
-                      <JobCard :job="item" :is-has-text-query="queryJson?.query" />
+                      <JobCard :job="item" :is-has-text-query="Boolean(queryJson?.query)" />
                     </template>
                   </AisHits>
                 </template>
