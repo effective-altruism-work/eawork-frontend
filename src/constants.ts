@@ -7,7 +7,7 @@ export namespace urls {
     view: (pk: number | string) => `/jobs/${pk}/view`,
     edit: (pk: number | string) => `/jobs/${pk}/edit`,
   }
-  export const about = "about";
-  export const privacyPolicy = "privacy-policy";
-  export const termsOfServices = "terms-of-services";
+  export const about = "/about";
+  export const privacyPolicy = "/privacy-policy";
+  export const termsOfServices = "/terms-of-services";
 }
