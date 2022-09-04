@@ -82,8 +82,10 @@ function saveQueryJson(state: {
             attribute="tags_degree_required"
             label="Educational requirements"
           />
-
-          <ExperienceRangeInput/>
+          <RefinementList
+            attribute="tags_exp_required"
+            label="Experience requirements"
+          />
 
           <RefinementList
             attribute="tags_country"
