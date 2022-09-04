@@ -9,7 +9,6 @@ import CurrentRefinements from "~/components/aloglia/current-refinements.vue";
 import ExperienceRangeInput from "~/components/aloglia/experience-range-input.vue";
 import RefinementList from "~/components/aloglia/refinement-list.vue";
 import SearchBox from "~/components/aloglia/search-box.vue";
-import Pagination from "~/components/aloglia/pagination";
 import BtnJobsAlert from "~/components/btn-jobs-alert.vue";
 import JobCard from "~/components/job-card.vue";
 import { history } from "instantsearch.js/es/lib/routers";
@@ -156,19 +155,33 @@ function saveQueryJson(state: {
 
           <CBox :mt="space">
             <CBox min-h="100vh">
-              <AisStateResults>
-                <template v-slot="{ state: { query }, results: { hits } }">
-                  <AisHits>
-                    <template v-slot:item="{ item, index, insights }">
-                      <JobCard :job="item" :is-has-text-query="Boolean(queryJson?.query)" />
-                    </template>
-                  </AisHits>
-                </template>
-              </AisStateResults>
-            </CBox>
+              <AisInfiniteHits>
+                <template
+                  v-slot="{
+                    items,
+                    refinePrevious,
+                    refineNext,
+                    isLastPage,
+                    sendEvent,
+                 }"
+                >
+                  <JobCard
+                    v-for="job in items"
+                    :job="job"
+                    :is-has-text-query="Boolean(queryJson?.query)"
+                  />
+                  
+                  <CBox v-if="!isLastPage">
+                    <CButton @click="refineNext">
+                      Load more
+                    </CButton>
+                  </CBox>
 
-            <Pagination />
+                </template>
+              </AisInfiniteHits>
+            </CBox>
           </CBox>
+
         </CFlex>
       </CFlex>
     </AisInstantSearch>

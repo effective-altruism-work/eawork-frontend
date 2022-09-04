@@ -82,3 +82,7 @@ $input-border-color: var(--colors-gray-200);
 *:focus {
   box-shadow: none !important;
 }
+
+html.dark {
+  background: white;
+}

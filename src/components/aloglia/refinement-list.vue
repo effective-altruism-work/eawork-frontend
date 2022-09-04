@@ -108,7 +108,7 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
           <chakra.ul mt="1px">
             <li v-if="isFromSearch && !items.length">No results.</li>
             <RefinementListFacets
-              :items="items"
+              :items="filterFacetValuesIfNeeded(items, 'other')"
               :refine="refine"
               :searchable="props.searchable"
             />
