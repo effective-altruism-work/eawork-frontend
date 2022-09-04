@@ -4,7 +4,7 @@ import AlgoliaLogo from "~/components/aloglia/algolia-logo.vue";
 </script>
 
 <template>
-  <CBox min-h="40px" class="algolia-search-box-main">
+  <CBox min-h="40px" class="algolia-search-box-main" pos="relative">
     <AisSearchBox />
     <AisStats>
       <template v-slot="{ nbHits }">
@@ -38,12 +38,11 @@ import AlgoliaLogo from "~/components/aloglia/algolia-logo.vue";
   }
   
   .ais-Stats {
-    display: none;
-    
     position: absolute;
     color: var(--colors-gray-400);
     font-size: 0.7rem;
     right: 0;
+    bottom: -20px;
     padding-top: 3px;
   }
 }

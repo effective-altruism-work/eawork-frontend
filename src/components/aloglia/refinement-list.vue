@@ -77,7 +77,7 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
 
         <CText
           v-if="props.attribute === 'tags_area'"
-          mt="3"
+          mt="2"
           font-weight="bold"
           font-size="sm"
           color="gray.500"
@@ -97,7 +97,7 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
         <CBox v-if="props.attribute === 'tags_area'">
 
           <CText
-            mt="3"
+            mt="2"
             font-weight="bold"
             font-size="sm"
             color="gray.500"
