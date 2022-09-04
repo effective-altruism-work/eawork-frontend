@@ -18,7 +18,7 @@ function shortenTagName(tagName: string) {
     case "Biosecurity & pandemic preparedness":
       return "Biosecurity & pandemic prep";
     case "International security & cooperation":
-      return "International security & cooperation";
+      return "International security & coop";
   }
   return tagName;
 }
