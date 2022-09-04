@@ -26,7 +26,12 @@ const props = defineProps<{
   @extend .chakra-radio;
 
   .ais-NumericMenu-labelText {
-    margin-left: 0.5rem;
+    margin-inline-start: 0.5rem;
+    font-size: 0.95rem;
+
+    &:hover {
+      color: var(--colors-blue-500);
+    }
   }
 }
 </style>
