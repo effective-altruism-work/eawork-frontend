@@ -17,20 +17,19 @@ const state = {
 };
 const space = 6;
 
-
 </script>
 
 <template>
-  <CBox mb="12" :key="job.objectID" display="block">
-    <CBox display="block">
+  <CBox mb="6" bg="white" p="4" border-radius="md">
+    <CBox>
       <CFlex>
-        <CLink :href="job.company_url">
+        <CLink :href="job?.company_url">
           <chakra.img
-            v-if="job.company_logo_url"
+            v-if="props.job"
             :src="job.company_logo_url"
-            w="56px"
-            h="56px"
-            bg="gray.200"
+            w="62px"
+            h="62px"
+            bg="white"
             border="1px solid #E2E8F0"
             loading="lazy"
           />
@@ -38,21 +37,77 @@ const space = 6;
 
         <CFlex
           :ml="job.company_logo_url ? 3 : 0"
-          mt="1"
-          mb="1"
-          justiy="space-between"
+          :justify="job.tags_city[0] ? 'space-between' : 'flex-start'"
           direction="column"
+          :gap="job.tags_city[0] ? 0 : 2"
         >
-          <CText font-size="lg" font-weight="bold" line-height="1">
+          <CText font-weight="bold" line-height="1">
             <ais-snippet :hit="job" attribute="title" />
           </CText>
 
-          <CFlex mt="5px" gap="3" align="center" display="flex">
-            <CText><ais-snippet :hit="job" attribute="company_name" /></CText>
-            <CBox v-if="job.tags_city[0]" w="3px" h="3px" mt="2px" bg="gray.300" />
-            <CText v-if="job.tags_city[0]">{{ job.tags_city[0] }}</CText>
-          </CFlex>
+          <CText font-size="15px" line-height="1">
+            <ais-snippet :hit="job" attribute="company_name" />
+          </CText>
+          <CText
+            v-if="job.tags_city[0]"
+            font-size="15px"
+            line-height="1"
+          >
+            {{ job.tags_city[0] }}
+          </CText>
+<!--          <CBox v-if="job.tags_city[0]" w="3px" h="3px" mt="2px" bg="gray.300" />-->
         </CFlex>
+      </CFlex>
+        
+      <CFlex w="100%" gap="3" mt="3" wrap="wrap">
+        <CFlex
+          v-for="area in job.tags_area"
+          :key="area"
+          direction="column"
+          gap="3"
+          bg="#f1faef"
+          px="2"
+          font-size="15px"
+        >
+          <CText color="#386f2c">{{ area }}</CText>
+        </CFlex>
+
+        <CFlex
+          v-for="workload in job.tags_workload"
+          :key="workload"
+          direction="column"
+          gap="3"
+          bg="#fbf6ed"
+          px="2"
+          font-size="15px"
+        >
+          <CText color="#98702e">{{ workload }}</CText>
+        </CFlex>
+
+        <CFlex
+          v-for="exp in job.tags_exp_required"
+          :key="exp"
+          direction="column"
+          gap="3"
+          bg="#edf1ff"
+          px="2"
+          font-size="15px"
+        >
+          <CText color="#1d2c5b">{{ exp }}</CText>
+        </CFlex>
+
+        <CFlex
+          v-for="location in job.tags_location_type"
+          :key="location"
+          direction="column"
+          gap="3"
+          bg="#E8F8F4"
+          px="2"
+          font-size="15px"
+        >
+          <CText color="#0E6D6F">{{ location }}</CText>
+        </CFlex>
+
       </CFlex>
       
       <JobSkills :job="props.job"/>
@@ -62,7 +117,7 @@ const space = 6;
       </CBox>
     </CBox>
 
-    <CFlex mt="3" justify="space-between" align="center">
+    <CFlex mt="4" justify="space-between" align="center">
       <CFlex :gap="space">
 
         <CLink
@@ -103,15 +158,15 @@ const space = 6;
           </CButton>
         </CLink>
         
-        <CFlex align="center">
-          <NuxtLink :to="urls.jobs.edit(props.job.post_pk)">
-            <CButton size="sm" variant="link">
-              Edit
-            </CButton>
-          </NuxtLink>
-        </CFlex>
+<!--        <CFlex align="center">-->
+<!--          <NuxtLink :to="urls.jobs.edit(props.job.post_pk)">-->
+<!--            <CButton size="sm" variant="link">-->
+<!--              Edit-->
+<!--            </CButton>-->
+<!--          </NuxtLink>-->
+<!--        </CFlex>-->
 
-        <BtnJobFlag :job="props.job" />
+<!--        <BtnJobFlag :job="props.job" />-->
       </CFlex>
 
       <CFlex gap="3" align="center" justify="center" h="100%" pt="0.5">
@@ -125,7 +180,7 @@ const space = 6;
         </CText>
         <CBox v-if="props.job.closes_at" w="3px" h="3px" mt="3px" bg="gray.300" />
         <CText color="gray.500" font-size="sm">
-          Posted
+          <span v-if="props.job.closes_at">Posted</span>
           {{
             formatDistance(new Date(props.job.posted_at * 1000), new Date(), {
               addSuffix: true,

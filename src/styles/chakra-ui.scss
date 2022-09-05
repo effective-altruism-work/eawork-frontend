@@ -63,6 +63,7 @@ $input-border-color: var(--colors-gray-200);
   padding-inline-end: var(--space-4);
   color: var(--colors-white);
   background: var(--colors-blue-500);
+
   &:hover {
     background: var(--colors-blue-600);
   }
@@ -136,10 +137,23 @@ $input-border-color: var(--colors-gray-200);
   
 }
 
+.chakra-skeleton {
+  border-radius: var(--radii-md);
+  border-color: var(--colors-gray-100);
+  background: padding-box var(--colors-gray-400);
+  animation: 0.8s linear 0s infinite alternate none running;
+}
+
 *:focus {
   box-shadow: none !important;
 }
 
-html.dark {
+html, html.dark {
   background: white;
+}
+
+:root {
+  --colors-blue-500: #0aa9bf;
+  --colors-blue-600: #0c8898;
+  --radii-md: 3px;
 }

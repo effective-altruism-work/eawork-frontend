@@ -68,19 +68,19 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
 
         <CInput
           v-if="props.searchable"
-          placeholder="Filter..."
+          placeholder="Search..."
           size="sm"
           @input="searchForItems($event.currentTarget.value)"
           mb="1"
           border-radius="md"
+          bg="white"
         />
 
         <CText
           v-if="props.attribute === 'tags_area'"
           mt="2"
           font-weight="bold"
-          font-size="sm"
-          color="gray.500"
+          font-size="13px"
         >
           Top recommended problems
         </CText>
@@ -99,8 +99,7 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
           <CText
             mt="2"
             font-weight="bold"
-            font-size="sm"
-            color="gray.500"
+            font-size="13px"
           >
             Other pressing problems
           </CText>

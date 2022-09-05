@@ -54,6 +54,7 @@ export interface JobAlgolia {
   tags_city: string[];
   tags_workload: string[];
   tags_area: string[];
+  tags_exp_required: string[];
   tags_degree_required: string[];
   tags_immigration: string[];
   tags_location_type: string[];

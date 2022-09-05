@@ -100,6 +100,7 @@ const value = computed({
     vertical-align: top;
     user-select: none;
     flex-shrink: 0;
+    background: white;
 
     &.chakra-checkbox__control__checked {
       background: var(--colors-blue-500) !important;

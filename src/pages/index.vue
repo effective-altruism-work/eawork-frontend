@@ -143,12 +143,12 @@ function saveQueryJson(state: {
           <CFlex justify="flex-end" :gap="space">
             <BtnJobsAlert :query-json="queryJson" />
 
-            <NuxtLink :to="urls.jobs.post">
-              <CButton color-scheme="blue" variant="outline">
-                <OhVueIcon name="hi-solid-plus" scale="1" color="var(--colors-blue-600)" />
-                <CText ml="2">Post Job</CText>
-              </CButton>
-            </NuxtLink>
+<!--            <NuxtLink :to="urls.jobs.post">-->
+<!--              <CButton color-scheme="blue" variant="outline">-->
+<!--                <OhVueIcon name="hi-solid-plus" scale="1" color="var(&#45;&#45;colors-blue-600)" />-->
+<!--                <CText ml="2">Post Job</CText>-->
+<!--              </CButton>-->
+<!--            </NuxtLink>-->
           </CFlex>
 
           <CBox :mt="space">
@@ -167,6 +167,7 @@ function saveQueryJson(state: {
                     v-for="job in items"
                     :job="job"
                     :is-has-text-query="Boolean(queryJson?.query)"
+                    :key="job.post_pk"
                   />
                   
                   <CBox v-if="!isLastPage">
@@ -188,4 +189,10 @@ function saveQueryJson(state: {
 
 <style lang="scss">
 @import "~/styles/chakra-ui.scss";
+
+
+html, html.dark {
+  background: var(--colors-gray-50);
+}
+
 </style>
