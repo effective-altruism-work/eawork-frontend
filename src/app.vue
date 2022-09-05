@@ -12,8 +12,8 @@ useHead({
 </script>
 
 <template>
-  <CBox>
-    <CBox :py="theme.spaces.md" bg="gray.50">
+  <CBox bg="gray.50">
+    <CBox :py="theme.spaces.md" bg="white">
       <CContainer
         max-w="6xl"
         align-itmes="baseline"

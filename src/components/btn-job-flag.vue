@@ -74,7 +74,7 @@ async function submit(data: { message: string; email?: string }, node: FormKitNo
         bg="white"
         border-radius="md"
       >
-        <CText w="fit-content" mb="-4">What would you like to report about "{{ props.job.title }}" post?</CText>
+        <CText w="fit-content" mb="-4">What would you like to report about "<i>{{ props.job.title }}</i>" post?</CText>
   
         <FormKit type="form" submit-label="Send" @submit="submit">
   

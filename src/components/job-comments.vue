@@ -85,7 +85,7 @@ async function loadComments(args?: {isReload?: boolean}) {
     </CBox>
     
     <CFlex gap="3" mt="6" direction="column">
-      <CText mt="6" font-size="lg" line-height="1">Leave a comment</CText>
+      <CText :mt="isNoComments ? 0 : 6" font-size="lg" line-height="1">Leave a comment</CText>
       <JobCommentForm :job-pk="props.jobPk" @comment-posted="loadComments({ isReload: true })" /> 
     </CFlex>
     

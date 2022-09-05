@@ -12,7 +12,6 @@ $input-border-color: var(--colors-gray-200);
   transition: var(--transition-property-common) var(--transition-duration-normal);
   outline: transparent solid 2px;
   font-size: var(--fontSizes-md);
-  border-radius: var(--radii-md);
   background: white;
   color: var(--colors-gray-800);
 
@@ -55,7 +54,6 @@ $input-border-color: var(--colors-gray-200);
   outline-offset: 2px;
   width: auto;
   line-height: 1.2;
-  border-radius: var(--radii-md);
   height: var(--sizes-10);
   min-width: var(--sizes-10);
   font-size: var(--fontSizes-md);
@@ -63,6 +61,7 @@ $input-border-color: var(--colors-gray-200);
   padding-inline-end: var(--space-4);
   color: var(--colors-white);
   background: var(--colors-blue-500);
+
   &:hover {
     background: var(--colors-blue-600);
   }
@@ -140,6 +139,10 @@ $input-border-color: var(--colors-gray-200);
   box-shadow: none !important;
 }
 
-html.dark {
+html, html.dark {
   background: white;
+}
+
+:root {
+  --colors-blue-500: #0aa9bf;
 }

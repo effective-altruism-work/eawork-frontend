@@ -27,6 +27,7 @@ import AlgoliaLogo from "~/components/aloglia/algolia-logo.vue";
 
       .ais-SearchBox-input {
         @include chakra-input;
+        //background: var(--color-gray-50);
       }
       .ais-SearchBox-submit {
         display: none;

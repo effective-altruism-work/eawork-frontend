@@ -81,13 +81,17 @@ async function submitComment(data: { email: string; first_name: string }, node: 
 
   .formkit-outer {
     width: fit-content;
-    margin-bottom: var(--space-3);
+    margin-bottom: 0;
+    
+    &[data-type="submit"] {
+      margin-bottom: 0 !important;
+    }
 
     .formkit-input[type='submit'] {
       display: flex;
       margin-right: auto;
       margin-left: 0;
-      margin-bottom: var(--space-6);
+      margin-bottom: 0;
     }
   }
 }

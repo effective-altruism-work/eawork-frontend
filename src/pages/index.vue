@@ -167,6 +167,7 @@ function saveQueryJson(state: {
                     v-for="job in items"
                     :job="job"
                     :is-has-text-query="Boolean(queryJson?.query)"
+                    :key="job.post_pk"
                   />
                   
                   <CBox v-if="!isLastPage">
@@ -188,4 +189,10 @@ function saveQueryJson(state: {
 
 <style lang="scss">
 @import "~/styles/chakra-ui.scss";
+
+
+html, html.dark {
+  background: var(--colors-gray-50);
+}
+
 </style>

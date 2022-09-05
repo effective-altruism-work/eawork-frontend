@@ -15,6 +15,9 @@ export default defineNuxtPlugin((nuxtApp) => {
 const theme = extendTheme({
   components: {
     Button: {
+      baseStyle: {
+        rounded: "none",
+      },
       defaultProps: {
         colorScheme: "blue",
       },
@@ -48,5 +51,10 @@ const theme = extendTheme({
         fontWeight: "normal",
       },
     },
+    Input: {
+      baseStyle: {
+        rounded: "none",
+      },
+    }
   },
 });
