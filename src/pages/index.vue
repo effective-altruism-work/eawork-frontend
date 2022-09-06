@@ -172,7 +172,6 @@ function saveQueryJson(state: {
                   />
                   
                   <CBox v-if="!isLastPage">
-                    <JobCardSkeleton />
                     <JobCardSkeleton v-observe-visibility="{
                       callback: (isVisible: boolean) => {
                         if (isVisible && !isLastPage) {
@@ -180,7 +179,8 @@ function saveQueryJson(state: {
                         }
                       },
                     }"/>
-                    <JobCardSkeleton />
+                    <JobCardSkeleton/>
+                    <JobCardSkeleton/>
                   </CBox>
 
                 </template>
