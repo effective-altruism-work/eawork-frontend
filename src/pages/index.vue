@@ -181,6 +181,9 @@ function saveQueryJson(state: {
                     }"/>
                     <JobCardSkeleton/>
                     <JobCardSkeleton/>
+                    <JobCardSkeleton/>
+                    <JobCardSkeleton/>
+                    <JobCardSkeleton/>
                   </CBox>
 
                 </template>
