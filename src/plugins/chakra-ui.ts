@@ -23,6 +23,7 @@ const theme = extendTheme({
           fontWeight: "normal",
         },
         outline: {
+          borderColor: "blue.500",
           fontWeight: "normal",
         },
         link: {

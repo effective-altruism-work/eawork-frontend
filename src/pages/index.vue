@@ -10,6 +10,7 @@ import NumericMenu from "~/components/aloglia/numeric-menu.vue";
 import RefinementList from "~/components/aloglia/refinement-list.vue";
 import SearchBox from "~/components/aloglia/search-box.vue";
 import BtnJobsAlert from "~/components/btn-jobs-alert.vue";
+import JobCardSkeleton from "~/components/job-card-skeleton.vue";
 import JobCard from "~/components/job-card.vue";
 import { history } from "instantsearch.js/es/lib/routers";
 import { singleIndex } from "instantsearch.js/es/lib/stateMappings";
@@ -171,9 +172,15 @@ function saveQueryJson(state: {
                   />
                   
                   <CBox v-if="!isLastPage">
-                    <CButton @click="refineNext">
-                      Load more
-                    </CButton>
+                    <JobCardSkeleton />
+                    <JobCardSkeleton v-observe-visibility="{
+                      callback: (isVisible: boolean) => {
+                        if (isVisible && !isLastPage) {
+                          refineNext();
+                        }
+                      },
+                    }"/>
+                    <JobCardSkeleton />
                   </CBox>
 
                 </template>
