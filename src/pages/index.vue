@@ -12,29 +12,47 @@ import BtnJobsAlert from "~/components/btn-jobs-alert.vue";
 import JobCardSkeleton from "~/components/job-card-skeleton.vue";
 import JobCard from "~/components/job-card.vue";
 import { history } from "instantsearch.js/es/lib/routers";
-import { singleIndex } from "instantsearch.js/es/lib/stateMappings";
+import { IndexUiState } from "instantsearch.js/es/types/ui-state";
+import { useStateVar } from "~/utils/structs";
+import { JobAlgolia } from "~/utils/types";
 
-const config = useRuntimeConfig();
-const searchClient = algoliasearch(
-  config.public.algoliaApplicationId,
-  config.public.algoliaApiKey,
-);
-const queryJson = ref<null | {
-  query: string;
-  facetFilters: string[];
-}>(null);
-
-onMounted(() => {
-  window?.parentIFrame?.sendMessage("mounted");
+const state = useStateVar(() => {
+  const config = useRuntimeConfig();
+  const searchClient = algoliasearch(
+    config.public.algoliaApplicationId,
+    config.public.algoliaApiKey,
+  );
+  return {
+    config,
+    searchClient: algoliasearch(
+      config.public.algoliaApplicationId,
+      config.public.algoliaApiKey,
+    ),
+    searchIndex: searchClient.initIndex(config.public.algoliaJobsIndex),
+    queryJson: ref<null | { query: string; facetFilters: string[]; }>(null),
+    jobPkCurrent: ref<string | null>(null),
+    jobFromUrlQuery: ref<JobAlgolia | null>(null),
+  };
 });
 
-watch(queryJson, (queryJsonNew?: { query: string }) => {
-  console.log(queryJsonNew);
-  let queryStringNew = "";
-  if (queryJsonNew?.query) {
-    queryStringNew = queryJsonNew.query;
+onMounted(async () => {
+  const url = new URL(window.location as any);
+  const jobPkCurrent = url.searchParams.get("jobPk");
+  if (jobPkCurrent) {
+    state.jobPkCurrent.value = jobPkCurrent;
+    state.jobFromUrlQuery.value = await state.searchIndex.getObject(jobPkCurrent);
   }
-  window?.parentIFrame?.sendMessage(`route-changed:${queryStringNew}`);
+});
+
+watch(state.jobPkCurrent, (jobPkCurrentNew: string | null) => {
+  const url = new URL(window.location as any);
+  if (jobPkCurrentNew) {
+    url.searchParams.set("jobPk", jobPkCurrentNew);
+    window.history.pushState({}, "", url);
+  } else {
+    url.searchParams.delete("jobPk");
+    window.history.pushState({}, "", url);
+  }
 });
 
 const space = 6;
@@ -44,12 +62,12 @@ function searchFunction(helper) {
   helper.search();
 }
 
-function saveQueryJson(state: {
+function saveQueryJson(uiState: {
   query: string;
   disjunctiveFacetsRefinements: Map<string, string[]>;
 }) {
-  const queryString = state.query;
-  const facetsRaw: Map<string, string[]> = state.disjunctiveFacetsRefinements;
+  const queryString = uiState.query;
+  const facetsRaw: Map<string, string[]> = uiState.disjunctiveFacetsRefinements;
   const facetFilters: string[] = [];
   for (const [facetName, facetValueArr] of Object.entries(facetsRaw)) {
     for (const facetValue of facetValueArr) {
@@ -58,15 +76,20 @@ function saveQueryJson(state: {
   }
   const isQuerySpecified = queryString || facetFilters.length;
   if (isQuerySpecified) {
-    queryJson.value = {
+    state.queryJson.value = {
       query: queryString,
       facetFilters: facetFilters,
     };
   } else {
-    queryJson.value = null;
+    state.queryJson.value = null;
   }
 }
 
+interface RouteState {
+  query: string;
+  refinementList: { [key: string]: string[] };
+  jobPk: string;
+}
 </script>
 
 <template>
@@ -75,11 +98,31 @@ function saveQueryJson(state: {
       show-loading-indicator
       :routing="{
         router: history(),
-        stateMapping: singleIndex(config.public.algoliaJobsIndex),
+        stateMapping: {
+          stateToRoute(uiState: { [indexId: string]: IndexUiState }): RouteState {
+            const indexUiState: IndexUiState = uiState[state.config.public.algoliaJobsIndex];
+            return {
+              query: indexUiState.query,
+              refinementList: indexUiState.refinementList,
+              jobPk: state.jobPkCurrent.value,
+            };
+          },
+          routeToState(routeState: RouteState): { [indexId: string]: IndexUiState } {
+            if (routeState.jobPk) {
+              state.jobPkCurrent.value = routeState.jobPk;
+            }
+            return {
+              [state.config.public.algoliaJobsIndex]: {
+                query: routeState.query,
+                refinementList: routeState.refinementList,
+              },
+            };
+          },
+        },
       }"
-      :search-client="searchClient"
+      :search-client="state.searchClient"
       :search-function="searchFunction"
-      :index-name="config.public.algoliaJobsIndex"
+      :index-name="state.config.public.algoliaJobsIndex"
     >
       <CFlex :mb="space * 4">
         <CFlex direction="column" min-w="31%" max-w="31%" pr="12" position="sticky">
@@ -154,7 +197,7 @@ function saveQueryJson(state: {
 
         <CFlex direction="column" min-w="69%">
           <CFlex justify="flex-end" :gap="space">
-            <BtnJobsAlert :query-json="queryJson" />
+            <BtnJobsAlert :query-json="state.queryJson.value" />
 
 <!--            <NuxtLink :to="urls.jobs.post">-->
 <!--              <CButton color-scheme="blue" variant="outline">-->
@@ -177,10 +220,19 @@ function saveQueryJson(state: {
                  }"
                 >
                   <JobCard
+                    v-if="state.jobFromUrlQuery.value"
+                    :job="state.jobFromUrlQuery.value"
+                    :is-expanded="true"
+                    :is-missing-algolia-context="true"
+                  />
+                  <JobCard
                     v-for="job in items"
                     :job="job"
-                    :is-has-text-query="Boolean(queryJson?.query)"
+                    :is-hidden="job?.post_pk === state.jobFromUrlQuery?.value?.post_pk"
+                    :is-has-text-query="Boolean(state.queryJson.value?.query)"
                     :key="job.post_pk"
+                    @card-expanded="state.jobPkCurrent.value = job.post_pk"
+                    @card-collapsed="state.jobPkCurrent.value = null"
                   />
                   
                   <CBox v-if="!isLastPage">
@@ -212,7 +264,6 @@ function saveQueryJson(state: {
 
 <style lang="scss">
 @import "~/styles/chakra-ui.scss";
-
 
 html, html.dark {
   background: var(--colors-gray-50);

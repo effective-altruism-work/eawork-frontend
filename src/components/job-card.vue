@@ -2,36 +2,54 @@
 import { CFlex, CBox, CButton, CLink, CText } from "@chakra-ui/vue-next";
 import { formatDistance } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
-import { onMounted, ref, watch } from "vue";
+import { defineEmits, onMounted, ref, watch } from "vue";
 import JobView from "~/components/job-view.vue";
 import JobSkills from "~/components/job-skills.vue";
-import BtnJobFlag from "~/components/btn-job-flag.vue";
 import { theme } from "~/styles/theme";
-import { urls } from "~/constants";
 import { JobAlgolia } from "~/utils/types";
 import CollapseTransition from '@ivanv/vue-collapse-transition/src/CollapseTransition.vue'
 
-const props = defineProps<{ job: JobAlgolia; isHasTextQuery?: boolean | string | null; }>();
+const props = defineProps<{
+  job: JobAlgolia;
+  isHasTextQuery?: boolean | string | null;
+  isExpanded?: boolean;
+  isHidden?: boolean;
+  isMissingAlgoliaContext?: boolean;
+}>();
+
+const emit = defineEmits<{
+  (event: "cardExpanded"): void;
+  (event: "cardCollapsed"): void;
+}>();
 
 const state = {
   isShowModal: ref(false),
-  isAccordionOpen: ref(false),
+  isAccordionOpen: ref(props.isExpanded ?? false),
   isHovering: ref(false),
 };
+
 const space = 6;
 
 </script>
 
 <template>
   <CBox
-    @click="state.isAccordionOpen.value = !state.isAccordionOpen.value"
+    v-if="!props.isHidden"
+    @click="() => {
+      if (state.isAccordionOpen.value) {
+        emit('cardCollapsed');
+      } else {
+        emit('cardExpanded');
+      }
+      state.isAccordionOpen.value = !state.isAccordionOpen.value;
+    }"
     @mouseover="state.isHovering.value = true"
     @mouseleave="state.isHovering.value = false"
     mb="6"
     bg="white"
     p="4"
     border-radius="5px"
-    :_hover="{cursor: 'pointer', boxShadow: 'lg'}"
+    :_hover="{ cursor: 'pointer', boxShadow: 'lg' }"
     transition="box-shadow 0.2s"
   >
     <CBox>
@@ -55,11 +73,13 @@ const space = 6;
           :gap="job.tags_city[0] ? 0 : 2"
         >
           <CText font-weight="bold" line-height="1">
-            <ais-snippet :hit="job" attribute="title" />
+            <span v-if="props.isMissingAlgoliaContext">{{ job.title }}</span>
+            <ais-snippet v-else :hit="job" attribute="title" />
           </CText>
 
           <CText font-size="15px" line-height="1">
-            <ais-snippet :hit="job" attribute="company_name" />
+            <span v-if="props.isMissingAlgoliaContext">{{ job.company_name }}</span>
+            <ais-snippet v-else :hit="job" attribute="company_name" />
           </CText>
           <CText
             v-if="job.tags_city[0]"
