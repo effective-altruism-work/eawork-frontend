@@ -9,18 +9,31 @@ import BtnJobFlag from "~/components/btn-job-flag.vue";
 import { theme } from "~/styles/theme";
 import { urls } from "~/constants";
 import { JobAlgolia } from "~/utils/types";
+import CollapseTransition from '@ivanv/vue-collapse-transition/src/CollapseTransition.vue'
 
 const props = defineProps<{ job: JobAlgolia; isHasTextQuery?: boolean | string | null; }>();
 
 const state = {
   isShowModal: ref(false),
+  isAccordionOpen: ref(false),
+  isHovering: ref(false),
 };
 const space = 6;
 
 </script>
 
 <template>
-  <CBox mb="6" bg="white" p="4" border-radius="md">
+  <CBox
+    @click="state.isAccordionOpen.value = !state.isAccordionOpen.value"
+    @mouseover="state.isHovering.value = true"
+    @mouseleave="state.isHovering.value = false"
+    mb="6"
+    bg="white"
+    p="4"
+    border-radius="5px"
+    :_hover="{cursor: 'pointer', boxShadow: 'lg'}"
+    transition="box-shadow 0.2s"
+  >
     <CBox>
       <CFlex>
         <CLink :href="job?.company_url">
@@ -112,33 +125,42 @@ const space = 6;
       
       <JobSkills :job="props.job"/>
 
-      <CBox v-if="props.isHasTextQuery" :mt="space / 2">
-        <ais-snippet :hit="job" attribute="description_short" />
-      </CBox>
+      <CollapseTransition>
+        <CBox :mt="space / 2" v-show="!state.isAccordionOpen.value && props.isHasTextQuery">
+          <ais-snippet :hit="job" attribute="description_short" />
+        </CBox>
+      </CollapseTransition>
+
+      <CollapseTransition>
+        <CBox :mt="space / 2" v-show="state.isAccordionOpen.value">
+          {{ job.description_short }}
+        </CBox>
+      </CollapseTransition>
+
     </CBox>
 
     <CFlex mt="4" justify="space-between" align="center">
       <CFlex :gap="space">
 
-        <CLink
-          :href="urls.jobs.view(props.job.post_pk)"
-          @click.left.prevent="state.isShowModal.value = true"
-          :_hover="{textDecoration: 'none'}"
-        >
-          <CButton
-            size="sm"
-            color-scheme="blue"
-            variant="outline"
-          >
-            <OhVueIcon
-              name="oi-eye"
-              scale="1"
-              color="var(--colors-blue-500)"
-              style="margin-right: 5px;"
-            />
-            View
-          </CButton>
-        </CLink>
+<!--        <CLink-->
+<!--          :href="urls.jobs.view(props.job.post_pk)"-->
+<!--          @click.left.prevent="state.isShowModal.value = true"-->
+<!--          :_hover="{textDecoration: 'none'}"-->
+<!--        >-->
+<!--          <CButton-->
+<!--            size="sm"-->
+<!--            color-scheme="blue"-->
+<!--            variant="outline"-->
+<!--          >-->
+<!--            <OhVueIcon-->
+<!--              name="oi-eye"-->
+<!--              scale="1"-->
+<!--              color="var(&#45;&#45;colors-blue-500)"-->
+<!--              style="margin-right: 5px;"-->
+<!--            />-->
+<!--            View-->
+<!--          </CButton>-->
+<!--        </CLink>-->
       
         <CLink
           :href="job.url_external"
@@ -147,7 +169,7 @@ const space = 6;
           display="flex"
           align-items="center"
         >
-          <CButton size="sm" color-scheme="blue" variant="link">
+          <CButton size="sm" color-scheme="blue" variant="outline">
             Apply
             <OhVueIcon
               name="ri-external-link-line"
@@ -157,6 +179,29 @@ const space = 6;
             />
           </CButton>
         </CLink>
+
+        <Transition name="fade">
+          <CButton
+            v-if="state.isHovering.value"
+            variant="link"
+            color="gray.500"
+            font-size="sm"
+          >
+            <CBox
+              :transform="state.isAccordionOpen.value ? 'rotate(180deg)' : 'rotate(0)'"
+              :mt="'2px'"
+              :mr="'5px'"
+            >
+              <OhVueIcon
+                name="hi-chevron-down"
+                scale="1.1"
+                color="var(--colors-gray-400)"
+              />
+            </CBox>
+            <span v-if="state.isAccordionOpen.value">Collapse</span>
+            <span v-else>Expand</span>
+          </CButton>
+        </Transition>
         
 <!--        <CFlex align="center">-->
 <!--          <NuxtLink :to="urls.jobs.edit(props.job.post_pk)">-->
@@ -223,3 +268,15 @@ const space = 6;
 
   </CBox>
 </template>
+
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
