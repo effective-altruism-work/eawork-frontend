@@ -2,6 +2,7 @@
 import { useHead } from "#app";
 import { CContainer, CFlex, CBox, CHeading, CLink, chakra } from "@chakra-ui/vue-next";
 import { OhVueIcon } from "oh-vue-icons";
+import { onMounted } from "vue";
 import { urls } from "~/constants";
 import { theme } from "~/styles/theme";
 
@@ -9,6 +10,10 @@ useHead({
   titleTemplate: (titleChunk) => (titleChunk ? `${titleChunk} - EA Work` : "EA Work"),
   link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
 });
+
+onMounted(() => {
+  window.parentIFrame.sendMessage("vue mounted");
+})
 </script>
 
 <template>
@@ -75,5 +80,6 @@ useHead({
     <CContainer max-w="6xl" :pt="theme.spaces.md">
       <NuxtPage />
     </CContainer>
+
   </CBox>
 </template>
