@@ -3,8 +3,7 @@ import { useRuntimeConfig } from "#app";
 import { CFlex, CHeading, CButton, CBox, CText } from "@chakra-ui/vue-next";
 import algoliasearch from "algoliasearch";
 import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns";
-import { OhVueIcon } from "oh-vue-icons";
-import { ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import CurrentRefinements from "~/components/aloglia/current-refinements.vue";
 import NumericMenu from "~/components/aloglia/numeric-menu.vue";
 import RefinementList from "~/components/aloglia/refinement-list.vue";
@@ -14,7 +13,6 @@ import JobCardSkeleton from "~/components/job-card-skeleton.vue";
 import JobCard from "~/components/job-card.vue";
 import { history } from "instantsearch.js/es/lib/routers";
 import { singleIndex } from "instantsearch.js/es/lib/stateMappings";
-import { urls } from "~/constants";
 
 const config = useRuntimeConfig();
 const searchClient = algoliasearch(
@@ -25,6 +23,19 @@ const queryJson = ref<null | {
   query: string;
   facetFilters: string[];
 }>(null);
+
+onMounted(() => {
+  window?.parentIFrame?.sendMessage("mounted");
+});
+
+watch(queryJson, (queryJsonNew?: { query: string }) => {
+  console.log(queryJsonNew);
+  let queryStringNew = "";
+  if (queryJsonNew?.query) {
+    queryStringNew = queryJsonNew.query;
+  }
+  window?.parentIFrame?.sendMessage(`route-changed:${queryStringNew}`);
+});
 
 const space = 6;
 
@@ -55,6 +66,7 @@ function saveQueryJson(state: {
     queryJson.value = null;
   }
 }
+
 </script>
 
 <template>
