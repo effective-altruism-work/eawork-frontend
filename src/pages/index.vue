@@ -30,7 +30,7 @@ const state = useStateVar(() => {
     ),
     searchIndex: searchClient.initIndex(config.public.algoliaJobsIndex),
     queryJson: ref<null | { query: string; facetFilters: string[]; }>(null),
-    jobPkCurrent: ref<string | null>(null),
+    jobPkCurrent: ref<number | null>(null),
     jobFromUrlQuery: ref<JobAlgolia | null>(null),
   };
 });
@@ -39,15 +39,15 @@ onMounted(async () => {
   const url = new URL(window.location as any);
   const jobPkCurrent = url.searchParams.get("jobPk");
   if (jobPkCurrent) {
-    state.jobPkCurrent.value = jobPkCurrent;
+    state.jobPkCurrent.value = Number(jobPkCurrent);
     state.jobFromUrlQuery.value = await state.searchIndex.getObject(jobPkCurrent);
   }
 });
 
-watch(state.jobPkCurrent, (jobPkCurrentNew: string | null) => {
+watch(state.jobPkCurrent, (jobPkCurrentNew: number | null) => {
   const url = new URL(window.location as any);
   if (jobPkCurrentNew) {
-    url.searchParams.set("jobPk", jobPkCurrentNew);
+    url.searchParams.set("jobPk", jobPkCurrentNew as any);
     window.history.pushState({}, "", url);
   } else {
     url.searchParams.delete("jobPk");
@@ -224,15 +224,25 @@ interface RouteState {
                     :job="state.jobFromUrlQuery.value"
                     :is-expanded="true"
                     :is-missing-algolia-context="true"
+                    @card-expanded="state.jobPkCurrent.value = state.jobFromUrlQuery.value?.post_pk"
+                    @card-collapsed="() => {
+                      if (Number(state.jobPkCurrent.value) === state.jobFromUrlQuery.value?.post_pk) {
+                        state.jobPkCurrent.value = null;                        
+                      }
+                    }"
                   />
                   <JobCard
                     v-for="job in items"
                     :job="job"
-                    :is-hidden="job?.post_pk === state.jobFromUrlQuery?.value?.post_pk"
+                    :is-hidden="job.post_pk === state.jobFromUrlQuery?.value?.post_pk"
                     :is-has-text-query="Boolean(state.queryJson.value?.query)"
                     :key="job.post_pk"
                     @card-expanded="state.jobPkCurrent.value = job.post_pk"
-                    @card-collapsed="state.jobPkCurrent.value = null"
+                    @card-collapsed="() => {
+                      if (state.jobPkCurrent.value === job.post_pk) {
+                        state.jobPkCurrent.value = null;                        
+                      }
+                    }"
                   />
                   
                   <CBox v-if="!isLastPage">
@@ -243,10 +253,6 @@ interface RouteState {
                         }
                       },
                     }"/>
-                    <JobCardSkeleton/>
-                    <JobCardSkeleton/>
-                    <JobCardSkeleton/>
-                    <JobCardSkeleton/>
                     <JobCardSkeleton/>
                     <JobCardSkeleton/>
                   </CBox>
