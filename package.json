@@ -12,11 +12,11 @@
     "lint": "yarn run eslint --fix src/"
   },
   "dependencies": {
-    "nuxt": "npm:nuxt3@latest",
+    "nuxt": "^3.0.0-rc.9",
     "@chakra-ui/vue-next": "^1.0.0-alpha.15",
       "@chakra-ui/nuxt-next": "^0.1.0-alpha.8",
-    "@formkit/nuxt": "^1.0.0-beta.10",
-      "@formkit/themes": "^1.0.0-beta.10",
+    "@formkit/nuxt": "next",
+      "@formkit/themes": "next",
     "@sentry/vue": "^7.11.1",
       "@sentry/tracing": "^7.11.1",
     "@sipec/vue3-tags-input": "^3.0.4",
@@ -31,6 +31,7 @@
     "vue-final-modal": "^3.4.4",
     "vue-debounce": "^4.0.0",
     "vue3-observe-visibility": "^0.1.2",
+    "@ivanv/vue-collapse-transition": "^1.0.2",
     "floating-vue": "^2.0.0-beta.19",
     "@ckeditor/ckeditor5-vue": "^4.0.1",
       "@ckeditor/ckeditor5-build-balloon-block": "^35.1.0",
@@ -38,8 +39,8 @@
     "@segment/analytics-next": "^1.43.0"
   },
   "devDependencies": {
-    "@nuxt/kit": "^3.0.0-rc.8",
-    "@nuxt/ui": "^0.3.1",
+    "@nuxt/kit": "^3.0.0-rc.9",
+    "@nuxt/ui": "^0.3.2",
       "vite": "^3.0.0", "//": "stub peer dep for @nuxt/ui",
     "eslint": "^8.6.0",
       "@vue/compiler-sfc": "^3.0.0-0",
