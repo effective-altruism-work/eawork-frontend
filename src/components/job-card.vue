@@ -2,11 +2,12 @@
 import { CFlex, CBox, CButton, CLink, CText } from "@chakra-ui/vue-next";
 import { formatDistance } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
-import { defineEmits, onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import JobView from "~/components/job-view.vue";
 import JobSkills from "~/components/job-skills.vue";
 import { theme } from "~/styles/theme";
 import { JobAlgolia } from "~/utils/types";
+import { tracking } from "~/utils/tracking";
 import CollapseTransition from '@ivanv/vue-collapse-transition/src/CollapseTransition.vue'
 
 const props = defineProps<{
@@ -28,7 +29,19 @@ const state = {
   isHovering: ref(false),
 };
 
-const space = 6;
+const comp = {
+  space: 6,
+  id: `job-card-${props.job.post_pk}`,
+}
+
+onMounted(async () => {
+  await tracking.bindAnchorsTracking({
+    selector: `#${comp.id}`,
+    defaults: {
+      action: "Viewed organisation homepage",
+    },
+  });
+});
 
 </script>
 
@@ -40,6 +53,7 @@ const space = 6;
         emit('cardCollapsed');
       } else {
         emit('cardExpanded');
+        tracking.sendEvent(props.job, 'viewed');
       }
       state.isAccordionOpen.value = !state.isAccordionOpen.value;
     }"
@@ -54,7 +68,7 @@ const space = 6;
   >
     <CBox>
       <CFlex>
-        <CLink :href="job?.company_url">
+        <CLink :href="job?.company_url" :id="comp.id">
           <chakra.img
             v-if="props.job"
             :src="job.company_logo_url"
@@ -146,13 +160,13 @@ const space = 6;
       <JobSkills :job="props.job"/>
 
       <CollapseTransition>
-        <CBox :mt="space / 2" v-show="!state.isAccordionOpen.value && props.isHasTextQuery">
+        <CBox :mt="comp.space / 2" v-show="!state.isAccordionOpen.value && props.isHasTextQuery">
           <ais-snippet :hit="job" attribute="description_short" />
         </CBox>
       </CollapseTransition>
 
       <CollapseTransition>
-        <CBox :mt="space / 2" v-show="state.isAccordionOpen.value">
+        <CBox :mt="comp.space / 2" v-show="state.isAccordionOpen.value">
           {{ job.description_short }}
         </CBox>
       </CollapseTransition>
@@ -160,7 +174,7 @@ const space = 6;
     </CBox>
 
     <CFlex mt="4" justify="space-between" align="center">
-      <CFlex :gap="space">
+      <CFlex :gap="comp.space">
 
 <!--        <CLink-->
 <!--          :href="urls.jobs.view(props.job.post_pk)"-->
@@ -183,6 +197,8 @@ const space = 6;
 <!--        </CLink>-->
       
         <CLink
+          @click="tracking.sendEvent(props.job, 'url_external clicked');"
+          @auxclick="tracking.sendEvent(props.job, 'url_external clicked');"
           :href="job.url_external"
           is-external
           :_hover="{ textDecoration: 'none !important' }"

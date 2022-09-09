@@ -35,7 +35,7 @@
     "@ckeditor/ckeditor5-vue": "^4.0.1",
       "@ckeditor/ckeditor5-build-balloon-block": "^35.1.0",
     "iframe-resizer": "^4.3.2",
-    "@ivanv/vue-collapse-transition": "^1.0.2"
+    "@segment/analytics-next": "^1.43.0"
   },
   "devDependencies": {
     "@nuxt/kit": "^3.0.0-rc.8",
