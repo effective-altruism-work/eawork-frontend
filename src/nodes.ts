@@ -18,10 +18,12 @@ export class NodeCategory extends Data {
   };
 }
 
+const baseUrl = "https://80000hours.org";
+
 export const nodes: Node[] = [
   Node.create({
     label: "Start here",
-    url: "/start-here/?int_campaign=2021-12--primary-navigation__start-here",
+    url: `${baseUrl}/start-here/?int_campaign=2021-12--primary-navigation__start-here`,
   }),
   Node.create({
     label: "Guides",
@@ -30,10 +32,10 @@ export const nodes: Node[] = [
       NodeCategory.create({
         label: "Key ideas",
         description: "Understand what makes for a high-impact career.",
-        url: "/key-ideas/",
+        url: `${baseUrl}/key-ideas/`,
         extension: {
           label: "Read the full guide →",
-          url: "/key-ideas/",
+          url: `${baseUrl}/key-ideas/`,
         },
         children: [
           NodeCategory.create({
@@ -41,11 +43,11 @@ export const nodes: Node[] = [
             children: [
               Node.create({
                 label: "Your most important decision",
-                url: "/make-a-difference-with-your-career/",
+                url: `${baseUrl}/make-a-difference-with-your-career/`,
               }),
               Node.create({
                 label: "Summary",
-                url: "/key-ideas/summary/",
+                url: `${baseUrl}/key-ideas/summary/`,
               }),
             ],
           }),
@@ -54,15 +56,15 @@ export const nodes: Node[] = [
             children: [
               Node.create({
                 label: "A definition of impact",
-                url: "/articles/what-is-social-impact-definition/",
+                url: `${baseUrl}/articles/what-is-social-impact-definition/`,
               }),
               Node.create({
                 label: "Future generations & their moral significance",
-                url: "/articles/future-generations/",
+                url: `${baseUrl}/articles/future-generations/`,
               }),
               Node.create({
                 label: "Effective altruism",
-                url: "https://80k.local/articles/effective-altruism/",
+                url: `${baseUrl}/articles/effective-altruism/`,
               }),
             ],
           }),
@@ -71,19 +73,19 @@ export const nodes: Node[] = [
             children: [
               Node.create({
                 label: "Why problem selection is crucial",
-                url: "https://80k.local/articles/your-choice-of-problem-is-crucial/",
+                url: `${baseUrl}/articles/your-choice-of-problem-is-crucial/`,
               }),
               Node.create({
                 label: "The case for reducing existential risks",
-                url: "https://80k.local/articles/existential-risks/",
+                url: `${baseUrl}/articles/existential-risks/`,
               }),
               Node.create({
                 label: "This could be the most important century",
-                url: "https://80k.local/articles/the-most-important-century/",
+                url: `${baseUrl}/articles/the-most-important-century/`,
               }),
               Node.create({
                 label: "Our current list of pressing problems",
-                url: "https://80k.local/problem-profiles/",
+                url: `${baseUrl}/problem-profiles/`,
               }),
             ],
           }),
@@ -92,7 +94,7 @@ export const nodes: Node[] = [
             children: [
               Node.create({
                 label: "The best solutions are far more effective",
-                url: "https://80k.local/articles/solutions/",
+                url: `${baseUrl}/articles/solutions/`,
               }),
             ],
           }),
@@ -101,11 +103,11 @@ export const nodes: Node[] = [
             children: [
               Node.create({
                 label: "What is leverage, and how to get it?",
-                url: "https://80k.local/articles/leverage/",
+                url: `${baseUrl}/articles/leverage/`,
               }),
               Node.create({
                 label: "Our list of high-impact careers",
-                url: "https://80k.local/career-reviews/",
+                url: `${baseUrl}/career-reviews/`,
               }),
             ],
           }),
@@ -114,7 +116,7 @@ export const nodes: Node[] = [
             children: [
               Node.create({
                 label: "Fit is more important than you think",
-                url: "https://80k.local/articles/personal-fit/",
+                url: `${baseUrl}/articles/personal-fit/`,
               }),
             ],
           }),
@@ -123,11 +125,11 @@ export const nodes: Node[] = [
             children: [
               Node.create({
                 label: "What is career capital?",
-                url: "https://80k.local/articles/career-capital",
+                url: `${baseUrl}/articles/career-capital`,
               }),
               Node.create({
                 label: "What is career capital?",
-                url: "https://80k.local/articles/career-capital",
+                url: `${baseUrl}/articles/career-capital`,
               }),
             ],
           }),
@@ -136,10 +138,10 @@ export const nodes: Node[] = [
       NodeCategory.create({
         label: "Problem profiles",
         description: "Find out about the world's biggest and most neglected problems.",
-        url: "/problem-profiles/",
+        url: `${baseUrl}/problem-profiles/`,
         extension: {
           label: "Go to problems hub →",
-          url: "https://80k.local/problem-profiles/",
+          url: `${baseUrl}/problem-profiles/`,
         },
         children: [
           NodeCategory.create({
@@ -147,11 +149,11 @@ export const nodes: Node[] = [
             children: [
               Node.create({
                 label: "Preventing an AI-related catastrophe",
-                url: "https://80k.local/problem-profiles/artificial-intelligence/",
+                url: `${baseUrl}/problem-profiles/artificial-intelligence/`,
               }),
               Node.create({
                 label: "Global priorities research",
-                url: "https://80k.local/problem-profiles/global-priorities-research/",
+                url: `${baseUrl}/problem-profiles/global-priorities-research/`,
               }),
             ],
           }),
@@ -160,19 +162,19 @@ export const nodes: Node[] = [
             children: [
               Node.create({
                 label: "Mitigating great power conflict",
-                url: "https://80k.local/problem-profiles/#reducing-great-power-conflict",
+                url: `${baseUrl}/problem-profiles/#reducing-great-power-conflict`,
               }),
               Node.create({
                 label: "Global governance",
-                url: "https://80k.local/problem-profiles/#improve-global-governance",
+                url: `${baseUrl}/problem-profiles/#improve-global-governance`,
               }),
               Node.create({
                 label: "Space governance",
-                url: "https://80k.local/problem-profiles/space-governance",
+                url: `${baseUrl}/problem-profiles/space-governance`,
               }),
               Node.create({
                 label: "See all →",
-                url: "https://80k.local/problem-profiles/#potentially_promising",
+                url: `${baseUrl}/problem-profiles/#potentially_promising`,
               }),
             ],
           }),
@@ -182,7 +184,7 @@ export const nodes: Node[] = [
   }),
   Node.create({
     label: "Job board",
-    url: "https://jobs.80000hours.org",
+    url: "`${baseUrl}https://jobs.80000hours.org`",
   }),
   Node.create({
     label: "Podcast",
@@ -192,11 +194,11 @@ export const nodes: Node[] = [
         children: [
           Node.create({
             label: "The 80,000 Hours Podcast",
-            url: "/podcast/",
+            url: `${baseUrl}/podcast/`,
           }),
           Node.create({
             label: "80k After Hours",
-            url: "/after-hours-podcast/",
+            url: `${baseUrl}/after-hours-podcast/`,
           }),
         ],
       }),
@@ -205,11 +207,11 @@ export const nodes: Node[] = [
         children: [
           Node.create({
             label: "Effective Altruism: An Introduction",
-            url: "/podcast/effective-altruism-an-introduction/",
+            url: `${baseUrl}/podcast/effective-altruism-an-introduction/`,
           }),
           Node.create({
             label: "Effective Altruism: Ten Global Problems",
-            url: "/podcast/effective-altruism-ten-global-problems//",
+            url: `${baseUrl}/podcast/effective-altruism-ten-global-problems//`,
           }),
         ],
       }),
@@ -217,10 +219,10 @@ export const nodes: Node[] = [
   }),
   Node.create({
     label: "Get 1-1 advice",
-    url: "/speak-with-us/?int_campaign=2021-08__primary-navigation",
+    url: `${baseUrl}/speak-with-us/?int_campaign=2021-08__primary-navigation`,
   }),
   Node.create({
     label: "Book giveaway",
-    url: "/book-giveaway/",
+    url: `${baseUrl}/book-giveaway/`,
   }),
 ];
