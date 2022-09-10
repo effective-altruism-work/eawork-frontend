@@ -11,7 +11,7 @@ import AlgoliaLogo from "~/components/aloglia/algolia-logo.vue";
         {{nbHits}} jobs
       </template>
     </AisStats>
-    <AlgoliaLogo/>
+<!--    <AlgoliaLogo/>-->
   </CBox>
 </template>
 
