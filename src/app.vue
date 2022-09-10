@@ -36,3 +36,7 @@ onBeforeMount(async () => {
 
   </CFlex>
 </template>
+
+<style>
+@import "~/styles/font-80k";
+</style>

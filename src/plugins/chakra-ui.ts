@@ -13,6 +13,10 @@ export default defineNuxtPlugin((nuxtApp) => {
 });
 
 const theme = extendTheme({
+  fonts: {
+    heading: `"museo-sans", "Helvetica Neue", Helvetica, Arial, sans-serif`,
+    body: `"proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif`,
+  },
   components: {
     Button: {
       defaultProps: {
