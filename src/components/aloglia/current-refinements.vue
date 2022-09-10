@@ -1,6 +1,25 @@
 <script setup lang="ts">
 import { CButton, CBox, CFlex, CIcon } from "@chakra-ui/vue-next";
-import { theme } from "~/styles/theme";
+import { formatDistance } from "date-fns";
+
+function format(refinement: {
+  attribute: string;
+  operator: "<=" | ">=" | string;
+  value: string | number,
+  label: string;
+  type: any;
+}) {
+  if (refinement.attribute === "closes_at" || refinement.attribute === "posted_at") {
+    const dateDistance = formatDistance(new Date((refinement.value as number) * 1000), new Date());
+    if (refinement.attribute === "closes_at") {
+      return `Closes in ${dateDistance}`;
+    }
+    if (refinement.attribute === "posted_at") {
+      return `Posted ${dateDistance} ago`;
+    }
+  }
+  return refinement.label;
+}
 </script>
 
 <template>
@@ -31,7 +50,7 @@ import { theme } from "~/styles/theme";
             size="xs"
             font-weight="normal"
           >
-            {{ refinement.label }}
+            {{ format(refinement) }}
             <CIcon ml="2" mt="0.5" size="2" name="close" />
           </CButton>
         </CFlex>
