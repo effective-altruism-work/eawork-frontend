@@ -4388,6 +4388,11 @@ data-uri-to-buffer@^4.0.0:
   resolved "https://registry.yarnpkg.com/data-uri-to-buffer/-/data-uri-to-buffer-4.0.0.tgz#b5db46aea50f6176428ac05b73be39a57701a64b"
   integrity sha512-Vr3mLBA8qWmcuschSLAOogKgQ/Jwxulv3RNE4FXnYWRGujzrRWQI4m12fQqRkwX06C0KanhLr4hK+GydchZsaA==
 
+dataclass@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/dataclass/-/dataclass-2.0.0.tgz#932f583c0183a25b58d17d83ba7417e39804d056"
+  integrity sha512-XbxboeVjIS4TFtoNan/Hnjifda6zKYN4u5gJzK1qFBEgmB3Dyf2sGYvv5GbbO62fY7JjPe+PVbGEwgiiAGclWA==
+
 date-fns@^2.29.2:
   version "2.29.2"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.29.2.tgz#0d4b3d0f3dff0f920820a070920f0d9662c51931"
@@ -8980,11 +8985,6 @@ vue-final-modal@^3.4.4:
   version "3.4.4"
   resolved "https://registry.yarnpkg.com/vue-final-modal/-/vue-final-modal-3.4.4.tgz#9f4cdb0aabab86a14eb0c005b2645159b0f2095c"
   integrity sha512-4nOLU+cMcUqAT0kg+64+Hi96kkQPOph2LOJa7Fl58BXlTyhfRxaMuz3M91wi2ooMIL4poWA8428P5GIAXSpuZg==
-
-vue-gtag@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/vue-gtag/-/vue-gtag-2.0.1.tgz#d4dc1b9cf79809c37ce844824c0f7fa97af520dd"
-  integrity sha512-aM4A58FVL0wV2ptYi+xzAjeg+pQVRyUcfBc5UkXAwQrR4t3WBhor50Izp2I+3Oo7+l+vWJ7u78DGcNzReb8S/A==
 
 vue-instantsearch@^4.4.2:
   version "4.5.0"

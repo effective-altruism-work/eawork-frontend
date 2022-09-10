@@ -272,7 +272,7 @@ interface RouteState {
 @import "~/styles/chakra-ui.scss";
 
 html, html.dark {
-  background: var(--colors-gray-50);
+  background: #F4F6F7;
 }
 
 </style>

@@ -29,7 +29,7 @@ const theme = extendTheme({
         link: {
           fontWeight: "normal",
         },
-      }
+      },
     },
     Link: {
       baseStyle: {
