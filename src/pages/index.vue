@@ -164,9 +164,9 @@ interface RouteState {
             :show-more-limit="20"
             :searchable="true"
           />
-          <RefinementList attribute="tags_location_type" label="Location" />
-          <RefinementList attribute="tags_skill" label="Skills" />
-          <RefinementList attribute="tags_generic" label="Tags" />
+<!--          <RefinementList attribute="tags_location_type" label="Location" />-->
+<!--          <RefinementList attribute="tags_skill" label="Skills" />-->
+<!--          <RefinementList attribute="tags_generic" label="Tags" />-->
 
           <NumericMenu
             label="Posted at"
