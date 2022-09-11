@@ -132,7 +132,7 @@ interface RouteState {
     >
       <CFlex :mb="space * 4">
 
-        <CFlex direction="column" min-w="69%">
+        <CFlex direction="column" min-w="75%">
           <CFlex justify="flex-end" :gap="space">
 <!--            <BtnJobsAlert :query-json="state.queryJson.value" />-->
 
@@ -201,7 +201,7 @@ interface RouteState {
 
         </CFlex>
 
-        <CFlex direction="column" min-w="31%" max-w="31%" pl="10" position="sticky">
+        <CFlex direction="column" min-w="25%" max-w="25%" pl="10" position="sticky">
           <SearchBox />
 
           <CurrentRefinements />
