@@ -5,10 +5,10 @@ import AlgoliaLogo from "~/components/aloglia/algolia-logo.vue";
 
 <template>
   <CBox min-h="40px" class="algolia-search-box-main" pos="relative">
-    <AisSearchBox />
+    <AisSearchBox placeholder="Keywords" />
     <AisStats>
       <template v-slot="{ nbHits }">
-        <CFlex my="6" gap="1" justify="flex-end">
+        <CFlex my="5" gap="1" justify="flex-end">
           <CText font-weight="bold">{{nbHits}}</CText> roles
         </CFlex>
       </template>
@@ -28,7 +28,22 @@ import AlgoliaLogo from "~/components/aloglia/algolia-logo.vue";
       display: flex;
 
       .ais-SearchBox-input {
-        @include chakra-input;
+        width: 100%;
+        padding: var(--space-4);
+        color: var(--colors-gray-900);
+        border-radius: 12px;
+        background: #E8ECEE;
+        
+        &::placeholder {
+          color: #3a4142;
+        }
+        &:hover {
+          box-shadow: inset 0 0 0 1px #dae0e8 !important;
+        }
+        &:active, &:focus {
+          outline: none;
+          box-shadow: inset 0 0 0 1px var(--colors-gray-300) !important;
+        }
       }
       .ais-SearchBox-submit {
         display: none;
