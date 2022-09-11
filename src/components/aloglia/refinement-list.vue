@@ -44,7 +44,15 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
 
 <template>
   <CBox :mt="props.mt ?? 6">
-    <CFormLabel mb="2" line-height="1">{{ props.label }}</CFormLabel>
+    <CFormLabel
+      mb="2"
+      font-size="xl"
+      font-weight="bold"
+      line-height="1"
+      font-family="Open Sans, Arial"
+    >
+      {{ props.label }}
+    </CFormLabel>
 
     <AisRefinementList
       :attribute="props.attribute"
@@ -69,7 +77,6 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
         <CInput
           v-if="props.searchable"
           placeholder="Search..."
-          size="sm"
           @input="searchForItems($event.currentTarget.value)"
           mb="1"
           border-radius="md"
@@ -85,7 +92,7 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
           Top recommended problems
         </CText>
 
-        <chakra.ul mt="1px">
+        <chakra.ul mt="px">
           <li v-if="isFromSearch && !items.length">No results.</li>
           <RefinementListFacets
             :items="filterFacetValuesIfNeeded(items, 'featured')"

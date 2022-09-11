@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { CFlex, CBox, CButton, CLink, CText } from "@chakra-ui/vue-next";
-import { formatDistance } from "date-fns";
+import { formatDistance, format } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
 import { onMounted, ref, watch } from "vue";
+import JobCardTags from "~/components/job-card-tags.vue";
 import JobView from "~/components/job-view.vue";
-import JobSkills from "~/components/job-skills.vue";
 import { theme } from "~/styles/theme";
+import { useComp } from "~/utils/structs";
 import { JobAlgolia } from "~/utils/types";
 import { tracking } from "~/utils/tracking";
 import CollapseTransition from '@ivanv/vue-collapse-transition/src/CollapseTransition.vue'
@@ -26,13 +27,19 @@ const emit = defineEmits<{
 const state = {
   isShowModal: ref(false),
   isAccordionOpen: ref(props.isExpanded ?? false),
+  isAccordionOpening: ref(props.isExpanded ?? false),
   isHovering: ref(false),
 };
 
-const comp = {
-  space: 6,
-  id: `job-card-${props.job.post_pk}`,
-}
+const comp = useComp(() => {
+  const activeShadowBorder = "inset 0 0 0 1px #E1E6EA";
+  return {
+    space: 6,
+    id: `job-card-${props.job.post_pk}`,
+    activeShadowBorder,
+    activeShadow: `0 8px 24px 0 #9badb629, ${activeShadowBorder}`,
+  }
+});
 
 onMounted(async () => {
   await tracking.bindAnchorsTracking({
@@ -43,27 +50,33 @@ onMounted(async () => {
   });
 });
 
+function onCardClick() {
+  if (state.isAccordionOpen.value) {
+    emit("cardCollapsed");
+  } else {
+    emit("cardExpanded");
+    tracking.sendEvent(props.job, "viewed");
+  }
+  state.isAccordionOpen.value = !state.isAccordionOpen.value;
+}
+
 </script>
 
 <template>
   <CBox
     v-if="!props.isHidden"
-    @click="() => {
-      if (state.isAccordionOpen.value) {
-        emit('cardCollapsed');
-      } else {
-        emit('cardExpanded');
-        tracking.sendEvent(props.job, 'viewed');
-      }
-      state.isAccordionOpen.value = !state.isAccordionOpen.value;
-    }"
+    @click="onCardClick"
     @mouseover="state.isHovering.value = true"
     @mouseleave="state.isHovering.value = false"
-    mb="6"
+    mb="3"
     bg="white"
-    p="4"
-    border-radius="5px"
-    :_hover="{ cursor: 'pointer', boxShadow: 'lg' }"
+    p="6"
+    border-radius="12px"
+    :_hover="{
+      cursor: 'pointer',
+      boxShadow: state.isAccordionOpen.value ? comp.activeShadow : comp.activeShadowBorder,
+    }"
+    :box-shadow="state.isAccordionOpen.value ? comp.activeShadow : 0"
     transition="box-shadow 0.2s"
   >
     <CBox>
@@ -72,195 +85,65 @@ onMounted(async () => {
           <chakra.img
             v-if="props.job"
             :src="job.company_logo_url"
-            w="62px"
-            h="62px"
+            w="60px"
+            h="60px"
             bg="white"
-            border="1px solid #E2E8F0"
             loading="lazy"
           />
         </CLink>
 
         <CFlex
-          :ml="job.company_logo_url ? 3 : 0"
-          :justify="job.tags_city[0] ? 'space-between' : 'flex-start'"
+          ml="3"
+          justify="center"
           direction="column"
-          :gap="job.tags_city[0] ? 0 : 2"
+          gap="3"
         >
-          <CText font-weight="bold" line-height="1">
+          <CText font-weight="bold" line-height="none" font-size="xl">
             <span v-if="props.isMissingAlgoliaContext">{{ job.title }}</span>
             <ais-snippet v-else :hit="job" attribute="title" />
           </CText>
 
-          <CText font-size="15px" line-height="1">
+          <CText line-height="none">
             <span v-if="props.isMissingAlgoliaContext">{{ job.company_name }}</span>
             <ais-snippet v-else :hit="job" attribute="company_name" />
           </CText>
-          <CText
-            v-if="job.tags_city[0]"
-            font-size="15px"
-            line-height="1"
-          >
-            {{ job.tags_city[0] }}
-          </CText>
-<!--          <CBox v-if="job.tags_city[0]" w="3px" h="3px" mt="2px" bg="gray.300" />-->
         </CFlex>
       </CFlex>
-        
-      <CFlex w="100%" gap="3" mt="3" wrap="wrap">
-        <CFlex
-          v-for="area in job.tags_area"
-          :key="area"
-          direction="column"
-          gap="3"
-          bg="#f1faef"
-          px="2"
-          font-size="15px"
-        >
-          <CText color="#386f2c">{{ area }}</CText>
-        </CFlex>
-
-        <CFlex
-          v-for="workload in job.tags_workload"
-          :key="workload"
-          direction="column"
-          gap="3"
-          bg="#fbf6ed"
-          px="2"
-          font-size="15px"
-        >
-          <CText color="#98702e">{{ workload }}</CText>
-        </CFlex>
-
-        <CFlex
-          v-for="exp in job.tags_exp_required"
-          :key="exp"
-          direction="column"
-          gap="3"
-          bg="#edf1ff"
-          px="2"
-          font-size="15px"
-        >
-          <CText color="#1d2c5b">{{ exp }}</CText>
-        </CFlex>
-
-        <CFlex
-          v-for="location in job.tags_location_type"
-          :key="location"
-          direction="column"
-          gap="3"
-          bg="#E8F8F4"
-          px="2"
-          font-size="15px"
-        >
-          <CText color="#0E6D6F">{{ location }}</CText>
-        </CFlex>
-
-      </CFlex>
-      
-      <JobSkills :job="props.job"/>
-
-      <CollapseTransition>
-        <CBox :mt="comp.space / 2" v-show="!state.isAccordionOpen.value && props.isHasTextQuery">
-          <ais-snippet :hit="job" attribute="description_short" />
-        </CBox>
-      </CollapseTransition>
-
-      <CollapseTransition>
-        <CBox :mt="comp.space / 2" v-show="state.isAccordionOpen.value">
-          {{ job.description_short }}
-        </CBox>
-      </CollapseTransition>
-
-    </CBox>
-
-    <CFlex mt="4" justify="space-between" align="center">
-      <CFlex :gap="comp.space">
-
-<!--        <CLink-->
-<!--          :href="urls.jobs.view(props.job.post_pk)"-->
-<!--          @click.left.prevent="state.isShowModal.value = true"-->
-<!--          :_hover="{textDecoration: 'none'}"-->
-<!--        >-->
-<!--          <CButton-->
-<!--            size="sm"-->
-<!--            color-scheme="blue"-->
-<!--            variant="outline"-->
-<!--          >-->
-<!--            <OhVueIcon-->
-<!--              name="oi-eye"-->
-<!--              scale="1"-->
-<!--              color="var(&#45;&#45;colors-blue-500)"-->
-<!--              style="margin-right: 5px;"-->
-<!--            />-->
-<!--            View-->
-<!--          </CButton>-->
-<!--        </CLink>-->
-      
-        <CLink
-          @click="tracking.sendEvent(props.job, 'url_external clicked');"
-          @auxclick="tracking.sendEvent(props.job, 'url_external clicked');"
-          :href="job.url_external"
-          is-external
-          :_hover="{ textDecoration: 'none !important' }"
-          display="flex"
-          align-items="center"
-        >
-          <CButton size="sm" color-scheme="blue" variant="outline">
-            Apply
-            <OhVueIcon
-              name="ri-external-link-line"
-              scale="0.7"
-              color="var(--colors-blue-500)"
-              style="margin-left: 5px; margin-top: 1px;"
-            />
-          </CButton>
-        </CLink>
-
-        <Transition name="fade">
-          <CButton
-            v-if="state.isHovering.value"
-            variant="link"
-            color="gray.500"
-            font-size="sm"
+  
+      <CFlex
+        ml="60px"
+        pl="3"
+        mt="3"
+        justify="space-between"
+        align="center"
+        font-size="sm"
+      >
+        <CFlex align="center" gap="1">
+          <OhVueIcon
+            name="fa-map-marker-alt"
+            scale="0.75"
+            color="#9BADB6"
+            style="margin-bottom: 1px"
+          />
+          <CFlex
+            v-for="(city, index) in props.job.tags_city"
+            :key="city"
+            align="center"
+            gap="3"
+            color="#9BADB6"
           >
+            <CText>{{ city }}</CText>
             <CBox
-              :transform="state.isAccordionOpen.value ? 'rotate(180deg)' : 'rotate(0)'"
-              :mt="'2px'"
-              :mr="'5px'"
-            >
-              <OhVueIcon
-                name="hi-chevron-down"
-                scale="1.1"
-                color="var(--colors-gray-400)"
-              />
-            </CBox>
-            <span v-if="state.isAccordionOpen.value">Collapse</span>
-            <span v-else>Expand</span>
-          </CButton>
-        </Transition>
+              v-if="job.tags_city[index + 1]"
+              w="3px"
+              h="3px"
+              mr="3"
+              bg="gray.300"
+            />
+          </CFlex>
+        </CFlex>
         
-<!--        <CFlex align="center">-->
-<!--          <NuxtLink :to="urls.jobs.edit(props.job.post_pk)">-->
-<!--            <CButton size="sm" variant="link">-->
-<!--              Edit-->
-<!--            </CButton>-->
-<!--          </NuxtLink>-->
-<!--        </CFlex>-->
-
-<!--        <BtnJobFlag :job="props.job" />-->
-      </CFlex>
-
-      <CFlex gap="3" align="center" justify="center" h="100%" pt="0.5">
-        <CText v-if="props.job.closes_at" color="gray.500" font-size="sm">
-          Closes
-          {{
-            formatDistance(new Date(props.job.closes_at * 1000), new Date(), {
-              addSuffix: true,
-            })
-          }}
-        </CText>
-        <CBox v-if="props.job.closes_at" w="3px" h="3px" mt="3px" bg="gray.300" />
-        <CText color="gray.500" font-size="sm">
+        <CText color="#9BADB6">
           <span v-if="props.job.closes_at">Posted</span>
           {{
             formatDistance(new Date(props.job.posted_at * 1000), new Date(), {
@@ -270,7 +153,136 @@ onMounted(async () => {
         </CText>
       </CFlex>
 
-    </CFlex>
+      <CollapseTransition>
+        <CBox
+          :mt="comp.space / 2"
+          v-show="!state.isAccordionOpen.value && props.isHasTextQuery"
+          font-size="15px"
+        >
+          <ais-snippet :hit="job" attribute="description_short" />
+        </CBox>
+      </CollapseTransition>
+
+      
+      <CollapseTransition>
+        <CBox v-show="state.isAccordionOpen.value">
+          <Transition name="fade">
+            
+            <CBox
+              v-if="state.isAccordionOpen.value"
+              mt="4"
+              font-size="15px"
+            >
+              <JobCardTags :job="props.job" />
+
+              <CBox mt="4">
+                <CText color="gray.400" font-size="sm">DESCRIPTION</CText>
+                <CText mt="2">{{ job.description_short }}</CText>
+              </CBox>
+              
+              <CBox mt="4" v-if="job.closes_at">
+                <CText color="gray.400" font-size="sm">APPLICATIONS CLOSE</CText>
+                <CText mt="2">
+                  {{
+                    format(new Date(props.job.closes_at * 1000), "do MMMM yyyy")
+                  }}
+                </CText>
+              </CBox>
+
+              <CBox mt="4">
+                <CText color="gray.400" font-size="sm">ABOUT THIS ORGANISATION</CText>
+                <CText mt="2" v-if="job.company_description">{{ job.company_description }}</CText>
+              </CBox>
+              
+              <CFlex :mt="job.company_description ? 4 : 3" align="baseline" gap="4">
+                <CText font-size="sm" color="gray.400">LINKS</CText>
+                <CLink :href="props.job.company_url" is-external>Homepage</CLink>
+                <CLink :href="props.job.company_career_page_url" is-external>Vacancies page</CLink>
+              </CFlex>
+
+              <CFlex :gap="comp.space" mt="4">
+        
+                <!--<CLink-->
+                <!--  :href="urls.jobs.view(props.job.post_pk)"-->
+                <!--  @click.left.prevent="state.isShowModal.value = true"-->
+                <!--  :_hover="{textDecoration: 'none'}"-->
+                <!-- >-->
+                <!--  <CButton-->
+                <!--    size="sm"-->
+                <!--    color-scheme="blue"-->
+                <!--    variant="outline"-->
+                <!--  >-->
+                <!--    <OhVueIcon-->
+                <!--      name="oi-eye"-->
+                <!--      scale="1"-->
+                <!--      color="var(&#45;&#45;colors-blue-500)"-->
+                <!--      style="margin-right: 5px;"-->
+                <!--    />-->
+                <!--    View-->
+                <!--  </CButton>-->
+                <!--</CLink>-->
+              
+                <CLink
+                  @click="tracking.sendEvent(props.job, 'url_external clicked');"
+                  @auxclick="tracking.sendEvent(props.job, 'url_external clicked');"
+                  :href="job.url_external"
+                  is-external
+                  :_hover="{ textDecoration: 'none !important' }"
+                  display="flex"
+                  align-items="center"
+                >
+                  <CButton>
+                    VIEW JOB DETAILS
+                    <OhVueIcon
+                      name="ri-external-link-line"
+                      scale="1"
+                      color="white"
+                      style="margin-left: 5px; margin-bottom: 3px;"
+                    />
+                  </CButton>
+                </CLink>
+        
+<!--                <Transition name="fade">-->
+<!--                  <CButton-->
+<!--                    v-if="state.isHovering.value"-->
+<!--                    variant="link"-->
+<!--                    color="gray.500"-->
+<!--                    font-size="sm"-->
+<!--                  >-->
+<!--                    <CBox-->
+<!--                      :transform="state.isAccordionOpen.value ? 'rotate(180deg)' : 'rotate(0)'"-->
+<!--                      :mt="'2px'"-->
+<!--                      :mr="'5px'"-->
+<!--                    >-->
+<!--                      <OhVueIcon-->
+<!--                        name="hi-chevron-down"-->
+<!--                        scale="1.1"-->
+<!--                        color="var(&#45;&#45;colors-gray-400)"-->
+<!--                      />-->
+<!--                    </CBox>-->
+<!--                    <span v-if="state.isAccordionOpen.value">Collapse</span>-->
+<!--                    <span v-else>Expand</span>-->
+<!--                  </CButton>-->
+<!--                </Transition>-->
+        
+                <!--<CFlex align="center">-->
+                <!--  <NuxtLink :to="urls.jobs.edit(props.job.post_pk)">-->
+                <!--    <CButton size="sm" variant="link">-->
+                <!--      Edit-->
+                <!--    </CButton>-->
+                <!--  </NuxtLink>-->
+                <!--</CFlex>-->
+                
+                <!--<BtnJobFlag :job="props.job" />-->
+              </CFlex>
+
+            </CBox>
+
+          </Transition>
+        </CBox>
+      </CollapseTransition>
+
+    </CBox>
     
     <VueFinalModal
       v-if="state.isShowModal.value"
@@ -308,7 +320,7 @@ onMounted(async () => {
 <style>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s ease;
+  transition: opacity 0.5s ease;
 }
 
 .fade-enter-from,

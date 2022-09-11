@@ -25,13 +25,13 @@ const comp = {
 
 <template>
   <CBox>
-    <CContainer w="100%" m="auto" max-w="6xl">
+    <CContainer w="100%" m="auto" max-w="8xl">
   
       <CFlex direction="column" align="center">
         <CFlex
           w="100%"
           grow="1"
-          max-w="6xl"
+          max-w="8xl"
           justify="center"
           :py="4 - 1"
           bg="white"
@@ -49,7 +49,7 @@ const comp = {
           display="flex"
           justify-content="space-between"
           w="100%"
-          max-w="6xl"
+          max-w="8xl"
         >
           <CFlex>Home</CFlex>
     

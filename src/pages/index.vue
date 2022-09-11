@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
-import { CFlex, CHeading, CButton, CBox, CText } from "@chakra-ui/vue-next";
+import { CFlex, CHeading, CButton, CVStack, CBox, CText } from "@chakra-ui/vue-next";
 import algoliasearch from "algoliasearch";
 import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns";
 import { onMounted, ref, watch } from "vue";
@@ -94,6 +94,12 @@ interface RouteState {
 
 <template>
   <CBox>
+
+    <CVStack my="16" gap="3">
+      <CHeading line-height="0.8" font-size="5xl" font-family="Open Sans">Jobs</CHeading>
+      <CText mt="3" font-size="lg">handpicked to help you tackle the world’s most pressing problems with your career.</CText>
+    </CVStack>
+
     <AisInstantSearch
       show-loading-indicator
       :routing="{
@@ -125,79 +131,10 @@ interface RouteState {
       :index-name="state.config.public.algoliaJobsIndex"
     >
       <CFlex :mb="space * 4">
-        <CFlex direction="column" min-w="31%" max-w="31%" pr="12" position="sticky">
-          <SearchBox />
-
-          <CBox mt="6">
-            <CurrentRefinements />
-          </CBox>
-
-          <RefinementList attribute="tags_area" label="Areas" :mt="0" />
-          <RefinementList attribute="tags_role_type" label="Roles" />
-          <RefinementList
-            attribute="tags_degree_required"
-            label="Educational requirements"
-          />
-          <RefinementList
-            attribute="tags_exp_required"
-            label="Experience requirements"
-          />
-
-          <RefinementList
-            attribute="tags_country"
-            label="Country"
-            :limit="6"
-            :show-more-limit="20"
-            :searchable="true"
-          />
-          <RefinementList
-            attribute="tags_city"
-            label="City"
-            :limit="6"
-            :show-more-limit="20"
-            :searchable="true"
-          />
-          <RefinementList
-            attribute="company_name"
-            label="Company"
-            :limit="6"
-            :show-more-limit="20"
-            :searchable="true"
-          />
-<!--          <RefinementList attribute="tags_location_type" label="Location" />-->
-<!--          <RefinementList attribute="tags_skill" label="Skills" />-->
-<!--          <RefinementList attribute="tags_generic" label="Tags" />-->
-
-          <NumericMenu
-            label="Posted at"
-            attribute="posted_at"
-            :items="[
-              { label: 'Anytime' },
-              { label: 'Today', start: getUnixTime(subDays(new Date(), 1)) },
-              { label: 'A week ago', start: getUnixTime(subDays(new Date(), 7)) },
-              { label: '30d ago', start: getUnixTime(subDays(new Date(), 30)) },
-              { label: '3m ago', start: getUnixTime(subDays(new Date(), 91)) },
-              { label: 'This year', start: getUnixTime(startOfYear(new Date())) },
-            ]"
-          />
-          
-          <NumericMenu
-            label="Closes in"
-            attribute="closes_at"
-            :items="[
-              { label: 'Anytime' },
-              { label: 'Today', end: getUnixTime(addDays(new Date(), 1)) },
-              { label: 'In a week', end: getUnixTime(addDays(new Date(), 7)) },
-              { label: 'In 30d', end: getUnixTime(addDays(new Date(), 30)) },
-              { label: 'In 3m', end: getUnixTime(addDays(new Date(), 91)) },
-              { label: 'This year', end: getUnixTime(endOfYear(new Date())) },
-            ]"
-          />
-        </CFlex>
 
         <CFlex direction="column" min-w="69%">
           <CFlex justify="flex-end" :gap="space">
-            <BtnJobsAlert :query-json="state.queryJson.value" />
+<!--            <BtnJobsAlert :query-json="state.queryJson.value" />-->
 
 <!--            <NuxtLink :to="urls.jobs.post">-->
 <!--              <CButton color-scheme="blue" variant="outline">-->
@@ -207,7 +144,7 @@ interface RouteState {
 <!--            </NuxtLink>-->
           </CFlex>
 
-          <CBox :mt="space">
+          <CBox>
             <CBox min-h="100vh">
               <AisInfiniteHits>
                 <template
@@ -263,6 +200,76 @@ interface RouteState {
           </CBox>
 
         </CFlex>
+
+        <CFlex direction="column" min-w="31%" max-w="31%" pl="10" position="sticky">
+          <SearchBox />
+
+          <CurrentRefinements />
+
+          <RefinementList attribute="tags_area" label="Areas" :mt="0" />
+          <RefinementList attribute="tags_role_type" label="Roles" />
+          <RefinementList
+            attribute="tags_degree_required"
+            label="Educational requirements"
+          />
+          <RefinementList
+            attribute="tags_exp_required"
+            label="Experience requirements"
+          />
+
+          <RefinementList
+            attribute="tags_country"
+            label="Country"
+            :limit="6"
+            :show-more-limit="20"
+            :searchable="true"
+          />
+          <RefinementList
+            attribute="tags_city"
+            label="City"
+            :limit="6"
+            :show-more-limit="20"
+            :searchable="true"
+          />
+          <RefinementList
+            attribute="company_name"
+            label="Company"
+            :limit="6"
+            :show-more-limit="20"
+            :searchable="true"
+          />
+
+          <!--<RefinementList attribute="tags_location_type" label="Location" />-->
+          <!--<RefinementList attribute="tags_skill" label="Skills" />-->
+          <!--<RefinementList attribute="tags_generic" label="Tags" />-->
+
+          <NumericMenu
+            label="Posted at"
+            attribute="posted_at"
+            :items="[
+              { label: 'Anytime' },
+              { label: 'Today', start: getUnixTime(subDays(new Date(), 1)) },
+              { label: 'A week ago', start: getUnixTime(subDays(new Date(), 7)) },
+              { label: '30d ago', start: getUnixTime(subDays(new Date(), 30)) },
+              { label: '3m ago', start: getUnixTime(subDays(new Date(), 91)) },
+              { label: 'This year', start: getUnixTime(startOfYear(new Date())) },
+            ]"
+          />
+          
+          <NumericMenu
+            label="Closes in"
+            attribute="closes_at"
+            :items="[
+              { label: 'Anytime' },
+              { label: 'Today', end: getUnixTime(addDays(new Date(), 1)) },
+              { label: 'In a week', end: getUnixTime(addDays(new Date(), 7)) },
+              { label: 'In 30d', end: getUnixTime(addDays(new Date(), 30)) },
+              { label: 'In 3m', end: getUnixTime(addDays(new Date(), 91)) },
+              { label: 'This year', end: getUnixTime(endOfYear(new Date())) },
+            ]"
+          />
+        </CFlex>
+
       </CFlex>
     </AisInstantSearch>
   </CBox>

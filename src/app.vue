@@ -29,7 +29,7 @@ onBeforeMount(async () => {
     <Menu />
 
     <CBox bg="#F4F6F7">
-      <CContainer max-w="6xl" :pt="theme.spaces.md">
+      <CContainer max-w="8xl">
         <NuxtPage />
       </CContainer>
     </CBox>

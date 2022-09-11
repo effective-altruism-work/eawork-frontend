@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CBox } from "@chakra-ui/vue-next";
+import { CBox, CText, CFlex } from "@chakra-ui/vue-next";
 import AlgoliaLogo from "~/components/aloglia/algolia-logo.vue";
 </script>
 
@@ -8,7 +8,9 @@ import AlgoliaLogo from "~/components/aloglia/algolia-logo.vue";
     <AisSearchBox />
     <AisStats>
       <template v-slot="{ nbHits }">
-        {{nbHits}} jobs
+        <CFlex my="6" gap="1" justify="flex-end">
+          <CText font-weight="bold">{{nbHits}}</CText> roles
+        </CFlex>
       </template>
     </AisStats>
 <!--    <AlgoliaLogo/>-->
@@ -35,15 +37,6 @@ import AlgoliaLogo from "~/components/aloglia/algolia-logo.vue";
         display: none;
       }
     }
-  }
-  
-  .ais-Stats {
-    position: absolute;
-    color: var(--colors-gray-400);
-    font-size: 0.7rem;
-    right: 0;
-    bottom: -20px;
-    padding-top: 3px;
   }
 }
 </style>

@@ -31,7 +31,7 @@ function shortenTagName(tagName: string) {
       :model-value="item.isRefined"
       @update:model-value="() => props.refine(item.value)"
     >
-      <CText font-size="0.95rem" mt="1px" :_hover="{ color: 'blue.500' }">
+      <CText mt="1px" :_hover="{ color: 'blue.500' }">
         <ais-highlight v-if="props.searchable" attribute="item" :hit="item" />
         <span v-else>
           {{ shortenTagName(item.value) }}

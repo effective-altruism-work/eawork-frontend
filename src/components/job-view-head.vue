@@ -5,6 +5,7 @@ import algoliasearch from "algoliasearch";
 import { OhVueIcon } from "oh-vue-icons";
 import { onMounted, onUpdated, ref, watch } from "vue";
 import FlagBtn from "~/components/btn-job-flag.vue";
+import JobCardTags from "~/components/job-card-tags.vue";
 import { useStateVar } from "~/utils/structs";
 import { JobAlgolia } from "~/utils/types";
 import { urls } from "~/constants";
@@ -171,9 +172,7 @@ const space = 6;
 
     </CFlex>
 
-    <CFlex mt="0">
-      <JobSkills :job="props.job"/>
-    </CFlex>
+    <JobCardTags :job="props.job" />
     
     <CBox v-if="props.job.description" :mt="space / 2" v-html="props.job.description"/>
   

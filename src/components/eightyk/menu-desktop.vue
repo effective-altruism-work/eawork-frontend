@@ -40,7 +40,7 @@ function onKeyUp(event) {
 }
 
 function isCurrentNode(node: Node) {
-  return state.nodeOpened.value?.label === node.label;
+  return state.nodeOpened.value?.label === node.label && node.categories;
 }
 
 </script>
