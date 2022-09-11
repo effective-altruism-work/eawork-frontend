@@ -110,7 +110,7 @@ interface RouteState {
             return {
               query: indexUiState.query,
               refinementList: indexUiState.refinementList,
-              jobPk: state.jobPkCurrent.value,
+              ...(state.jobPkCurrent.value ? { jobPk: state.jobPkCurrent.value } : {}),
             };
           },
           routeToState(routeState: RouteState): { [indexId: string]: IndexUiState } {
