@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CBox, CText, CButton, CBadge, CInput, CFormLabel } from "@chakra-ui/vue-next";
+import { CBox, CText, CButton, CBadge, CInput, CFormLabel, chakra } from "@chakra-ui/vue-next";
 import Checkbox from "~/components/chakra/checkbox.vue";
 
 const props = defineProps<{
@@ -26,7 +26,11 @@ function shortenTagName(tagName: string) {
 </script>
 
 <template>
-  <li v-for="item in props.items" :key="item.value">
+  <chakra.li
+    v-for="item in props.items"
+    :key="item.value"
+    mt="1"
+  >
     <Checkbox
       :model-value="item.isRefined"
       @update:model-value="() => props.refine(item.value)"
@@ -36,10 +40,20 @@ function shortenTagName(tagName: string) {
         <span v-else>
           {{ shortenTagName(item.value) }}
         </span>
-        <CBadge ml="1" mt="0" font-weight="normal" font-size="0.6rem">
+        <CBadge
+          ml="2"
+          mt="0"
+          py="2px"
+          px="4px"
+          font-weight="normal"
+          font-size="xs"
+          color="gray.400"
+          border-radius="4px"
+          bg="white"
+        >
           {{ item.count.toLocaleString() }}
         </CBadge>
       </CText>
     </Checkbox>
-  </li>
+  </chakra.li>
 </template>

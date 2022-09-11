@@ -45,11 +45,10 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
 <template>
   <CBox :mt="props.mt ?? 6">
     <CFormLabel
-      mb="2"
+      mb="3"
       font-size="xl"
       font-weight="bold"
-      line-height="1"
-      font-family="Open Sans, Arial"
+      line-height="none"
     >
       {{ props.label }}
     </CFormLabel>
@@ -85,7 +84,7 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
 
         <CText
           v-if="props.attribute === 'tags_area'"
-          mt="2"
+          mt="3"
           font-weight="bold"
           font-size="13px"
         >
@@ -104,7 +103,7 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
         <CBox v-if="props.attribute === 'tags_area'">
 
           <CText
-            mt="2"
+            mt="3"
             font-weight="bold"
             font-size="13px"
           >

@@ -86,6 +86,7 @@ function onCardClick() {
             v-if="props.job"
             :src="job.company_logo_url"
             w="60px"
+            min-w="60px"
             h="60px"
             bg="white"
             loading="lazy"

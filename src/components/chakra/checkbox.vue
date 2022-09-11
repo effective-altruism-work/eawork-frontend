@@ -85,13 +85,12 @@ const value = computed({
   }
 
   .chakra-checkbox__control {
+    margin-top: 5px;
     width: var(--sizes-4);
-    transition-property: box-shadow;
-    transition-duration: var(--transition-duration-normal);
-    border-width: 2px;
-    border-style: solid;
-    border-radius: var(--radii-sm);
+    transition: box-shadow var(--transition-duration-normal);
+    border: 2px solid;
     border-color: inherit;
+    border-radius: var(--radii-sm);
     color: var(--colors-white);
     height: var(--sizes-4);
     display: inline-flex;
@@ -109,7 +108,7 @@ const value = computed({
     }
   }
   .chakra-checkbox__label {
-    margin-inline-start: 0.5rem;
+    margin-inline-start: 0.6rem;
     user-select: none;
     font-size: var(--chakra-fontSizes-md);
   }
