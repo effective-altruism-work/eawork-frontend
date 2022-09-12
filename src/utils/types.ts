@@ -58,6 +58,7 @@ export interface JobAlgolia {
   tags_degree_required: string[];
   tags_immigration: string[];
   tags_location_type: string[];
+  tags_location_80k: string[];
   tags_generic: string[];
 }
 

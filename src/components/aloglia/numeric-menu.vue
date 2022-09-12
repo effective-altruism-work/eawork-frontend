@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CHeading, CBox } from "@chakra-ui/vue-next";
+import { CHeading, CFormLabel, CBox } from "@chakra-ui/vue-next";
 
 const props = defineProps<{
   attribute: string;
@@ -11,7 +11,14 @@ const props = defineProps<{
 
 <template>
   <CBox mt="6">
-    <CHeading size="sm" mb="2px" font-weight="normal">{{ props.label }}</CHeading>
+    <CFormLabel
+      font-size="xl"
+      font-weight="bold"
+      line-height="none"
+    >
+      {{ props.label }}
+    </CFormLabel>
+
     <ais-numeric-menu
       :attribute="props.attribute"
       :items="props.items"
@@ -23,11 +30,12 @@ const props = defineProps<{
 @import "~/styles/chakra-ui.scss";
 
 .ais-NumericMenu-label {
+  margin-top: var(--sizes-1);
   @extend .chakra-radio;
 
   .ais-NumericMenu-labelText {
     margin-inline-start: 0.5rem;
-    font-size: 0.95rem;
+    font-size: 1rem;
 
     &:hover {
       color: var(--colors-blue-500);

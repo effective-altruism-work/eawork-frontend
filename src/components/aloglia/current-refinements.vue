@@ -65,6 +65,7 @@ function format(refinement: {
     flex-wrap: wrap;
     gap: var(--space-2);
     margin-bottom: var(--space-6);
+
     &.ais-CurrentRefinements--noRefinement {
       margin-bottom: 0;
     }

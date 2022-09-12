@@ -11,6 +11,7 @@ const props = defineProps<{
   }>;
   searchable: boolean;
   refine: (string) => void;
+  countBg?: string;
 }>();
 
 function shortenTagName(tagName: string) {
@@ -49,7 +50,7 @@ function shortenTagName(tagName: string) {
           font-size="xs"
           color="gray.400"
           border-radius="4px"
-          bg="white"
+          :bg="props.countBg ?? 'white'"
         >
           {{ item.count.toLocaleString() }}
         </CBadge>

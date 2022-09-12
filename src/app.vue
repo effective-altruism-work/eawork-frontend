@@ -17,10 +17,6 @@ useHead({
   link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
 });
 
-onBeforeMount(async () => {
-  await tracking.init(state.config.public.segmentId);
-});
-
 </script>
 
 <template>
@@ -29,7 +25,7 @@ onBeforeMount(async () => {
     <Menu />
 
     <CBox bg="#F4F6F7">
-      <CContainer max-w="8xl">
+      <CContainer max-w="8xl" :px="[3, null, 4]">
         <NuxtPage />
       </CContainer>
     </CBox>

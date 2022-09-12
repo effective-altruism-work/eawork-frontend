@@ -1,11 +1,18 @@
 <script setup lang="ts">
+import { useRuntimeConfig } from "#app";
 import { CFlex, CBox, CButton, CContainer, CLink, CHeading, CText, chakra } from "@chakra-ui/vue-next";
+import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { ref } from "vue";
 import { nodes, Node, NodeCategory } from "~/nodes";
 import { OhVueIcon } from "oh-vue-icons";
 import { useComp } from "~/utils/structs";
 import MenuDesktop from "~/components/eightyk/menu-desktop";
 import MenuMobile from "~/components/eightyk/menu-mobile";
+
+const hooks = {
+  breakpoints: useBreakpoints(breakpointsTailwind),
+  config: useRuntimeConfig(),
+};
 
 const state = {
   nodeOpened: ref<Node>(null),
@@ -26,8 +33,12 @@ const comp = {
 <template>
   <CBox>
     <CContainer w="100%" m="auto" max-w="8xl">
-  
-      <CFlex direction="column" align="center">
+
+      <CFlex
+        v-if="hooks.breakpoints.isGreaterOrEqual('xl')"
+        direction="column"
+        align="center"
+      >
         <CFlex
           w="100%"
           grow="1"
@@ -39,27 +50,34 @@ const comp = {
           <MenuDesktop />
         </CFlex>
       </CFlex>
-  <!--    <MenuMobile />-->
+      
+<!--      <MenuMobile v-else />-->
   
     </CContainer>
-    
-      <CFlex bg="#EEEEEE" direction="column" align="center" py="2">
 
-        <CContainer
-          display="flex"
-          justify-content="space-between"
-          w="100%"
-          max-w="8xl"
-        >
-          <CFlex>Home</CFlex>
-    
-          <CFlex gap="6">
-            <CLink color="comp.black50">New releases</CLink>
-            <CLink color="comp.black50">All articles</CLink>
-            <CLink color="comp.black50">Community</CLink>
-            <CLink color="comp.black50">About</CLink>
-          </CFlex>
-        </CContainer>
-      </CFlex>
+    <CFlex
+      v-if="hooks.breakpoints.isGreaterOrEqual('xl')"
+      bg="#EEEEEE"
+      direction="column"
+      align="center"
+      py="2"
+    >
+
+      <CContainer
+        display="flex"
+        justify-content="space-between"
+        w="100%"
+        max-w="8xl"
+      >
+        <CFlex>Home</CFlex>
+  
+        <CFlex gap="6">
+          <CLink color="comp.black50">New releases</CLink>
+          <CLink color="comp.black50">All articles</CLink>
+          <CLink color="comp.black50">Community</CLink>
+          <CLink color="comp.black50">About</CLink>
+        </CFlex>
+      </CContainer>
+    </CFlex>
   </CBox>
 </template>

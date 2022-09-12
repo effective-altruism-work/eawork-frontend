@@ -1,20 +1,27 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
-import { CFlex, CHeading, CButton, CVStack, CBox, CText } from "@chakra-ui/vue-next";
+import { CFlex, CHeading, CButton, CVStack, CLink, CBox, CText } from "@chakra-ui/vue-next";
+import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import algoliasearch from "algoliasearch";
 import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns";
-import { onMounted, ref, watch } from "vue";
+import { onBeforeMount, onMounted, ref, watch } from "vue";
 import CurrentRefinements from "~/components/aloglia/current-refinements.vue";
-import NumericMenu from "~/components/aloglia/numeric-menu.vue";
-import RefinementList from "~/components/aloglia/refinement-list.vue";
-import SearchBox from "~/components/aloglia/search-box.vue";
+import Filters from "~/components/aloglia/filters.vue";
 import BtnJobsAlert from "~/components/btn-jobs-alert.vue";
 import JobCardSkeleton from "~/components/job-card-skeleton.vue";
 import JobCard from "~/components/job-card.vue";
 import { history } from "instantsearch.js/es/lib/routers";
 import { IndexUiState } from "instantsearch.js/es/types/ui-state";
-import { useStateVar } from "~/utils/structs";
+import { useComp, useStateVar } from "~/utils/structs";
+import { tracking } from "~/utils/tracking";
 import { JobAlgolia } from "~/utils/types";
+import { OhVueIcon } from "oh-vue-icons";
+
+
+const hooks = {
+  breakpoints: useBreakpoints(breakpointsTailwind),
+  config: useRuntimeConfig(),
+};
 
 const state = useStateVar(() => {
   const config = useRuntimeConfig();
@@ -32,7 +39,21 @@ const state = useStateVar(() => {
     queryJson: ref<null | { query: string; facetFilters: string[]; }>(null),
     jobPkCurrent: ref<number | null>(null),
     jobFromUrlQuery: ref<JobAlgolia | null>(null),
+    isShowMobileFilters: ref(false),
   };
+});
+
+const comp = useComp(() => {
+  return {
+    cardW: { base: "100%", lg: "70%", xl: "74%" },
+    filtersW: { base: 0, lg: "30%", xl: "26%" },
+    filtersDisplay: { base: "none", lg: "flex" },
+    space: 6,
+  }
+});
+
+onBeforeMount(async () => {
+  await tracking.init(state.config.public.segmentId);
 });
 
 onMounted(async () => {
@@ -54,8 +75,6 @@ watch(state.jobPkCurrent, (jobPkCurrentNew: number | null) => {
     window.history.pushState({}, "", url);
   }
 });
-
-const space = 6;
 
 function searchFunction(helper) {
   saveQueryJson(helper.state);
@@ -95,10 +114,60 @@ interface RouteState {
 <template>
   <CBox>
 
-    <CVStack my="16" gap="3">
-      <CHeading line-height="0.8" font-size="5xl" font-family="Open Sans">Jobs</CHeading>
-      <CText mt="3" font-size="lg">handpicked to help you tackle the world’s most pressing problems with your career.</CText>
+    <CVStack :mt="[8, null, null, 14]" :mb="[6, null, null, 14]" :gap="[4, null, null, 3]">
+      <CFlex justify="space-between" align="center">
+        <CHeading
+          line-height="0.8"
+          :font-size="['2.7rem', null, null, '5xl']"
+          font-family="Open Sans"
+        >
+          Jobs
+        </CHeading>
+
+        <CButton
+          v-if="hooks.breakpoints.isSmaller('lg')"
+          size="lg"
+          @click="state.isShowMobileFilters.value = true"
+        >
+          <OhVueIcon
+            name="md-filterlist-round"
+            scale="1.1"
+            style="margin-bottom: 1px"
+          />
+          <chakra.span ml="2">Filters</chakra.span>
+        </CButton>
+
+      </CFlex>
+      <CText font-size="lg">handpicked to help you tackle the world’s most pressing problems with your career.</CText>
     </CVStack>
+
+    <CFlex gap="4" :mt="[null, null, null, -2]" :mb="[8, null, null, 6]">
+      <CLink
+        href="https://80000hours.org/job-board/?tab=organisations"
+        text-decoration="underline"
+        color="gray.400"
+      >
+        <OhVueIcon
+          name="md-starrate-round"
+          scale="1.1"
+          style="margin-bottom: 1px"
+        />
+        <chakra.span ml="1">Top recommended organisations</chakra.span>
+      </CLink>
+      <CLink
+        href="https://80000hours.org/job-board/?tab=faq"
+        text-decoration="underline"
+        color="gray.400"
+      >
+        <OhVueIcon
+          name="bi-question-circle-fill"
+          scale="1"
+          style="margin-right: 4px"
+        />
+        <chakra.span ml="px">FAQ</chakra.span>
+      </CLink>
+    </CFlex>
+
 
     <AisInstantSearch
       show-loading-indicator
@@ -130,18 +199,18 @@ interface RouteState {
       :search-function="searchFunction"
       :index-name="state.config.public.algoliaJobsIndex"
     >
-      <CFlex :mb="space * 4">
+      <CFlex :mb="comp.space * 4">
 
-        <CFlex direction="column" min-w="75%">
-          <CFlex justify="flex-end" :gap="space">
-<!--            <BtnJobsAlert :query-json="state.queryJson.value" />-->
-
-<!--            <NuxtLink :to="urls.jobs.post">-->
-<!--              <CButton color-scheme="blue" variant="outline">-->
-<!--                <OhVueIcon name="hi-solid-plus" scale="1" color="var(&#45;&#45;colors-blue-600)" />-->
-<!--                <CText ml="2">Post Job</CText>-->
-<!--              </CButton>-->
-<!--            </NuxtLink>-->
+        <CFlex direction="column" :min-w="comp.cardW">
+          <CFlex justify="flex-end" :gap="comp.space">
+            <!--<BtnJobsAlert :query-json="state.queryJson.value" />-->
+            
+            <!--<NuxtLink :to="urls.jobs.post">-->
+            <!--  <CButton color-scheme="blue" variant="outline">-->
+            <!--    <OhVueIcon name="hi-solid-plus" scale="1" color="var(&#45;&#45;colors-blue-600)" />-->
+            <!--    <CText ml="2">Post Job</CText>-->
+            <!--  </CButton>-->
+            <!--</NuxtLink>-->
           </CFlex>
 
           <CBox>
@@ -201,74 +270,83 @@ interface RouteState {
 
         </CFlex>
 
-        <CFlex direction="column" min-w="25%" max-w="25%" pl="10" position="sticky">
-          <SearchBox />
-
-          <CurrentRefinements />
-
-          <RefinementList attribute="tags_area" label="Areas" :mt="0" />
-          <RefinementList attribute="tags_role_type" label="Roles" />
-          <RefinementList
-            attribute="tags_degree_required"
-            label="Educational requirements"
-          />
-          <RefinementList
-            attribute="tags_exp_required"
-            label="Experience requirements"
-          />
-
-          <RefinementList
-            attribute="tags_country"
-            label="Country"
-            :limit="6"
-            :show-more-limit="20"
-            :searchable="true"
-          />
-          <RefinementList
-            attribute="tags_city"
-            label="City"
-            :limit="6"
-            :show-more-limit="20"
-            :searchable="true"
-          />
-          <RefinementList
-            attribute="company_name"
-            label="Company"
-            :limit="6"
-            :show-more-limit="20"
-            :searchable="true"
-          />
-
-          <!--<RefinementList attribute="tags_location_type" label="Location" />-->
-          <!--<RefinementList attribute="tags_skill" label="Skills" />-->
-          <!--<RefinementList attribute="tags_generic" label="Tags" />-->
-
-          <NumericMenu
-            label="Posted at"
-            attribute="posted_at"
-            :items="[
-              { label: 'Anytime' },
-              { label: 'Today', start: getUnixTime(subDays(new Date(), 1)) },
-              { label: 'A week ago', start: getUnixTime(subDays(new Date(), 7)) },
-              { label: '30d ago', start: getUnixTime(subDays(new Date(), 30)) },
-              { label: '3m ago', start: getUnixTime(subDays(new Date(), 91)) },
-              { label: 'This year', start: getUnixTime(startOfYear(new Date())) },
-            ]"
-          />
-          
-          <NumericMenu
-            label="Closes in"
-            attribute="closes_at"
-            :items="[
-              { label: 'Anytime' },
-              { label: 'Today', end: getUnixTime(addDays(new Date(), 1)) },
-              { label: 'In a week', end: getUnixTime(addDays(new Date(), 7)) },
-              { label: 'In 30d', end: getUnixTime(addDays(new Date(), 30)) },
-              { label: 'In 3m', end: getUnixTime(addDays(new Date(), 91)) },
-              { label: 'This year', end: getUnixTime(endOfYear(new Date())) },
-            ]"
-          />
+        <CFlex
+          :display="comp.filtersDisplay"
+          direction="column"
+          :min-w="comp.filtersW"
+          :max-w="comp.filtersW"
+          pl="10"
+          position="sticky"
+        >
+          <Filters :is-show-results-count="true" />
         </CFlex>
+        
+        <VueFinalModal
+          v-if="state.isShowMobileFilters.value"
+          v-model="state.isShowMobileFilters.value"
+          :click-to-close="true"
+          :esc-to-close="true"
+        >
+          <CFlex
+            pos="absolute"
+            left="0"
+            bottom="0"
+            w="100vw"
+            h="94vh"
+            gap="6"
+            p="6"
+            pt="7"
+            direction="column"
+            bg="white"
+            border-radius="12px"
+            border-bottom-radius="0"
+            overflow="scroll"
+          >
+            <CFlex justify="space-between" align="center" my="-1">
+              <CHeading size="lg" line-height="none">Filters</CHeading>
+              <CButton
+                @click="state.isShowMobileFilters.value = false"
+                size="sm"
+                color-scheme="gray"
+                border-radius="full"
+                color="blue.500"
+                bg="#F4F6F7"
+              >
+                <OhVueIcon
+                  name="io-close"
+                  scale="1"
+                  style="position: absolute"
+                />
+              </CButton>
+            </CFlex>
+            
+            <Filters :is-show-results-count="false" count-bg="gray.50" />
+      
+            <CSpacer mt="12" />
+            <CFlex
+              pos="fixed"
+              bottom="0"
+              left="0"
+              w="100vw"
+              h="fit-content"
+              p="4"
+              px="6"
+              justify="center"
+              bg="#F4F6F7"
+            >
+              <CButton
+                @click="state.isShowMobileFilters.value = false"
+                font-weight="normal"
+              >
+                <chakra.span mr="2">SHOW RESULTS:</chakra.span>
+                <AisStats>
+                  <template v-slot="{ nbHits }">{{ nbHits }}</template>
+                </AisStats>
+              </CButton>
+            </CFlex>
+      
+          </CFlex>
+        </VueFinalModal>
 
       </CFlex>
     </AisInstantSearch>
@@ -281,5 +359,4 @@ interface RouteState {
 html, html.dark {
   background: #F4F6F7;
 }
-
 </style>

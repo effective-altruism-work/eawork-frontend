@@ -13,6 +13,7 @@ const props = defineProps<{
   limit?: number;
   showMoreLimit?: number;
   mt?: number | string;
+  countBg?: string;
 }>();
 
 const state = {
@@ -97,6 +98,7 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
             :items="filterFacetValuesIfNeeded(items, 'featured')"
             :refine="refine"
             :searchable="props.searchable"
+            :count-bg="props.countBg"
           />
         </chakra.ul>
 
@@ -116,6 +118,7 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
               :items="filterFacetValuesIfNeeded(items, 'other')"
               :refine="refine"
               :searchable="props.searchable"
+              :count-bg="props.countBg"
             />
           </chakra.ul>
 

@@ -70,7 +70,7 @@ function onCardClick() {
     @mouseleave="state.isHovering.value = false"
     mb="3"
     bg="white"
-    p="6"
+    :p="[4, null, 6]"
     border-radius="12px"
     :_hover="{
       cursor: 'pointer',
@@ -88,6 +88,7 @@ function onCardClick() {
             w="60px"
             min-w="60px"
             h="60px"
+            border-radius="4px"
             bg="white"
             loading="lazy"
           />
@@ -99,27 +100,27 @@ function onCardClick() {
           direction="column"
           gap="3"
         >
-          <CText font-weight="bold" line-height="none" font-size="xl">
+          <CText font-weight="bold" :line-height="[1.3, null, 'none']" font-size="xl">
             <span v-if="props.isMissingAlgoliaContext">{{ job.title }}</span>
             <ais-snippet v-else :hit="job" attribute="title" />
           </CText>
 
-          <CText line-height="none">
+          <CText :line-height="[1.3, null, 'none']" >
             <span v-if="props.isMissingAlgoliaContext">{{ job.company_name }}</span>
             <ais-snippet v-else :hit="job" attribute="company_name" />
           </CText>
         </CFlex>
       </CFlex>
-  
+
       <CFlex
         ml="60px"
         pl="3"
         mt="3"
-        justify="space-between"
+        :justify="job.tags_location_80k.length ? 'space-between' : 'flex-end'"
         align="center"
         font-size="sm"
       >
-        <CFlex align="center" gap="1">
+        <CFlex align="center" gap="1" v-if="job.tags_location_80k.length">
           <OhVueIcon
             name="fa-map-marker-alt"
             scale="0.75"
@@ -127,15 +128,15 @@ function onCardClick() {
             style="margin-bottom: 1px"
           />
           <CFlex
-            v-for="(city, index) in props.job.tags_city"
-            :key="city"
+            v-for="(location, index) in props.job.tags_location_80k"
+            :key="location"
             align="center"
             gap="3"
             color="#9BADB6"
           >
-            <CText>{{ city }}</CText>
+            <CText>{{ location }}</CText>
             <CBox
-              v-if="job.tags_city[index + 1]"
+              v-if="job.tags_location_80k[index + 1]"
               w="3px"
               h="3px"
               mr="3"
@@ -143,9 +144,8 @@ function onCardClick() {
             />
           </CFlex>
         </CFlex>
-        
+
         <CText color="#9BADB6">
-          <span v-if="props.job.closes_at">Posted</span>
           {{
             formatDistance(new Date(props.job.posted_at * 1000), new Date(), {
               addSuffix: true,
@@ -160,10 +160,9 @@ function onCardClick() {
           v-show="!state.isAccordionOpen.value && props.isHasTextQuery"
           font-size="15px"
         >
-          <ais-snippet :hit="job" attribute="description_short" />
+          <ais-snippet :hit="job" attribute="description_search" />
         </CBox>
       </CollapseTransition>
-
       
       <CollapseTransition>
         <CBox v-show="state.isAccordionOpen.value">
@@ -178,7 +177,7 @@ function onCardClick() {
 
               <CBox mt="4">
                 <CText color="gray.400" font-size="sm">DESCRIPTION</CText>
-                <CText mt="2">{{ job.description_short }}</CText>
+                <CText mt="2" v-html="job.description_short + ' [...]'" />
               </CBox>
               
               <CBox mt="4" v-if="job.closes_at">
@@ -190,7 +189,7 @@ function onCardClick() {
                 </CText>
               </CBox>
 
-              <CBox mt="4">
+              <CBox :mt="4 - 1">
                 <CText color="gray.400" font-size="sm">ABOUT THIS ORGANISATION</CText>
                 <CText mt="2" v-if="job.company_description">{{ job.company_description }}</CText>
               </CBox>
