@@ -271,6 +271,7 @@ interface RouteState {
         </CFlex>
 
         <CFlex
+          v-if="hooks.breakpoints.isGreaterOrEqual('lg')"
           :display="comp.filtersDisplay"
           direction="column"
           :min-w="comp.filtersW"
@@ -282,7 +283,7 @@ interface RouteState {
         </CFlex>
         
         <VueFinalModal
-          v-if="state.isShowMobileFilters.value"
+          v-else
           v-model="state.isShowMobileFilters.value"
           :click-to-close="true"
           :esc-to-close="true"
@@ -319,8 +320,11 @@ interface RouteState {
                 />
               </CButton>
             </CFlex>
-            
-            <Filters :is-show-results-count="false" count-bg="gray.50" />
+
+            <Filters
+              :is-show-results-count="false"
+              count-bg="gray.50"
+            />
       
             <CSpacer mt="12" />
             <CFlex
