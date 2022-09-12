@@ -1,18 +1,15 @@
 <script setup lang="ts">
-import { CBox, CLink } from "@chakra-ui/vue-next";
+import { CBox, CLink, CFlex } from "@chakra-ui/vue-next";
 
 </script>
 
 <template>
   <CBox>
 
-    <CLink
-      href="https://github.com/effective-altruism-work/eawork-backend/discussions/categories/feature-requests"
-      color="gray.500"
-      :_hover="{color: 'blue.900'}"
-    >
-      Feature Requests
-    </CLink>
+    <CFlex direction="column">
+      <CLink href="google.com">Feature Requests</CLink>
+      <CLink href="google.com">Feature Requests</CLink>
+    </CFlex>
 
     <NuxtPage />
   </CBox>
