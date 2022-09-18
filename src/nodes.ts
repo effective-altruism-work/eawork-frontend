@@ -184,7 +184,7 @@ export const nodes: Node[] = [
   }),
   Node.create({
     label: "Job board",
-    url: "`${baseUrl}https://jobs.80000hours.org`",
+    url: "https://jobs.80000hours.org",
   }),
   Node.create({
     label: "Podcast",

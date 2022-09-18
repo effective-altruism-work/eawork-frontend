@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { CFlex, CBox, CButton, CLink, CHeading, CText, chakra } from "@chakra-ui/vue-next";
+import { CFlex, CBox, CButton, CLink, CIcon, CHeading, CText, chakra } from "@chakra-ui/vue-next";
 import { onMounted, onUnmounted, ref } from "vue";
 import { nodes, Node, NodeCategory } from "~/nodes";
 import {
+  CIconButton,
   CDrawer,
   CDrawerBody,
   CDrawerOverlay,
@@ -22,6 +23,7 @@ const comp = {
     sm: 2,
     md: 4,
   },
+  linkP: 5,
 };
 
 onMounted(() => {
@@ -41,18 +43,52 @@ function onKeyUp(event) {
 function onNodeClick(node: Node, event: Event) {
   event.preventDefault()
   if (node.categories) {
-    state.nodeOpened.value = node;
+    if (state.nodeOpened.value?.label === node.label) {
+      state.nodeOpened.value = null;
+    } else {
+      state.nodeOpened.value = node;
+    }
   } else {
     window.location.href = node.url;
   }
 }
 
+function isCurrentNode(node: Node) {
+  return state.nodeOpened.value?.label === node.label && node.categories;
+}
+
 </script>
 
 <template>
-  <CBox>
-    
-    <CButton @click="state.isOpen.value = true">open</CButton>
+  <CFlex direction="row" align="center" justify="space-between" py="2">
+
+    <CLink is-external href="https://80000">
+      <chakra.img w="55px" mb="px" src="/80k-logo.png"/>
+    </CLink>
+
+    <CButton
+      @click="state.isOpen.value = true"
+      variant="none"
+      px="0"
+      w="fit-content"
+      mx="-11px"
+    >
+      <chakra.svg
+        width="25"
+        height="30"
+        viewBox="0 0 512 512"
+        fill="currentColor"
+      >
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-miterlimit="10"
+          stroke-width="48"
+          d="M88 152h336M88 256h336M88 360h336"
+        ></path>
+      </chakra.svg>
+    </CButton>
 
     <CDrawer
       v-model="state.isOpen.value"
@@ -61,36 +97,89 @@ function onNodeClick(node: Node, event: Event) {
       tabindex="0"
     >
       <CDrawerOverlay />
-      <CDrawerContent>
-        <CDrawerCloseButton />
-        
-        <CDrawerBody>
+      <CDrawerContent bg="gray.50">
+        <CDrawerBody p="0">
+          
+          <CFlex justify="flex-end" py="1" bg="white">
+            <CIconButton
+              @click="state.isOpen.value = false"
+              icon="x"
+              variant="ghost"
+              size="lg"
+              font-size="2xl"
+              color="gray.900"
+            />
+          </CFlex>
           
           <CBox
-            v-for="node in nodes"
-            :key="node.label"
+            border-bottom="1px solid"
+            border-color="gray.100"
           >
-
-            <CLink
-              :href="node.url"
-              @click="(event) => onNodeClick(node, event)"
-            >
-              {{node.label}}
-              <OhVueIcon
-                v-if="node.categories"
-                name="ri-arrow-down-s-fill"
-                scale="1"
-                color="white"
-              />
-            </CLink>
-            
+          
             <CBox
-              v-if="node.label === state.nodeOpened.value?.label"
-              v-for="category in node.categories"
+              v-for="node in nodes"
+              :key="node.label"
             >
+              <CLink
+                :href="node.url"
+                @click="(event) => onNodeClick(node, event)"
+                py="2"
+                :px="comp.linkP"
+                border-top="1px solid"
+                border-color="gray.100"
+                display="flex"
+                align-items="center"
+                color="gray.900"
+                font-weight="bold"
+                :_hover="{ color: 'initial' }"
+                :bg="isCurrentNode(node) ? 'white' : 'initial'"
+              >
+                {{node.label}}
+                <CIcon
+                  v-if="node.categories"
+                  name="ri-arrow-down-s-fill"
+                  ml="1"
+                  mt="px"
+                  :transform="isCurrentNode(node) ? 'rotate(180deg)' : ''"
+                  font-size="lg"
+                />
+              </CLink>
               
-            </CBox>
+              <CBox
+                v-if="isCurrentNode(node)"
+                v-for="category in node.categories"
+                bg="white"
+                pb="2"
+              >
+                <CLink
+                  :href="category.url"
+                  @click="(event) => onNodeClick(category, event)"
+                  font-weight="bold"
+                  :px="comp.linkP"
+                  py="2"
+                  display="flex"
+                  color="gray.900"
+                  font-size="0.90rem"
+                >
+                  {{ category.label }}
+                </CLink>
 
+                <CLink
+                  v-for="node in category.children"
+                  :href="node.url"
+                  :px="comp.linkP"
+                  py="2"
+                  display="flex"
+                  color="gray.900"
+                  font-size="0.90rem"
+                >
+                  {{ node.label }}
+                </CLink>
+                
+              </CBox>
+
+          </CBox>
+            
           </CBox>
           
         </CDrawerBody>
@@ -108,7 +197,7 @@ function onNodeClick(node: Node, event: Event) {
       z-index="1399"
     />
 
-  </CBox>
+  </CFlex>
 </template>
 
 <style lang="scss">

@@ -16,6 +16,7 @@ import {
   OiEye,
   MdFilterlistRound,
   IoClose,
+  IoMenu,
 } from "oh-vue-icons/icons";
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -35,5 +36,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     OiEye,
     MdFilterlistRound,
     IoClose,
+    IoMenu,
   );
 });

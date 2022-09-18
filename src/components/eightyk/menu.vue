@@ -33,7 +33,7 @@ const comp = {
 <template>
   <CBox>
     <CContainer w="100%" m="auto" max-w="8xl">
-
+      
       <CFlex
         v-if="hooks.breakpoints.isGreaterOrEqual('xl')"
         direction="column"
@@ -51,7 +51,7 @@ const comp = {
         </CFlex>
       </CFlex>
       
-<!--      <MenuMobile v-else />-->
+      <MenuMobile v-else />
   
     </CContainer>
 

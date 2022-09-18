@@ -25,6 +25,7 @@
       "instantsearch.js": "^4.44.0",
     "date-fns": "^2.29.2",
     "oh-vue-icons": "^1.0.0-rc3",
+    "feather-icons-paths": "^1.1.1",
     "vue": "^3.2.37",
     "vue-axios": "^3.4.1",
       "axios": "^0.24",

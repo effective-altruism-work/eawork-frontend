@@ -20,7 +20,7 @@ useHead({
 </script>
 
 <template>
-  <CFlex direction="column">
+  <CFlex direction="column" overflowX="hidden">
 
     <Menu />
 

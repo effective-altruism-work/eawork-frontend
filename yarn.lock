@@ -3184,6 +3184,11 @@
     "@babel/plugin-transform-typescript" "^7.18.12"
     "@vue/babel-plugin-jsx" "^1.1.1"
 
+"@vitejs/plugin-vue@^1.2.5":
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-1.10.2.tgz#d718479e2789d8a94b63e00f23f1898ba239253a"
+  integrity sha512-/QJ0Z9qfhAFtKRY+r57ziY4BSbGUTGsPRMpB/Ron3QPwBZM4OZAZHdTa4a8PafCwU5DTatXG8TMDoP8z+oDqJw==
+
 "@vitejs/plugin-vue@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-3.1.0.tgz#3a423ea6943a450e806da412a911150e928598ed"
@@ -5397,6 +5402,13 @@ fastq@^1.6.0:
   integrity sha512-YpkpUnK8od0o1hmeSc7UUs/eB/vIPWJYjKck2QKIzAf71Vm1AAQ3EbuZB3g2JIy+pg+ERD0vqI79KyZiB2e2Nw==
   dependencies:
     reusify "^1.0.4"
+
+feather-icons-paths@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/feather-icons-paths/-/feather-icons-paths-1.1.1.tgz#fa6161e5d459639992847f5fd968705b553d9a97"
+  integrity sha512-/tJRkJiRD3U3ZxxAFahlAnFYyYf6FyupwHbWZCi4W+5DAmNeJVvmSXFeDvWY0VT+RTcqqpCdNtT3YnDUfZyTKw==
+  dependencies:
+    "@vitejs/plugin-vue" "^1.2.5"
 
 fetch-blob@^3.1.2, fetch-blob@^3.1.4:
   version "3.2.0"

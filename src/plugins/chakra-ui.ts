@@ -1,10 +1,24 @@
 import ChakraUIVuePlugin, { chakra, extendTheme } from "@chakra-ui/vue-next";
 import { domElements } from "@chakra-ui/vue-system";
 import { defineNuxtPlugin } from "#app";
+import { feActivity, feChevronDown, feUser, feX } from "feather-icons-paths";
+import { FaDiscord, IoMenu, RiArrowDownSFill } from "oh-vue-icons/icons";
+import { IconType } from "oh-vue-icons/types/icons";
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(ChakraUIVuePlugin, {
     extendTheme: theme,
+    icons: {
+      library: {
+        feX,
+        feChevronDown,
+      },
+      extend: {
+        ...getIconProps(FaDiscord),
+        ...getIconProps(IoMenu),
+        ...getIconProps(RiArrowDownSFill),
+      },
+    },
   });
 
   domElements.forEach((tag) => {
@@ -56,3 +70,12 @@ const theme = extendTheme({
     },
   },
 });
+
+function getIconProps(icon: IconType) {
+  return {
+    [icon.name]: {
+      path: icon.raw,
+      viewBox: `${icon.minX} ${icon.minY} ${icon.width} ${icon.height}`,
+    }
+  }
+}

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
-import { CFlex, CHeading, CButton, CVStack, CLink, CBox, CText } from "@chakra-ui/vue-next";
+import { CFlex, CHeading, CButton, CVStack, CLink, CSpacer, CBox, CText } from "@chakra-ui/vue-next";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import algoliasearch from "algoliasearch";
 import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns";
