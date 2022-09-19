@@ -95,7 +95,7 @@ function isCurrentNode(node: Node) {
               w="100%"
               h="fit-content"
               :mt="comp.spaces.lg"
-              max-h="404px"
+              max-h="fit-content"
               z-index="2"
               left="0"
               bg="#f5f5f5"
@@ -125,6 +125,7 @@ function isCurrentNode(node: Node) {
               <CFlex
                 bg="white"
                 grow="1"
+                max-h="580px"
                 :p="comp.spaces.md"
                 px="5"
                 pos="relative"

@@ -180,6 +180,29 @@ export const nodes: Node[] = [
           }),
         ],
       }),
+      NodeCategory.create({
+        label: "Career reviews",
+        description: "Learn about high-impact career paths.",
+        url: `${baseUrl}/career-reviews/`,
+        extension: {
+          label: "See all our career reviews →",
+          url: `${baseUrl}/career-reviews/`,
+        },
+      }),
+      NodeCategory.create({
+        label: "Planning & decision making",
+        description: "Use our tools to make concrete plans.",
+        url: `${baseUrl}/career-planning/`,
+        extension: {
+          label: "See all planning resources →",
+          url: `${baseUrl}/career-planning/`,
+        },
+      }),
+      NodeCategory.create({
+        label: "Browse all our content",
+        description: "Pick a topic to explore or check out our most popular pieces.",
+        url: `${baseUrl}/topics/`,
+      }),
     ],
   }),
   Node.create({
