@@ -14,6 +14,8 @@ export namespace tracking {
   }
 
   export async function sendEvent(job: JobAlgolia, action: Action) {
+    await waitForInit();
+
     const eventProps = get80kJobProps(job, action);
     await analytics.track(eventProps.action, eventProps);
   }
@@ -37,6 +39,8 @@ export namespace tracking {
   }
 
   async function sendAnchorClick(anchor: HTMLAnchorElement, defaults?: EventDefaultProps) {
+    await waitForInit();
+    
     await analytics.track(
       anchor.getAttribute(`${prefix}-action`) ?? defaults.action,
       {
