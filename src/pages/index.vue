@@ -144,7 +144,7 @@ interface RouteState {
 
     <CFlex gap="7" :mt="{ lg: -2 }" :mb="{ base: 8, lg: 6 }">
       <CLink
-        href="https://80000hours.org/job-board/?tab=organisations"
+        href="https://80000hours.org/job-board/top-orgs/"
         text-decoration="underline"
         color="gray.400"
       >
@@ -156,7 +156,7 @@ interface RouteState {
         <chakra.span ml="1">Top recommended organisations</chakra.span>
       </CLink>
       <CLink
-        href="https://80000hours.org/job-board/?tab=faq"
+        href="https://80000hours.org/job-board/faq/"
         text-decoration="underline"
         color="gray.400"
       >
