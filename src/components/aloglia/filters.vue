@@ -53,9 +53,17 @@ const props = defineProps<{
     />
 
     <RefinementList
-      attribute="tags_location_80k"
+      attribute="tags_city"
       :count-bg="props.countBg"
-      label="Location"
+      label="Cities"
+      :limit="8"
+      :show-more-limit="20"
+      :searchable="true"
+    />
+    <RefinementList
+      attribute="tags_country"
+      :count-bg="props.countBg"
+      label="Countries"
       :limit="8"
       :show-more-limit="20"
       :searchable="true"

@@ -2,7 +2,7 @@ import ChakraUIVuePlugin, { chakra, extendTheme } from "@chakra-ui/vue-next";
 import { domElements } from "@chakra-ui/vue-system";
 import { defineNuxtPlugin } from "#app";
 import { feActivity, feChevronDown, feExternalLink, feMessageCircle, feMessageSquare, feUser, feX } from "feather-icons-paths";
-import { FaDiscord, HiArrowNarrowRight, IoMenu, RiArrowDownSFill } from "oh-vue-icons/icons";
+import { FaDiscord, FaMapMarkerAlt, HiArrowNarrowRight, IoMenu, RiArrowDownSFill } from "oh-vue-icons/icons";
 import { IconType } from "oh-vue-icons/types/icons";
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -20,6 +20,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         ...getIconProps(IoMenu),
         ...getIconProps(RiArrowDownSFill),
         ...getIconProps(HiArrowNarrowRight),
+        ...getIconProps(FaMapMarkerAlt),
       },
     },
   });
