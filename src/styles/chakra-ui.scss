@@ -103,8 +103,6 @@ $input-border-color: var(--colors-gray-200);
     width: var($size);
     height: var($size);
     cursor: pointer;
-    
-    
 
     &::before {
       content: "";
@@ -135,7 +133,6 @@ $input-border-color: var(--colors-gray-200);
       height: 50%;
       background: white;
     }
-    
   }
   
 }
@@ -156,7 +153,9 @@ html, html.dark {
 }
 
 :root {
+  --colors-blue-400: #2EBDD1;
   --colors-blue-500: #0aa9bf;
   --colors-blue-600: #0c8898;
+  --colors-blue-700: #076875;
   --radii-md: 3px;
 }

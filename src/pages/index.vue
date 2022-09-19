@@ -8,6 +8,7 @@ import { onBeforeMount, onMounted, ref, watch } from "vue";
 import CurrentRefinements from "~/components/aloglia/current-refinements.vue";
 import Filters from "~/components/aloglia/filters.vue";
 import BtnJobsAlert from "~/components/btn-jobs-alert.vue";
+import FiltersFooter from "~/components/eightyk/filters-footer.vue";
 import JobCardSkeleton from "~/components/job-card-skeleton.vue";
 import JobCard from "~/components/job-card.vue";
 import { history } from "instantsearch.js/es/lib/routers";
@@ -138,10 +139,10 @@ interface RouteState {
         </CButton>
 
       </CFlex>
-      <CText font-size="lg">handpicked to help you tackle the world’s most pressing problems with your career.</CText>
+      <CText font-size="lg">Handpicked to help you tackle the world’s most pressing problems with your career.</CText>
     </CVStack>
 
-    <CFlex gap="4" :mt="[null, null, null, -2]" :mb="[8, null, null, 6]">
+    <CFlex gap="7" :mt="{ lg: -2 }" :mb="{ base: 8, lg: 6 }">
       <CLink
         href="https://80000hours.org/job-board/?tab=organisations"
         text-decoration="underline"
@@ -280,6 +281,8 @@ interface RouteState {
           position="sticky"
         >
           <Filters :is-show-results-count="true" />
+          
+          <FiltersFooter />
         </CFlex>
         
         <VueFinalModal
@@ -325,7 +328,9 @@ interface RouteState {
               :is-show-results-count="false"
               count-bg="gray.50"
             />
-      
+
+            <FiltersFooter career-consultancy-bg="#F4F6F7" />
+
             <CSpacer mt="12" />
             <CFlex
               pos="fixed"
