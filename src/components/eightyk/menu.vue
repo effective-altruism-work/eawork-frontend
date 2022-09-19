@@ -3,9 +3,7 @@ import { useRuntimeConfig } from "#app";
 import { CFlex, CBox, CButton, CContainer, CLink, CHeading, CText, chakra } from "@chakra-ui/vue-next";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { ref } from "vue";
-import { nodes, Node, NodeCategory } from "~/nodes";
-import { OhVueIcon } from "oh-vue-icons";
-import { useComp } from "~/utils/structs";
+import { nodes, Node, NodeCategory, nodesSecondary } from "~/nodes";
 import MenuDesktop from "~/components/eightyk/menu-desktop";
 import MenuMobile from "~/components/eightyk/menu-mobile";
 
@@ -72,10 +70,14 @@ const comp = {
         <CFlex>Home</CFlex>
   
         <CFlex gap="6">
-          <CLink color="comp.black50">New releases</CLink>
-          <CLink color="comp.black50">All articles</CLink>
-          <CLink color="comp.black50">Community</CLink>
-          <CLink color="comp.black50">About</CLink>
+          <CLink
+            v-for="node in nodesSecondary"
+            :href="node.url"
+            :key="node.label"
+            color="comp.black50"
+          >
+            {{node.label}}
+          </CLink>
         </CFlex>
       </CContainer>
     </CFlex>

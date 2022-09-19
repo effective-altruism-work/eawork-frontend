@@ -226,3 +226,22 @@ export const nodes: Node[] = [
     url: `${baseUrl}/book-giveaway/`,
   }),
 ];
+
+export const nodesSecondary = [
+  Node.create({
+    label: "New releases",
+    url: `${baseUrl}/latest/`,
+  }),
+  Node.create({
+    label: "All articles",
+    url: `${baseUrl}/all-articles/`,
+  }),
+  Node.create({
+    label: "Community",
+    url: `${baseUrl}/community/`,
+  }),
+  Node.create({
+    label: "About",
+    url: `${baseUrl}/about/`,
+  }),
+];

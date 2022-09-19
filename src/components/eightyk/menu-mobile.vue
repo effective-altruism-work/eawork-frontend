@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { CFlex, CBox, CButton, CLink, CIcon, CHeading, CText, chakra } from "@chakra-ui/vue-next";
 import { onMounted, onUnmounted, ref } from "vue";
-import { nodes, Node, NodeCategory } from "~/nodes";
+import { nodes, nodesSecondary, Node, NodeCategory } from "~/nodes";
 import {
   CIconButton,
   CDrawer,
@@ -180,8 +180,27 @@ function isCurrentNode(node: Node) {
                 </CLink>
               </CBox>
 
-          </CBox>
-            
+            </CBox>
+          
+            <CBox
+              v-for="node in nodesSecondary"
+              :key="node.label"
+            >
+              <CLink
+                :href="node.url"
+                py="3"
+                :px="comp.linkP"
+                border-top="1px solid"
+                border-color="gray.100"
+                display="flex"
+                color="gray.900"
+                :_hover="{ color: 'blue.600' }"
+                :bg="isCurrentNode(node) ? 'white' : 'initial'"
+              >
+                {{node.label}}
+              </CLink>
+            </CBox>
+
           </CBox>
           
         </CDrawerBody>

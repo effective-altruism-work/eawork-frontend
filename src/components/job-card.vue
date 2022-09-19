@@ -93,18 +93,16 @@ function onCardClick() {
   >
     <CBox>
       <CFlex pos="relative">
-        <CLink :href="job?.company_url" :id="comp.id">
-          <chakra.img
-            v-if="props.job"
-            :src="job.company_logo_url"
-            w="60px"
-            min-w="60px"
-            h="60px"
-            border-radius="4px"
-            bg="white"
-            loading="lazy"
-          />
-        </CLink>
+        <chakra.img
+          v-if="props.job"
+          :src="job.company_logo_url"
+          w="60px"
+          min-w="60px"
+          h="60px"
+          border-radius="4px"
+          bg="white"
+          loading="lazy"
+        />
 
         <CFlex
           ml="3"

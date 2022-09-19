@@ -59,8 +59,10 @@ function isCurrentNode(node: Node) {
             :key="node.label"
             z-index="2"
           >
-            <CButton
-              @click="() => {
+            <CLink
+              :href="node.url"
+              @click="(event) => {
+                event.preventDefault();
                 if (isCurrentNode(node)) {
                   state.nodeOpened.value = null;
                 } else {
@@ -70,19 +72,22 @@ function isCurrentNode(node: Node) {
                   state.nodeOpened.value = node;
                 }
               }"
-              variant="link"
-              :ml="comp.spaces.lg"
-              :color="isCurrentNode(node) ? 'blue.500' : comp.black50"
-              font-weight="bold"
             >
-              {{ node.label }}
-              <OhVueIcon
-                v-if="node.categories"
-                name="ri-arrow-down-s-fill"
-                scale="1"
+              <CButton
+                variant="link"
+                :ml="comp.spaces.lg"
                 :color="isCurrentNode(node) ? 'blue.500' : comp.black50"
-              />
-            </CButton>
+                font-weight="bold"
+              >
+                {{ node.label }}
+                <OhVueIcon
+                  v-if="node.categories"
+                  name="ri-arrow-down-s-fill"
+                  scale="1"
+                  :color="isCurrentNode(node) ? 'blue.500' : comp.black50"
+                />
+              </CButton>
+            </CLink>
             
             <CFlex
               v-if="node.isMegaNode && isCurrentNode(node)"
@@ -100,18 +105,21 @@ function isCurrentNode(node: Node) {
                 direction="column"
                 max-w="30%"
               >
-                <CFlex
+                <CLink
                   v-for="category in node.categories"
                   :key="category.label"
+                  :href="category.url"
                   @mouseenter="state.nodeCategoryActive.value = category"
-                  direction="column"
+                  display="flex"
+                  flex-direction="column"
                   :p="comp.spaces.md"
                   :bg="category === state.nodeCategoryActive.value ? 'white' : 'initial'"
                   :_hover="{ cursor: 'pointer' }"
+                  color="gray.900"
                 >
                   <CHeading size="sm">{{ category.label }}</CHeading>
                   <CText>{{ category.description }}</CText>
-                </CFlex>
+                </CLink>
               </CFlex>
 
               <CFlex
@@ -172,7 +180,11 @@ function isCurrentNode(node: Node) {
                   :gap="comp.spaces.sm"
                 >
                   <CHeading size="sm">{{ category.label }}</CHeading>
-                  <CLink v-for="catNode in category.children">
+                  <CLink
+                    v-for="catNode in category.children"
+                    :key="catNode.url"
+                    :href="catNode.url"
+                  >
                      {{catNode.label}}
                   </CLink>
                 </CFlex>
