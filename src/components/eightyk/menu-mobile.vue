@@ -100,7 +100,8 @@ function isCurrentNode(node: Node) {
       <CDrawerContent bg="gray.50">
         <CDrawerBody p="0">
           
-          <CFlex justify="flex-end" py="1" bg="white">
+          <CFlex justify="space-between" align="center" py="1" bg="white">
+            <CText :ml="comp.linkP" font-size="lg">Menu</CText>
             <CIconButton
               @click="state.isOpen.value = false"
               icon="x"
@@ -108,6 +109,7 @@ function isCurrentNode(node: Node) {
               size="lg"
               font-size="2xl"
               color="gray.900"
+              aria-label="close"
             />
           </CFlex>
           
@@ -123,7 +125,7 @@ function isCurrentNode(node: Node) {
               <CLink
                 :href="node.url"
                 @click="(event) => onNodeClick(node, event)"
-                py="2"
+                py="3"
                 :px="comp.linkP"
                 border-top="1px solid"
                 border-color="gray.100"
@@ -156,7 +158,8 @@ function isCurrentNode(node: Node) {
                   @click="(event) => onNodeClick(category, event)"
                   font-weight="bold"
                   :px="comp.linkP"
-                  py="2"
+                  pt="0"
+                  pb="1"
                   display="flex"
                   color="gray.900"
                   font-size="0.90rem"
@@ -175,7 +178,6 @@ function isCurrentNode(node: Node) {
                 >
                   {{ node.label }}
                 </CLink>
-                
               </CBox>
 
           </CBox>
