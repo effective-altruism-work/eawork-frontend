@@ -49,6 +49,9 @@ function format(refinement: {
             variant="outline"
             size="xs"
             font-weight="normal"
+            bg="#E1F0F2"
+            color="blue.500"
+            font-size="13px"
           >
             {{ format(refinement) }}
             <CIcon ml="2" mt="0.5" size="2" name="close" />
