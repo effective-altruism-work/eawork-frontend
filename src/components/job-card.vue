@@ -249,7 +249,7 @@ function onCardClick() {
 
           <CBox mt="4">
             <CText color="gray.400" font-size="sm">DESCRIPTION</CText>
-            <CText mt="2" v-html="job.description_short + ' [...]'" />
+            <CText className="html-text" mt="2" v-html="job.description_short + ' [...]'" />
           </CBox>
           
           <CBox mt="4" v-if="job.closes_at">
@@ -263,7 +263,8 @@ function onCardClick() {
 
           <CBox :mt="4 - 1">
             <CText color="gray.400" font-size="sm">ABOUT THIS ORGANISATION</CText>
-            <CText mt="2" v-if="job.company_description">{{ job.company_description }}</CText>
+            <CText className="html-text" mt="2" v-if="job.company_description" v-html="job.company_description"/>
+            <!-- <CText mt="2" v-if="job.company_description">{{ job.company_description }}</CText> -->
           </CBox>
           
           <CFlex :mt="job.company_description ? 4 : 3" align="baseline" gap="4">
@@ -386,3 +387,17 @@ function onCardClick() {
 
   </CBox>
 </template>
+
+
+<style scoped>
+
+
+  .html-text >>> a {
+    color: var(--colors-blue-500);
+  }
+
+  .html-text >>> a:hover {
+    color: var(--colors-blue-700);
+  }
+
+</style>
