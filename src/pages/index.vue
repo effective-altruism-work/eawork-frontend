@@ -284,7 +284,8 @@ interface RouteState {
           
           <FiltersFooter />
         </CFlex>
-        
+
+        <!-- size="full" -->
         <VueFinalModal
           v-else
           v-model="state.isShowMobileFilters.value"
@@ -294,15 +295,15 @@ interface RouteState {
           <CFlex
             pos="absolute"
             left="0"
-            bottom="0"
+            top="0"
             w="100vw"
-            h="94vh"
+            h="100vh"
             gap="6"
             p="6"
             pt="7"
+            pb="12"
             direction="column"
             bg="white"
-            border-radius="12px"
             border-bottom-radius="0"
             overflow="scroll"
           >
