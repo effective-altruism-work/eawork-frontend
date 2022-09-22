@@ -72,7 +72,24 @@ watch(state.jobPkCurrent, (jobPkCurrentNew: number | null) => {
   }
 });
 
-useHead({ title: "Job board" });
+useHead({
+  title: "Job board",
+  meta: [
+    {
+      "og:title": "80,000 Hours Job Board",
+      "og:description": "A curated list of the most promising vacancies we're aware of. If you’re a good fit for one of these, it could be your best opportunity to help solve one of the world’s most pressing problems.",
+      "og:image": "https://80000hours.org/wp-content/uploads/2017/03/job_board_share_logos3.png",
+      "og:image:width": "1200",
+      "og:image:height": "630",
+      "og:url": "https://jobs.80000hours.org/",
+      "og:site_name": "80,000 Hours",
+      "article:publisher": "https://www.facebook.com/80000Hours",
+      "twitter:card": "summary_large_image",
+      "twitter:description": "If you’re a good fit for one of these roles, it could be your best opportunity to help solve one of the world’s most pressing problems.",
+      "twitter:site": "@80000hours",
+    },
+  ],
+});
 
 function searchFunction(helper) {
   saveQueryJson(helper.state);
