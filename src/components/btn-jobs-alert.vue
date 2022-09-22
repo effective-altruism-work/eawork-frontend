@@ -50,7 +50,7 @@ async function createJobAlert() {
     <OhVueIcon name="md-addalert-round" scale="1" color="white" />
     <CText ml="2">
       <span>Set up alerts</span>
-      <span v-if="props.queryJson">for this filter</span>
+      <span v-if="props.queryJson"> for this filter</span>
     </CText>
   </CButton>
 

@@ -158,8 +158,16 @@ interface RouteState {
       <CText font-size="lg">Handpicked to help you tackle the world’s most pressing problems with your career.</CText>
     </CVStack>
 
-    <CFlex gap="7" :mt="{ lg: -2 }" :mb="{ base: 8, lg: 6 }">
+    <CFlex
+      gap="7"
+      :mt="{ lg: -2 }"
+      :mb="{ base: 8, lg: 6 }"
+      :font-size="{base: 'sm', md: 'md'}"
+      align="center"
+    >
       <CLink
+        display="flex"
+        align-items="center"
         href="https://80000hours.org/job-board/top-orgs/"
         text-decoration="underline"
         color="gray.400"
@@ -172,6 +180,8 @@ interface RouteState {
         <chakra.span ml="1">Top recommended organisations</chakra.span>
       </CLink>
       <CLink
+        display="flex"
+        align-items="center"
         href="https://80000hours.org/job-board/faq/"
         text-decoration="underline"
         color="gray.400"
@@ -314,7 +324,7 @@ interface RouteState {
             left="0"
             bottom="0"
             w="100vw"
-            h="94vh"
+            h="92vh"
             gap="6"
             p="6"
             pt="7"
