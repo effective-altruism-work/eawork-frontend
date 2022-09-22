@@ -43,6 +43,22 @@ function isCurrentNode(node: Node) {
   return state.nodeOpened.value?.label === node.label && node.categories;
 }
 
+function onNodeClick(event, node) {
+  if (isCurrentNode(node)) {
+    event.preventDefault();
+    state.nodeOpened.value = null;
+  } else {
+    if (node.isMegaNode) {
+      event.preventDefault();
+      state.nodeCategoryActive.value = node.categories[0];
+      state.nodeOpened.value = node;
+    } else if (node.categories?.length) {
+      event.preventDefault();
+      state.nodeOpened.value = node;
+    }
+  }
+}
+
 </script>
 
 <template>
@@ -61,17 +77,7 @@ function isCurrentNode(node: Node) {
           >
             <CLink
               :href="node.url"
-              @click="(event) => {
-                event.preventDefault();
-                if (isCurrentNode(node)) {
-                  state.nodeOpened.value = null;
-                } else {
-                  if (node.isMegaNode) {
-                    state.nodeCategoryActive.value = node.categories[0];
-                  }
-                  state.nodeOpened.value = node;
-                }
-              }"
+              @click="(event) => onNodeClick(event, node)"
             >
               <CButton
                 variant="link"
