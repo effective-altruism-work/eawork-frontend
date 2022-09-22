@@ -3,19 +3,10 @@ import { useRuntimeConfig } from "#app";
 import { CFlex, CHeading, CButton, CVStack, CLink, CBox, CText } from "@chakra-ui/vue-next";
 import algoliasearch from "algoliasearch";
 import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns";
-import { onMounted, ref, watch } from "vue";
-import CurrentRefinements from "~/components/aloglia/current-refinements.vue";
 import NumericMenu from "~/components/aloglia/numeric-menu.vue";
 import RefinementList from "~/components/aloglia/refinement-list.vue";
-import SearchBox from "~/components/aloglia/search-box.vue";
-import BtnJobsAlert from "~/components/btn-jobs-alert.vue";
 
 const props = defineProps<{
-  queryJson: null | {
-    query: string;
-    facetFilters: string[];
-  };
-  isShowResultsCount: boolean;
   countBg?: string;
 }>();
 
@@ -23,56 +14,47 @@ const props = defineProps<{
 
 <template>
   <CBox>
-    <SearchBox :is-show-results-count="props.isShowResultsCount" />
-
-    <CurrentRefinements />
-
-    <CBox mb="7">
-      <BtnJobsAlert :query-json="props.queryJson" />
-    </CBox>
-
     <RefinementList
       attribute="tags_area"
       :count-bg="props.countBg"
-      label="Areas"
+      label="Problem Areas"
       :mt="0"
-    />
-    <RefinementList
-      attribute="tags_role_type"
-      :count-bg="props.countBg"
-      label="Roles"
-    />
-    <RefinementList
-      attribute="tags_degree_required"
-      :count-bg="props.countBg"
-      label="Educational requirements"
-    />
-    <RefinementList
-      attribute="tags_exp_required"
-      :count-bg="props.countBg"
-      label="Experience requirements"
-    />
-
-    <RefinementList
-      attribute="tags_city"
-      :count-bg="props.countBg"
-      label="Cities"
-      :limit="8"
-      :show-more-limit="20"
-      :searchable="true"
     />
     <RefinementList
       attribute="tags_country"
       :count-bg="props.countBg"
-      label="Countries"
+      label="Country"
       :limit="8"
       :show-more-limit="20"
       :searchable="true"
     />
     <RefinementList
+      attribute="tags_city"
+      :count-bg="props.countBg"
+      label="City"
+      :limit="8"
+      :show-more-limit="20"
+      :searchable="true"
+    />
+    <RefinementList
+      attribute="tags_degree_required"
+      :count-bg="props.countBg"
+      label="Education"
+    />
+    <RefinementList
+      attribute="tags_exp_required"
+      :count-bg="props.countBg"
+      label="Experience"
+    />
+    <RefinementList
+      attribute="tags_role_type"
+      :count-bg="props.countBg"
+      label="Role type"
+    />
+    <RefinementList
       attribute="company_name"
       :count-bg="props.countBg"
-      label="Company"
+      label="Organisation"
       :limit="6"
       :show-more-limit="20"
       :searchable="true"
@@ -83,7 +65,7 @@ const props = defineProps<{
     <!--<RefinementList attribute="tags_generic" label="Tags" />-->
 
     <NumericMenu
-      label="Posted at"
+      label="Posted"
       attribute="posted_at"
       :items="[
         { label: 'Anytime' },
@@ -96,7 +78,7 @@ const props = defineProps<{
     />
     
     <NumericMenu
-      label="Closes in"
+      label="Closes"
       attribute="closes_at"
       :items="[
         { label: 'Anytime' },

@@ -2,8 +2,7 @@
 import { useRuntimeConfig } from "#app";
 import { CFlex, CButton, CInput, CText, CBox } from "@chakra-ui/vue-next";
 import axios from "axios";
-import { addIcons, OhVueIcon } from "oh-vue-icons";
-import { MdAddalertRound } from "oh-vue-icons/icons";
+import { OhVueIcon } from "oh-vue-icons";
 import { ref } from "vue";
 import { theme } from "~/styles/theme";
 
@@ -13,8 +12,6 @@ const props = defineProps<{
     facetFilters: string[];
   };
 }>();
-
-addIcons(MdAddalertRound);
 
 const nuxtConfig = useRuntimeConfig();
 
@@ -113,8 +110,8 @@ async function createJobAlert() {
         font-size="xs"
       >
         <CText v-if="props.queryJson.query">Query: {{ props.queryJson.query }}</CText>
-        <CText v-for="filter in props.queryJson.facetFilters">
-          {{ filter.replace("tags_area:", "Filter: ") }}
+        <CText v-for="filter in props.queryJson?.facetFilters ?? []" :key="filter">
+          {{ filter.replace(/tags_\w*:/, "Filter: ") }}
         </CText>
       </CText>
 

@@ -6,8 +6,10 @@ import algoliasearch from "algoliasearch";
 import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns";
 import { onBeforeMount, onMounted, ref, watch } from "vue";
 import CurrentRefinements from "~/components/aloglia/current-refinements.vue";
-import Filters from "~/components/aloglia/filters.vue";
+import Refinements from "~/components/aloglia/refinements.vue";
+import Filters from "~/components/aloglia/refinements.vue";
 import BtnJobsAlert from "~/components/btn-jobs-alert.vue";
+import SearchBox from "~/components/aloglia/search-box.vue";
 import FiltersFooter from "~/components/eightyk/filters-footer.vue";
 import JobCardSkeleton from "~/components/job-card-skeleton.vue";
 import JobCard from "~/components/job-card.vue";
@@ -292,11 +294,12 @@ interface RouteState {
           pl="10"
           position="sticky"
         >
-          <Filters
-            :query-json="state.queryJson.value"
-            :is-show-results-count="true"
-          />
-          
+          <SearchBox :is-show-results-count="true" />
+          <CurrentRefinements />
+          <CBox mb="7">
+            <BtnJobsAlert :query-json="state.queryJson.value" />
+          </CBox>
+          <Refinements />
           <FiltersFooter />
         </CFlex>
         
@@ -339,13 +342,15 @@ interface RouteState {
               </CButton>
             </CFlex>
 
-            <Filters
-              :query-json="state.queryJson.value"
-              :is-show-results-count="false"
-              count-bg="gray.50"
-            />
-
-            <FiltersFooter career-consultancy-bg="#F4F6F7" />
+            <SearchBox :is-show-results-count="true" />
+            <CBox mt="3">
+              <CurrentRefinements />
+            </CBox>
+            <CBox mb="7">
+              <BtnJobsAlert :query-json="state.queryJson.value" />
+            </CBox>
+            <Refinements />
+            <FiltersFooter />
 
             <CSpacer mt="12" />
             <CFlex
