@@ -9,15 +9,12 @@ import NumericMenu from "~/components/aloglia/numeric-menu.vue";
 import RefinementList from "~/components/aloglia/refinement-list.vue";
 import SearchBox from "~/components/aloglia/search-box.vue";
 import BtnJobsAlert from "~/components/btn-jobs-alert.vue";
-import JobCardSkeleton from "~/components/job-card-skeleton.vue";
-import JobCard from "~/components/job-card.vue";
-import { history } from "instantsearch.js/es/lib/routers";
-import { IndexUiState } from "instantsearch.js/es/types/ui-state";
-import { useComp, useStateVar } from "~/utils/structs";
-import { JobAlgolia } from "~/utils/types";
-import { OhVueIcon } from "oh-vue-icons";
 
 const props = defineProps<{
+  queryJson: null | {
+    query: string;
+    facetFilters: string[];
+  };
   isShowResultsCount: boolean;
   countBg?: string;
 }>();
@@ -29,6 +26,10 @@ const props = defineProps<{
     <SearchBox :is-show-results-count="props.isShowResultsCount" />
 
     <CurrentRefinements />
+
+    <CBox mb="7">
+      <BtnJobsAlert :query-json="props.queryJson" />
+    </CBox>
 
     <RefinementList
       attribute="tags_area"

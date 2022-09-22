@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRuntimeConfig } from "#app";
+import { useHead, useRuntimeConfig } from "#app";
 import { CFlex, CHeading, CButton, CVStack, CLink, CSpacer, CBox, CText } from "@chakra-ui/vue-next";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import algoliasearch from "algoliasearch";
@@ -13,36 +13,31 @@ import JobCardSkeleton from "~/components/job-card-skeleton.vue";
 import JobCard from "~/components/job-card.vue";
 import { history } from "instantsearch.js/es/lib/routers";
 import { IndexUiState } from "instantsearch.js/es/types/ui-state";
-import { useComp, useStateVar } from "~/utils/structs";
+import { useComp, useHooks, useStateVar } from "~/utils/structs";
 import { tracking } from "~/utils/tracking";
 import { JobAlgolia } from "~/utils/types";
 import { OhVueIcon } from "oh-vue-icons";
 
 
-const hooks = {
-  breakpoints: useBreakpoints(breakpointsTailwind),
-  config: useRuntimeConfig(),
-};
-
-const state = useStateVar(() => {
+const hooks = useHooks(() => {
   const config = useRuntimeConfig();
-  const searchClient = algoliasearch(
-    config.public.algoliaApplicationId,
-    config.public.algoliaApiKey,
-  );
   return {
+    breakpoints: useBreakpoints(breakpointsTailwind),
     config,
     searchClient: algoliasearch(
       config.public.algoliaApplicationId,
       config.public.algoliaApiKey,
     ),
-    searchIndex: searchClient.initIndex(config.public.algoliaJobsIndex),
-    queryJson: ref<null | { query: string; facetFilters: string[]; }>(null),
-    jobPkCurrent: ref<number | null>(null),
-    jobFromUrlQuery: ref<JobAlgolia | null>(null),
-    isShowMobileFilters: ref(false),
   };
 });
+
+const state = {
+  searchIndex: hooks.searchClient.initIndex(hooks.config.public.algoliaJobsIndex),
+  queryJson: ref<null | { query: string; facetFilters: string[]; }>(null),
+  jobPkCurrent: ref<number | null>(null),
+  jobFromUrlQuery: ref<JobAlgolia | null>(null),
+  isShowMobileFilters: ref(false),
+};
 
 const comp = useComp(() => {
   return {
@@ -54,7 +49,7 @@ const comp = useComp(() => {
 });
 
 onBeforeMount(async () => {
-  await tracking.init(state.config.public.segmentId);
+  await tracking.init(hooks.config.public.segmentId);
 });
 
 onMounted(async () => {
@@ -76,6 +71,8 @@ watch(state.jobPkCurrent, (jobPkCurrentNew: number | null) => {
     window.history.pushState({}, "", url);
   }
 });
+
+useHead({ title: "Job board" });
 
 function searchFunction(helper) {
   saveQueryJson(helper.state);
@@ -176,7 +173,7 @@ interface RouteState {
         router: history(),
         stateMapping: {
           stateToRoute(uiState: { [indexId: string]: IndexUiState }): RouteState {
-            const indexUiState: IndexUiState = uiState[state.config.public.algoliaJobsIndex];
+            const indexUiState: IndexUiState = uiState[hooks.config.public.algoliaJobsIndex];
             return {
               query: indexUiState.query,
               refinementList: indexUiState.refinementList,
@@ -188,7 +185,7 @@ interface RouteState {
               state.jobPkCurrent.value = routeState.jobPk;
             }
             return {
-              [state.config.public.algoliaJobsIndex]: {
+              [hooks.config.public.algoliaJobsIndex]: {
                 query: routeState.query,
                 refinementList: routeState.refinementList,
               },
@@ -196,16 +193,14 @@ interface RouteState {
           },
         },
       }"
-      :search-client="state.searchClient"
+      :search-client="hooks.searchClient"
       :search-function="searchFunction"
-      :index-name="state.config.public.algoliaJobsIndex"
+      :index-name="hooks.config.public.algoliaJobsIndex"
     >
       <CFlex :mb="comp.space * 4">
 
         <CFlex direction="column" :min-w="comp.cardW">
           <CFlex justify="flex-end" :gap="comp.space">
-            <!--<BtnJobsAlert :query-json="state.queryJson.value" />-->
-            
             <!--<NuxtLink :to="urls.jobs.post">-->
             <!--  <CButton color-scheme="blue" variant="outline">-->
             <!--    <OhVueIcon name="hi-solid-plus" scale="1" color="var(&#45;&#45;colors-blue-600)" />-->
@@ -280,7 +275,10 @@ interface RouteState {
           pl="10"
           position="sticky"
         >
-          <Filters :is-show-results-count="true" />
+          <Filters
+            :query-json="state.queryJson.value"
+            :is-show-results-count="true"
+          />
           
           <FiltersFooter />
         </CFlex>
@@ -325,6 +323,7 @@ interface RouteState {
             </CFlex>
 
             <Filters
+              :query-json="state.queryJson.value"
               :is-show-results-count="false"
               count-bg="gray.50"
             />

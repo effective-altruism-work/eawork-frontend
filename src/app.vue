@@ -13,8 +13,8 @@ const state = {
 };
 
 useHead({
-  titleTemplate: (titleChunk) => (titleChunk ? `${titleChunk} - EA Work` : "EA Work"),
-  link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
+  titleTemplate: (titleChunk) => (titleChunk ? `${titleChunk} - 80,000 hours` : "80,000 hours"),
+  link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.ico" }],
 });
 
 </script>

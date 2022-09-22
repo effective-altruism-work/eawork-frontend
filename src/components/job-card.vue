@@ -163,7 +163,7 @@ function onCardClick() {
           :mt="comp.space / 2"
           font-size="15px"
         >
-          <ais-snippet :hit="job" attribute="description_short" />
+          <ais-snippet :hit="job" attribute="description_for_search" />
         </CBox>
       </TransitionCollapseFade>
       
@@ -263,7 +263,7 @@ function onCardClick() {
 
           <CBox :mt="4 - 1">
             <CText color="gray.400" font-size="sm">ABOUT THIS ORGANISATION</CText>
-            <CText mt="2" v-if="job.company_description">{{ job.company_description }}</CText>
+            <CText mt="2" v-if="job.company_description" v-html="job.company_description" />
           </CBox>
           
           <CFlex :mt="job.company_description ? 4 : 3" align="baseline" gap="4">

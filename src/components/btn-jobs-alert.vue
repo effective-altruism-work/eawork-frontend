@@ -51,7 +51,10 @@ async function createJobAlert() {
 <template>
   <CButton color-scheme="blue" @click="state.isShowModal.value = true">
     <OhVueIcon name="md-addalert-round" scale="1" color="white" />
-    <CText ml="2">Setup Alert</CText>
+    <CText ml="2">
+      <span>Set up alerts</span>
+      <span v-if="props.queryJson">for this filter</span>
+    </CText>
   </CButton>
 
   <VueFinalModal
@@ -72,13 +75,33 @@ async function createJobAlert() {
       :p="theme.spaces.md"
       direction="column"
       bg="white"
-      border-radius="md"
+      border-radius="8"
     >
-      <CText v-if="props.queryJson" w="fit-content">Subscribe to new jobs that match your query:</CText>
-      <CBox v-else>
-        <CText w="fit-content">Subscribe to all new job posts.</CText>
-        <CText w="fit-content" color="gray.500" font-size="sm">(because your search query is unspecified)</CText>
-      </CBox>
+      <CFlex justify="space-between">
+        <CText
+          v-if="props.queryJson"
+          w="fit-content"
+          font-size="sm"
+        >
+          Subscribe to new jobs that match your query:
+        </CText>
+        <CBox v-else>
+          <CText w="fit-content">Subscribe to all new job posts.</CText>
+          <CText w="fit-content" color="gray.500" font-size="sm">(because your search query is unspecified)</CText>
+        </CBox>
+
+        <CBox
+          font-size="xs"
+          color="blue.500"
+          border="1px solid"
+          border-color="blue.500"
+          border-radius="5"
+          px="1"
+          h="fit-content"
+        >
+          BETA
+        </CBox>
+      </CFlex>
 
       <CText
         v-if="props.queryJson"
@@ -90,7 +113,9 @@ async function createJobAlert() {
         font-size="xs"
       >
         <CText v-if="props.queryJson.query">Query: {{ props.queryJson.query }}</CText>
-        <CText v-for="filter in props.queryJson.facetFilters">{{ filter }}</CText>
+        <CText v-for="filter in props.queryJson.facetFilters">
+          {{ filter.replace("tags_area:", "Filter: ") }}
+        </CText>
       </CText>
 
       <CInput
@@ -99,18 +124,26 @@ async function createJobAlert() {
         name="email"
         placeholder="joe@example.com"
       />
-      <CButton
-        @click="createJobAlert()"
-        :is-loading="state.isSubmitting.value"
-        max-w="fit-content"
-        align-self="flex-end"
-        color-scheme="blue"
-      >
-        Subscribe
-      </CButton>
+      
+      <CFlex justify="space-between">
+        <CText font-size="10px" max-w="200px" line-height="1.3" color="gray.600">
+          You will receive updates daily (if there are new roles that match your query)
+          and you can unsubscribe at any time
+        </CText>
+        
+        <CButton
+          @click="createJobAlert()"
+          :is-loading="state.isSubmitting.value"
+          max-w="fit-content"
+          align-self="flex-end"
+          color-scheme="blue"
+        >
+          Subscribe
+        </CButton>
+      </CFlex>
 
       <CText v-if="state.isSuccess.value" color="green.500">Subscribed!</CText>
-      <CText v-if="state.isError.value" color="red.500">An error occured</CText>
+      <CText v-if="state.isError.value" color="red.500">An error occurred</CText>
     </CFlex>
   </VueFinalModal>
 </template>
