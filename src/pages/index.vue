@@ -140,7 +140,12 @@ interface RouteState {
         </CButton>
 
       </CFlex>
-      <CText font-size="lg">Handpicked to help you tackle the world’s most pressing problems with your career.</CText>
+      <CText font-size="lg">Handpicked to help you tackle the
+        <CLink href="https://80000hours.org/problem-profiles/">
+          world’s most pressing problems
+        </CLink>
+        with your career.
+      </CText>
     </CVStack>
 
     <CFlex
