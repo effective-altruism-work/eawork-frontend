@@ -73,7 +73,7 @@ function onCardClick(event: MouseEvent) {
     emit("cardCollapsed");
   } else {
     emit("cardExpanded");
-    tracking.sendEvent(props.job, "viewed");
+    tracking.sendJobEvent(props.job, "viewed");
   }
   state.isAccordionOpen.value = !state.isAccordionOpen.value;
 }
@@ -317,9 +317,9 @@ function onCardClick(event: MouseEvent) {
             <CLink
               @click="async (event) => {
                 event.stopPropagation();
-                await tracking.sendEvent(props.job, 'url_external clicked');
+                await tracking.sendJobEvent(props.job, 'url_external clicked');
               }"
-              @auxclick="tracking.sendEvent(props.job, 'url_external clicked');"
+              @auxclick="tracking.sendJobEvent(props.job, 'url_external clicked');"
               :href="job.url_external"
               is-external
               :_hover="{ textDecoration: 'none !important' }"
