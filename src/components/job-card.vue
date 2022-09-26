@@ -5,6 +5,7 @@ import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { formatDistance, format } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
 import { computed, onMounted, ref, watch } from "vue";
+import { Document } from "yaml";
 import JobCardLocationShort from "~/components/job-card-location-short.vue";
 import JobCardTags from "~/components/job-card-tags.vue";
 import JobView from "~/components/job-view.vue";
@@ -13,7 +14,6 @@ import { theme } from "~/styles/theme";
 import { useComp } from "~/utils/structs";
 import { JobAlgolia } from "~/utils/types";
 import { tracking } from "~/utils/tracking";
-import CollapseTransition from '@ivanv/vue-collapse-transition/src/CollapseTransition.vue'
 import { strings } from "~/constants";
 
 const props = defineProps<{
@@ -45,9 +45,6 @@ const comp = useComp(() => {
   const activeShadowBorder = "inset 0 0 0 1px #E1E6EA";
   return {
     space: 6,
-    id: `job-card-${props.job.post_pk}`,
-    idCompanyUrl: `job-card-${props.job.post_pk}-org-homepage`,
-    idCompanyCareers: `job-card-${props.job.post_pk}-org-careers`,
     activeShadowBorder,
     isJobGlobal: props.job.tags_country.includes("Global"),
     activeShadow: `0 8px 24px 0 #9badb629, ${activeShadowBorder}`,
@@ -55,20 +52,7 @@ const comp = useComp(() => {
   };
 });
 
-onMounted(async () => {
-  await tracking.bindAnchorsTracking({
-    selector: `#${comp.idCompanyUrl}`,
-    action: "company_url clicked",
-    job: props.job,
-  });
-  await tracking.bindAnchorsTracking({
-    selector: `#${comp.idCompanyCareers}`,
-    action: "company_career_page_url clicked",
-    job: props.job,
-  });
-});
-
-function onCardClick(event: MouseEvent) {
+function onCardClick() {
   if (state.isAccordionOpen.value) {
     emit("cardCollapsed");
   } else {
@@ -276,16 +260,26 @@ function onCardClick(event: MouseEvent) {
             <CText font-size="sm" color="gray.400">LINKS</CText>
             <CLink
               :href="props.job.company_url"
-              :id="comp.idCompanyUrl"
-              @click="event => event.stopPropagation()"
+              @click="(event) => {
+                event.stopPropagation();
+                tracking.sendJobEvent(props.job, 'company_url clicked');
+              }"
+              @auxclick="(event) => {
+                tracking.sendJobEvent(props.job, 'company_url clicked');
+              }"
               is-external
             >
               Homepage
             </CLink>
             <CLink
               :href="props.job.company_career_page_url"
-              :id="comp.idCompanyCareers"
-              @click="event => event.stopPropagation()"
+              @click="(event) => {
+                event.stopPropagation();
+                tracking.sendJobEvent(props.job, 'company_career_page_url clicked');
+              }"
+              @auxclick="async (event) => {
+                await tracking.sendJobEvent(props.job, 'company_career_page_url clicked');
+              }"
               is-external
             >
               Vacancies page

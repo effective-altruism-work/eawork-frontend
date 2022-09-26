@@ -18,9 +18,21 @@ export namespace tracking {
     await waitForInit();
 
     const eventProps = get80kJobProps(job, action);
-    await analytics.track(eventProps.action, eventProps);
+    
+    let propsExtra = {};
+    switch (action) {
+      case "company_url clicked": {
+        propsExtra = { label: job.company_url };
+        break;
+      }
+      case "url_external clicked": {
+        propsExtra = { label: job.url_external };
+        break;
+      }
+    }
+    await analytics.track(eventProps.action, { ...eventProps, ...propsExtra });
   }
-  
+
   export async function sendEvent(action: Action, data: any) {
     try {
       await waitForInit();
@@ -29,47 +41,6 @@ export namespace tracking {
     } catch (err) {
       captureEvent(err);
     }
-  }
-
-  interface BindArgs {
-    selector: string;
-    action: Action;
-    defaults?: {
-      category?: "Job board";
-      label?: string;
-    };
-    job: JobAlgolia;
-  }
-
-  export async function bindAnchorsTracking(args: BindArgs) {
-    await waitForInit();
-    const anchors: NodeListOf<HTMLAnchorElement> = document.querySelectorAll(args.selector);
-    for (const anchor of anchors) {
-      anchor.addEventListener("click", async (event) => {
-        event.preventDefault();
-        setTimeout(() => window.location.href = anchor.href, clickTimeout);
-        await sendAnchorClick(anchor, args);
-      });
-      anchor.addEventListener("auxclick", async () => {
-        await sendAnchorClick(anchor, args);
-      });
-    }
-  }
-
-  async function sendAnchorClick(anchor: HTMLAnchorElement, bindArgs: BindArgs) {
-    await waitForInit();
-    const eightyProps = get80kJobProps(bindArgs.job, bindArgs.action);
-    await analytics.track(
-      eightyProps.action,
-      {
-        ...eightyProps,
-        category: anchor.getAttribute(`${prefix}-category`) ?? bindArgs.defaults.category ?? "Job board",
-        label: anchor.getAttribute(`${prefix}-label`) ?? bindArgs.defaults.label ?? anchor.href,
-        objectId: anchor.getAttribute(`${prefix}-object-id`),
-        userFacingLabel: anchor.innerText,
-        objectType: "link",
-      }
-    );
   }
 
   async function waitForInit() {
