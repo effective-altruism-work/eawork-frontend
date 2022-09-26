@@ -46,6 +46,8 @@ const comp = useComp(() => {
   return {
     space: 6,
     id: `job-card-${props.job.post_pk}`,
+    idCompanyUrl: `job-card-${props.job.post_pk}-org-homepage`,
+    idCompanyCareers: `job-card-${props.job.post_pk}-org-careers`,
     activeShadowBorder,
     isJobGlobal: props.job.tags_country.includes("Global"),
     activeShadow: `0 8px 24px 0 #9badb629, ${activeShadowBorder}`,
@@ -55,14 +57,18 @@ const comp = useComp(() => {
 
 onMounted(async () => {
   await tracking.bindAnchorsTracking({
-    selector: `#${comp.id}`,
-    defaults: {
-      action: "Viewed organisation homepage",
-    },
+    selector: `#${comp.idCompanyUrl}`,
+    action: "company_url clicked",
+    job: props.job,
+  });
+  await tracking.bindAnchorsTracking({
+    selector: `#${comp.idCompanyCareers}`,
+    action: "company_career_page_url clicked",
+    job: props.job,
   });
 });
 
-function onCardClick() {
+function onCardClick(event: MouseEvent) {
   if (state.isAccordionOpen.value) {
     emit("cardCollapsed");
   } else {
@@ -268,8 +274,22 @@ function onCardClick() {
           
           <CFlex :mt="job.company_description ? 4 : 3" align="baseline" gap="4">
             <CText font-size="sm" color="gray.400">LINKS</CText>
-            <CLink :href="props.job.company_url" is-external>Homepage</CLink>
-            <CLink :href="props.job.company_career_page_url" is-external>Vacancies page</CLink>
+            <CLink
+              :href="props.job.company_url"
+              :id="comp.idCompanyUrl"
+              @click="event => event.stopPropagation()"
+              is-external
+            >
+              Homepage
+            </CLink>
+            <CLink
+              :href="props.job.company_career_page_url"
+              :id="comp.idCompanyCareers"
+              @click="event => event.stopPropagation()"
+              is-external
+            >
+              Vacancies page
+            </CLink>
           </CFlex>
 
           <CFlex :gap="comp.space" mt="4">
@@ -295,7 +315,10 @@ function onCardClick() {
             <!--</CLink>-->
           
             <CLink
-              @click="tracking.sendEvent(props.job, 'url_external clicked');"
+              @click="async (event) => {
+                event.stopPropagation();
+                await tracking.sendEvent(props.job, 'url_external clicked');
+              }"
               @auxclick="tracking.sendEvent(props.job, 'url_external clicked');"
               :href="job.url_external"
               is-external

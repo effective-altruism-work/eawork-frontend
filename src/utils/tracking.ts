@@ -19,33 +19,41 @@ export namespace tracking {
     const eventProps = get80kJobProps(job, action);
     await analytics.track(eventProps.action, eventProps);
   }
-
-  export async function bindAnchorsTracking(args: {
+  
+  interface BindArgs {
     selector: string;
-    defaults?: EventDefaultProps;
-  }) {
+    action: Action;
+    defaults?: {
+      category?: "Job board";
+      label?: string;
+    };
+    job: JobAlgolia;
+  }
+
+  export async function bindAnchorsTracking(args: BindArgs) {
     await waitForInit();
     const anchors: NodeListOf<HTMLAnchorElement> = document.querySelectorAll(args.selector);
     for (const anchor of anchors) {
       anchor.addEventListener("click", async (event) => {
         event.preventDefault();
         setTimeout(() => window.location.href = anchor.href, clickTimeout);
-        await sendAnchorClick(anchor, args.defaults);
+        await sendAnchorClick(anchor, args);
       });
       anchor.addEventListener("auxclick", async () => {
-        await sendAnchorClick(anchor, args.defaults);
+        await sendAnchorClick(anchor, args);
       });
     }
   }
 
-  async function sendAnchorClick(anchor: HTMLAnchorElement, defaults?: EventDefaultProps) {
+  async function sendAnchorClick(anchor: HTMLAnchorElement, bindArgs: BindArgs) {
     await waitForInit();
-    
+    const eightyProps = get80kJobProps(bindArgs.job, bindArgs.action);
     await analytics.track(
-      anchor.getAttribute(`${prefix}-action`) ?? defaults.action,
+      eightyProps.action,
       {
-        category: anchor.getAttribute(`${prefix}-category`) ?? defaults.category,
-        label: anchor.getAttribute(`${prefix}-label`) ?? defaults.label ?? anchor.href,
+        ...eightyProps,
+        category: anchor.getAttribute(`${prefix}-category`) ?? bindArgs.defaults.category ?? "Job board",
+        label: anchor.getAttribute(`${prefix}-label`) ?? bindArgs.defaults.label ?? anchor.href,
         objectId: anchor.getAttribute(`${prefix}-object-id`),
         userFacingLabel: anchor.innerText,
         objectType: "link",
@@ -102,12 +110,6 @@ export namespace tracking {
           ...props,
         }
     }
-  }
-  
-  interface EventDefaultProps {
-    category?: "Job board";
-    action?: Action80k;
-    label?: string;
   }
 
   interface JobEvent80k {
