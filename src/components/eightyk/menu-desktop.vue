@@ -24,7 +24,6 @@ function getCategoryDisplay(category: NodeCategory): string {
   return (state.nodeCategoryActive.value?.label === category.label) ? "flex" : "none";
 }
 
-
 onMounted(() => {
   window.addEventListener("keyup", onKeyUp);
 });
@@ -73,7 +72,7 @@ function onNodeClick(event, node) {
           <CBox
             v-for="node in nodes"
             :key="node.label"
-            z-index="2"
+            z-index="modal"
           >
             <CLink
               :href="node.url"
@@ -102,7 +101,7 @@ function onNodeClick(event, node) {
               h="fit-content"
               :mt="comp.spaces.lg"
               max-h="fit-content"
-              z-index="2"
+              z-index="modal"
               left="0"
               bg="#f5f5f5"
               border="2px solid #eee"
@@ -174,7 +173,7 @@ function onNodeClick(event, node) {
               h="fit-content"
               :py="comp.spaces.md"
               :mt="comp.spaces.lg"
-              z-index="2"
+              z-index="modal"
               bg="white"
               border="2px solid #eee"
             >
@@ -215,7 +214,7 @@ function onNodeClick(event, node) {
       right="0"
       top="0"
       bottom="0"
-      z-index="1"
+      z-index="overlay"
     />
 
   </CBox>

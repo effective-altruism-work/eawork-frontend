@@ -124,7 +124,7 @@ function onNodeClick(event, node) {
               right="0"
               :py="comp.spaces.md"
               :mt="2"
-              z-index="2"
+              z-index="modal"
               bg="white"
               border="2px solid #eee"
             >
@@ -164,7 +164,7 @@ function onNodeClick(event, node) {
       right="0"
       top="0"
       bottom="0"
-      z-index="1"
+      z-index="overlay"
     />
   </CBox>
 </template>
