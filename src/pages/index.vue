@@ -55,12 +55,8 @@ onBeforeMount(async () => {
 });
 
 onMounted(async () => {
-  const url = new URL(window.location as any);
-  const jobPkCurrent = url.searchParams.get("jobPk");
-  if (jobPkCurrent) {
-    state.jobPkCurrent.value = Number(jobPkCurrent);
-    state.jobFromUrlQuery.value = await state.searchIndex.getObject(jobPkCurrent);
-  }
+  await loadJobIfSpecified();
+  window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 watch(state.jobPkCurrent, (jobPkCurrentNew: number | null) => {
@@ -77,6 +73,15 @@ watch(state.jobPkCurrent, (jobPkCurrentNew: number | null) => {
 useHead({
   title: "Job board",
 });
+
+async function loadJobIfSpecified() {
+  const url = new URL(window.location as any);
+  const jobPkCurrent = url.searchParams.get("jobPk");
+  if (jobPkCurrent) {
+    state.jobPkCurrent.value = Number(jobPkCurrent);
+    state.jobFromUrlQuery.value = await state.searchIndex.getObject(jobPkCurrent);
+  }
+}
 
 function searchFunction(helper) {
   saveQueryJson(helper.state);
