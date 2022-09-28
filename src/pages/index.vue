@@ -51,12 +51,12 @@ const comp = useComp(() => {
 });
 
 onBeforeMount(async () => {
+  window.addEventListener("load", () => window.scrollTo({ top: 0, behavior: "smooth" }));
   await tracking.init(hooks.config.public.segmentId);
 });
 
 onMounted(async () => {
   await loadJobIfSpecified();
-  window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 watch(state.jobPkCurrent, (jobPkCurrentNew: number | null) => {
@@ -121,7 +121,7 @@ interface RouteState {
 <template>
   <CBox>
     
-    <CBox :min-h="{ base: '236px', lg: '0' }">
+    <CBox>
 
       <CVStack
         :mt="[8, null, null, 14]"
