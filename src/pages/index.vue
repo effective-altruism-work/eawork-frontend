@@ -51,7 +51,16 @@ const comp = useComp(() => {
 });
 
 onBeforeMount(async () => {
-  window.addEventListener("load", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  // on ios in 50% of page reloads the viewport has top offset of ~300px.
+  // Spent half an hour: not reproducible on desktop safari. I'll just wait for apple to fix it
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      const isBloodySafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+      if (isBloodySafari) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }, 300);
+  });
   await tracking.init(hooks.config.public.segmentId);
 });
 
@@ -397,7 +406,7 @@ interface RouteState {
 </template>
 
 <style lang="scss">
-@import "~/styles/chakra-ui.scss";
+@import '~/styles/chakra-ui.scss';
 
 html, html.dark {
   background: #F4F6F7;
