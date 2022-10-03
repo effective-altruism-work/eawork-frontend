@@ -59,7 +59,7 @@ onBeforeMount(async () => {
       if (isBloodySafari) {
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
-    }, 700);
+    }, 1800);
   });
   await tracking.init(hooks.config.public.segmentId);
 });
