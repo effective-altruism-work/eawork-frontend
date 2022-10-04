@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import { useHead, useRuntimeConfig } from "#app";
-import { CFlex, CHeading, CButton, CVStack, CLink, CSpacer, CBox, CText } from "@chakra-ui/vue-next";
+import {
+  CFlex,
+  CHeading,
+  CButton,
+  CVStack,
+  CLink,
+  CSpacer,
+  CBox,
+  CText,
+} from "@chakra-ui/vue-next";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import algoliasearch from "algoliasearch";
 import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns";
@@ -20,7 +29,6 @@ import { tracking } from "~/utils/tracking";
 import { JobAlgolia } from "~/utils/types";
 import { OhVueIcon } from "oh-vue-icons";
 
-
 const hooks = useHooks(() => {
   const config = useRuntimeConfig();
   return {
@@ -35,7 +43,7 @@ const hooks = useHooks(() => {
 
 const state = {
   searchIndex: hooks.searchClient.initIndex(hooks.config.public.algoliaJobsIndex),
-  queryJson: ref<null | { query: string; facetFilters: string[]; }>(null),
+  queryJson: ref<null | { query: string; facetFilters: string[] }>(null),
   jobPkCurrent: ref<number | null>(null),
   jobFromUrlQuery: ref<JobAlgolia | null>(null),
   isShowMobileFilters: ref(false),
@@ -47,7 +55,7 @@ const comp = useComp(() => {
     filtersW: { base: 0, lg: "30%", xl: "26%" },
     filtersDisplay: { base: "none", lg: "flex" },
     space: 6,
-  }
+  };
 });
 
 onBeforeMount(async () => {
@@ -115,7 +123,6 @@ interface RouteState {
 
 <template>
   <CBox>
-
     <CVStack :mt="[8, null, null, 14]" :mb="[6, null, null, 14]" :gap="[4, null, null, 3]">
       <CFlex justify="space-between" align="center">
         <CHeading
@@ -131,16 +138,12 @@ interface RouteState {
           size="lg"
           @click="state.isShowMobileFilters.value = true"
         >
-          <OhVueIcon
-            name="md-filterlist-round"
-            scale="1.1"
-            style="margin-bottom: 1px"
-          />
+          <OhVueIcon name="md-filterlist-round" scale="1.1" style="margin-bottom: 1px" />
           <chakra.span ml="2">Filters</chakra.span>
         </CButton>
-
       </CFlex>
-      <CText font-size="lg">Handpicked to help you tackle the
+      <CText font-size="lg"
+        >Handpicked to help you tackle the
         <CLink href="https://80000hours.org/problem-profiles/">
           world’s most pressing problems
         </CLink>
@@ -152,7 +155,7 @@ interface RouteState {
       gap="7"
       :mt="{ lg: -2 }"
       :mb="{ base: 8, lg: 6 }"
-      :font-size="{base: 'sm', md: 'md'}"
+      :font-size="{ base: 'sm', md: 'md' }"
       align="center"
     >
       <CLink
@@ -162,11 +165,7 @@ interface RouteState {
         text-decoration="underline"
         color="gray.400"
       >
-        <OhVueIcon
-          name="md-starrate-round"
-          scale="1.1"
-          style="margin-bottom: 1px"
-        />
+        <OhVueIcon name="md-starrate-round" scale="1.1" style="margin-bottom: 1px" />
         <chakra.span ml="1">Top recommended organisations</chakra.span>
       </CLink>
       <CLink
@@ -176,15 +175,10 @@ interface RouteState {
         text-decoration="underline"
         color="gray.400"
       >
-        <OhVueIcon
-          name="bi-question-circle-fill"
-          scale="1"
-          style="margin-right: 4px"
-        />
+        <OhVueIcon name="bi-question-circle-fill" scale="1" style="margin-right: 4px" />
         <chakra.span ml="px">FAQ</chakra.span>
       </CLink>
     </CFlex>
-
 
     <AisInstantSearch
       show-loading-indicator
@@ -217,7 +211,6 @@ interface RouteState {
       :index-name="hooks.config.public.algoliaJobsIndex"
     >
       <CFlex :mb="comp.space * 4">
-
         <CFlex direction="column" :min-w="comp.cardW">
           <CFlex justify="flex-end" :gap="comp.space">
             <!--<NuxtLink :to="urls.jobs.post">-->
@@ -232,25 +225,26 @@ interface RouteState {
             <CBox min-h="100vh">
               <AisInfiniteHits>
                 <template
-                  v-slot="{
-                    items,
-                    refinePrevious,
-                    refineNext,
-                    isLastPage,
-                    sendEvent,
-                 }"
+                  v-slot="{ items, refinePrevious, refineNext, isLastPage, sendEvent }"
                 >
                   <JobCard
                     v-if="state.jobFromUrlQuery.value"
                     :job="state.jobFromUrlQuery.value"
                     :is-expanded="true"
                     :is-missing-algolia-context="true"
-                    @card-expanded="state.jobPkCurrent.value = state.jobFromUrlQuery.value?.post_pk"
-                    @card-collapsed="() => {
-                      if (Number(state.jobPkCurrent.value) === state.jobFromUrlQuery.value?.post_pk) {
-                        state.jobPkCurrent.value = null;                        
+                    @card-expanded="
+                      state.jobPkCurrent.value = state.jobFromUrlQuery.value?.post_pk
+                    "
+                    @card-collapsed="
+                      () => {
+                        if (
+                          Number(state.jobPkCurrent.value) ===
+                          state.jobFromUrlQuery.value?.post_pk
+                        ) {
+                          state.jobPkCurrent.value = null;
+                        }
                       }
-                    }"
+                    "
                   />
                   <JobCard
                     v-for="job in items"
@@ -259,30 +253,32 @@ interface RouteState {
                     :is-has-text-query="Boolean(state.queryJson.value?.query)"
                     :key="job.post_pk"
                     @card-expanded="state.jobPkCurrent.value = job.post_pk"
-                    @card-collapsed="() => {
-                      if (state.jobPkCurrent.value === job.post_pk) {
-                        state.jobPkCurrent.value = null;                        
+                    @card-collapsed="
+                      () => {
+                        if (state.jobPkCurrent.value === job.post_pk) {
+                          state.jobPkCurrent.value = null;
+                        }
                       }
-                    }"
+                    "
                   />
-                  
+
                   <CBox v-if="!isLastPage">
-                    <JobCardSkeleton v-observe-visibility="{
+                    <JobCardSkeleton
+                      v-observe-visibility="{
                       callback: (isVisible: boolean) => {
                         if (isVisible && !isLastPage) {
                           refineNext();
                         }
                       },
-                    }"/>
-                    <JobCardSkeleton/>
-                    <JobCardSkeleton/>
+                    }"
+                    />
+                    <JobCardSkeleton />
+                    <JobCardSkeleton />
                   </CBox>
-
                 </template>
               </AisInfiniteHits>
             </CBox>
           </CBox>
-
         </CFlex>
 
         <CFlex
@@ -302,7 +298,7 @@ interface RouteState {
           <Refinements />
           <FiltersFooter />
         </CFlex>
-        
+
         <VueFinalModal
           v-else
           v-model="state.isShowMobileFilters.value"
@@ -334,11 +330,7 @@ interface RouteState {
                 color="blue.500"
                 bg="#F4F6F7"
               >
-                <OhVueIcon
-                  name="io-close"
-                  scale="1"
-                  style="position: absolute"
-                />
+                <OhVueIcon name="io-close" scale="1" style="position: absolute" />
               </CButton>
             </CFlex>
 
@@ -364,20 +356,15 @@ interface RouteState {
               justify="center"
               bg="#F4F6F7"
             >
-              <CButton
-                @click="state.isShowMobileFilters.value = false"
-                font-weight="normal"
-              >
+              <CButton @click="state.isShowMobileFilters.value = false" font-weight="normal">
                 <chakra.span mr="2">SHOW RESULTS:</chakra.span>
                 <AisStats>
                   <template v-slot="{ nbHits }">{{ nbHits }}</template>
                 </AisStats>
               </CButton>
             </CFlex>
-      
           </CFlex>
         </VueFinalModal>
-
       </CFlex>
     </AisInstantSearch>
   </CBox>
@@ -386,7 +373,8 @@ interface RouteState {
 <style lang="scss">
 @import "~/styles/chakra-ui.scss";
 
-html, html.dark {
-  background: #F4F6F7;
+html,
+html.dark {
+  background: #f4f6f7;
 }
 </style>
