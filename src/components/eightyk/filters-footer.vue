@@ -31,7 +31,7 @@ const hooks = {
       <CIcon name="external-link" mb="px" mr="1" />
       View all roles in a spreadsheet
     </CLink>
-    <CLink href="https://80000hours.org/impact-survey/?int_campaign=job-board__sidebar">
+    <CLink href="https://80000hours.typeform.com/to/LG2lzrOC">
       <CIcon name="message-square" mb="px" mr="1" />
       Give us feedback
     </CLink>
