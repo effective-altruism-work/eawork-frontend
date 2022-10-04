@@ -48,6 +48,7 @@ const state = {
   isAccordionOpen: ref(props.isExpanded ?? false),
   isAccordionOpening: ref(props.isExpanded ?? false),
   isHovering: ref(false),
+  isStarHovering: ref(false),
 };
 
 const comp = useComp(() => {
@@ -77,7 +78,9 @@ function onCardClick() {
     v-if="!props.isHidden"
     @click="onCardClick"
     @mouseover="state.isHovering.value = true"
+    @focus="state.isHovering.value = true"
     @mouseleave="state.isHovering.value = false"
+    @blur="state.isHovering.value = false"
     mb="3"
     bg="white"
     :p="[4, null, 6]"
@@ -113,6 +116,42 @@ function onCardClick() {
           </CText>
 
           <CText :line-height="[1.3, null, 'none']" :font-size="{ base: 'sm', lg: 'md' }">
+            <CBox
+              v-if="false"
+              @mouseover="state.isStarHovering.value = true"
+              @focus="state.isStarHovering.value = true"
+              @mouseleave="state.isStarHovering.value = false"
+              @blur="state.isStarHovering.value = false"
+              position="relative"
+              display="inline"
+            >
+              <OhVueIcon
+                name="md-starrate-round"
+                scale="1.1"
+                style="margin-bottom: 1px; color: #9badb6; margin-right: 2px"
+              />
+              <CBox
+                v-if="state.isStarHovering.value"
+                position="absolute"
+                bottom="0"
+                left="0"
+              >
+                <CBox
+                  margin="4"
+                  padding="6"
+                  background-color="rgba(255, 255, 255, 0.95)"
+                  width="350px"
+                  border-radius="md"
+                  shadow="inset 0 0 0 1px #E1E6EA"
+                >
+                  This is one of our
+                  <CLink href="https://80000hours.org/job-board/top-orgs/"
+                    >top recommended organisations</CLink
+                  >.
+                </CBox>
+              </CBox>
+            </CBox>
+            <!-- huh -->
             <span v-if="props.isMissingAlgoliaContext">{{ job.company_name }}</span>
             <ais-snippet v-else :hit="job" attribute="company_name" />
           </CText>
