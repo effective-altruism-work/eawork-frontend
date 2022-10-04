@@ -1,7 +1,8 @@
-import { defineNuxtConfig } from "nuxt";
+import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
   modules: ["@nuxt/ui", "@formkit/nuxt"],
+  meta: [{ name: "viewport", content: "width=device-width, initial-scale=1" }],
   runtimeConfig: {
     public: {
       apiBase: "https://backend.eawork.org/api",

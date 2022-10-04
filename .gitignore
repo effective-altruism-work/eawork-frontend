@@ -14,3 +14,5 @@ todo.md
 .idea/
 .DS_Store
 *.pem
+
+.output

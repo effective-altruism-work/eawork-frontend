@@ -21,7 +21,7 @@ const comp = {
 
 function getCategoryDisplay(category: NodeCategory): string {
   // must be in <script> due to the vue templating bug
-  return (state.nodeCategoryActive.value?.label === category.label) ? "flex" : "none";
+  return state.nodeCategoryActive.value?.label === category.label ? "flex" : "none";
 }
 
 onMounted(() => {
@@ -57,27 +57,17 @@ function onNodeClick(event, node) {
     }
   }
 }
-
 </script>
 
 <template>
   <CBox w="100%" mb="-2px">
-
     <CBox pos="relative">
       <CFlex justify="space-between" align="center">
-        <chakra.img w="72px" src="/80k-logo.png"/>
-        
+        <chakra.img w="72px" src="/80k-logo.png" />
+
         <CFlex>
-          
-          <CBox
-            v-for="node in nodes"
-            :key="node.label"
-            z-index="modal"
-          >
-            <CLink
-              :href="node.url"
-              @click="(event) => onNodeClick(event, node)"
-            >
+          <CBox v-for="node in nodes" :key="node.label" z-index="modal">
+            <CLink :href="node.url" @click="(event) => onNodeClick(event, node)">
               <CButton
                 variant="link"
                 :ml="comp.spaces.lg"
@@ -93,7 +83,7 @@ function onNodeClick(event, node) {
                 />
               </CButton>
             </CLink>
-            
+
             <CFlex
               v-if="node.isMegaNode && isCurrentNode(node)"
               pos="absolute"
@@ -106,10 +96,7 @@ function onNodeClick(event, node) {
               bg="#f5f5f5"
               border="2px solid #eee"
             >
-              <CFlex
-                direction="column"
-                max-w="30%"
-              >
+              <CFlex direction="column" max-w="30%">
                 <CLink
                   v-for="category in node.categories"
                   :key="category.label"
@@ -163,9 +150,8 @@ function onNodeClick(event, node) {
                   </CFlex>
                 </CFlex>
               </CFlex>
-
             </CFlex>
-            
+
             <CFlex
               v-if="!node.isMegaNode && isCurrentNode(node)"
               pos="absolute"
@@ -191,15 +177,12 @@ function onNodeClick(event, node) {
                     :key="catNode.url"
                     :href="catNode.url"
                   >
-                     {{catNode.label}}
+                    {{ catNode.label }}
                   </CLink>
                 </CFlex>
-                
               </CFlex>
             </CFlex>
-
           </CBox>
-            
         </CFlex>
       </CFlex>
     </CBox>
@@ -216,13 +199,11 @@ function onNodeClick(event, node) {
       bottom="0"
       z-index="overlay"
     />
-
   </CBox>
 </template>
 
 <style>
 body {
   position: relative;
-  min-height: 100vh;
 }
 </style>

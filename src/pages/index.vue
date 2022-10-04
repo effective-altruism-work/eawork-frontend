@@ -59,16 +59,6 @@ const comp = useComp(() => {
 });
 
 onBeforeMount(async () => {
-  // on ios in 50% of page reloads the viewport has top offset of ~300px.
-  // Spent half an hour: not reproducible on desktop safari. I'll just wait for apple to fix it
-  window.addEventListener("load", () => {
-    setTimeout(() => {
-      const isBloodySafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-      if (isBloodySafari) {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-    }, 1800);
-  });
   await tracking.init(hooks.config.public.segmentId);
 });
 
@@ -238,7 +228,7 @@ interface RouteState {
           </CFlex>
 
           <CBox>
-            <CBox min-h="100vh">
+            <CBox>
               <AisInfiniteHits>
                 <template
                   v-slot="{ items, refinePrevious, refineNext, isLastPage, sendEvent }"

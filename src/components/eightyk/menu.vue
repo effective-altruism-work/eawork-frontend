@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
-import { CFlex, CBox, CButton, CContainer, CLink, CHeading, CText, chakra } from "@chakra-ui/vue-next";
+import {
+  CFlex,
+  CBox,
+  CButton,
+  CContainer,
+  CLink,
+  CHeading,
+  CText,
+  chakra,
+} from "@chakra-ui/vue-next";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { ref } from "vue";
 import { nodes, Node, NodeCategory, nodesSecondary } from "~/nodes";
@@ -46,32 +55,22 @@ function onNodeClick(event, node) {
     }
   }
 }
-
 </script>
 
 <template>
   <CBox>
     <CContainer w="100%" m="auto" max-w="8xl">
-      
       <CFlex
         v-if="hooks.breakpoints.isGreaterOrEqual('xl')"
         direction="column"
         align="center"
       >
-        <CFlex
-          w="100%"
-          grow="1"
-          max-w="8xl"
-          justify="center"
-          :py="4 - 1"
-          bg="white"
-        >
+        <CFlex w="100%" grow="1" max-w="8xl" justify="center" :py="4 - 1" bg="white">
           <MenuDesktop />
         </CFlex>
       </CFlex>
-      
+
       <MenuMobile v-else />
-  
     </CContainer>
 
     <CFlex
@@ -81,26 +80,12 @@ function onNodeClick(event, node) {
       align="center"
       py="2"
     >
-
-      <CContainer
-        display="flex"
-        justify-content="space-between"
-        w="100%"
-        max-w="8xl"
-      >
+      <CContainer display="flex" justify-content="space-between" w="100%" max-w="8xl">
         <CFlex>Home</CFlex>
-  
-        <CFlex gap="6">
-          <CBox
-            v-for="node in nodesSecondary"
-            :key="node.label"
-            pos="relative"
-          >
 
-            <CLink
-              :href="node.url"
-              @click="(event) => onNodeClick(event, node)"
-            >
+        <CFlex gap="6">
+          <CBox v-for="node in nodesSecondary" :key="node.label" pos="relative">
+            <CLink :href="node.url" @click="(event) => onNodeClick(event, node)">
               <CButton
                 variant="link"
                 :ml="comp.spaces.md"
@@ -115,7 +100,7 @@ function onNodeClick(event, node) {
                 />
               </CButton>
             </CLink>
-            
+
             <CFlex
               v-if="!node.isMegaNode && isCurrentNode(node)"
               pos="absolute"
@@ -128,7 +113,7 @@ function onNodeClick(event, node) {
               bg="white"
               border="2px solid #eee"
             >
-              <CFlex  :gap="comp.spaces.md" >
+              <CFlex :gap="comp.spaces.md">
                 <CFlex
                   v-for="category in node.categories"
                   :key="category.label"
@@ -143,17 +128,16 @@ function onNodeClick(event, node) {
                     :href="catNode.url"
                     white-space="nowrap"
                   >
-                     {{catNode.label}}
+                    {{ catNode.label }}
                   </CLink>
                 </CFlex>
               </CFlex>
             </CFlex>
-
           </CBox>
         </CFlex>
       </CContainer>
     </CFlex>
-    
+
     <CBox
       v-if="state.nodeOpened.value"
       @click="state.nodeOpened.value = null"
