@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
 import { CFlex, CButton, CInput, CText, CBox } from "@chakra-ui/vue-next";
+import { captureEvent } from "@sentry/vue";
 import axios from "axios";
 import { OhVueIcon } from "oh-vue-icons";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { theme } from "~/styles/theme";
+import { tracking } from "~/utils/tracking";
 
 const props = defineProps<{
   queryJson: null | {
@@ -13,7 +15,9 @@ const props = defineProps<{
   };
 }>();
 
-const nuxtConfig = useRuntimeConfig();
+const hooks = {
+  config: useRuntimeConfig(),
+};
 
 const state = {
   isShowModal: ref(false),
@@ -23,22 +27,47 @@ const state = {
   isError: ref(false),
 };
 
+watch(state.isShowModal, () => {
+  state.isSuccess.value = false;
+  state.isError.value = false;
+});
+
 async function createJobAlert() {
   state.isSubmitting.value = true;
   state.isSuccess.value = null;
   state.isError.value = false;
+  
+  if (state.email.value === "") {
+    state.isError.value = true;
+    state.isSubmitting.value = false;
+    return;
+  }
+  
   try {
-    const res = await axios.post(`${nuxtConfig.public.apiBase}/jobs/subscribe`, {
+    const res = await axios.post(`${hooks.config.public.apiBase}/jobs/subscribe`, {
       email: state.email.value,
       query_json: props.queryJson,
       query_string: window.location.search,
     });
     if (res.data.success) {
       state.isSuccess.value = true;
+      
+      await tracking.sendEvent("alert sign up", {
+        label: window.location.href,
+        problemArea: props.queryJson.facetFilters["tags_area"],
+        roleType: props.queryJson.facetFilters["tags_role_type"],
+        ...tracking.get80kLocations(
+          props.queryJson.facetFilters["tags_city"],
+          props.queryJson.facetFilters["tags_county"]
+        ),
+      });
     } else {
+      console.log("non success");
       state.isError.value = true;
     }
   } catch (e) {
+    captureEvent(e);
+    console.log("error", e);
     state.isError.value = true;
   }
   state.isSubmitting.value = false;

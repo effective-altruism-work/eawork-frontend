@@ -5,6 +5,7 @@ export class Node extends Data {
   url?: string;
   categories?: NodeCategory[];
   isMegaNode?: boolean;
+  isSecondary?: boolean;
 }
 
 export class NodeCategory extends Data {
@@ -250,21 +251,104 @@ export const nodes: Node[] = [
   }),
 ];
 
-export const nodesSecondary = [
+export const nodesSecondary: Node[] = [
   Node.create({
+    isSecondary: true,
     label: "New releases",
     url: `${baseUrl}/latest/`,
   }),
   Node.create({
+    isSecondary: true,
     label: "All articles",
     url: `${baseUrl}/all-articles/`,
   }),
   Node.create({
+    isSecondary: true,
     label: "Community",
     url: `${baseUrl}/community/`,
   }),
   Node.create({
+    isSecondary: true,
     label: "About",
     url: `${baseUrl}/about/`,
+    categories: [
+      NodeCategory.create({
+        label: "About us",
+        children: [
+          Node.create({
+            label: "Introduction",
+            url: `${baseUrl}/about/`,
+          }),
+          Node.create({
+            label: "Meet the team",
+            url: `${baseUrl}/about/meet-the-team/`,
+          }),
+          Node.create({
+            label: "Our donors",
+            url: `${baseUrl}/about/donors/`,
+          }),
+          Node.create({
+            label: "Media coverage",
+            url: `${baseUrl}/about/media-coverage/`,
+          }),
+          Node.create({
+            label: "Contact us",
+            url: `${baseUrl}/about/contact-us/`,
+          }),
+        ],
+      }),
+      NodeCategory.create({
+        label: "Support us",
+        children: [
+          Node.create({
+            label: "Take our survey",
+            url: `${baseUrl}/user-survey/`,
+          }),
+          Node.create({
+            label: "Donate",
+            url: `${baseUrl}/support-us/donate/`,
+          }),
+          Node.create({
+            label: "Stay updated",
+            url: `${baseUrl}/about/stay-updated/`,
+          }),
+          Node.create({
+            label: "Acknowledgements",
+            url: `${baseUrl}/support-us/acknowledgements/`,
+          }),
+          Node.create({
+            label: "Work with us",
+            url: `${baseUrl}/about/work-with-us/`,
+          }),
+        ],
+      }),
+      NodeCategory.create({
+        label: "Our impact & credibility",
+        children: [
+          Node.create({
+            label: "Evaluations",
+            url: `${baseUrl}/about/credibility/evaluations/`,
+          }),
+          Node.create({
+            label: "Our mistakes",
+            url: `${baseUrl}/about/credibility/evaluations/mistakes/`,
+          }),
+          Node.create({
+            label: "Research principles",
+            url: `${baseUrl}/about/credibility/research-principles/`,
+          }),
+          Node.create({
+            label: "Endorsements",
+            url: `${baseUrl}/about/credibility/endorsements/`,
+          }),
+          Node.create({
+            label: "Testimonials",
+            url: `${baseUrl}/about/impact/testimonials/`,
+          }),
+        ],
+      }),
+    ],
   }),
 ];
+
+export const nodesAll = nodes.concat(nodesSecondary);

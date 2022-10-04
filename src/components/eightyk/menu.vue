@@ -6,6 +6,7 @@ import { ref } from "vue";
 import { nodes, Node, NodeCategory, nodesSecondary } from "~/nodes";
 import MenuDesktop from "~/components/eightyk/menu-desktop";
 import MenuMobile from "~/components/eightyk/menu-mobile";
+import { OhVueIcon } from "oh-vue-icons";
 
 const hooks = {
   breakpoints: useBreakpoints(breakpointsTailwind),
@@ -25,6 +26,26 @@ const comp = {
   },
   black50: "#2a2e30",
 };
+
+function isCurrentNode(node: Node) {
+  return state.nodeOpened.value?.label === node.label && node.categories;
+}
+
+function onNodeClick(event, node) {
+  if (isCurrentNode(node)) {
+    event.preventDefault();
+    state.nodeOpened.value = null;
+  } else {
+    if (node.isMegaNode) {
+      event.preventDefault();
+      state.nodeCategoryActive.value = node.categories[0];
+      state.nodeOpened.value = node;
+    } else if (node.categories?.length) {
+      event.preventDefault();
+      state.nodeOpened.value = node;
+    }
+  }
+}
 
 </script>
 
@@ -70,16 +91,80 @@ const comp = {
         <CFlex>Home</CFlex>
   
         <CFlex gap="6">
-          <CLink
+          <CBox
             v-for="node in nodesSecondary"
-            :href="node.url"
             :key="node.label"
-            color="comp.black50"
+            pos="relative"
           >
-            {{node.label}}
-          </CLink>
+
+            <CLink
+              :href="node.url"
+              @click="(event) => onNodeClick(event, node)"
+            >
+              <CButton
+                variant="link"
+                :ml="comp.spaces.md"
+                :color="isCurrentNode(node) ? 'blue.500' : comp.black50"
+              >
+                {{ node.label }}
+                <OhVueIcon
+                  v-if="node.categories"
+                  name="ri-arrow-down-s-fill"
+                  scale="1"
+                  :color="isCurrentNode(node) ? 'blue.500' : comp.black50"
+                />
+              </CButton>
+            </CLink>
+            
+            <CFlex
+              v-if="!node.isMegaNode && isCurrentNode(node)"
+              pos="absolute"
+              w="fit-content"
+              h="fit-content"
+              right="0"
+              :py="comp.spaces.md"
+              :mt="2"
+              z-index="modal"
+              bg="white"
+              border="2px solid #eee"
+            >
+              <CFlex  :gap="comp.spaces.md" >
+                <CFlex
+                  v-for="category in node.categories"
+                  :key="category.label"
+                  direction="column"
+                  :px="comp.spaces.lg"
+                  :gap="comp.spaces.sm"
+                >
+                  <CHeading size="sm" white-space="nowrap">{{ category.label }}</CHeading>
+                  <CLink
+                    v-for="catNode in category.children"
+                    :key="catNode.url"
+                    :href="catNode.url"
+                    white-space="nowrap"
+                  >
+                     {{catNode.label}}
+                  </CLink>
+                </CFlex>
+              </CFlex>
+            </CFlex>
+
+          </CBox>
         </CFlex>
       </CContainer>
     </CFlex>
+    
+    <CBox
+      v-if="state.nodeOpened.value"
+      @click="state.nodeOpened.value = null"
+      pos="absolute"
+      w="100%"
+      h="100%"
+      left="0"
+      right="0"
+      top="0"
+      bottom="0"
+      z-index="overlay"
+    />
   </CBox>
 </template>

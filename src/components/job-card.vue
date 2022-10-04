@@ -14,6 +14,7 @@ import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { formatDistance, format } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
 import { computed, onMounted, ref, watch } from "vue";
+import { Document } from "yaml";
 import JobCardLocationShort from "~/components/job-card-location-short.vue";
 import JobCardTags from "~/components/job-card-tags.vue";
 import JobView from "~/components/job-view.vue";
@@ -22,7 +23,6 @@ import { theme } from "~/styles/theme";
 import { useComp } from "~/utils/structs";
 import { JobAlgolia } from "~/utils/types";
 import { tracking } from "~/utils/tracking";
-import CollapseTransition from "@ivanv/vue-collapse-transition/src/CollapseTransition.vue";
 import { strings } from "~/constants";
 
 const props = defineProps<{
@@ -32,7 +32,6 @@ const props = defineProps<{
   isHidden?: boolean;
   isMissingAlgoliaContext?: boolean;
 }>();
-
 
 const emit = defineEmits<{
   (event: "cardExpanded"): void;
@@ -55,7 +54,6 @@ const comp = useComp(() => {
   const activeShadowBorder = "inset 0 0 0 1px #E1E6EA";
   return {
     space: 6,
-    id: `job-card-${props.job.post_pk}`,
     activeShadowBorder,
     isJobGlobal: props.job.tags_country.includes("Global"),
     activeShadow: `0 8px 24px 0 #9badb629, ${activeShadowBorder}`,
@@ -63,21 +61,12 @@ const comp = useComp(() => {
   };
 });
 
-onMounted(async () => {
-  await tracking.bindAnchorsTracking({
-    selector: `#${comp.id}`,
-    defaults: {
-      action: "Viewed organisation homepage",
-    },
-  });
-});
-
 function onCardClick() {
   if (state.isAccordionOpen.value) {
     emit("cardCollapsed");
   } else {
     emit("cardExpanded");
-    tracking.sendEvent(props.job, "viewed");
+    tracking.sendJobEvent(props.job, "viewed");
   }
   state.isAccordionOpen.value = !state.isAccordionOpen.value;
 }
@@ -267,10 +256,40 @@ function onCardClick() {
 
           <CFlex :mt="job.company_description ? 4 : 3" align="baseline" gap="4">
             <CText font-size="sm" color="gray.400">LINKS</CText>
-            <CLink :href="props.job.company_url" is-external>Homepage</CLink>
-            <CLink :href="props.job.company_career_page_url" is-external
-              >Vacancies page</CLink
+            <CLink
+              :href="props.job.company_url"
+              @click="
+                (event) => {
+                  event.stopPropagation();
+                  tracking.sendJobEvent(props.job, 'company_url clicked');
+                }
+              "
+              @auxclick="
+                (event) => {
+                  tracking.sendJobEvent(props.job, 'company_url clicked');
+                }
+              "
+              is-external
             >
+              Homepage
+            </CLink>
+            <CLink
+              :href="props.job.company_career_page_url"
+              @click="
+                (event) => {
+                  event.stopPropagation();
+                  tracking.sendJobEvent(props.job, 'company_career_page_url clicked');
+                }
+              "
+              @auxclick="
+                async (event) => {
+                  await tracking.sendJobEvent(props.job, 'company_career_page_url clicked');
+                }
+              "
+              is-external
+            >
+              Vacancies page
+            </CLink>
           </CFlex>
 
           <CFlex :gap="comp.space" mt="4">
@@ -295,8 +314,13 @@ function onCardClick() {
             <!--</CLink>-->
 
             <CLink
-              @click="tracking.sendEvent(props.job, 'url_external clicked')"
-              @auxclick="tracking.sendEvent(props.job, 'url_external clicked')"
+              @click="
+                async (event) => {
+                  event.stopPropagation();
+                  await tracking.sendJobEvent(props.job, 'url_external clicked');
+                }
+              "
+              @auxclick="tracking.sendJobEvent(props.job, 'url_external clicked')"
               :href="job.url_external"
               is-external
               :_hover="{ textDecoration: 'none !important' }"
