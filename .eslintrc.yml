@@ -34,6 +34,7 @@ rules:
   no-unused-vars: 0 # a good one, but many exceptions + broken linter
   no-underscore-dangle: 0 # not applicable
   prefer-destructuring: 0 # poor code style
+  max-classes-per-file: 0 # why?
   no-inner-declarations: 0
   import/prefer-default-export: 0
   import/extensions: 0
