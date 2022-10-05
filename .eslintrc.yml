@@ -7,6 +7,9 @@ extends:
 plugins:
   - prettier
   - unused-imports
+ignorePatterns: 
+  - node_modules/*
+  - .nuxt/*
 rules:
   quotes:
     - error
@@ -32,7 +35,6 @@ rules:
   operator-linebreak: 0 # a good one, but broken linter
   object-curly-newline: 0 # a good one, but broken linter
   no-unused-vars: 0 # a good one, but many exceptions + broken linter
-  no-unused-imports: 1 # a good one, but many exceptions + broken linter
   no-underscore-dangle: 0 # not applicable
   prefer-destructuring: 0 # poor code style
   max-classes-per-file: 0 # why?

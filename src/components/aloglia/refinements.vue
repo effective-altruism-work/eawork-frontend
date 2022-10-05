@@ -9,7 +9,6 @@ import RefinementList from "~/components/aloglia/refinement-list.vue";
 const props = defineProps<{
   countBg?: string;
 }>();
-
 </script>
 
 <template>
@@ -46,11 +45,7 @@ const props = defineProps<{
       :count-bg="props.countBg"
       label="Experience"
     />
-    <RefinementList
-      attribute="tags_role_type"
-      :count-bg="props.countBg"
-      label="Role type"
-    />
+    <RefinementList attribute="tags_role_type" :count-bg="props.countBg" label="Role type" />
     <RefinementList
       attribute="company_name"
       :count-bg="props.countBg"
@@ -76,7 +71,7 @@ const props = defineProps<{
         { label: 'In last year', start: getUnixTime(startOfYear(new Date())) },
       ]"
     />
-    
+
     <NumericMenu
       label="Closes"
       attribute="closes_at"

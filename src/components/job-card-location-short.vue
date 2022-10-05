@@ -10,8 +10,10 @@ const props = defineProps<{
 }>();
 
 const comp = useComp(() => {
-  const isShouldShowCity = props.job.tags_city.length && !props.job.tags_city.includes(strings.remoteLiteral);
-  const isShouldShowCountry = !isShouldShowCity && !props.job.tags_country.includes(strings.remoteLiteral);
+  const isShouldShowCity =
+    props.job.tags_city.length && !props.job.tags_city.includes(strings.remoteLiteral);
+  const isShouldShowCountry =
+    !isShouldShowCity && !props.job.tags_country.includes(strings.remoteLiteral);
   const isJobGlobal = props.job.tags_country.includes(strings.remoteLiteral);
   const isJobGlobalOnly = !isShouldShowCity && !isShouldShowCountry && isJobGlobal;
   return {
@@ -19,10 +21,11 @@ const comp = useComp(() => {
     isJobGlobalOnly,
     isShouldShowCity,
     isShouldShowCountry,
-    cities: props.job.tags_city.map(city => city.replace("Washington, DC metro area", "Washington, DC")),
+    cities: props.job.tags_city.map((city) =>
+      city.replace("Washington, DC metro area", "Washington, DC"),
+    ),
   };
 });
-
 </script>
 
 <template>
@@ -31,7 +34,6 @@ const comp = useComp(() => {
     gap="1"
     v-if="props.job.tags_city.length || props.job.tags_country.length"
   >
-
     <OhVueIcon
       name="fa-map-marker-alt"
       scale="0.75"
@@ -39,15 +41,10 @@ const comp = useComp(() => {
       style="margin-bottom: 1px"
     />
 
-    <CFlex
-      v-if="comp.isJobGlobal"
-      align="center"
-      gap="3"
-      color="#9BADB6"
-    >
+    <CFlex v-if="comp.isJobGlobal" align="center" gap="3" color="#9BADB6">
       <CText>Global</CText>
     </CFlex>
-    
+
     <CBox
       v-if="comp.isJobGlobal && !comp.isJobGlobalOnly"
       w="3px"
@@ -56,23 +53,12 @@ const comp = useComp(() => {
       bg="gray.300"
     />
 
-    <CFlex
-      v-if="comp.isShouldShowCity"
-      align="center"
-      gap="3"
-      color="#9BADB6"
-    >
+    <CFlex v-if="comp.isShouldShowCity" align="center" gap="3" color="#9BADB6">
       <CText>{{ comp.cities[0] }}</CText>
     </CFlex>
 
-    <CFlex
-      v-if="comp.isShouldShowCountry"
-      align="center"
-      gap="3"
-      color="#9BADB6"
-    >
+    <CFlex v-if="comp.isShouldShowCountry" align="center" gap="3" color="#9BADB6">
       <CText>{{ props.job.tags_country[0] }}</CText>
     </CFlex>
-
   </CFlex>
 </template>
