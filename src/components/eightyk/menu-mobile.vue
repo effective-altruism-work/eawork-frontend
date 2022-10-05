@@ -1,5 +1,14 @@
 <script setup lang="ts">
-import { CFlex, CBox, CButton, CLink, CIcon, CHeading, CText, chakra } from "@chakra-ui/vue-next";
+import {
+  CFlex,
+  CBox,
+  CButton,
+  CLink,
+  CIcon,
+  CHeading,
+  CText,
+  chakra,
+} from "@chakra-ui/vue-next";
 import { onMounted, onUnmounted, ref } from "vue";
 import { nodes, nodesSecondary, Node, NodeCategory, nodesAll } from "~/nodes";
 import {
@@ -41,7 +50,7 @@ function onKeyUp(event) {
 }
 
 function onNodeClick(node: Node, event: Event) {
-  event.preventDefault()
+  event.preventDefault();
   if (node.categories) {
     if (state.nodeOpened.value?.label === node.label) {
       state.nodeOpened.value = null;
@@ -56,14 +65,12 @@ function onNodeClick(node: Node, event: Event) {
 function isCurrentNode(node: Node) {
   return state.nodeOpened.value?.label === node.label && node.categories;
 }
-
 </script>
 
 <template>
   <CFlex direction="row" align="center" justify="space-between" py="2">
-
     <CLink is-external href="https://80000">
-      <chakra.img w="55px" mb="px" src="/80k-logo.png"/>
+      <chakra.img w="55px" mb="px" src="/80k-logo.png" />
     </CLink>
 
     <CButton
@@ -73,12 +80,7 @@ function isCurrentNode(node: Node) {
       w="fit-content"
       mx="-11px"
     >
-      <chakra.svg
-        width="25"
-        height="30"
-        viewBox="0 0 512 512"
-        fill="currentColor"
-      >
+      <chakra.svg width="25" height="30" viewBox="0 0 512 512" fill="currentColor">
         <path
           fill="none"
           stroke="currentColor"
@@ -99,7 +101,6 @@ function isCurrentNode(node: Node) {
       <CDrawerOverlay />
       <CDrawerContent bg="gray.50">
         <CDrawerBody p="0">
-          
           <CFlex justify="space-between" align="center" py="1" bg="white">
             <CText :ml="comp.linkP" font-size="lg">Menu</CText>
             <CIconButton
@@ -112,16 +113,9 @@ function isCurrentNode(node: Node) {
               aria-label="close"
             />
           </CFlex>
-          
-          <CBox
-            border-bottom="1px solid"
-            border-color="gray.100"
-          >
-          
-            <CBox
-              v-for="node in nodesAll"
-              :key="node.label"
-            >
+
+          <CBox border-bottom="1px solid" border-color="gray.100">
+            <CBox v-for="node in nodesAll" :key="node.label">
               <CLink
                 :href="node.url"
                 @click="(event) => onNodeClick(node, event)"
@@ -136,7 +130,7 @@ function isCurrentNode(node: Node) {
                 :_hover="{ color: 'initial' }"
                 :bg="isCurrentNode(node) ? 'white' : 'initial'"
               >
-                {{node.label}}
+                {{ node.label }}
                 <CIcon
                   v-if="node.categories"
                   name="ri-arrow-down-s-fill"
@@ -146,7 +140,7 @@ function isCurrentNode(node: Node) {
                   font-size="lg"
                 />
               </CLink>
-              
+
               <CBox
                 v-if="isCurrentNode(node)"
                 v-for="category in node.categories"
@@ -179,15 +173,12 @@ function isCurrentNode(node: Node) {
                   {{ node.label }}
                 </CLink>
               </CBox>
-
             </CBox>
-          
           </CBox>
-          
         </CDrawerBody>
       </CDrawerContent>
     </CDrawer>
-    
+
     <CBox
       v-if="state.isOpen.value"
       @click="state.isOpen.value = false"
@@ -198,7 +189,6 @@ function isCurrentNode(node: Node) {
       top="0"
       z-index="1399"
     />
-
   </CFlex>
 </template>
 

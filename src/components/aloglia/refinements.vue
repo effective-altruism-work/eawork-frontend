@@ -70,10 +70,10 @@ const props = defineProps<{
       :items="[
         { label: 'Anytime' },
         { label: 'Today', start: getUnixTime(subDays(new Date(), 1)) },
-        { label: 'A week ago', start: getUnixTime(subDays(new Date(), 7)) },
-        { label: '30d ago', start: getUnixTime(subDays(new Date(), 30)) },
-        { label: '3m ago', start: getUnixTime(subDays(new Date(), 91)) },
-        { label: 'This year', start: getUnixTime(startOfYear(new Date())) },
+        { label: 'In last week', start: getUnixTime(subDays(new Date(), 7)) },
+        // { label: '30d ago', start: getUnixTime(subDays(new Date(), 30)) },
+        { label: 'In last 3m', start: getUnixTime(subDays(new Date(), 91)) },
+        { label: 'In last year', start: getUnixTime(startOfYear(new Date())) },
       ]"
     />
     
@@ -84,7 +84,7 @@ const props = defineProps<{
         { label: 'Anytime' },
         { label: 'Today', end: getUnixTime(addDays(new Date(), 1)) },
         { label: 'In a week', end: getUnixTime(addDays(new Date(), 7)) },
-        { label: 'In 30d', end: getUnixTime(addDays(new Date(), 30)) },
+        // { label: 'In 30d', end: getUnixTime(addDays(new Date(), 30)) },
         { label: 'In 3m', end: getUnixTime(addDays(new Date(), 91)) },
         { label: 'This year', end: getUnixTime(endOfYear(new Date())) },
       ]"

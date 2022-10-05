@@ -18,12 +18,11 @@ import { Document } from "yaml";
 import JobCardLocationShort from "~/components/job-card-location-short.vue";
 import JobCardTags from "~/components/job-card-tags.vue";
 import JobView from "~/components/job-view.vue";
-import { breakpointsChakra } from "~/constants";
+import { breakpointsChakra, strings } from "~/constants";
 import { theme } from "~/styles/theme";
 import { useComp } from "~/utils/structs";
 import { JobAlgolia } from "~/utils/types";
 import { tracking } from "~/utils/tracking";
-import { strings } from "~/constants";
 
 const props = defineProps<{
   job: JobAlgolia;
@@ -313,6 +312,24 @@ function onCardClick() {
               Homepage
             </CLink>
             <CLink
+              v-if="company_forum_link in props.job"
+              :href="props.job?.company_forum_link"
+              @click="
+                (event) => {
+                  event.stopPropagation();
+                  tracking.sendJobEvent(props.job, 'company_forum_url clicked');
+                }
+              "
+              @auxclick="
+                async (event) => {
+                  await tracking.sendJobEvent(props.job, 'company_forum_url clicked');
+                }
+              "
+              is-external
+            >
+              EA Forum Page
+            </CLink>
+            <!-- <CLink
               :href="props.job.company_career_page_url"
               @click="
                 (event) => {
@@ -328,7 +345,7 @@ function onCardClick() {
               is-external
             >
               Vacancies page
-            </CLink>
+            </CLink> -->
           </CFlex>
 
           <CFlex :gap="comp.space" mt="4">

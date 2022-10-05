@@ -5,12 +5,15 @@ import { formatDistance } from "date-fns";
 function format(refinement: {
   attribute: string;
   operator: "<=" | ">=" | string;
-  value: string | number,
+  value: string | number;
   label: string;
   type: any;
 }) {
   if (refinement.attribute === "closes_at" || refinement.attribute === "posted_at") {
-    const dateDistance = formatDistance(new Date((refinement.value as number) * 1000), new Date());
+    const dateDistance = formatDistance(
+      new Date((refinement.value as number) * 1000),
+      new Date(),
+    );
     if (refinement.attribute === "closes_at") {
       return `Closes in ${dateDistance}`;
     }
@@ -25,12 +28,7 @@ function format(refinement: {
 <template>
   <ais-current-refinements>
     <template v-slot="{ items, createURL }">
-      <CFlex
-        v-for="item in items"
-        :key="item.attribute"
-        wrap="wrap"
-        gap="2"
-      >
+      <CFlex v-for="item in items" :key="item.attribute" wrap="wrap" gap="2">
         <CFlex
           v-for="refinement in item.refinements"
           :key="
@@ -63,14 +61,14 @@ function format(refinement: {
 </template>
 
 <style lang="scss">
-  .ais-CurrentRefinements {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin-bottom: var(--space-6);
+.ais-CurrentRefinements {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
 
-    &.ais-CurrentRefinements--noRefinement {
-      margin-bottom: 0;
-    }
+  &.ais-CurrentRefinements--noRefinement {
+    margin-bottom: 0;
   }
+}
 </style>
