@@ -3,7 +3,7 @@ import { CFlex, CBox, CButton, CLink, CHeading, CText, chakra } from "@chakra-ui
 import { onMounted, onUnmounted, ref } from "vue";
 import { nodes, Node, NodeCategory } from "~/nodes";
 import { OhVueIcon } from "oh-vue-icons";
-import { useComp } from "~/utils/structs";
+// import { useComp } from "~/utils/structs";
 
 const state = {
   nodeOpened: ref<Node>(null),
@@ -24,6 +24,12 @@ function getCategoryDisplay(category: NodeCategory): string {
   return state.nodeCategoryActive.value?.label === category.label ? "flex" : "none";
 }
 
+function onKeyUp(event) {
+  if (event.which === 27) {
+    state.nodeOpened.value = null;
+  }
+}
+
 onMounted(() => {
   window.addEventListener("keyup", onKeyUp);
 });
@@ -31,12 +37,6 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener("keyup", onKeyUp);
 });
-
-function onKeyUp(event) {
-  if (event.which === 27) {
-    state.nodeOpened.value = null;
-  }
-}
 
 function isCurrentNode(node: Node) {
   return state.nodeOpened.value?.label === node.label && node.categories;
@@ -102,6 +102,7 @@ function onNodeClick(event, node) {
                   :key="category.label"
                   :href="category.url"
                   @mouseenter="state.nodeCategoryActive.value = category"
+                  @focus="state.nodeCategoryActive.value = category"
                   display="flex"
                   flex-direction="column"
                   :p="comp.spaces.md"
@@ -147,7 +148,27 @@ function onNodeClick(event, node) {
                     >
                       {{ childNode.label }}
                     </CLink>
+
+                    <!-- these are the internal extensions, such as are currently used in 'browse all our content' -->
+                    <CLink
+                      my="6"
+                      font="bold"
+                      v-if="!!childCategory.extension"
+                      :href="childCategory.extension.url"
+                      >{{ childCategory.extension.label }}</CLink
+                    >
                   </CFlex>
+
+                  <CLink
+                    mt="6"
+                    font="bold"
+                    v-if="
+                      !!category.extension &&
+                      state.nodeCategoryActive.value?.label === category.label
+                    "
+                    :href="category.extension.url"
+                    >{{ category.extension.label }}</CLink
+                  >
                 </CFlex>
               </CFlex>
             </CFlex>

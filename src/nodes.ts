@@ -382,6 +382,7 @@ export const nodes: Node[] = [
         children: [
           NodeCategory.create({
             label: "Selected topics",
+            extension: { label: "See all topics →", url: `${baseUrl}/topics/` },
             children: [
               Node.create({
                 url: `${baseUrl}/topic/big-picture/moral-philosophy/`,
@@ -427,6 +428,11 @@ export const nodes: Node[] = [
           }),
           NodeCategory.create({
             label: "Top articles from outside our guides",
+            extension: {
+              label: "All articles →",
+              url: `${baseUrl}/research/#list-of-everything`,
+            },
+
             children: [
               Node.create({
                 url: `${baseUrl}/career-guide/job-satisfaction/`,
