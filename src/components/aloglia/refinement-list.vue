@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
-import { CBox, CText, CButton, CBadge, CInput, CFormLabel } from "@chakra-ui/vue-next";
+import { CBox, CText, CButton, CInput, CFormLabel } from "@chakra-ui/vue-next";
 import axios from "axios";
 import { onMounted, ref } from "vue";
 import RefinementListFacets from "~/components/aloglia/refinement-list-facets.vue";
@@ -20,37 +20,32 @@ const state = {
   tagsFeatured: ref<TagDjango[]>([]),
   tagsFeaturedNames: ref<string[]>([]),
   config: useRuntimeConfig(),
-}
+};
 
 onMounted(async () => {
   if (props.attribute === "tags_area") {
     const res = await axios.get(`${state.config.public.apiBase}/tags/?is_featured=true`);
     state.tagsFeatured.value = res.data;
-    state.tagsFeaturedNames.value = res.data.map(tag => tag.name);
+    state.tagsFeaturedNames.value = res.data.map((tag) => tag.name);
   }
-})
+});
 
 function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other") {
   if (props.attribute === "tags_area") {
     if (section === "featured") {
-      return items.filter(item => state.tagsFeaturedNames.value.includes(item.value));
-    } else if (section === "other") {
-      return items.filter(item => !state.tagsFeaturedNames.value.includes(item.value));
+      return items.filter((item) => state.tagsFeaturedNames.value.includes(item.value));
+    }
+    if (section === "other") {
+      return items.filter((item) => !state.tagsFeaturedNames.value.includes(item.value));
     }
   }
   return items;
 }
-
 </script>
 
 <template>
   <CBox :mt="props.mt ?? 6">
-    <CFormLabel
-      mb="3"
-      font-size="xl"
-      font-weight="bold"
-      line-height="none"
-    >
+    <CFormLabel mb="3" font-size="xl" font-weight="bold" line-height="none">
       {{ props.label }}
     </CFormLabel>
 
@@ -73,7 +68,6 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
           sendEvent,
         }"
       >
-
         <CInput
           v-if="props.searchable"
           placeholder="Search..."
@@ -103,15 +97,8 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
         </chakra.ul>
 
         <CBox v-if="props.attribute === 'tags_area'">
+          <CText mt="3" font-weight="bold" font-size="13px"> Other pressing problems </CText>
 
-          <CText
-            mt="3"
-            font-weight="bold"
-            font-size="13px"
-          >
-            Other pressing problems
-          </CText>
-          
           <chakra.ul mt="1px">
             <li v-if="isFromSearch && !items.length">No results.</li>
             <RefinementListFacets
@@ -121,7 +108,6 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
               :count-bg="props.countBg"
             />
           </chakra.ul>
-
         </CBox>
 
         <CButton size="sm" v-if="canToggleShowMore" @click="toggleShowMore">

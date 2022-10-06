@@ -32,7 +32,7 @@ const state = useStateVar(() => {
   const autocompleteItems = ref([]);
   return {
     searchClient: searchClient,
-    tags: ref(props.tags?.map(tagName => ({ text: tagName })) ?? [] as Tag[]),
+    tags: ref(props.tags?.map((tagName) => ({ text: tagName })) ?? ([] as Tag[])),
     tag: ref(""),
     autocompleteItems: autocompleteItems,
     autocompleteDebounce: debounce(async (tagName: string, limit?: number) => {
@@ -95,7 +95,7 @@ function onTagsChanged(newTags: Array<Tag>) {
 </template>
 
 <style lang="scss">
-@import '~/styles/chakra-ui.scss';
+@import "~/styles/chakra-ui.scss";
 
 .vue-tags-input {
   max-width: 100% !important;

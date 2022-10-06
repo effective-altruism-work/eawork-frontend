@@ -1,8 +1,14 @@
 import ChakraUIVuePlugin, { chakra, extendTheme } from "@chakra-ui/vue-next";
 import { domElements } from "@chakra-ui/vue-system";
 import { defineNuxtPlugin } from "#app";
-import { feActivity, feChevronDown, feExternalLink, feMessageCircle, feMessageSquare, feUser, feX } from "feather-icons-paths";
-import { FaDiscord, FaMapMarkerAlt, HiArrowNarrowRight, IoMenu, RiArrowDownSFill } from "oh-vue-icons/icons";
+import { feChevronDown, feExternalLink, feMessageSquare, feX } from "feather-icons-paths";
+import {
+  FaDiscord,
+  FaMapMarkerAlt,
+  HiArrowNarrowRight,
+  IoMenu,
+  RiArrowDownSFill,
+} from "oh-vue-icons/icons";
 import { IconType } from "oh-vue-icons/types/icons";
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -63,7 +69,7 @@ const theme = extendTheme({
         },
         _active: {
           color: "blue.800",
-        }
+        },
       },
       colorScheme: "blue",
     },
@@ -80,6 +86,6 @@ function getIconProps(icon: IconType) {
     [icon.name]: {
       path: icon.raw,
       viewBox: `${icon.minX} ${icon.minY} ${icon.width} ${icon.height}`,
-    }
-  }
+    },
+  };
 }

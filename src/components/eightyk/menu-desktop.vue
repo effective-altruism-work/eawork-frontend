@@ -3,7 +3,7 @@ import { CFlex, CBox, CButton, CLink, CHeading, CText, chakra } from "@chakra-ui
 import { onMounted, onUnmounted, ref } from "vue";
 import { nodes, Node, NodeCategory } from "~/nodes";
 import { OhVueIcon } from "oh-vue-icons";
-import { useComp } from "~/utils/structs";
+// import { useComp } from "~/utils/structs";
 
 const state = {
   nodeOpened: ref<Node>(null),
@@ -21,7 +21,13 @@ const comp = {
 
 function getCategoryDisplay(category: NodeCategory): string {
   // must be in <script> due to the vue templating bug
-  return (state.nodeCategoryActive.value?.label === category.label) ? "flex" : "none";
+  return state.nodeCategoryActive.value?.label === category.label ? "flex" : "none";
+}
+
+function onKeyUp(event) {
+  if (event.which === 27) {
+    state.nodeOpened.value = null;
+  }
 }
 
 onMounted(() => {
@@ -32,12 +38,6 @@ onUnmounted(() => {
   window.removeEventListener("keyup", onKeyUp);
 });
 
-function onKeyUp(event) {
-  if (event.which === 27) {
-    state.nodeOpened.value = null;
-  }
-}
-
 function isCurrentNode(node: Node) {
   return state.nodeOpened.value?.label === node.label && node.categories;
 }
@@ -46,38 +46,26 @@ function onNodeClick(event, node) {
   if (isCurrentNode(node)) {
     event.preventDefault();
     state.nodeOpened.value = null;
-  } else {
-    if (node.isMegaNode) {
-      event.preventDefault();
-      state.nodeCategoryActive.value = node.categories[0];
-      state.nodeOpened.value = node;
-    } else if (node.categories?.length) {
-      event.preventDefault();
-      state.nodeOpened.value = node;
-    }
+  } else if (node.isMegaNode) {
+    event.preventDefault();
+    state.nodeCategoryActive.value = node.categories[0];
+    state.nodeOpened.value = node;
+  } else if (node.categories?.length) {
+    event.preventDefault();
+    state.nodeOpened.value = node;
   }
 }
-
 </script>
 
 <template>
   <CBox w="100%" mb="-2px">
-
     <CBox pos="relative">
       <CFlex justify="space-between" align="center">
-        <chakra.img w="72px" src="/80k-logo.png"/>
-        
+        <chakra.img w="72px" src="/80k-logo.png" />
+
         <CFlex>
-          
-          <CBox
-            v-for="node in nodes"
-            :key="node.label"
-            z-index="modal"
-          >
-            <CLink
-              :href="node.url"
-              @click="(event) => onNodeClick(event, node)"
-            >
+          <CBox v-for="node in nodes" :key="node.label" z-index="modal">
+            <CLink :href="node.url" @click="(event) => onNodeClick(event, node)">
               <CButton
                 variant="link"
                 :ml="comp.spaces.lg"
@@ -93,7 +81,7 @@ function onNodeClick(event, node) {
                 />
               </CButton>
             </CLink>
-            
+
             <CFlex
               v-if="node.isMegaNode && isCurrentNode(node)"
               pos="absolute"
@@ -106,15 +94,13 @@ function onNodeClick(event, node) {
               bg="#f5f5f5"
               border="2px solid #eee"
             >
-              <CFlex
-                direction="column"
-                max-w="30%"
-              >
+              <CFlex direction="column" max-w="30%">
                 <CLink
                   v-for="category in node.categories"
                   :key="category.label"
                   :href="category.url"
                   @mouseenter="state.nodeCategoryActive.value = category"
+                  @focus="state.nodeCategoryActive.value = category"
                   display="flex"
                   flex-direction="column"
                   :p="comp.spaces.md"
@@ -160,12 +146,31 @@ function onNodeClick(event, node) {
                     >
                       {{ childNode.label }}
                     </CLink>
+
+                    <!-- these are the internal extensions, such as are currently used in 'browse all our content' -->
+                    <CLink
+                      my="6"
+                      font="bold"
+                      v-if="!!childCategory.extension"
+                      :href="childCategory.extension.url"
+                      >{{ childCategory.extension.label }}</CLink
+                    >
                   </CFlex>
+
+                  <CLink
+                    mt="6"
+                    font="bold"
+                    v-if="
+                      !!category.extension &&
+                      state.nodeCategoryActive.value?.label === category.label
+                    "
+                    :href="category.extension.url"
+                    >{{ category.extension.label }}</CLink
+                  >
                 </CFlex>
               </CFlex>
-
             </CFlex>
-            
+
             <CFlex
               v-if="!node.isMegaNode && isCurrentNode(node)"
               pos="absolute"
@@ -191,15 +196,12 @@ function onNodeClick(event, node) {
                     :key="catNode.url"
                     :href="catNode.url"
                   >
-                     {{catNode.label}}
+                    {{ catNode.label }}
                   </CLink>
                 </CFlex>
-                
               </CFlex>
             </CFlex>
-
           </CBox>
-            
         </CFlex>
       </CFlex>
     </CBox>
@@ -216,13 +218,11 @@ function onNodeClick(event, node) {
       bottom="0"
       z-index="overlay"
     />
-
   </CBox>
 </template>
 
 <style>
 body {
   position: relative;
-  min-height: 100vh;
 }
 </style>

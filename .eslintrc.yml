@@ -7,6 +7,9 @@ extends:
 plugins:
   - prettier
   - unused-imports
+ignorePatterns: 
+  - node_modules/*
+  - .nuxt/*
 rules:
   quotes:
     - error
@@ -34,13 +37,14 @@ rules:
   no-unused-vars: 0 # a good one, but many exceptions + broken linter
   no-underscore-dangle: 0 # not applicable
   prefer-destructuring: 0 # poor code style
+  max-classes-per-file: 0 # why?
   no-inner-declarations: 0
+  lines-between-class-members: 0 # picky. TS
   import/prefer-default-export: 0
   import/extensions: 0
   prettier/prettier:
     - 1
-    -
-      trailingComma: all
+    - trailingComma: all
       printWidth: 93
   unused-imports/no-unused-imports:
     - error

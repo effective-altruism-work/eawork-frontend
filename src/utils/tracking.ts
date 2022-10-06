@@ -2,13 +2,21 @@ import { Analytics, AnalyticsBrowser, Context } from "@segment/analytics-next";
 import { captureEvent } from "@sentry/vue";
 import { JobAlgolia } from "~/utils/types";
 
-
 export namespace tracking {
   const separator = " / ";
-  let analytics: Analytics | null = null; 
-  let context: Context | null = null; 
+  let analytics: Analytics | null = null;
+  let context: Context | null = null;
   const prefix = "data-80k-event";
   const clickTimeout = 300;
+
+  async function waitForInit() {
+    while (true) {
+      if (analytics) {
+        break;
+      }
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+  }
 
   export async function init(writeKey: string) {
     [analytics, context] = await AnalyticsBrowser.load({ writeKey });
@@ -18,7 +26,7 @@ export namespace tracking {
     await waitForInit();
 
     const eventProps = get80kJobProps(job, action);
-    
+
     let propsExtra = {};
     switch (action) {
       case "company_url clicked": {
@@ -43,17 +51,8 @@ export namespace tracking {
     }
   }
 
-  async function waitForInit() {
-    while (true) {
-      if (analytics) {
-        break;
-      }
-      await new Promise((resolve) => setTimeout(resolve, 100));
-    }
-  }
-
   function get80kJobProps(job: JobAlgolia, action: Action): JobEvent80k {
-    let props = {
+    const props = {
       category: "Job board",
       label: job.url_external,
       organization: job.company_name,
@@ -65,31 +64,31 @@ export namespace tracking {
       experienceRequirement: job.tags_exp_required[0],
       degreeRequirement: job.tags_degree_required[0],
       nonInteraction: false,
-    }
+    };
     switch (action) {
       case "viewed":
         return {
           action: get80KAction(action),
           ...props,
-        }
+        };
       case "url_external clicked":
         return {
           action: get80KAction(action),
           label: job.url_external,
           ...props,
-        }
+        };
       case "company_url clicked":
         return {
           action: get80KAction(action),
           label: job.company_url,
           ...props,
-        }
+        };
       case "company_career_page_url clicked":
         return {
           action: get80KAction(action),
           label: job.company_career_page_url,
           ...props,
-        }
+        };
     }
   }
 
@@ -97,7 +96,7 @@ export namespace tracking {
     return {
       locationList: [...tags_country, ...tags_city],
       location: [...tags_country, ...tags_city].join(separator),
-    }
+    };
   }
 
   function get80KAction(action: Action) {
@@ -131,25 +130,25 @@ export namespace tracking {
     title: string;
   }
 
-  type Action = 
-    "viewed" |
-    "url_external clicked" |
-    "company_career_page_url clicked" |
-    "company_url clicked" | 
-    "alert sign up";
+  type Action =
+    | "viewed"
+    | "url_external clicked"
+    | "company_career_page_url clicked"
+    | "company_url clicked"
+    | "alert sign up";
 
   type Action80k =
-    "Viewed vacancy details" |
-    "Viewed vacancy description" |
-    "Viewed organisation homepage" |
-    "Viewed organisation vacancies page" | 
-    "Searched job board" | 
-    "Results found" | 
-    "No results found" | 
-    "Signed up for email alerts" | 
-    "Errors" | 
-    "Warning";
-  
+    | "Viewed vacancy details"
+    | "Viewed vacancy description"
+    | "Viewed organisation homepage"
+    | "Viewed organisation vacancies page"
+    | "Searched job board"
+    | "Results found"
+    | "No results found"
+    | "Signed up for email alerts"
+    | "Errors"
+    | "Warning";
+
   type CompanyExternalURL = string;
   type JobExternalURL = string;
 }

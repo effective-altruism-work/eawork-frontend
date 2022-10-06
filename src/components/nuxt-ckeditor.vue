@@ -1,9 +1,13 @@
 <script lang="ts" setup>
 import BalloonBlockEditor from "@ckeditor/ckeditor5-build-balloon-block";
 import CKEditor from "@ckeditor/ckeditor5-vue";
-import { ref, computed, onMounted, onBeforeMount } from "vue";
+import { ref, computed } from "vue";
 
-const props = defineProps<{ modelValue: string; toolbarItems?: string[]; height?: string; }>();
+const props = defineProps<{
+  modelValue: string;
+  toolbarItems?: string[];
+  height?: string;
+}>();
 
 const CKEditorVue = CKEditor.component;
 const editor = ref(BalloonBlockEditor);
@@ -41,7 +45,7 @@ const value = computed({
     :editor="editor"
     v-model="value"
     :config="editorConfig"
-    :style="{'min-height': props.height === 'lg' ? '172px' : 'initial'}"
+    :style="{ 'min-height': props.height === 'lg' ? '172px' : 'initial' }"
   />
 </template>
 

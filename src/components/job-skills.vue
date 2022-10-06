@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { CFlex, CBox, CButton, CLink, CText } from "@chakra-ui/vue-next";
+import { CFlex } from "@chakra-ui/vue-next";
 import { JobAlgolia } from "~/utils/types";
 
 const props = defineProps<{ job: JobAlgolia }>();
-
 </script>
 
 <template>

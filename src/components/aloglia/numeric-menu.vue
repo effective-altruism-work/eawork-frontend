@@ -1,28 +1,20 @@
 <script setup lang="ts">
-import { CHeading, CFormLabel, CBox } from "@chakra-ui/vue-next";
+import { CFormLabel, CBox } from "@chakra-ui/vue-next";
 
 const props = defineProps<{
   attribute: string;
   label: string;
   items: Array<any>;
 }>();
-
 </script>
 
 <template>
   <CBox mt="6">
-    <CFormLabel
-      font-size="xl"
-      font-weight="bold"
-      line-height="none"
-    >
+    <CFormLabel font-size="xl" font-weight="bold" line-height="none">
       {{ props.label }}
     </CFormLabel>
 
-    <ais-numeric-menu
-      :attribute="props.attribute"
-      :items="props.items"
-    />
+    <ais-numeric-menu :attribute="props.attribute" :items="props.items" />
   </CBox>
 </template>
 

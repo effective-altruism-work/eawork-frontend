@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { useRuntimeConfig } from "#app";
-import { CFlex, CHeading, CButton, CVStack, CLink, CBox, CText } from "@chakra-ui/vue-next";
-import algoliasearch from "algoliasearch";
+import { CBox } from "@chakra-ui/vue-next";
 import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns";
 import NumericMenu from "~/components/aloglia/numeric-menu.vue";
 import RefinementList from "~/components/aloglia/refinement-list.vue";
@@ -9,7 +7,6 @@ import RefinementList from "~/components/aloglia/refinement-list.vue";
 const props = defineProps<{
   countBg?: string;
 }>();
-
 </script>
 
 <template>
@@ -46,11 +43,7 @@ const props = defineProps<{
       :count-bg="props.countBg"
       label="Experience"
     />
-    <RefinementList
-      attribute="tags_role_type"
-      :count-bg="props.countBg"
-      label="Role type"
-    />
+    <RefinementList attribute="tags_role_type" :count-bg="props.countBg" label="Role type" />
     <RefinementList
       attribute="company_name"
       :count-bg="props.countBg"
@@ -70,13 +63,13 @@ const props = defineProps<{
       :items="[
         { label: 'Anytime' },
         { label: 'Today', start: getUnixTime(subDays(new Date(), 1)) },
-        { label: 'A week ago', start: getUnixTime(subDays(new Date(), 7)) },
-        { label: '30d ago', start: getUnixTime(subDays(new Date(), 30)) },
-        { label: '3m ago', start: getUnixTime(subDays(new Date(), 91)) },
-        { label: 'This year', start: getUnixTime(startOfYear(new Date())) },
+        { label: 'In last week', start: getUnixTime(subDays(new Date(), 7)) },
+        // { label: '30d ago', start: getUnixTime(subDays(new Date(), 30)) },
+        { label: 'In last 3m', start: getUnixTime(subDays(new Date(), 91)) },
+        { label: 'In last year', start: getUnixTime(startOfYear(new Date())) },
       ]"
     />
-    
+
     <NumericMenu
       label="Closes"
       attribute="closes_at"
@@ -84,7 +77,7 @@ const props = defineProps<{
         { label: 'Anytime' },
         { label: 'Today', end: getUnixTime(addDays(new Date(), 1)) },
         { label: 'In a week', end: getUnixTime(addDays(new Date(), 7)) },
-        { label: 'In 30d', end: getUnixTime(addDays(new Date(), 30)) },
+        // { label: 'In 30d', end: getUnixTime(addDays(new Date(), 30)) },
         { label: 'In 3m', end: getUnixTime(addDays(new Date(), 91)) },
         { label: 'This year', end: getUnixTime(endOfYear(new Date())) },
       ]"

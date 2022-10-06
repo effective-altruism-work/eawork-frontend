@@ -2,17 +2,25 @@ import { Data } from "dataclass";
 
 export class Node extends Data {
   label: string;
+
   url?: string;
+
   categories?: NodeCategory[];
+
   isMegaNode?: boolean;
+
   isSecondary?: boolean;
 }
 
 export class NodeCategory extends Data {
   label: string;
+
   description?: string;
+
   url?: string;
+
   children: Node[] | NodeCategory[];
+
   extension?: {
     url: string;
     label: string;
@@ -129,8 +137,33 @@ export const nodes: Node[] = [
                 url: `${baseUrl}/articles/career-capital`,
               }),
               Node.create({
-                label: "What is career capital?",
-                url: `${baseUrl}/articles/career-capital`,
+                label: "How much to explore?",
+                url: `${baseUrl}/articles/exploration-value/`,
+              }),
+              Node.create({
+                label: "Coordination and impact",
+                url: `${baseUrl}/articles/coordination/`,
+              }),
+              Node.create({
+                label: "Balancing impact and doing what you love",
+                url: `${baseUrl}/articles/impact-versus-happiness/`,
+              }),
+              Node.create({
+                label: "Aim higher: a rational case for dreaming&nbsp;big",
+                url: `${baseUrl}/articles/aim-higher/`,
+              }),
+              Node.create({
+                label: "Three career stages",
+                url: `${baseUrl}/articles/key-career-stages/`,
+              }),
+            ],
+          }),
+          NodeCategory.create({
+            label: "Conclusion",
+            children: [
+              Node.create({
+                label: "How much do careers differ in impact?",
+                url: `${baseUrl}/articles/careers-differ-in-impact/`,
               }),
             ],
           }),
@@ -149,12 +182,36 @@ export const nodes: Node[] = [
             label: "Top areas to work on",
             children: [
               Node.create({
-                label: "Preventing an AI-related catastrophe",
                 url: `${baseUrl}/problem-profiles/artificial-intelligence/`,
+                label: "Preventing an AI-related catastrophe",
               }),
               Node.create({
-                label: "Global priorities research",
+                url: `${baseUrl}/problem-profiles/preventing-catastrophic-pandemics/`,
+                label: "Catastrophic pandemics",
+              }),
+              Node.create({
+                url: `${baseUrl}/problem-profiles/promoting-effective-altruism/`,
+                label: "Building effective altruism",
+              }),
+              Node.create({
                 url: `${baseUrl}/problem-profiles/global-priorities-research/`,
+                label: "Global priorities research",
+              }),
+              Node.create({
+                url: `${baseUrl}/problem-profiles/nuclear-security/`,
+                label: "Nuclear war",
+              }),
+              Node.create({
+                url: `${baseUrl}/problem-profiles/improving-institutional-decision-making/`,
+                label: "Epistemics and institutional decision making",
+              }),
+              Node.create({
+                url: `${baseUrl}/problem-profiles/climate-change/`,
+                label: "Climate change",
+              }),
+              Node.create({
+                url: `${baseUrl}/problem-profiles/great-power-conflict/`,
+                label: "Great power conflict",
               }),
             ],
           }),
@@ -162,19 +219,15 @@ export const nodes: Node[] = [
             label: "Other promising areas",
             children: [
               Node.create({
-                label: "Mitigating great power conflict",
-                url: `${baseUrl}/problem-profiles/#reducing-great-power-conflict`,
+                url: `${baseUrl}/problem-profiles/promoting-positive-values/`,
+                label: "Promoting positive values",
               }),
               Node.create({
-                label: "Global governance",
-                url: `${baseUrl}/problem-profiles/#improve-global-governance`,
-              }),
-              Node.create({
-                label: "Space governance",
                 url: `${baseUrl}/problem-profiles/space-governance`,
+                label: "Space governance",
               }),
               Node.create({
-                label: "See all →",
+                label: "See more →",
                 url: `${baseUrl}/problem-profiles/#potentially_promising`,
               }),
             ],
@@ -189,6 +242,121 @@ export const nodes: Node[] = [
           label: "See all our career reviews →",
           url: `${baseUrl}/career-reviews/`,
         },
+        children: [
+          NodeCategory.create({
+            label: "Key categories of impactful careers",
+            children: [
+              Node.create({
+                url: `${baseUrl}/articles/government-policy/`,
+                label: "Government and policy",
+              }),
+              Node.create({
+                url: `${baseUrl}/articles/organisation-building/`,
+                label: "Organisation-building at effective nonprofits",
+              }),
+              Node.create({
+                url: `${baseUrl}/articles/research-careers/`,
+                label: "Research",
+              }),
+              Node.create({
+                url: `${baseUrl}/articles/applying-an-unusual-skill-to-a-needed-niche/`,
+                label: "Applying an unusual strength to a needed niche",
+              }),
+              Node.create({
+                url: `${baseUrl}/articles/communication/`,
+                label: "Communication",
+              }),
+              Node.create({
+                url: `${baseUrl}/articles/earning-to-give/`,
+                label: "Earning to give",
+              }),
+            ],
+          }),
+          NodeCategory.create({
+            label: "List of top-recommended career paths",
+            children: [
+              Node.create({
+                url: `${baseUrl}/career-reviews/ai-safety-researcher/`,
+                label: "AI safety technical research",
+              }),
+              Node.create({
+                url: `${baseUrl}/career-reviews/ai-policy-and-strategy/`,
+                label: "Long-term AI policy",
+              }),
+              Node.create({
+                url: `${baseUrl}/career-reviews/founder-impactful-organisations/`,
+                label: "Founder of new projects",
+              }),
+              Node.create({
+                url: `${baseUrl}https://80000hours.org/career-reviews/work-in-effective-altruism-organisations/`,
+                label: "Helping build the effective altruism community",
+              }),
+              Node.create({
+                url: `${baseUrl}/career-reviews/grantmaker/`,
+                label: "Grantmaker",
+              }),
+              Node.create({
+                url: `${baseUrl}https://80000hours.org/articles/operations-management/`,
+                label: "Operations management in high-impact organisations",
+              }),
+              Node.create({
+                url: `${baseUrl}/career-reviews/global-priorities-researcher/`,
+                label: "Research into global priorities",
+              }),
+              Node.create({
+                url: `${baseUrl}/career-reviews/biorisk-research/`,
+                label: "Biorisk research, strategy, and policy",
+              }),
+              Node.create({
+                url: `${baseUrl}https://80000hours.org/career-reviews/china-related-ai-safety-and-governance-paths/`,
+                label: "China-related AI safety and governance",
+              }),
+              Node.create({
+                url: `${baseUrl}/career-reviews/forecasting/`,
+                label: "Forecasting research and implementation",
+              }),
+            ],
+          }),
+          NodeCategory.create({
+            label: "Sometimes-recommended paths",
+            children: [
+              Node.create({
+                url: `${baseUrl}/career-reviews/#high-impact-but-especially-competitive`,
+                label: "High-impact but especially competitive",
+              }),
+              Node.create({
+                url: `${baseUrl}/career-reviews/#potentially-high-impact-but-still-under-researched`,
+                label: "Promising but under-researched",
+              }),
+              Node.create({
+                url: `${baseUrl}/career-reviews/#other-impactful-options-if-youre-an-especially-good-fit`,
+                label: "Impactful if you're an especially good fit",
+              }),
+            ],
+          }),
+          NodeCategory.create({
+            label: "Recommended career capital",
+            children: [
+              Node.create({
+                url: `${baseUrl}/career-reviews/#steps-to-build-career-capital-and-increase-your-future-impact`,
+                label: "Steps to build your skills and network",
+              }),
+            ],
+          }),
+          NodeCategory.create({
+            label: "Making the most of your current job",
+            children: [
+              Node.create({
+                url: `${baseUrl}/career-guide/making-a-difference/`,
+                label: "Doing good in any career",
+              }),
+              Node.create({
+                url: `${baseUrl}/career-guide/how-to-be-successful/`,
+                label: "How to invest in yourself",
+              }),
+            ],
+          }),
+        ],
       }),
       NodeCategory.create({
         label: "Planning & decision making",
@@ -198,11 +366,146 @@ export const nodes: Node[] = [
           label: "See all planning resources →",
           url: `${baseUrl}/career-planning/`,
         },
+        children: [
+          NodeCategory.create({
+            label: "Create a high-impact career plan",
+            children: [
+              Node.create({
+                url: `${baseUrl}/career-planning/process/`,
+                label: "8-week career planning course",
+              }),
+              Node.create({
+                url: `${baseUrl}/career-planning/summary/`,
+                label: "Summary",
+              }),
+              Node.create({
+                url: `${baseUrl}/career-planning/career-plan-template/`,
+                label: "Career plan template",
+              }),
+              Node.create({
+                url: `${baseUrl}/career-planning/annual-career-review/`,
+                label: "Annual career check-up",
+              }),
+            ],
+          }),
+          NodeCategory.create({
+            label: "Make good career decisions",
+            children: [
+              Node.create({
+                url: `${baseUrl}/career-decision/article/`,
+                label: "Make an immediate decision",
+              }),
+              Node.create({
+                url: `${baseUrl}/career-planning/#learn-more-about-career-decision-making`,
+                label: "Improve your decision-making skills",
+              }),
+            ],
+          }),
+        ],
       }),
       NodeCategory.create({
         label: "Browse all our content",
         description: "Pick a topic to explore or check out our most popular pieces.",
         url: `${baseUrl}/topics/`,
+        children: [
+          NodeCategory.create({
+            label: "Selected topics",
+            extension: { label: "See all topics →", url: `${baseUrl}/topics/` },
+            children: [
+              Node.create({
+                url: `${baseUrl}/topic/big-picture/moral-philosophy/`,
+                label: "Moral philosophy ",
+              }),
+              Node.create({
+                url: `${baseUrl}/topic/planning/career-capital/skills/`,
+                label: "Skills ",
+              }),
+              Node.create({
+                url: `${baseUrl}/topic/planning/personal-fit/job-satisfaction/`,
+                label: "Job satisfaction ",
+              }),
+              Node.create({
+                url: `${baseUrl}/topic/other/anonymous-advice/`,
+                label: "Anonymous advice ",
+              }),
+              Node.create({
+                url: `${baseUrl}/topic/other/unconventional-advice/`,
+                label: "Unconventional advice ",
+              }),
+              Node.create({
+                url: `${baseUrl}/topic/other/what-to-study/`,
+                label: "What to study ",
+              }),
+              Node.create({
+                url: `${baseUrl}/topic/strategies/advocacy-strategies/`,
+                label: "Advocacy ",
+              }),
+              Node.create({
+                url: `${baseUrl}/topic/causes/catastrophic-risks/`,
+                label: "Catastrophic risks ",
+              }),
+              Node.create({
+                url: `${baseUrl}/topic/causes/meta-causes/`,
+                label: "Meta-causes ",
+              }),
+              Node.create({
+                url: `${baseUrl}/topic/priority-paths/`,
+                label: "Priority paths ",
+              }),
+            ],
+          }),
+          NodeCategory.create({
+            label: "Top articles from outside our guides",
+            extension: {
+              label: "All articles →",
+              url: `${baseUrl}/research/#list-of-everything`,
+            },
+
+            children: [
+              Node.create({
+                url: `${baseUrl}/career-guide/job-satisfaction/`,
+                label: "What makes for a dream job? ",
+              }),
+              Node.create({
+                url: `${baseUrl}/articles/best-charity/`,
+                label: "Best charities to donate to ",
+              }),
+              Node.create({
+                url: `${baseUrl}/2020/08/misconceptions-effective-altruism/`,
+                label: "Misconceptions about effective altruism ",
+              }),
+              Node.create({
+                url: `${baseUrl}/articles/research-questions-by-discipline/`,
+                label: "High-impact research questions ",
+              }),
+              Node.create({
+                url: `${baseUrl}/2015/07/what-are-your-odds-of-getting-into-congress-if-you-try/`,
+                label: "What are your chances of getting elected to Congress, if you try? ",
+              }),
+              Node.create({
+                url: `${baseUrl}/2012/08/how-many-lives-does-a-doctor-save/`,
+                label: "How many lives does a doctor save? ",
+              }),
+              Node.create({
+                url: `${baseUrl}/articles/is-voting-important/`,
+                label: "What's the impact of voting? ",
+              }),
+              Node.create({
+                url: `${baseUrl}/articles/advice-for-undergraduates/`,
+                label: "Advice for undergraduates ",
+              }),
+            ],
+          }),
+          NodeCategory.create({
+            label: "2017 career guide",
+            children: [
+              Node.create({
+                url: "https://80000hours.org/career-guide/",
+                label: "All career guide pages →",
+              }),
+            ],
+          }),
+        ],
       }),
     ],
   }),

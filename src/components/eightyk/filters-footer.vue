@@ -1,13 +1,6 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
-import { CFlex, CBox, CButton, CContainer, CIcon, CLink, CHeading, CText, CVStack, chakra } from "@chakra-ui/vue-next";
-import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
-import { ref } from "vue";
-import { nodes, Node, NodeCategory } from "~/nodes";
-import { OhVueIcon } from "oh-vue-icons";
-import { useComp } from "~/utils/structs";
-import { JobAlgolia } from "~/utils/types";
-import { breakpointsChakra } from "~/constants";
+import { CFlex, CIcon, CLink, CText, CVStack, chakra } from "@chakra-ui/vue-next";
 
 const props = defineProps<{
   careerConsultancyBg?: string;
@@ -16,7 +9,6 @@ const props = defineProps<{
 const hooks = {
   config: useRuntimeConfig(),
 };
-
 </script>
 
 <template>
@@ -31,7 +23,7 @@ const hooks = {
       <CIcon name="external-link" mb="px" mr="1" />
       View all roles in a spreadsheet
     </CLink>
-    <CLink href="https://80000hours.org/impact-survey/?int_campaign=job-board__sidebar">
+    <CLink href="https://80000hours.typeform.com/to/LG2lzrOC">
       <CIcon name="message-square" mb="px" mr="1" />
       Give us feedback
     </CLink>
@@ -43,7 +35,10 @@ const hooks = {
       p="5"
       gap="1"
     >
-      <CText>Talk with our team for free if you are interested in working on one of our top problem areas</CText>
+      <CText
+        >Talk with our team for free if you are interested in working on one of our top
+        problem areas</CText
+      >
       <CLink
         href="https://80000hours.org/speak-with-us/"
         font-size="13px"
