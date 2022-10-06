@@ -182,12 +182,36 @@ export const nodes: Node[] = [
             label: "Top areas to work on",
             children: [
               Node.create({
-                label: "Preventing an AI-related catastrophe",
                 url: `${baseUrl}/problem-profiles/artificial-intelligence/`,
+                label: "Preventing an AI-related catastrophe",
               }),
               Node.create({
-                label: "Global priorities research",
+                url: `${baseUrl}/problem-profiles/preventing-catastrophic-pandemics/`,
+                label: "Catastrophic pandemics",
+              }),
+              Node.create({
+                url: `${baseUrl}/problem-profiles/promoting-effective-altruism/`,
+                label: "Building effective altruism",
+              }),
+              Node.create({
                 url: `${baseUrl}/problem-profiles/global-priorities-research/`,
+                label: "Global priorities research",
+              }),
+              Node.create({
+                url: `${baseUrl}/problem-profiles/nuclear-security/`,
+                label: "Nuclear war",
+              }),
+              Node.create({
+                url: `${baseUrl}/problem-profiles/improving-institutional-decision-making/`,
+                label: "Epistemics and institutional decision making",
+              }),
+              Node.create({
+                url: `${baseUrl}/problem-profiles/climate-change/`,
+                label: "Climate change",
+              }),
+              Node.create({
+                url: `${baseUrl}/problem-profiles/great-power-conflict/`,
+                label: "Great power conflict",
               }),
             ],
           }),
@@ -195,16 +219,12 @@ export const nodes: Node[] = [
             label: "Other promising areas",
             children: [
               Node.create({
-                label: "Mitigating great power conflict",
-                url: `${baseUrl}/problem-profiles/#reducing-great-power-conflict`,
+                url: `${baseUrl}/problem-profiles/promoting-positive-values/`,
+                label: "Promoting positive values",
               }),
               Node.create({
-                label: "Global governance",
-                url: `${baseUrl}/problem-profiles/#improve-global-governance`,
-              }),
-              Node.create({
-                label: "Space governance",
                 url: `${baseUrl}/problem-profiles/space-governance`,
+                label: "Space governance",
               }),
               Node.create({
                 label: "See more →",
