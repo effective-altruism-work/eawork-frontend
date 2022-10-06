@@ -1,25 +1,16 @@
 <script setup lang="ts">
-import { useFetch, useHead, useRuntimeConfig } from "#app";
-import { CFlex, CBox, CButton, CLink, CText, CSpinner } from "@chakra-ui/vue-next";
-import algoliasearch from "algoliasearch";
-import { OhVueIcon } from "oh-vue-icons";
-import { onMounted, onUpdated, ref, watch } from "vue";
-import FlagBtn from "~/components/btn-job-flag.vue";
+import { CFlex, CBox, CLink, CText } from "@chakra-ui/vue-next";
 import JobCardTags from "~/components/job-card-tags.vue";
-import { useStateVar } from "~/utils/structs";
 import { JobAlgolia } from "~/utils/types";
-import { urls } from "~/constants";
 import { formatDistance } from "date-fns";
 
-const props = defineProps<{ job: JobAlgolia; }>();
+const props = defineProps<{ job: JobAlgolia }>();
 
 const space = 6;
-
 </script>
 
 <template>
   <CBox>
-
     <CFlex>
       <CLink :href="props.job.company_url">
         <chakra.img
@@ -40,23 +31,23 @@ const space = 6;
       >
         <CFlex justify="space-between" pos="relative">
           <CText font-size="20px" font-weight="bold" line-height="1.1">
-            {{props.job.title}}
+            {{ props.job.title }}
           </CText>
 
-<!--          <CButton-->
-<!--            variant="outline"-->
-<!--            size="xs"-->
-<!--            ml="6"-->
-<!--            h="5"-->
-<!--            gap="1"-->
-<!--            align="center"-->
-<!--            justify="center"-->
-<!--            color-scheme="gray"-->
-<!--          >-->
-<!--            <CBox w="4px" h="4px" bg="gray.400" />-->
-<!--            <CBox w="4px" h="4px" bg="gray.400" />-->
-<!--            <CBox w="4px" h="4px" bg="gray.400" />-->
-<!--          </CButton>-->
+          <!--          <CButton-->
+          <!--            variant="outline"-->
+          <!--            size="xs"-->
+          <!--            ml="6"-->
+          <!--            h="5"-->
+          <!--            gap="1"-->
+          <!--            align="center"-->
+          <!--            justify="center"-->
+          <!--            color-scheme="gray"-->
+          <!--          >-->
+          <!--            <CBox w="4px" h="4px" bg="gray.400" />-->
+          <!--            <CBox w="4px" h="4px" bg="gray.400" />-->
+          <!--            <CBox w="4px" h="4px" bg="gray.400" />-->
+          <!--          </CButton>-->
 
           <CFlex
             direction="column"
@@ -66,7 +57,6 @@ const space = 6;
             right="0"
             top="0"
           >
-
             <CText color="gray.500" font-size="sm">
               {{
                 formatDistance(new Date(props.job.posted_at * 1000), new Date(), {
@@ -83,21 +73,14 @@ const space = 6;
                 })
               }}
             </CText>
-
           </CFlex>
         </CFlex>
 
-        <CText mt="1px" color="blue.500">{{props.job.company_name}}</CText>
-        
-        <CFlex gap="2" align="center" display="flex">
+        <CText mt="1px" color="blue.500">{{ props.job.company_name }}</CText>
 
+        <CFlex gap="2" align="center" display="flex">
           <CBox mx="-2px" my="-2px">
-            <svg
-              aria-hidden="true"
-              width="17.28"
-              height="17.28"
-              viewBox="0 0 512 512"
-            >
+            <svg aria-hidden="true" width="17.28" height="17.28" viewBox="0 0 512 512">
               <path
                 stroke="var(--colors-gray-500)"
                 fill="none"
@@ -118,13 +101,13 @@ const space = 6;
               />
             </svg>
           </CBox>
-          
+
           <CText v-if="props.job.tags_city[0]">{{ props.job.tags_city[0] }}</CText>
           <CBox v-if="false" w="3px" h="3px" mt="2px" bg="gray.300" />
         </CFlex>
       </CFlex>
     </CFlex>
-    
+
     <CFlex w="100%" gap="3" mt="3" wrap="wrap">
       <CFlex
         v-for="area in job.tags_area"
@@ -169,12 +152,10 @@ const space = 6;
       >
         <CText color="#0E6D6F">{{ location }}</CText>
       </CFlex>
-
     </CFlex>
 
     <JobCardTags :job="props.job" />
-    
-    <CBox v-if="props.job.description" :mt="space / 2" v-html="props.job.description"/>
-  
+
+    <CBox v-if="props.job.description" :mt="space / 2" v-html="props.job.description" />
   </CBox>
 </template>

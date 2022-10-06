@@ -47,7 +47,7 @@ export interface JobAlgolia {
   company_url: string;
   company_career_page_url: string;
   company_description: string;
-  
+
   tags_role_type: string[];
   tags_skill: string[];
   tags_country: string[];
@@ -66,7 +66,7 @@ export interface Comment {
   pk: number;
   parent: number;
   post: number;
-  author: { 
+  author: {
     email: string;
     first_name: string;
     last_name: string;

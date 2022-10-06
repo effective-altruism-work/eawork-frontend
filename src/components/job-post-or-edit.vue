@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useHead, useRuntimeConfig } from "#app";
+import { useRuntimeConfig } from "#app";
 import {
   CBox,
   CFlex,
@@ -20,7 +20,7 @@ import { theme } from "~/styles/theme";
 import { useStateVar } from "~/utils/structs";
 import { JobAlgolia, Tag, TagTypeName, AlgoliaTagFields, tagTypes } from "~/utils/types";
 import NuxtCkeditor from "~/components/nuxt-ckeditor.vue";
-import "@formkit/themes/genesis";
+
 const props = defineProps<{ jobPk: string | number }>();
 
 const state = useStateVar(() => {
@@ -45,12 +45,12 @@ const state = useStateVar(() => {
     config: useRuntimeConfig(),
     isSuccess: ref(false),
     isLoaded: ref(false),
-  }
+  };
 });
 
 onMounted(async () => {
   if (props.jobPk) {
-    const jobPost: JobAlgolia = await state.searchIndex.getObject(props.jobPk as string)
+    const jobPost: JobAlgolia = await state.searchIndex.getObject(props.jobPk as string);
     state.job.value = jobPost;
     state.form.description.value = jobPost.description;
     state.form.description_short.value = jobPost.description_short;
@@ -82,7 +82,7 @@ async function postJob(
       description: state.form.description.value,
       ...data,
       ...state.form.tags.value,
-    }
+    };
     if (props.jobPk) {
       reqData.job_post_pk = props.jobPk;
     }
@@ -243,11 +243,16 @@ function tagsChanged(tagTypeName: TagTypeName, tagsNew: Tag[]) {
 
     <CFlex :gap="theme.spaces.md * 2" justify="flex-end">
       <CFlex w="50%" />
-      <CAlert v-if="state.isSuccess.value" status="success" border-radius="md" w="50%" mt="6">
+      <CAlert
+        v-if="state.isSuccess.value"
+        status="success"
+        border-radius="md"
+        w="50%"
+        mt="6"
+      >
         <CAlertIcon />
         <CAlertDescription>
-          Submitted successfully and will be reviewed within several
-          days.
+          Submitted successfully and will be reviewed within several days.
         </CAlertDescription>
       </CAlert>
     </CFlex>

@@ -5,21 +5,16 @@ import {
   CButton,
   CLink,
   CIcon,
-  CHeading,
   CText,
   chakra,
-} from "@chakra-ui/vue-next";
-import { onMounted, onUnmounted, ref } from "vue";
-import { nodes, nodesSecondary, Node, NodeCategory, nodesAll } from "~/nodes";
-import {
   CIconButton,
   CDrawer,
   CDrawerBody,
   CDrawerOverlay,
   CDrawerContent,
-  CDrawerCloseButton,
 } from "@chakra-ui/vue-next";
-import { OhVueIcon } from "oh-vue-icons";
+import { onMounted, onUnmounted, ref } from "vue";
+import { Node, NodeCategory, nodesAll } from "~/nodes";
 
 const state = {
   isOpen: ref(false),

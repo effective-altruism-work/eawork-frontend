@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { useHead, useRuntimeConfig } from "#app";
 
-import { CContainer, CFlex, CBox, CHeading, CLink, chakra } from "@chakra-ui/vue-next";
-import { OhVueIcon } from "oh-vue-icons";
-import { urls } from "~/constants";
-import { theme } from "~/styles/theme";
-import { tracking } from "~/utils/tracking";
+import { CContainer, CFlex, CBox } from "@chakra-ui/vue-next";
 import Menu from "~/components/eightyk/menu";
 
 const state = {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CButton, CBox, CFlex, CIcon } from "@chakra-ui/vue-next";
+import { CButton, CFlex, CIcon } from "@chakra-ui/vue-next";
 import { formatDistance } from "date-fns";
 
 function format(refinement: {

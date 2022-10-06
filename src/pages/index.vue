@@ -12,19 +12,16 @@ import {
 } from "@chakra-ui/vue-next";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import algoliasearch from "algoliasearch";
-import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns";
 import { onBeforeMount, onMounted, ref, watch } from "vue";
 import CurrentRefinements from "~/components/aloglia/current-refinements.vue";
 import Refinements from "~/components/aloglia/refinements.vue";
-import Filters from "~/components/aloglia/refinements.vue";
 import BtnJobsAlert from "~/components/btn-jobs-alert.vue";
 import SearchBox from "~/components/aloglia/search-box.vue";
 import FiltersFooter from "~/components/eightyk/filters-footer.vue";
 import JobCardSkeleton from "~/components/job-card-skeleton.vue";
 import JobCard from "~/components/job-card.vue";
 import { history } from "instantsearch.js/es/lib/routers";
-import { IndexUiState } from "instantsearch.js/es/types/ui-state";
-import { useComp, useHooks, useStateVar } from "~/utils/structs";
+import { useComp, useHooks } from "~/utils/structs";
 import { tracking } from "~/utils/tracking";
 import { JobAlgolia } from "~/utils/types";
 import { OhVueIcon } from "oh-vue-icons";
@@ -49,14 +46,12 @@ const state = {
   isShowMobileFilters: ref(false),
 };
 
-const comp = useComp(() => {
-  return {
-    cardW: { base: "100%", lg: "70%", xl: "74%" },
-    filtersW: { base: 0, lg: "30%", xl: "26%" },
-    filtersDisplay: { base: "none", lg: "flex" },
-    space: 6,
-  };
-});
+const comp = useComp(() => ({
+  cardW: { base: "100%", lg: "70%", xl: "74%" },
+  filtersW: { base: 0, lg: "30%", xl: "26%" },
+  filtersDisplay: { base: "none", lg: "flex" },
+  space: 6,
+}));
 
 onBeforeMount(async () => {
   await tracking.init(hooks.config.public.segmentId);

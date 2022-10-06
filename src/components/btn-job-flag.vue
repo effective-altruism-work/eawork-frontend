@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
 import {
-  CBox,
   CFlex,
   CText,
   CButton,
@@ -44,12 +43,7 @@ async function submit(data: { message: string; email?: string }, node: FormKitNo
 
 <template>
   <CFlex align="center" class="flag-btn">
-    <CButton
-      @click="state.isShowModal.value = true"
-      size="sm"
-      variant="link"
-      m="auto"
-    >
+    <CButton @click="state.isShowModal.value = true" size="sm" variant="link" m="auto">
       Flag
     </CButton>
 
@@ -75,27 +69,26 @@ async function submit(data: { message: string; email?: string }, node: FormKitNo
         border-radius="md"
       >
         <CText w="fit-content" mb="-4">
-          What would you like to report about "<i>{{ props.job.title }}</i>" post?
+          What would you like to report about "<i>{{ props.job.title }}</i
+          >" post?
         </CText>
-  
+
         <FormKit type="form" submit-label="Send" @submit="submit">
-  
           <FormKit
             name="message"
             placeholder="Outdated? Incorrect? Missing info?"
             validation="required"
             type="textarea"
           />
-  
+
           <FormKit
             name="email"
             label="Your Email (optional)"
             validation="email"
             placeholder="joe@example.com"
           />
-
         </FormKit>
-  
+
         <CAlert v-if="state.isSuccess.value" status="success" border-radius="md">
           <CAlertIcon />
           <CAlertDescription>Submitted, thank you!</CAlertDescription>
@@ -107,5 +100,4 @@ async function submit(data: { message: string; email?: string }, node: FormKitNo
 
 <style lang="scss">
 @import "~/styles/formkit.scss";
-
 </style>

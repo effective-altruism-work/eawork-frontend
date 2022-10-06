@@ -1,20 +1,10 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
-import {
-  CFlex,
-  CBox,
-  CButton,
-  CHStack,
-  CVStack,
-  CLink,
-  CIcon,
-  CText,
-} from "@chakra-ui/vue-next";
-import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
+import { CFlex, CBox, CButton, CHStack, CLink, CIcon, CText } from "@chakra-ui/vue-next";
+import { useBreakpoints } from "@vueuse/core";
 import { formatDistance, format } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
-import { computed, onMounted, ref, watch } from "vue";
-import { Document } from "yaml";
+import { ref } from "vue";
 import JobCardLocationShort from "~/components/job-card-location-short.vue";
 import JobCardTags from "~/components/job-card-tags.vue";
 import JobView from "~/components/job-view.vue";

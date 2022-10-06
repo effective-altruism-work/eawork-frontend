@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
-import { CBox, CText, CButton, CBadge, CInput, CFormLabel } from "@chakra-ui/vue-next";
+import { CBox, CText, CButton, CInput, CFormLabel } from "@chakra-ui/vue-next";
 import axios from "axios";
 import { onMounted, ref } from "vue";
 import RefinementListFacets from "~/components/aloglia/refinement-list-facets.vue";
@@ -34,7 +34,8 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
   if (props.attribute === "tags_area") {
     if (section === "featured") {
       return items.filter((item) => state.tagsFeaturedNames.value.includes(item.value));
-    } else if (section === "other") {
+    }
+    if (section === "other") {
       return items.filter((item) => !state.tagsFeaturedNames.value.includes(item.value));
     }
   }

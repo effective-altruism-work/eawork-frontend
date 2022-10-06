@@ -2,17 +2,25 @@ import { Data } from "dataclass";
 
 export class Node extends Data {
   label: string;
+
   url?: string;
+
   categories?: NodeCategory[];
+
   isMegaNode?: boolean;
+
   isSecondary?: boolean;
 }
 
 export class NodeCategory extends Data {
   label: string;
+
   description?: string;
+
   url?: string;
+
   children: Node[] | NodeCategory[];
+
   extension?: {
     url: string;
     label: string;

@@ -1,21 +1,12 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
-import {
-  CFlex,
-  CBox,
-  CButton,
-  CContainer,
-  CLink,
-  CHeading,
-  CText,
-  chakra,
-} from "@chakra-ui/vue-next";
+import { CFlex, CBox, CButton, CContainer, CLink, CHeading } from "@chakra-ui/vue-next";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { ref } from "vue";
-import { nodes, Node, NodeCategory, nodesSecondary } from "~/nodes";
+import { Node, NodeCategory, nodesSecondary } from "~/nodes";
+import { OhVueIcon } from "oh-vue-icons";
 import MenuDesktop from "~/components/eightyk/menu-desktop";
 import MenuMobile from "~/components/eightyk/menu-mobile";
-import { OhVueIcon } from "oh-vue-icons";
 
 const hooks = {
   breakpoints: useBreakpoints(breakpointsTailwind),
@@ -44,15 +35,13 @@ function onNodeClick(event, node) {
   if (isCurrentNode(node)) {
     event.preventDefault();
     state.nodeOpened.value = null;
-  } else {
-    if (node.isMegaNode) {
-      event.preventDefault();
-      state.nodeCategoryActive.value = node.categories[0];
-      state.nodeOpened.value = node;
-    } else if (node.categories?.length) {
-      event.preventDefault();
-      state.nodeOpened.value = node;
-    }
+  } else if (node.isMegaNode) {
+    event.preventDefault();
+    state.nodeCategoryActive.value = node.categories[0];
+    state.nodeOpened.value = node;
+  } else if (node.categories?.length) {
+    event.preventDefault();
+    state.nodeOpened.value = node;
   }
 }
 </script>

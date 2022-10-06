@@ -9,6 +9,15 @@ export namespace tracking {
   const prefix = "data-80k-event";
   const clickTimeout = 300;
 
+  async function waitForInit() {
+    while (true) {
+      if (analytics) {
+        break;
+      }
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+  }
+
   export async function init(writeKey: string) {
     [analytics, context] = await AnalyticsBrowser.load({ writeKey });
   }
@@ -42,17 +51,8 @@ export namespace tracking {
     }
   }
 
-  async function waitForInit() {
-    while (true) {
-      if (analytics) {
-        break;
-      }
-      await new Promise((resolve) => setTimeout(resolve, 100));
-    }
-  }
-
   function get80kJobProps(job: JobAlgolia, action: Action): JobEvent80k {
-    let props = {
+    const props = {
       category: "Job board",
       label: job.url_external,
       organization: job.company_name,

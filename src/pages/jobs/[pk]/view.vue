@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { useFetch, useHead, useRoute, useRuntimeConfig } from "#app";
+import { useHead, useRoute } from "#app";
 import { JobView } from "#components";
-import { CBox, CText, CLink } from "@chakra-ui/vue-next";
+import { CBox } from "@chakra-ui/vue-next";
 
 useHead({ title: "Job" });
 
 const route = useRoute();
-
 </script>
 
 <template>

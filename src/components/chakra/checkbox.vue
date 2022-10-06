@@ -65,7 +65,7 @@ const value = computed({
   align-items: center;
   vertical-align: top;
   position: relative;
-  
+
   &:hover {
     .chakra-checkbox__control {
       border-color: var(--colors-blue-100);

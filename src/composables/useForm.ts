@@ -13,7 +13,7 @@ export function useForm(args: {
   const hooks = {
     config: useRuntimeConfig(),
   };
-  
+
   const state = {
     isSuccess: ref(false),
   };
@@ -22,7 +22,7 @@ export function useForm(args: {
     state.isSuccess.value = false;
 
     let dataAll = {};
-    if (typeof args.dataExtra === "object"){
+    if (typeof args.dataExtra === "object") {
       dataAll = { ...dataAll, ...args.dataExtra };
     } else if (typeof args.dataExtra === "function") {
       dataAll = { ...dataAll, ...args.dataExtra() };

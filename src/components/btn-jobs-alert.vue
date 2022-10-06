@@ -36,13 +36,13 @@ async function createJobAlert() {
   state.isSubmitting.value = true;
   state.isSuccess.value = null;
   state.isError.value = false;
-  
+
   if (state.email.value === "") {
     state.isError.value = true;
     state.isSubmitting.value = false;
     return;
   }
-  
+
   try {
     const res = await axios.post(`${hooks.config.public.apiBase}/jobs/subscribe`, {
       email: state.email.value,
@@ -51,14 +51,14 @@ async function createJobAlert() {
     });
     if (res.data.success) {
       state.isSuccess.value = true;
-      
+
       await tracking.sendEvent("alert sign up", {
         label: window.location.href,
-        problemArea: props.queryJson.facetFilters["tags_area"],
-        roleType: props.queryJson.facetFilters["tags_role_type"],
+        problemArea: props.queryJson.facetFilters.tags_area,
+        roleType: props.queryJson.facetFilters.tags_role_type,
         ...tracking.get80kLocations(
-          props.queryJson.facetFilters["tags_city"],
-          props.queryJson.facetFilters["tags_county"]
+          props.queryJson.facetFilters.tags_city,
+          props.queryJson.facetFilters.tags_county,
         ),
       });
     } else {
@@ -104,16 +104,14 @@ async function createJobAlert() {
       border-radius="8"
     >
       <CFlex justify="space-between">
-        <CText
-          v-if="props.queryJson"
-          w="fit-content"
-          font-size="sm"
-        >
+        <CText v-if="props.queryJson" w="fit-content" font-size="sm">
           Subscribe to new jobs that match your query:
         </CText>
         <CBox v-else>
           <CText w="fit-content">Subscribe to all new job posts.</CText>
-          <CText w="fit-content" color="gray.500" font-size="sm">(because your search query is unspecified)</CText>
+          <CText w="fit-content" color="gray.500" font-size="sm"
+            >(because your search query is unspecified)</CText
+          >
         </CBox>
 
         <CBox
@@ -150,13 +148,13 @@ async function createJobAlert() {
         name="email"
         placeholder="joe@example.com"
       />
-      
+
       <CFlex justify="space-between">
         <CText font-size="10px" max-w="200px" line-height="1.3" color="gray.600">
-          You will receive updates daily (if there are new roles that match your query)
-          and you can unsubscribe at any time
+          You will receive updates daily (if there are new roles that match your query) and
+          you can unsubscribe at any time
         </CText>
-        
+
         <CButton
           @click="createJobAlert()"
           :is-loading="state.isSubmitting.value"
