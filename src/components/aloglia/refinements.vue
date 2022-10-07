@@ -53,6 +53,13 @@ const props = defineProps<{
       :searchable="true"
     />
 
+    <NumericMenu
+      attribute="company_is_recommended_org"
+      :count-bg="props.countBg"
+      label="Top Recommended Orgs"
+      :items="[{ label: 'All orgs' }, { label: 'Top recommended orgs', start: 1 }]"
+    />
+
     <!--<RefinementList attribute="tags_location_type" label="Location" />-->
     <!--<RefinementList attribute="tags_skill" label="Skills" />-->
     <!--<RefinementList attribute="tags_generic" label="Tags" />-->

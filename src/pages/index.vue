@@ -93,15 +93,24 @@ function searchFunction(helper) {
 function saveQueryJson(uiState: {
   query: string;
   disjunctiveFacetsRefinements: Map<string, string[]>;
+  numericRefinements: { company_is_recommended_org: any };
 }) {
   const queryString = uiState.query;
-  const facetsRaw: Map<string, string[]> = uiState.disjunctiveFacetsRefinements;
   const facetFilters: string[] = [];
-  for (const [facetName, facetValueArr] of Object.entries(facetsRaw)) {
+
+  // disjunctive facets
+  const disjunctiveFacetsRaw: Map<string, string[]> = uiState.disjunctiveFacetsRefinements;
+  for (const [facetName, facetValueArr] of Object.entries(disjunctiveFacetsRaw)) {
     for (const facetValue of facetValueArr) {
       facetFilters.push(`${facetName}:${facetValue}`);
     }
   }
+
+  // currently relevant numeric facets. Less insane parsing to come.
+  if (">=" in uiState.numericRefinements.company_is_recommended_org && uiState.numericRefinements?.company_is_recommended_org[">="][0] === 1) {
+    facetFilters.push("company_is_recommended_org:true");
+  }
+
   const isQuerySpecified = queryString || facetFilters.length;
   if (isQuerySpecified) {
     state.queryJson.value = {
