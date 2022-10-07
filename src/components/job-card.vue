@@ -106,7 +106,7 @@ function onCardClick() {
 
           <CText :line-height="[1.3, null, 'none']" :font-size="{ base: 'sm', lg: 'md' }">
             <CBox
-              v-if="false"
+              v-if="job?.company_is_recommended_org"
               @mouseover="state.isStarHovering.value = true"
               @focus="state.isStarHovering.value = true"
               @mouseleave="state.isStarHovering.value = false"
@@ -302,8 +302,8 @@ function onCardClick() {
               Homepage
             </CLink>
             <CLink
-              v-if="company_forum_link in props.job"
-              :href="props.job?.company_forum_link"
+              v-if="!!props.job?.company_ea_forum_url"
+              :href="props.job?.company_ea_forum_url"
               @click="
                 (event) => {
                   event.stopPropagation();

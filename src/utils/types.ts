@@ -46,7 +46,9 @@ export interface JobAlgolia {
   company_name: string;
   company_url: string;
   company_career_page_url: string;
+  company_ea_forum_url: string;
   company_description: string;
+  company_is_recommended_org: boolean;
 
   tags_role_type: string[];
   tags_skill: string[];
