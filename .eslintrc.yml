@@ -3,11 +3,10 @@ extends:
   - plugin:vue/vue3-essential
   - "@vue/eslint-config-airbnb-with-typescript"
   - "@vue/eslint-config-airbnb-with-typescript/allow-js-in-vue"
-  - prettier
+  - prettier # this (eslint-config-prettier) disables rules that would conflict with Prettier
 plugins:
-  - prettier
   - unused-imports
-ignorePatterns: 
+ignorePatterns:
   - node_modules/*
   - .nuxt/*
 rules:
@@ -42,10 +41,6 @@ rules:
   lines-between-class-members: 0 # picky. TS
   import/prefer-default-export: 0
   import/extensions: 0
-  prettier/prettier:
-    - 1
-    - trailingComma: all
-      printWidth: 93
   unused-imports/no-unused-imports:
     - error
 env:

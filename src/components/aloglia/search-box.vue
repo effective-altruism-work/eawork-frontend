@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { CBox, CText, CFlex } from "@chakra-ui/vue-next";
+import { CBox, CText, CFlex, CIcon } from "@chakra-ui/vue-next";
 // import AlgoliaLogo from "~/components/aloglia/algolia-logo.vue";
-import MagnifyingGlass from "../icons/magnifying-glass.vue";
 
 const props = defineProps<{
   isShowResultsCount: boolean;
@@ -17,9 +16,7 @@ const props = defineProps<{
   >
     <AisSearchBox placeholder="Keywords">
       <template v-slot:submit-icon>
-        <div style="color: grey">
-          <MagnifyingGlass />
-        </div>
+        <CIcon w="6" h="6" name="search" color="grey" />
       </template>
     </AisSearchBox>
     <AisStats v-if="props.isShowResultsCount">
