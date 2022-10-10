@@ -45,8 +45,10 @@ export default defineNuxtPlugin((nuxtApp) => {
 
 const theme = extendTheme({
   fonts: {
-    heading: `Open Sans, Helvetica, Arial, sans-serif`,
-    body: `Open Sans, Helvetica, Arial, sans-serif`,
+    // heading: `Open Sans, Helvetica, Arial, sans-serif`,
+    // body: `Open Sans, Helvetica, Arial, sans-serif`,
+    heading: `"proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif`,
+    body: `"proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif`,
     proxima: `"proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif`,
   },
   components: {

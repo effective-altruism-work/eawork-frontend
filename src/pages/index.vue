@@ -137,7 +137,6 @@ interface RouteState {
           <CHeading
             line-height="0.8"
             :font-size="['2.7rem', null, null, '5xl']"
-            font-family="Open Sans"
           >
             Jobs
           </CHeading>
