@@ -52,6 +52,18 @@ async function createJobAlert() {
     if (res.data.success) {
       state.isSuccess.value = true;
 
+      // const separated = {};
+      // for (const subarr of props.queryJson.facetFilters) {
+      //   let prefix = subarr[0].substring(0, subarr[0].indexOf(":"));
+
+      //   switch (prefix) {
+      //     case "tags_area":
+      //       separated["tags_area"] = subarr;
+      //       break;
+      //     case "tags_role_type":
+      //       separated["tags_role_type"] = subarr
+      //   }
+      // }
       await tracking.sendEvent("alert sign up", {
         label: window.location.href,
         problemArea: props.queryJson.facetFilters.tags_area,
