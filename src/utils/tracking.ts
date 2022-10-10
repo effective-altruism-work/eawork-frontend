@@ -109,6 +109,8 @@ export namespace tracking {
         return "Viewed organisation homepage";
       case "company_career_page_url clicked":
         return "Viewed organisation vacancies page";
+      case "company_ea_forum_url clicked":
+        return "Viewed organisation ea forum page"
       case "alert sign up":
         return "Signed up for email alerts";
     }
@@ -134,6 +136,7 @@ export namespace tracking {
     | "viewed"
     | "url_external clicked"
     | "company_career_page_url clicked"
+    | "company_ea_forum_url clicked"
     | "company_url clicked"
     | "alert sign up";
 

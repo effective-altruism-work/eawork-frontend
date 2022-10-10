@@ -307,12 +307,12 @@ function onCardClick() {
               @click="
                 (event) => {
                   event.stopPropagation();
-                  tracking.sendJobEvent(props.job, 'company_forum_url clicked');
+                  tracking.sendJobEvent(props.job, 'company_ea_forum_url clicked');
                 }
               "
               @auxclick="
                 async (event) => {
-                  await tracking.sendJobEvent(props.job, 'company_forum_url clicked');
+                  await tracking.sendJobEvent(props.job, 'company_ea_forum_url clicked');
                 }
               "
               is-external

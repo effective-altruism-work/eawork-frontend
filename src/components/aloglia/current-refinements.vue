@@ -21,6 +21,11 @@ function format(refinement: {
       return `Posted ${dateDistance} ago`;
     }
   }
+
+  if (refinement.attribute === "company_is_recommended_org") {
+    return refinement.value ? "Top recommended orgs" : "All orgs"; // this latter should never happen, to be clear.
+  }
+
   return refinement.label;
 }
 </script>
