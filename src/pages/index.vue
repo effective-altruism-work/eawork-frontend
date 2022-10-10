@@ -111,12 +111,12 @@ function saveQueryJson(uiState: {
   }
 
   // currently relevant numeric facets. Less insane parsing to come.
-  if (
-    ">=" in uiState.numericRefinements.company_is_recommended_org &&
-    uiState.numericRefinements?.company_is_recommended_org[">="][0] === 1
-  ) {
-    facetFilters.push(["company_is_recommended_org:true"]);
-  }
+  // if (
+  //   ">=" in uiState.numericRefinements.company_is_recommended_org &&
+  //   uiState.numericRefinements?.company_is_recommended_org[">="][0] === 1
+  // ) {
+  //   facetFilters.push(["company_is_recommended_org:true"]);
+  // }
 
   const isQuerySpecified = queryString || facetFilters.length;
   if (isQuerySpecified) {
@@ -130,7 +130,6 @@ function saveQueryJson(uiState: {
 }
 
 function searchFunction(helper) {
-  console.log({ helper });
   saveQueryJson(helper.state);
   helper.search();
 }

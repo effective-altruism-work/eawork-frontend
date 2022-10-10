@@ -43,7 +43,6 @@ async function createJobAlert() {
     return;
   }
 
-  console.log(props.queryJson);
   try {
     const res = await axios.post(`${hooks.config.public.apiBase}/jobs/subscribe`, {
       email: state.email.value,
