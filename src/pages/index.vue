@@ -40,7 +40,7 @@ const hooks = useHooks(() => {
 
 const state = {
   searchIndex: hooks.searchClient.initIndex(hooks.config.public.algoliaJobsIndex),
-  queryJson: ref<null | { query: string; facetFilters: string[] }>(null),
+  queryJson: ref<null | { query: string; facetFilters: string[][] }>(null),
   jobPkCurrent: ref<number | null>(null),
   jobFromUrlQuery: ref<JobAlgolia | null>(null),
   isShowMobileFilters: ref(false),
@@ -85,30 +85,37 @@ async function loadJobIfSpecified() {
   }
 }
 
-function searchFunction(helper) {
-  saveQueryJson(helper.state);
-  helper.search();
-}
-
 function saveQueryJson(uiState: {
   query: string;
   disjunctiveFacetsRefinements: Map<string, string[]>;
   numericRefinements: { company_is_recommended_org: any };
 }) {
   const queryString = uiState.query;
-  const facetFilters: string[] = [];
+  const facetFilters: string[][] = [];
 
   // disjunctive facets
   const disjunctiveFacetsRaw: Map<string, string[]> = uiState.disjunctiveFacetsRefinements;
   for (const [facetName, facetValueArr] of Object.entries(disjunctiveFacetsRaw)) {
-    for (const facetValue of facetValueArr) {
-      facetFilters.push(`${facetName}:${facetValue}`);
+    if (!facetValueArr.length) {
+      continue; // skip empties
     }
+
+    const set = [];
+    for (const facetValue of facetValueArr) {
+      set.push(`${facetName}:${facetValue}`);
+    }
+
+    // by throwing these into sets of related facets (ex. subarray of tags_area, subarray of experience level),
+    // we tell Algolia to look at these subarrays as OR options.
+    facetFilters.push(set);
   }
 
   // currently relevant numeric facets. Less insane parsing to come.
-  if (">=" in uiState.numericRefinements.company_is_recommended_org && uiState.numericRefinements?.company_is_recommended_org[">="][0] === 1) {
-    facetFilters.push("company_is_recommended_org:true");
+  if (
+    ">=" in uiState.numericRefinements.company_is_recommended_org &&
+    uiState.numericRefinements?.company_is_recommended_org[">="][0] === 1
+  ) {
+    facetFilters.push(["company_is_recommended_org:true"]);
   }
 
   const isQuerySpecified = queryString || facetFilters.length;
@@ -120,6 +127,12 @@ function saveQueryJson(uiState: {
   } else {
     state.queryJson.value = null;
   }
+}
+
+function searchFunction(helper) {
+  console.log({ helper });
+  saveQueryJson(helper.state);
+  helper.search();
 }
 
 interface RouteState {
@@ -134,10 +147,7 @@ interface RouteState {
     <CBox>
       <CVStack :mt="[8, null, null, 14]" :mb="[6, null, null, 14]" :gap="[4, null, null, 3]">
         <CFlex justify="space-between" align="center">
-          <CHeading
-            line-height="0.8"
-            :font-size="['2.7rem', null, null, '5xl']"
-          >
+          <CHeading line-height="0.8" :font-size="['2.7rem', null, null, '5xl']">
             Jobs
           </CHeading>
 

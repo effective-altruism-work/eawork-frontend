@@ -11,7 +11,7 @@ import { tracking } from "~/utils/tracking";
 const props = defineProps<{
   queryJson: null | {
     query: string;
-    facetFilters: string[];
+    facetFilters: string[][];
   };
 }>();
 
@@ -43,6 +43,7 @@ async function createJobAlert() {
     return;
   }
 
+  console.log(props.queryJson);
   try {
     const res = await axios.post(`${hooks.config.public.apiBase}/jobs/subscribe`, {
       email: state.email.value,
@@ -137,7 +138,7 @@ async function createJobAlert() {
         font-size="xs"
       >
         <CText v-if="props.queryJson.query">Query: {{ props.queryJson.query }}</CText>
-        <CText v-for="filter in props.queryJson?.facetFilters ?? []" :key="filter">
+        <CText v-for="filter in props.queryJson?.facetFilters.flat() ?? []" :key="filter">
           {{ filter.replace(/tags_\w*:/, "Filter: ") }}
         </CText>
       </CText>
