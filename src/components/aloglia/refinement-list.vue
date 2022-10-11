@@ -18,8 +18,6 @@ const props = defineProps<{
   countBg?: string;
 }>();
 
-console.log(props.attribute);
-
 const state = {
   tagsFeatured: ref<TagDjango[]>([]),
   tagsFeaturedNames: ref<string[]>([]),
@@ -81,7 +79,7 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
           bg="white"
         />
 
-        <!-- bonus fellow we're sneaking in -->
+        <!-- bonus fellow we sneak in one time -->
         <AlgoliaToggle
           v-if="props.attribute === 'company_name'"
           attribute="company_is_recommended_org"

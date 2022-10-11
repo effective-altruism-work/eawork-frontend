@@ -11,17 +11,22 @@ const props = defineProps<{
   mt?: number | string;
   countBg?: string;
 }>();
+
+// function log(v: any) {
+//   console.log(v);
+// }
 </script>
 
 <template>
-  <ais-toggle-refinement :attribute="props.attribute" :count-bg="props.countBg">
+  <ais-toggle-refinement :attribute="props.attribute">
     <template v-slot="{ value, refine, createURL, sendEvent }">
+      <!-- <a :href="createURL(value)" @click.prevent="refine(value)"> -->
       <Checkbox
         :modelValue="value.isRefined"
         @update:model-value="
           () => {
-            createURL(value); // doesn't work
             refine(value);
+            // createURL(value); // doesn't work
           }
         "
       >
@@ -44,6 +49,7 @@ const props = defineProps<{
           </CBadge>
         </CText>
       </Checkbox>
+      <!-- </a> -->
     </template>
   </ais-toggle-refinement>
 </template>
