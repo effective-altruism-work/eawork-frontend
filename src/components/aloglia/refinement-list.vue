@@ -5,6 +5,8 @@ import axios from "axios";
 import { onMounted, ref } from "vue";
 import RefinementListFacets from "~/components/aloglia/refinement-list-facets.vue";
 import { TagDjango, TagTypeName } from "~/utils/types";
+import NumericMenu from "~/components/aloglia/numeric-menu.vue";
+import AlgoliaToggle from "./algolia-toggle.vue";
 
 const props = defineProps<{
   label: string;
@@ -15,8 +17,6 @@ const props = defineProps<{
   mt?: number | string;
   countBg?: string;
 }>();
-
-console.log(props.attribute);
 
 const state = {
   tagsFeatured: ref<TagDjango[]>([]),
@@ -77,6 +77,14 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
           mb="1"
           border-radius="md"
           bg="white"
+        />
+
+        <!-- bonus fellow we sneak in one time -->
+        <AlgoliaToggle
+          v-if="props.attribute === 'company_name'"
+          attribute="company_is_recommended_org"
+          :count-bg="props.countBg"
+          label="Top recommended orgs only"
         />
 
         <CText

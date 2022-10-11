@@ -110,14 +110,6 @@ function saveQueryJson(uiState: {
     facetFilters.push(set);
   }
 
-  // currently relevant numeric facets. Less insane parsing to come.
-  // if (
-  //   ">=" in uiState.numericRefinements.company_is_recommended_org &&
-  //   uiState.numericRefinements?.company_is_recommended_org[">="][0] === 1
-  // ) {
-  //   facetFilters.push(["company_is_recommended_org:true"]);
-  // }
-
   const isQuerySpecified = queryString || facetFilters.length;
   if (isQuerySpecified) {
     state.queryJson.value = {
@@ -208,7 +200,7 @@ interface RouteState {
             return {
               query: indexUiState.query,
               refinementList: indexUiState.refinementList,
-              ...(state.jobPkCurrent.value ? { jobPk: state.jobPkCurrent.value } : {}),
+              ...(state.jobPkCurrent.value ? { jobPk: String(state.jobPkCurrent.value) } : {}),
             };
           },
           routeToState(routeState: RouteState): { [indexId: string]: IndexUiState } {
