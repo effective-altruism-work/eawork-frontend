@@ -81,6 +81,7 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
           bg="white"
         />
 
+        <!-- bonus fellow we're sneaking in -->
         <AlgoliaToggle
           v-if="props.attribute === 'company_name'"
           attribute="company_is_recommended_org"
