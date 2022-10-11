@@ -1,7 +1,13 @@
 import ChakraUIVuePlugin, { chakra, extendTheme } from "@chakra-ui/vue-next";
 import { domElements } from "@chakra-ui/vue-system";
 import { defineNuxtPlugin } from "#app";
-import { feChevronDown, feExternalLink, feMessageSquare, feX } from "feather-icons-paths";
+import {
+  feChevronDown,
+  feExternalLink,
+  feMessageSquare,
+  feX,
+  feSearch,
+} from "feather-icons-paths";
 import {
   FaDiscord,
   FaMapMarkerAlt,
@@ -20,6 +26,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         feChevronDown,
         feExternalLink,
         feMessageSquare,
+        feSearch,
       },
       extend: {
         ...getIconProps(FaDiscord),
@@ -38,8 +45,10 @@ export default defineNuxtPlugin((nuxtApp) => {
 
 const theme = extendTheme({
   fonts: {
-    heading: `Open Sans, Helvetica, Arial, sans-serif`,
-    body: `Open Sans, Helvetica, Arial, sans-serif`,
+    // heading: `Open Sans, Helvetica, Arial, sans-serif`,
+    // body: `Open Sans, Helvetica, Arial, sans-serif`,
+    heading: `"proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif`,
+    body: `"proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif`,
     proxima: `"proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif`,
   },
   components: {

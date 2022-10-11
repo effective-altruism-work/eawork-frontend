@@ -16,6 +16,8 @@ const props = defineProps<{
   countBg?: string;
 }>();
 
+console.log(props.attribute);
+
 const state = {
   tagsFeatured: ref<TagDjango[]>([]),
   tagsFeaturedNames: ref<string[]>([]),
@@ -101,6 +103,7 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
 
           <chakra.ul mt="1px">
             <li v-if="isFromSearch && !items.length">No results.</li>
+            <!-- MAIN -->
             <RefinementListFacets
               :items="filterFacetValuesIfNeeded(items, 'other')"
               :refine="refine"
