@@ -52,25 +52,33 @@ async function createJobAlert() {
     if (res.data.success) {
       state.isSuccess.value = true;
 
-      // const separated = {};
-      // for (const subarr of props.queryJson.facetFilters) {
-      //   let prefix = subarr[0].substring(0, subarr[0].indexOf(":"));
+      const separated: { [key: string]: string[] } = {};
+      for (const subarr of props.queryJson.facetFilters) {
+        let prefix = subarr[0].substring(0, subarr[0].indexOf(":"));
 
-      //   switch (prefix) {
-      //     case "tags_area":
-      //       separated["tags_area"] = subarr;
-      //       break;
-      //     case "tags_role_type":
-      //       separated["tags_role_type"] = subarr
-      //   }
-      // }
+        switch (prefix) {
+          case "tags_area":
+            separated["tags_area"] = subarr;
+            break;
+          case "tags_role_type":
+            separated["tags_role_type"] = subarr;
+            break;
+          case "tags_city":
+            separated["tags_city"] = subarr;
+            break;
+          case "tags_country":
+            separated["tags_country"] = subarr;
+            break;
+        }
+      }
+
       await tracking.sendEvent("alert sign up", {
         label: window.location.href,
-        problemArea: props.queryJson.facetFilters.tags_area,
-        roleType: props.queryJson.facetFilters.tags_role_type,
+        problemArea: separated?.tags_area || null,
+        roleType: separated?.tags_role_type || null,
         ...tracking.get80kLocations(
-          props.queryJson.facetFilters.tags_city,
-          props.queryJson.facetFilters.tags_county,
+          separated?.tags_city || null,
+          separated?.tags_country || null,
         ),
       });
     } else {
@@ -149,7 +157,7 @@ async function createJobAlert() {
         font-size="xs"
       >
         <CText v-if="props.queryJson.query">Query: {{ props.queryJson.query }}</CText>
-        <CText v-for="filter in props.queryJson?.facetFilters.flat() ?? []" :key="filter">
+        <CText v-for="filter in props.queryJson?.facetFilters.flat() || []" :key="filter">
           {{ filter.replace(/tags_\w*:/, "Filter: ") }}
         </CText>
       </CText>

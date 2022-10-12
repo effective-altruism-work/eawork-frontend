@@ -48,7 +48,7 @@ function format(refinement: {
         >
           <CButton
             :href="createURL(refinement)"
-            @click="item.refine(refinement)"
+            @click="() => item.refine(refinement)"
             variant="outline"
             size="xs"
             font-weight="normal"
