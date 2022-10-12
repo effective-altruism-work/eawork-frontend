@@ -83,6 +83,25 @@ function log(i) {
           bg="white"
         />
 
+        <!-- REMOTE bonus fellow we sneak in -->
+        <!-- this toggles showing all jobs with a location type of 'remote' -->
+        <!-- which helpfully captures all the "Remote, Global" and "Remote, <country>" jobs -->
+        <AisRefinementList
+          v-if="props.attribute === 'tags_country'"
+          attribute="tags_location_type"
+        >
+          <template v-slot="{ items, refine }">
+            <chakra.ul mt="px">
+              <RefinementListFacets
+                :items="items"
+                :refine="refine"
+                :searchable="false"
+                :count-bg="props.countBg"
+              />
+            </chakra.ul>
+          </template>
+        </AisRefinementList>
+
         <!-- bonus fellow we sneak inside the company_name section -->
         <AisRefinementList
           v-if="props.attribute === 'company_name'"

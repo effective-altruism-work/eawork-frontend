@@ -11,10 +11,6 @@ const props = defineProps<{
   mt?: number | string;
   countBg?: string;
 }>();
-
-// function log(v: any) {
-//   console.log(v);
-// }
 </script>
 
 <template>
