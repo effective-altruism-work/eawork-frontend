@@ -240,6 +240,7 @@ interface RouteState {
                   <JobCard
                     v-if="state.jobFromUrlQuery.value"
                     :job="state.jobFromUrlQuery.value"
+                    :jobFromURLQuery="true"
                     :is-expanded="true"
                     :is-missing-algolia-context="true"
                     @card-expanded="
