@@ -64,7 +64,7 @@ function isCurrentNode(node: Node) {
 
 <template>
   <CFlex direction="row" align="center" justify="space-between" py="2">
-    <CLink is-external href="https://80000">
+    <CLink is-external href="https://80000hours.org/">
       <chakra.img w="55px" mb="px" src="/80k-logo.png" />
     </CLink>
 
