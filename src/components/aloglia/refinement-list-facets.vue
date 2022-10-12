@@ -34,7 +34,7 @@ function shortenTagName(tagName: string) {
       <CText mt="1px" :_hover="{ color: 'blue.500' }">
         <ais-highlight v-if="props.searchable" attribute="item" :hit="item" />
         <span v-else>
-          {{ shortenTagName(item.value) }}
+          {{ shortenTagName(item.label) }}
         </span>
         <CBadge
           ml="2"
