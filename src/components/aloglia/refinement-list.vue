@@ -43,6 +43,10 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
   }
   return items;
 }
+
+function log(i) {
+  console.log(i);
+}
 </script>
 
 <template>
@@ -79,13 +83,47 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
           bg="white"
         />
 
-        <!-- bonus fellow we sneak in one time -->
-        <AlgoliaToggle
+        <!-- REMOTE bonus fellow we sneak in -->
+        <!-- this toggles showing all jobs with a location type of 'remote' -->
+        <!-- which helpfully captures all the "Remote, Global" and "Remote, <country>" jobs -->
+        <AisRefinementList
+          v-if="props.attribute === 'tags_country'"
+          attribute="tags_location_type"
+        >
+          <template v-slot="{ items, refine }">
+            <chakra.ul mt="px">
+              <RefinementListFacets
+                :items="items"
+                :refine="refine"
+                :searchable="false"
+                :count-bg="props.countBg"
+              />
+            </chakra.ul>
+          </template>
+        </AisRefinementList>
+
+        <!-- bonus fellow we sneak inside the company_name section -->
+        <AisRefinementList
           v-if="props.attribute === 'company_name'"
           attribute="company_is_recommended_org"
-          :count-bg="props.countBg"
-          label="Top recommended orgs only"
-        />
+        >
+          <template v-slot="{ items, refine }">
+            <chakra.ul mt="px">
+              <!-- at present we just want to include an for top organizations only, not an option for bottom orgs only -->
+              <RefinementListFacets
+                :items="
+                  filterFacetValuesIfNeeded(
+                    items.filter((i) => i.value !== 'false'),
+                    'other',
+                  ).map((i) => ({ ...i, label: 'Top organisations only' }))
+                "
+                :refine="refine"
+                :searchable="false"
+                :count-bg="props.countBg"
+              />
+            </chakra.ul>
+          </template>
+        </AisRefinementList>
 
         <CText
           v-if="props.attribute === 'tags_area'"
