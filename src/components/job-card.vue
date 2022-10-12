@@ -82,6 +82,7 @@ function onCardClick() {
 </script>
 
 <template>
+  <!-- CBox won't cooperate with refs, thus the div wrapper -->
   <div ref="cardRef">
     <CBox
       v-if="!props.isHidden"

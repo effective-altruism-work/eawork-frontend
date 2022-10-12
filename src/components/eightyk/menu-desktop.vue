@@ -143,6 +143,7 @@ function onNodeClick(event, node) {
                       v-for="childNode in childCategory.children"
                       :key="childNode.label"
                       :href="childNode.url"
+                      color="gray.900"
                       mb="1"
                     >
                       {{ childNode.label }}
