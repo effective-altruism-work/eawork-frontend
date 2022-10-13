@@ -43,10 +43,6 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
   }
   return items;
 }
-
-function log(i) {
-  console.log(i);
-}
 </script>
 
 <template>

@@ -24,8 +24,6 @@ const props = defineProps<{
   isMissingAlgoliaContext?: boolean;
 }>();
 
-console.log(props.job.company_name);
-
 const emit = defineEmits<{
   (event: "cardExpanded"): void;
   (event: "cardCollapsed"): void;
