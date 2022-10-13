@@ -1,7 +1,7 @@
 export const msg = {
   error:
     "An error occurred, our team has been notified. Please try again or contact support at support@eawork.org.",
-};
+} as const;
 export namespace urls {
   export const jobs = {
     post: "/jobs/post",
@@ -28,4 +28,4 @@ export const breakpointsChakra = {
 export const strings = {
   error: msg.error,
   remoteLiteral: "Global",
-};
+} as const;
