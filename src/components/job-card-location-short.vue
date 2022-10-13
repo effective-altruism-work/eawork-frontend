@@ -10,17 +10,21 @@ const props = defineProps<{
 }>();
 
 const comp = useComp(() => {
-  const isShouldShowCity =
+  const isJobRemote = props.job.tags_location_type.includes("Remote");
+  const remoteLocation = isJobRemote
+    ? props.job.tags_location_80k.find((s) => s.toLowerCase().includes("remote"))
+    : "";
+
+  const showCity =
     props.job.tags_city.length && !props.job.tags_city.includes(strings.remoteLiteral);
-  const isShouldShowCountry =
-    !isShouldShowCity && !props.job.tags_country.includes(strings.remoteLiteral);
-  const isJobGlobal = props.job.tags_country.includes(strings.remoteLiteral);
-  const isJobGlobalOnly = !isShouldShowCity && !isShouldShowCountry && isJobGlobal;
+  const isRemoteOnly = !showCity;
+  const showCountry = !showCity && !isJobRemote;
+
   return {
-    isJobGlobal,
-    isJobGlobalOnly,
-    isShouldShowCity,
-    isShouldShowCountry,
+    remoteLocation,
+    isRemoteOnly,
+    isShouldShowCity: showCity,
+    isShouldShowCountry: showCountry,
     cities: props.job.tags_city.map((city) =>
       city.replace("Washington, DC metro area", "Washington, DC"),
     ),
@@ -42,14 +46,14 @@ const comp = useComp(() => {
     />
 
     <CFlex :no-of-lines="1">
-      <CFlex v-if="comp.isJobGlobal" align="center" display="inline" gap="3" color="#9BADB6">
-        <CText display="inline">Global</CText>
+      <CFlex v-if="comp.remoteLocation" align="center" display="inline" color="#9BADB6">
+        <CText display="inline">{{ comp.remoteLocation }}</CText>
       </CFlex>
 
       <CText
         mx="2"
         display="inline"
-        v-if="comp.isJobGlobal && !comp.isJobGlobalOnly"
+        v-if="comp.remoteLocation && !comp.isRemoteOnly"
         color="#9BADB6"
       >
         ▪
@@ -61,7 +65,7 @@ const comp = useComp(() => {
         >
       </CFlex>
 
-      <CFlex v-if="comp.isShouldShowCountry" align="center" gap="3" color="#9BADB6">
+      <CFlex v-if="comp.isShouldShowCountry" align="center" color="#9BADB6">
         <CText v-for="(country, index) in props.job.tags_country" :key="country">
           <CText mx="2" display="inline" v-if="index">▪</CText>{{ country }}</CText
         >

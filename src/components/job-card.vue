@@ -61,10 +61,15 @@ onMounted(() => {
 
 const comp = useComp(() => {
   const activeShadowBorder = "inset 0 0 0 1px #E1E6EA";
+  const isJobRemote = props.job.tags_location_type.includes("Remote");
+  const remoteLocation = isJobRemote
+    ? props.job.tags_location_80k.find((s) => s.toLowerCase().includes("remote"))
+    : "";
+
   return {
     space: 6,
     activeShadowBorder,
-    isJobGlobal: props.job.tags_country.includes("Global"),
+    remoteLocation,
     activeShadow: `0 8px 24px 0 #9badb629, ${activeShadowBorder}`,
     isHasLocation: props.job.tags_city.length || props.job.tags_country.length,
   };
@@ -223,14 +228,11 @@ function onCardClick() {
                   :align="{ lg: 'center' }"
                   :gap="{ base: 'px', lg: 3 }"
                 >
-                  <CFlex v-if="props.job.tags_country.includes(strings.remoteLiteral)">
-                    {{ strings.remoteLiteral }}
+                  <CFlex v-if="comp.remoteLocation">
+                    {{ comp.remoteLocation }}
                   </CFlex>
                   <CBox
-                    v-if="
-                      props.job.tags_country.includes(strings.remoteLiteral) &&
-                      props.job.tags_country.length !== 1
-                    "
+                    v-if="comp.remoteLocation && props.job.tags_country.length !== 1"
                     :display="{ base: 'none', lg: 'block' }"
                     w="3px"
                     h="3px"
@@ -256,7 +258,7 @@ function onCardClick() {
                   </CFlex>
 
                   <CFlex
-                    v-if="!job.tags_city.length"
+                    v-if="!job.tags_city.length && !comp.remoteLocation"
                     v-for="(country, index) in job.tags_country"
                     :key="country"
                   >

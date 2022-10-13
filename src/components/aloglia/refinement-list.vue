@@ -115,7 +115,7 @@ function log(i) {
                   filterFacetValuesIfNeeded(
                     items.filter((i) => i.value !== 'false'),
                     'other',
-                  ).map((i) => ({ ...i, label: 'Top organisations only' }))
+                  ).map((i) => ({ ...i, label: 'Top recommended orgs' }))
                 "
                 :refine="refine"
                 :searchable="false"
@@ -129,7 +129,7 @@ function log(i) {
           v-if="props.attribute === 'tags_area'"
           mt="3"
           font-weight="bold"
-          font-size="13px"
+          font-size="15px"
         >
           Top recommended problems
         </CText>
@@ -145,7 +145,7 @@ function log(i) {
         </chakra.ul>
 
         <CBox v-if="props.attribute === 'tags_area'">
-          <CText mt="3" font-weight="bold" font-size="13px"> Other pressing problems </CText>
+          <CText mt="3" font-weight="bold" font-size="15px"> Other pressing problems </CText>
 
           <chakra.ul mt="1px">
             <li v-if="isFromSearch && !items.length">No results.</li>
