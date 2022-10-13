@@ -41,24 +41,31 @@ const comp = useComp(() => {
       style="margin-bottom: 1px"
     />
 
-    <CFlex v-if="comp.isJobGlobal" align="center" gap="3" color="#9BADB6">
-      <CText>Global</CText>
-    </CFlex>
+    <CFlex :no-of-lines="1">
+      <CFlex v-if="comp.isJobGlobal" align="center" display="inline" gap="3" color="#9BADB6">
+        <CText display="inline">Global</CText>
+      </CFlex>
 
-    <CBox
-      v-if="comp.isJobGlobal && !comp.isJobGlobalOnly"
-      w="3px"
-      h="3px"
-      mx="3"
-      bg="gray.300"
-    />
+      <CText
+        mx="2"
+        display="inline"
+        v-if="comp.isJobGlobal && !comp.isJobGlobalOnly"
+        color="#9BADB6"
+      >
+        ▪
+      </CText>
 
-    <CFlex v-if="comp.isShouldShowCity" align="center" gap="3" color="#9BADB6">
-      <CText>{{ comp.cities[0] }}</CText>
-    </CFlex>
+      <CFlex display="inline" v-if="comp.isShouldShowCity" align="center" color="#9BADB6">
+        <CText display="inline" v-for="(city, index) of comp.cities" :key="city"
+          ><CText mx="2" display="inline" v-if="index">▪</CText>{{ city }}</CText
+        >
+      </CFlex>
 
-    <CFlex v-if="comp.isShouldShowCountry" align="center" gap="3" color="#9BADB6">
-      <CText>{{ props.job.tags_country[0] }}</CText>
+      <CFlex v-if="comp.isShouldShowCountry" align="center" gap="3" color="#9BADB6">
+        <CText v-for="(country, index) in props.job.tags_country" :key="country">
+          <CText mx="2" display="inline" v-if="index">▪</CText>{{ country }}</CText
+        >
+      </CFlex>
     </CFlex>
   </CFlex>
 </template>
