@@ -13,6 +13,7 @@ import { theme } from "~/styles/theme";
 import { useComp } from "~/utils/structs";
 import { JobAlgolia } from "~/utils/types";
 import { tracking } from "~/utils/tracking";
+import JobHoverText from "~/components/job-hover-text.vue";
 
 const props = defineProps<{
   job: JobAlgolia;
@@ -22,6 +23,8 @@ const props = defineProps<{
   isHidden?: boolean;
   isMissingAlgoliaContext?: boolean;
 }>();
+
+console.log(props.job.company_name);
 
 const emit = defineEmits<{
   (event: "cardExpanded"): void;
@@ -145,26 +148,10 @@ function onCardClick() {
                   scale="1.1"
                   style="margin-bottom: 1px; color: #9badb6; margin-right: 2px"
                 />
-                <CBox
+                <JobHoverText
                   v-if="state.isStarHovering.value"
-                  position="absolute"
-                  bottom="0"
-                  left="0"
-                >
-                  <CBox
-                    margin="4"
-                    padding="6"
-                    background-color="rgba(255, 255, 255, 0.95)"
-                    width="350px"
-                    border-radius="md"
-                    shadow="inset 0 0 0 1px #E1E6EA"
-                  >
-                    This is one of our
-                    <CLink href="https://80000hours.org/job-board/top-orgs/"
-                      >top recommended organisations</CLink
-                    >.
-                  </CBox>
-                </CBox>
+                  :companyName="job.company_name"
+                />
               </CBox>
               <!-- huh -->
               <span v-if="props.isMissingAlgoliaContext">{{ job.company_name }}</span>
