@@ -53,22 +53,27 @@ async function createJobAlert() {
       state.isSuccess.value = true;
 
       const separated: { [key: string]: string[] } = {};
-      for (const subarr of props.queryJson.facetFilters) {
-        let prefix = subarr[0].substring(0, subarr[0].indexOf(":"));
 
-        switch (prefix) {
-          case "tags_area":
-            separated["tags_area"] = subarr;
-            break;
-          case "tags_role_type":
-            separated["tags_role_type"] = subarr;
-            break;
-          case "tags_city":
-            separated["tags_city"] = subarr;
-            break;
-          case "tags_country":
-            separated["tags_country"] = subarr;
-            break;
+      if (props?.queryJson?.facetFilters) {
+        for (const subarr of props.queryJson.facetFilters) {
+          const prefix = subarr[0].substring(0, subarr[0].indexOf(":"));
+
+          switch (prefix) {
+            case "tags_area":
+              separated["tags_area"] = subarr;
+              break;
+            case "tags_role_type":
+              separated["tags_role_type"] = subarr;
+              break;
+            case "tags_city":
+              separated["tags_city"] = subarr;
+              break;
+            case "tags_country":
+              separated["tags_country"] = subarr;
+              break;
+            default:
+              break;
+          }
         }
       }
 
@@ -77,8 +82,8 @@ async function createJobAlert() {
         problemArea: separated?.tags_area || null,
         roleType: separated?.tags_role_type || null,
         ...tracking.get80kLocations(
-          separated?.tags_city || null,
-          separated?.tags_country || null,
+          "tags_city" in separated ? separated.tags_city : [],
+          "tags_country" in separated ? separated.tags_country : [],
         ),
       });
     } else {
