@@ -47,6 +47,7 @@ function format(refinement: {
           gap="2"
         >
           <CButton
+            v-if="refinement.value !== 'Multiple experience levels'"
             :href="createURL(refinement)"
             @click="() => item.refine(refinement)"
             variant="outline"

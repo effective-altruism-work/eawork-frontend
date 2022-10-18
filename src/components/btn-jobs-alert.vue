@@ -162,7 +162,13 @@ async function createJobAlert() {
         font-size="xs"
       >
         <CText v-if="props.queryJson.query">Query: {{ props.queryJson.query }}</CText>
-        <CText v-for="filter in props.queryJson?.facetFilters.flat() || []" :key="filter">
+        <CText
+          v-for="filter in props.queryJson?.facetFilters
+            .flat()
+            .filter((f) => !f.includes('Multiple experience levels')) || // don't need to display this
+          []"
+          :key="filter"
+        >
           {{ filter.replace(/tags_\w*:/, "Filter: ") }}
         </CText>
       </CText>
