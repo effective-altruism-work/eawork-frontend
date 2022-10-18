@@ -5,8 +5,6 @@ import axios from "axios";
 import { onMounted, ref } from "vue";
 import RefinementListFacets from "~/components/aloglia/refinement-list-facets.vue";
 import { TagDjango, TagTypeName } from "~/utils/types";
-import NumericMenu from "~/components/aloglia/numeric-menu.vue";
-import AlgoliaToggle from "./algolia-toggle.vue";
 
 const props = defineProps<{
   label: string;
@@ -51,7 +49,34 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
       {{ props.label }}
     </CFormLabel>
 
+    <!-- EXPERIENCE -->
     <AisRefinementList
+      v-if="props.attribute == 'tags_exp_required'"
+      :attribute="props.attribute"
+      :searchable="props.searchable"
+      :limit="props.limit"
+      :show-more-limit="props.showMoreLimit"
+    >
+      <template v-slot="{ items, refine }">
+        <chakra.ul mt="px">
+          <RefinementListFacets
+            :searchable="props.searchable"
+            :items="items.filter((item) => item.value !== 'Multiple experience levels')"
+            :refine="
+              (currItem) => {
+                refine(currItem);
+                refine('Multiple experience levels'); // also include these
+              }
+            "
+            :count-bg="props.countBg"
+          />
+        </chakra.ul>
+      </template>
+    </AisRefinementList>
+
+    <!-- MAIN -->
+    <AisRefinementList
+      v-else
       :attribute="props.attribute"
       :searchable="props.searchable"
       :limit="props.limit"
