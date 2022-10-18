@@ -10,7 +10,6 @@ const props = defineProps<{
   countBg?: string;
 }>();
 
-console.log(props.items);
 function shortenTagName(tagName: string) {
   switch (tagName) {
     case "Biosecurity & pandemic preparedness":

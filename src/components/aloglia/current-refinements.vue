@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { CButton, CFlex, CIcon } from "@chakra-ui/vue-next";
 import { formatDistance } from "date-fns";
+import { AlgoliaFilterItem } from "~~/src/utils/types";
 
 function format(refinement: {
   attribute: string;
@@ -28,6 +29,38 @@ function format(refinement: {
 
   return refinement.label;
 }
+
+type Refinement = {
+  attribute: string;
+  type: string;
+  value: string;
+  label: string;
+  count: number;
+  exhaustive: boolean;
+};
+function carefulRefine(
+  item: {
+    attribute: string;
+    refine: (r: Refinement) => any;
+    refinements: Refinement[];
+  },
+  refinement: Refinement,
+) {
+  const refinementIndex = item.refinements.findIndex((r) => r.value === refinement.value);
+
+  // if we are deleting the last visible experience tag, we also want to delete the invisible Multi-Experience tag.
+  if (
+    item.attribute === "tags_exp_required" &&
+    item.refinements.length === 2 &&
+    refinementIndex !== -1
+  ) {
+    const multiExpIndex = refinementIndex === 0 ? 1 : 0;
+    const multiExpRef = item.refinements[multiExpIndex];
+    item.refine(multiExpRef);
+  }
+
+  item.refine(refinement);
+}
 </script>
 
 <template>
@@ -49,7 +82,7 @@ function format(refinement: {
           <CButton
             v-if="refinement.value !== 'Multiple experience levels'"
             :href="createURL(refinement)"
-            @click="() => item.refine(refinement)"
+            @click="() => carefulRefine(item, refinement)"
             variant="outline"
             size="xs"
             font-weight="normal"
