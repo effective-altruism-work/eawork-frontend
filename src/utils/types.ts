@@ -78,3 +78,10 @@ export interface Comment {
   updated_at: string;
   created_at: string;
 }
+
+export type AlgoliaFilterItem = {
+  value: string;
+  label: string;
+  count: number;
+  isRefined: boolean;
+};

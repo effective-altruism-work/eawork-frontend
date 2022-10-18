@@ -4,7 +4,7 @@ import { CBox, CText, CButton, CInput, CFormLabel } from "@chakra-ui/vue-next";
 import axios from "axios";
 import { onMounted, ref } from "vue";
 import RefinementListFacets from "~/components/aloglia/refinement-list-facets.vue";
-import { TagDjango, TagTypeName } from "~/utils/types";
+import { TagDjango, TagTypeName, AlgoliaFilterItem } from "~/utils/types";
 
 const props = defineProps<{
   label: string;
@@ -41,6 +41,28 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
   }
   return items;
 }
+
+function carefulRefine(
+  basicRefine: (x: AlgoliaFilterItem | string) => void,
+  item: AlgoliaFilterItem,
+  items: AlgoliaFilterItem[],
+) {
+  const howManyRefinedBefore = items.reduce(
+    (acc, currItem) => (currItem.isRefined ? acc + 1 : acc),
+    0,
+  );
+
+  basicRefine(item);
+
+  const howManyRefinedAfter = items.reduce(
+    (acc, currItem) => (currItem.isRefined ? acc + 1 : acc),
+    0,
+  );
+
+  if (howManyRefinedBefore === 0 || howManyRefinedAfter === 0) {
+    basicRefine("Multiple experience levels"); // only trigger this when we move between 0 and 1 filters.
+  }
+}
 </script>
 
 <template>
@@ -65,8 +87,7 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
             :items="items.filter((item) => item.value !== 'Multiple experience levels')"
             :refine="
               (currItem) => {
-                refine(currItem);
-                refine('Multiple experience levels'); // also include these
+                carefulRefine(refine, currItem, items);
               }
             "
             :count-bg="props.countBg"

@@ -3,7 +3,6 @@ import { CBox } from "@chakra-ui/vue-next";
 import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns";
 import NumericMenu from "~/components/aloglia/numeric-menu.vue";
 import RefinementList from "~/components/aloglia/refinement-list.vue";
-import RefinementListFacets from "~/components/aloglia/refinement-list-facets.vue";
 
 const props = defineProps<{
   countBg?: string;
