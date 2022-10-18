@@ -130,7 +130,7 @@ async function createJobAlert() {
     >
       <CFlex justify="space-between">
         <CText v-if="props.queryJson" w="fit-content" font-size="sm">
-          Subscribe to new jobs that match your query:
+          Subscribe to new jobs that match your query
         </CText>
         <CBox v-else>
           <CText w="fit-content">Subscribe to all new job posts.</CText>
@@ -159,7 +159,7 @@ async function createJobAlert() {
         py="3"
         px="4"
         mt="-1"
-        font-size="xs"
+        font-size="sm"
       >
         <CText v-if="props.queryJson.query">Query: {{ props.queryJson.query }}</CText>
         <CText
@@ -177,11 +177,12 @@ async function createJobAlert() {
         v-model="state.email.value"
         type="email"
         name="email"
+        font-size="md"
         placeholder="joe@example.com"
       />
 
       <CFlex justify="space-between">
-        <CText font-size="10px" max-w="200px" line-height="1.3" color="gray.600">
+        <CText font-size="12px" max-w="200px" line-height="1.3" color="gray.600">
           You will receive updates daily (if there are new roles that match your query) and
           you can unsubscribe at any time
         </CText>
