@@ -1,19 +1,16 @@
 <script setup lang="ts">
 import { CText, CBadge, chakra } from "@chakra-ui/vue-next";
 import Checkbox from "~/components/chakra/checkbox.vue";
+import { AlgoliaFilterItem } from "~~/src/utils/types";
 
 const props = defineProps<{
-  items: Array<{
-    value: string;
-    label: string;
-    count: number;
-    isRefined: boolean;
-  }>;
+  items: AlgoliaFilterItem[];
   searchable: boolean;
   refine: (string) => void;
   countBg?: string;
 }>();
 
+console.log(props.items);
 function shortenTagName(tagName: string) {
   switch (tagName) {
     case "Biosecurity & pandemic preparedness":

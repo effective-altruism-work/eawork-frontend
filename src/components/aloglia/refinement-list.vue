@@ -4,9 +4,7 @@ import { CBox, CText, CButton, CInput, CFormLabel } from "@chakra-ui/vue-next";
 import axios from "axios";
 import { onMounted, ref } from "vue";
 import RefinementListFacets from "~/components/aloglia/refinement-list-facets.vue";
-import { TagDjango, TagTypeName } from "~/utils/types";
-import NumericMenu from "~/components/aloglia/numeric-menu.vue";
-import AlgoliaToggle from "./algolia-toggle.vue";
+import { TagDjango, TagTypeName, AlgoliaFilterItem } from "~/utils/types";
 
 const props = defineProps<{
   label: string;
@@ -43,6 +41,28 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
   }
   return items;
 }
+
+function carefulRefine(
+  basicRefine: (x: AlgoliaFilterItem | string) => void,
+  item: AlgoliaFilterItem,
+  items: AlgoliaFilterItem[],
+) {
+  const howManyRefinedBefore = items.reduce(
+    (acc, currItem) => (currItem.isRefined ? acc + 1 : acc),
+    0,
+  );
+
+  basicRefine(item);
+
+  const howManyRefinedAfter = items.reduce(
+    (acc, currItem) => (currItem.isRefined ? acc + 1 : acc),
+    0,
+  );
+
+  if (howManyRefinedBefore === 0 || howManyRefinedAfter === 0) {
+    basicRefine("Multiple experience levels"); // only trigger this when we move between 0 and 1 filters.
+  }
+}
 </script>
 
 <template>
@@ -51,7 +71,34 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
       {{ props.label }}
     </CFormLabel>
 
+    <!-- EXPERIENCE -->
     <AisRefinementList
+      v-if="props.attribute == 'tags_exp_required'"
+      :attribute="props.attribute"
+      :searchable="props.searchable"
+      :limit="props.limit"
+      :sort-by="['name:asc']"
+      :show-more-limit="props.showMoreLimit"
+    >
+      <template v-slot="{ items, refine }">
+        <chakra.ul mt="px">
+          <RefinementListFacets
+            :searchable="props.searchable"
+            :items="items.filter((item) => item.value !== 'Multiple experience levels')"
+            :refine="
+              (currItem) => {
+                carefulRefine(refine, currItem, items);
+              }
+            "
+            :count-bg="props.countBg"
+          />
+        </chakra.ul>
+      </template>
+    </AisRefinementList>
+
+    <!-- MAIN -->
+    <AisRefinementList
+      v-else
       :attribute="props.attribute"
       :searchable="props.searchable"
       :limit="props.limit"
