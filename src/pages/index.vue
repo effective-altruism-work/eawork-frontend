@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/vue-next";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import algoliasearch from "algoliasearch";
-import { onBeforeMount, onMounted, ref, watch } from "vue";
+import { onBeforeMount, onMounted, ref, watch, onBeforeUnmount } from "vue";
 import CurrentRefinements from "~/components/aloglia/current-refinements.vue";
 import Refinements from "~/components/aloglia/refinements.vue";
 import BtnJobsAlert from "~/components/btn-jobs-alert.vue";
@@ -53,12 +53,32 @@ const comp = useComp(() => ({
   space: 6,
 }));
 
+async function loadJobIfSpecified() {
+  const url = new URL(window.location as any);
+  const jobPkCurrent = url.searchParams.get("jobPk");
+  if (jobPkCurrent) {
+    state.jobPkCurrent.value = Number(jobPkCurrent);
+    state.jobFromUrlQuery.value = await state.searchIndex.getObject(jobPkCurrent);
+  }
+}
+
 onBeforeMount(async () => {
   await tracking.init(hooks.config.public.segmentId);
 });
 
+let timeout: any = null;
+onMounted(() => {});
+
 onMounted(async () => {
+  timeout = setInterval(() => {
+    tracking.sendEvent("Stayed on page", {});
+  }, 30000);
+
   await loadJobIfSpecified();
+});
+
+onBeforeUnmount(() => {
+  timeout(); // clear
 });
 
 watch(state.jobPkCurrent, (jobPkCurrentNew: number | null) => {
@@ -75,15 +95,6 @@ watch(state.jobPkCurrent, (jobPkCurrentNew: number | null) => {
 useHead({
   title: "Job board",
 });
-
-async function loadJobIfSpecified() {
-  const url = new URL(window.location as any);
-  const jobPkCurrent = url.searchParams.get("jobPk");
-  if (jobPkCurrent) {
-    state.jobPkCurrent.value = Number(jobPkCurrent);
-    state.jobFromUrlQuery.value = await state.searchIndex.getObject(jobPkCurrent);
-  }
-}
 
 function saveQueryJson(uiState: {
   query: string;

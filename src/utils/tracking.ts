@@ -18,6 +18,27 @@ export namespace tracking {
     }
   }
 
+  function get80KAction(action: Action): Action80k {
+    switch (action) {
+      case "viewed":
+        return "Viewed vacancy description";
+      case "url_external clicked":
+        return "Viewed vacancy details";
+      case "company_url clicked":
+        return "Viewed organisation homepage";
+      case "company_career_page_url clicked":
+        return "Viewed organisation vacancies page";
+      case "company_ea_forum_url clicked":
+        return "Viewed organisation ea forum page";
+      case "alert sign up":
+        return "Signed up for email alerts";
+      case "Stayed on page":
+        return "Stayed on page";
+      default:
+        return action;
+    }
+  }
+
   export async function init(writeKey: string) {
     [analytics, context] = await AnalyticsBrowser.load({ writeKey });
   }
@@ -37,6 +58,8 @@ export namespace tracking {
         propsExtra = { label: job.url_external };
         break;
       }
+      default:
+        break;
     }
     await analytics.track(eventProps.action, { ...eventProps, ...propsExtra });
   }
@@ -49,6 +72,13 @@ export namespace tracking {
     } catch (err) {
       captureEvent(err);
     }
+  }
+
+  export function get80kLocations(tags_city: string[] = [], tags_country: string[] = []) {
+    return {
+      locationList: [...tags_country, ...tags_city],
+      location: [...tags_country, ...tags_city].join(separator),
+    };
   }
 
   function get80kJobProps(job: JobAlgolia, action: Action): JobEvent80k {
@@ -89,30 +119,17 @@ export namespace tracking {
           label: job.company_career_page_url,
           ...props,
         };
-    }
-  }
-
-  export function get80kLocations(tags_city: string[] = [], tags_country: string[] = []) {
-    return {
-      locationList: [...tags_country, ...tags_city],
-      location: [...tags_country, ...tags_city].join(separator),
-    };
-  }
-
-  function get80KAction(action: Action) {
-    switch (action) {
-      case "viewed":
-        return "Viewed vacancy description";
-      case "url_external clicked":
-        return "Viewed vacancy details";
-      case "company_url clicked":
-        return "Viewed organisation homepage";
-      case "company_career_page_url clicked":
-        return "Viewed organisation vacancies page";
-      case "company_ea_forum_url clicked":
-        return "Viewed organisation ea forum page"
-      case "alert sign up":
-        return "Signed up for email alerts";
+      case "Stayed on page":
+        return {
+          action: get80KAction(action),
+          label: "Stayed on page",
+          ...props,
+        };
+      default:
+        return {
+          action,
+          label: props.label,
+        };
     }
   }
 
@@ -138,18 +155,21 @@ export namespace tracking {
     | "company_career_page_url clicked"
     | "company_ea_forum_url clicked"
     | "company_url clicked"
-    | "alert sign up";
+    | "alert sign up"
+    | "Stayed on page";
 
   type Action80k =
     | "Viewed vacancy details"
     | "Viewed vacancy description"
     | "Viewed organisation homepage"
     | "Viewed organisation vacancies page"
+    | "Viewed organisation ea forum page"
     | "Searched job board"
     | "Results found"
     | "No results found"
     | "Signed up for email alerts"
     | "Errors"
+    | "Stayed on page"
     | "Warning";
 
   type CompanyExternalURL = string;
