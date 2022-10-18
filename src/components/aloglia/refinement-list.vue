@@ -44,7 +44,8 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
 
 function carefulRefine(
   basicRefine: (x: AlgoliaFilterItem | string) => void,
-  item: AlgoliaFilterItem,
+  currItemValue: string,
+
   items: AlgoliaFilterItem[],
 ) {
   const howManyRefinedBefore = items.reduce(
@@ -52,14 +53,13 @@ function carefulRefine(
     0,
   );
 
-  basicRefine(item);
+  basicRefine(currItemValue);
 
-  const howManyRefinedAfter = items.reduce(
-    (acc, currItem) => (currItem.isRefined ? acc + 1 : acc),
-    0,
-  );
+  const currItem = items.find((i) => i.value === currItemValue);
+  const isRemoval = howManyRefinedBefore === 2 && currItem.isRefined;
+  
+  if (howManyRefinedBefore === 0 || isRemoval) {
 
-  if (howManyRefinedBefore === 0 || howManyRefinedAfter === 0) {
     basicRefine("Multiple experience levels"); // only trigger this when we move between 0 and 1 filters.
   }
 }
