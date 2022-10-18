@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<!-- <script lang="ts" setup>
 import BalloonBlockEditor from "@ckeditor/ckeditor5-build-balloon-block";
 import CKEditor from "@ckeditor/ckeditor5-vue";
 import { ref, computed } from "vue";
@@ -387,4 +387,5 @@ const value = computed({
   background: hsl(0, 0%, 87%);
   border: 0;
 }
-</style>
+</style> -->
+<template><CText>Coming soon...</CText></template>
