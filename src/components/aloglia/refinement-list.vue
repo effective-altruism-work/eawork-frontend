@@ -55,6 +55,7 @@ function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other")
       :attribute="props.attribute"
       :searchable="props.searchable"
       :limit="props.limit"
+      :sort-by="['name:asc']"
       :show-more-limit="props.showMoreLimit"
     >
       <template v-slot="{ items, refine }">
