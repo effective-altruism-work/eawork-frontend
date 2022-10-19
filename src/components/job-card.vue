@@ -135,6 +135,7 @@ function onCardClick() {
               :line-height="[1.3, null, 'none']"
               position="relative"
               :left="job?.company_is_recommended_org ? '-3px' : ''"
+
               :font-size="{ base: 'sm', lg: 'md' }"
             >
               <CBox
