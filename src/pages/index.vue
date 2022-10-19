@@ -25,6 +25,7 @@ import { useComp, useHooks } from "~/utils/structs";
 import { tracking } from "~/utils/tracking";
 import { JobAlgolia } from "~/utils/types";
 import { OhVueIcon } from "oh-vue-icons";
+import riveted from "~/utils/riveted";
 
 const hooks = useHooks(() => {
   const config = useRuntimeConfig();
@@ -64,12 +65,20 @@ async function loadJobIfSpecified() {
 
 onBeforeMount(async () => {
   await tracking.init(hooks.config.public.segmentId);
-});
 
-let timeout: any = null;
+  const url = new URL(window.location.href);
+  const source = url.searchParams.get("utm_source");
+  const campaign = url.searchParams.get("utm_campaign");
+  tracking.page("Job Board | Home", { source, campaign });
+});
 
 onMounted(async () => {
   await loadJobIfSpecified();
+});
+
+// track page-stays
+onMounted(() => {
+  riveted();
 });
 
 // onMounted(async () => {
@@ -82,10 +91,6 @@ onMounted(async () => {
 //   }),
 // );
 // });
-
-onBeforeUnmount(() => {
-  timeout(); // clear
-});
 
 watch(state.jobPkCurrent, (jobPkCurrentNew: number | null) => {
   const url = new URL(window.location as any);

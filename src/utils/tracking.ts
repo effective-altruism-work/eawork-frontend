@@ -74,6 +74,9 @@ export namespace tracking {
     }
   }
 
+  export function page(name: string, data: { [key: string]: any }) {
+    analytics.page("", name, data);
+  }
   export function get80kLocations(tags_city: string[] = [], tags_country: string[] = []) {
     return {
       locationList: [...tags_country, ...tags_city],
