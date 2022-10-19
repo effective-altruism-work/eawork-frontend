@@ -110,7 +110,7 @@ async function createJobAlert() {
 
   <VueFinalModal
     v-model="state.isShowModal.value"
-    :lock-scroll="false"
+    :lock-scroll="true"
     :click-to-close="true"
     :esc-to-close="true"
   >
@@ -129,11 +129,11 @@ async function createJobAlert() {
       border-radius="8"
     >
       <CFlex justify="space-between">
-        <CText v-if="props.queryJson" w="fit-content" font-size="sm">
+        <CText v-if="props.queryJson" w="fit-content" font-size="lg">
           Subscribe to new jobs that match your query
         </CText>
         <CBox v-else>
-          <CText w="fit-content">Subscribe to all new job posts.</CText>
+          <CText w="fit-content" font-size="lg">Subscribe to all new job posts</CText>
           <CText w="fit-content" color="gray.500" font-size="sm"
             >(because your search query is unspecified)</CText
           >
@@ -146,6 +146,7 @@ async function createJobAlert() {
           border-color="blue.500"
           border-radius="5"
           px="1"
+          m="2"
           h="fit-content"
         >
           BETA
@@ -159,7 +160,7 @@ async function createJobAlert() {
         py="3"
         px="4"
         mt="-1"
-        font-size="sm"
+        font-size="md"
       >
         <CText v-if="props.queryJson.query">Query: {{ props.queryJson.query }}</CText>
         <CText
@@ -169,7 +170,11 @@ async function createJobAlert() {
           []"
           :key="filter"
         >
-          {{ filter.replace("company_is_recommended_org:true", "Filter: Recommended orgs").replace(/tags_\w*:/, "Filter: ") }}
+          {{
+            filter
+              .replace("company_is_recommended_org:true", "Filter: Recommended orgs")
+              .replace(/tags_\w*:/, "Filter: ")
+          }}
         </CText>
       </CText>
 
@@ -193,6 +198,7 @@ async function createJobAlert() {
           max-w="fit-content"
           align-self="flex-end"
           color-scheme="blue"
+          font-size="lg"
         >
           Subscribe
         </CButton>
