@@ -94,6 +94,7 @@ onMounted(async () => {
 // track page-stays
 onMounted(() => {
   riveted();
+
 });
 
 watch(state.jobPkCurrent, (jobPkCurrentNew: number | null) => {
