@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useHead, useRuntimeConfig } from "#app";
+import { useHead, useRuntimeConfig, useRoute, useRouter } from "#app";
 import {
   CFlex,
   CHeading,
@@ -64,6 +64,14 @@ async function loadJobIfSpecified() {
   }
 }
 
+function pageTrack() {
+  const url = new URL(window.location.href);
+
+  const source = url.searchParams.get("utm_source");
+  const campaign = url.searchParams.get("utm_campaign");
+  tracking.page("Job Board | Home", { source, campaign });
+}
+
 onBeforeMount(async () => {
   const url = new URL(window.location.href);
   const params: { [key: string]: any } = {};
@@ -76,9 +84,7 @@ onBeforeMount(async () => {
 
   await tracking.init(hooks.config.public.segmentId);
 
-  const source = params["utm_source"];
-  const campaign = params["utm_campaign"];
-  tracking.page("Job Board | Home", { source, campaign });
+  pageTrack();
 });
 
 onMounted(async () => {

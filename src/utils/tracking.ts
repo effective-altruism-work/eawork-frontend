@@ -61,22 +61,27 @@ export namespace tracking {
       default:
         break;
     }
-    await analytics.track(eventProps.action, { ...eventProps, ...propsExtra });
+
+    await analytics.track(eventProps.action, {
+      ...eventProps,
+      ...propsExtra,
+    });
   }
 
   export async function sendEvent(action: Action, data: any) {
     try {
       await waitForInit();
       const action80k = get80KAction(action);
-      await analytics.track(action80k, data);
+      analytics.track(action80k, { ...data });
     } catch (err) {
       captureEvent(err);
     }
   }
 
-  export function page(name: string, data: { [key: string]: any }) {
+  export async function page(name: string, data: { [key: string]: any }) {
     analytics.page("", name, data);
   }
+
   export function get80kLocations(tags_city: string[] = [], tags_country: string[] = []) {
     return {
       locationList: [...tags_country, ...tags_city],

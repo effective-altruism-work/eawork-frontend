@@ -303,6 +303,7 @@ export default function rivetInit() {
 
   riveted.init({
     idleTimeout: 30,
+    reportInterval: 30,
     eventHandler: function (
       secondsOnPage: number,
       nonInteraction: boolean,
