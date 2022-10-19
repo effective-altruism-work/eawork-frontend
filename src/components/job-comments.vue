@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useRuntimeConfig } from "#app";
 import { CFlex, CBox, CText } from "@chakra-ui/vue-next";
-import { captureEvent } from "@sentry/hub";
+import { captureEvent } from "@sentry/vue";
 import axios from "axios";
 import { onMounted, onUpdated, ref } from "vue";
 import JobCommentChild from "~/components/job-comment-child.vue";

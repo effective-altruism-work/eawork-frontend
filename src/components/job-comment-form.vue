@@ -2,7 +2,7 @@
 import { useRuntimeConfig } from "#app";
 import { CFlex, CBox, CButton } from "@chakra-ui/vue-next";
 import { FormKitNode } from "@formkit/core";
-import { captureEvent } from "@sentry/hub";
+import { captureEvent } from "@sentry/vue";
 import axios from "axios";
 import { ref } from "vue";
 import NuxtCkeditor from "~/components/nuxt-ckeditor.vue";
