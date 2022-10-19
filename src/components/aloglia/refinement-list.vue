@@ -57,9 +57,8 @@ function carefulRefine(
 
   const currItem = items.find((i) => i.value === currItemValue);
   const isRemoval = howManyRefinedBefore === 2 && currItem.isRefined;
-  
-  if (howManyRefinedBefore === 0 || isRemoval) {
 
+  if (howManyRefinedBefore === 0 || isRemoval) {
     basicRefine("Multiple experience levels"); // only trigger this when we move between 0 and 1 filters.
   }
 }
@@ -180,6 +179,7 @@ function carefulRefine(
         <chakra.ul mt="px">
           <li v-if="isFromSearch && !items.length">No results.</li>
           <RefinementListFacets
+            :attribute="props.attribute"
             :items="filterFacetValuesIfNeeded(items, 'featured')"
             :refine="refine"
             :searchable="props.searchable"

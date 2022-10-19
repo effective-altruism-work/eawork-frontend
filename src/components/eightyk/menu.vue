@@ -5,8 +5,8 @@ import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { ref } from "vue";
 import { Node, NodeCategory, nodesSecondary } from "~/nodes";
 import { OhVueIcon } from "oh-vue-icons";
-import MenuDesktop from "~/components/eightyk/menu-desktop";
-import MenuMobile from "~/components/eightyk/menu-mobile";
+import MenuDesktop from "~/components/eightyk/menu-desktop.vue";
+import MenuMobile from "~/components/eightyk/menu-mobile.vue";
 
 const hooks = {
   breakpoints: useBreakpoints(breakpointsTailwind),

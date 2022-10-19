@@ -14,10 +14,6 @@ const comments = ref(null);
 const isNoComments = ref(false);
 const config = useRuntimeConfig();
 
-onMounted(loadComments);
-
-onUpdated(loadComments);
-
 async function loadComments(args?: { isReload?: boolean }) {
   if ((props.isShouldLoad && !comments.value) || args?.isReload) {
     try {
@@ -29,6 +25,10 @@ async function loadComments(args?: { isReload?: boolean }) {
     }
   }
 }
+
+onMounted(loadComments);
+
+onUpdated(loadComments);
 </script>
 
 <template>

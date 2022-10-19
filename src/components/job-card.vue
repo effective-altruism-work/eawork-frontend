@@ -4,7 +4,7 @@ import { CFlex, CBox, CButton, CHStack, CLink, CIcon, CText } from "@chakra-ui/v
 import { useBreakpoints } from "@vueuse/core";
 import { formatDistance, format } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import JobCardLocationShort from "~/components/job-card-location-short.vue";
 import JobCardTags from "~/components/job-card-tags.vue";
 import JobView from "~/components/job-view.vue";

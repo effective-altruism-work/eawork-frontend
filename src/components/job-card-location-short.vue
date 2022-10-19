@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CFlex, CBox, CText } from "@chakra-ui/vue-next";
+import { CFlex, CText } from "@chakra-ui/vue-next";
 import { OhVueIcon } from "oh-vue-icons";
 import { strings } from "~/constants";
 import { useComp } from "~/utils/structs";
