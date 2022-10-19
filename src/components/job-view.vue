@@ -30,10 +30,6 @@ const state = useStateVar(() => {
   };
 });
 
-onUpdated(loadJob);
-
-onMounted(loadJob);
-
 async function loadJob() {
   if (props.isVisible && !state.job.value) {
     state.job.value = await state.searchIndex.getObject(props.jobPk as string);
@@ -41,6 +37,10 @@ async function loadJob() {
     state.job.value = props.job;
   }
 }
+
+onUpdated(loadJob);
+
+onMounted(loadJob);
 
 const space = 6;
 

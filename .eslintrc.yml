@@ -42,8 +42,10 @@ rules:
   import/prefer-default-export: 0
   import/extensions: 0
   no-continue: 0 # fights my personal strong pref for left-aligned happy path.
-  unused-imports/no-unused-imports:
-    - error
+  unused-imports/no-unused-imports: 2
+  @typescript-eslint/dot-notation: 0 # doesn't matter
+  vue/no-v-text-v-html-on-component: 0 # we need this
+  vue/multi-word-component-names: 0 # "index.vue", "about.vue"...
 env:
   browser: true
   node: true

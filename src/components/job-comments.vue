@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useRuntimeConfig } from "#app";
 import { CFlex, CBox, CText } from "@chakra-ui/vue-next";
-import { captureEvent } from "@sentry/hub";
+import { captureEvent } from "@sentry/vue";
 import axios from "axios";
 import { onMounted, onUpdated, ref } from "vue";
 import JobCommentChild from "~/components/job-comment-child.vue";
@@ -14,10 +14,6 @@ const comments = ref(null);
 const isNoComments = ref(false);
 const config = useRuntimeConfig();
 
-onMounted(loadComments);
-
-onUpdated(loadComments);
-
 async function loadComments(args?: { isReload?: boolean }) {
   if ((props.isShouldLoad && !comments.value) || args?.isReload) {
     try {
@@ -29,6 +25,10 @@ async function loadComments(args?: { isReload?: boolean }) {
     }
   }
 }
+
+onMounted(loadComments);
+
+onUpdated(loadComments);
 </script>
 
 <template>

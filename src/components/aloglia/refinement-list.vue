@@ -5,6 +5,7 @@ import axios from "axios";
 import { onMounted, ref } from "vue";
 import RefinementListFacets from "~/components/aloglia/refinement-list-facets.vue";
 import { TagDjango, TagTypeName, AlgoliaFilterItem } from "~/utils/types";
+import { chakra } from "@chakra-ui/vue-next";
 
 const props = defineProps<{
   label: string;
@@ -57,9 +58,8 @@ function carefulRefine(
 
   const currItem = items.find((i) => i.value === currItemValue);
   const isRemoval = howManyRefinedBefore === 2 && currItem.isRefined;
-  
-  if (howManyRefinedBefore === 0 || isRemoval) {
 
+  if (howManyRefinedBefore === 0 || isRemoval) {
     basicRefine("Multiple experience levels"); // only trigger this when we move between 0 and 1 filters.
   }
 }
@@ -180,6 +180,7 @@ function carefulRefine(
         <chakra.ul mt="px">
           <li v-if="isFromSearch && !items.length">No results.</li>
           <RefinementListFacets
+            :attribute="props.attribute"
             :items="filterFacetValuesIfNeeded(items, 'featured')"
             :refine="refine"
             :searchable="props.searchable"

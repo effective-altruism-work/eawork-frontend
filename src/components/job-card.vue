@@ -4,7 +4,7 @@ import { CFlex, CBox, CButton, CHStack, CLink, CIcon, CText } from "@chakra-ui/v
 import { useBreakpoints } from "@vueuse/core";
 import { formatDistance, format } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import JobCardLocationShort from "~/components/job-card-location-short.vue";
 import JobCardTags from "~/components/job-card-tags.vue";
 import JobView from "~/components/job-view.vue";
@@ -134,7 +134,7 @@ function onCardClick() {
             <CText
               :line-height="[1.3, null, 'none']"
               position="relative"
-              left="-3px"
+              :left="job?.company_is_recommended_org ? '-3px' : ''"
               :font-size="{ base: 'sm', lg: 'md' }"
             >
               <CBox

@@ -4,6 +4,7 @@ import Checkbox from "~/components/chakra/checkbox.vue";
 import { AlgoliaFilterItem } from "~~/src/utils/types";
 
 const props = defineProps<{
+  attribute?: string;
   items: AlgoliaFilterItem[];
   searchable: boolean;
   refine: (string) => void;
@@ -16,8 +17,9 @@ function shortenTagName(tagName: string) {
       return "Biosecurity & pandemic prep";
     case "International security & cooperation":
       return "International security & coop";
+    default:
+      return tagName;
   }
-  return tagName;
 }
 </script>
 

@@ -2,7 +2,7 @@
 import { useHead, useRuntimeConfig } from "#app";
 
 import { CContainer, CFlex, CBox } from "@chakra-ui/vue-next";
-import Menu from "~/components/eightyk/menu";
+import Menu from "~/components/eightyk/menu.vue";
 
 const state = {
   config: useRuntimeConfig(),
