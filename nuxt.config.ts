@@ -15,7 +15,7 @@ export default defineNuxtConfig({
       algoliaApiKey: "b0e9cd27b37d64ac5bbb0b0671e1e84b",
       algoliaTagsIndex: "tags_prod",
       algoliaJobsIndex: "jobs_prod",
-      segmentId: "QqrrbQRwmlXp4TQ7MC9CQu0R3oQUZ99m",
+      segmentId: "",
     },
   },
   ssr: false,
