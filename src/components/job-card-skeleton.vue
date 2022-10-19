@@ -7,25 +7,23 @@ const space = 6;
 </script>
 
 <template>
-  <CBox mb="6" bg="white" p="4" border-radius="md">
-    <CBox>
-      <CFlex>
+  <CBox mb="6" bg="white" pl="6" pt="6" pb="6" pr="5" border-radius="md">
+    <CBox w="100%">
+      <CFlex w="100%">
         <Skeleton w="62px" h="62px" />
 
-        <CFlex ml="3" justify="space-between" direction="column">
+        <CFlex ml="3" gap="3" justify="space-between" flex="1" direction="column">
           <Skeleton w="350px" h="18px" />
           <Skeleton w="125px" h="18px" />
-          <Skeleton w="100px" h="18px" />
+          <CFlex justify="space-between" mb="1" w="100%">
+            <Skeleton w="100px" h="18px" />
+            <Skeleton w="80px" h="18px" />
+          </CFlex>
         </CFlex>
-      </CFlex>
-
-      <CFlex w="100%" gap="3" mt="3" wrap="wrap">
-        <Skeleton w="176px" h="22.5px" />
-        <Skeleton w="100px" h="22.5px" />
       </CFlex>
     </CBox>
 
-    <CFlex mt="4" justify="space-between" align="center">
+    <!-- <CFlex mt="4" justify="space-between" align="center">
       <CFlex :gap="space">
         <CLink :_hover="{ textDecoration: 'none' }">
           <CButton size="sm" color-scheme="blue" variant="outline">
@@ -65,7 +63,7 @@ const space = 6;
       <CFlex gap="3" align="center" justify="center" h="100%" pt="0.5">
         <Skeleton w="71px" h="21px" />
       </CFlex>
-    </CFlex>
+    </CFlex> -->
   </CBox>
 </template>
 

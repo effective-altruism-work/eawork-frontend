@@ -131,7 +131,12 @@ function onCardClick() {
               <ais-snippet v-else :hit="job" attribute="title" />
             </CText>
 
-            <CText :line-height="[1.3, null, 'none']" :font-size="{ base: 'sm', lg: 'md' }">
+            <CText
+              :line-height="[1.3, null, 'none']"
+              position="relative"
+              left="-3px"
+              :font-size="{ base: 'sm', lg: 'md' }"
+            >
               <CBox
                 v-if="job?.company_is_recommended_org"
                 @mouseover="state.isStarHovering.value = true"
