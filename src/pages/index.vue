@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useHead, useRuntimeConfig } from "#app";
+import { useHead, useRuntimeConfig, useRoute, useRouter } from "#app";
 import {
   CFlex,
   CHeading,
@@ -25,6 +25,7 @@ import { useComp, useHooks } from "~/utils/structs";
 import { tracking } from "~/utils/tracking";
 import { JobAlgolia } from "~/utils/types";
 import { OhVueIcon } from "oh-vue-icons";
+import riveted from "~/utils/riveted";
 
 const hooks = useHooks(() => {
   const config = useRuntimeConfig();
@@ -43,6 +44,7 @@ const state = {
   queryJson: ref<null | { query: string; facetFilters: string[][] }>(null),
   jobPkCurrent: ref<number | null>(null),
   jobFromUrlQuery: ref<JobAlgolia | null>(null),
+  otherParams: ref(null),
   isShowMobileFilters: ref(false),
 };
 
@@ -62,29 +64,37 @@ async function loadJobIfSpecified() {
   }
 }
 
-onBeforeMount(async () => {
-  await tracking.init(hooks.config.public.segmentId);
-});
+function pageTrack() {
+  const url = new URL(window.location.href);
 
-let timeout: any = null;
+  const source = url.searchParams.get("utm_source");
+  const campaign = url.searchParams.get("utm_campaign");
+  tracking.page("Job Board | Home", { source, campaign });
+}
+
+onBeforeMount(async () => {
+  const url = new URL(window.location.href);
+  const params: { [key: string]: any } = {};
+  for (const [key, val] of url.searchParams.entries()) {
+    if (key.includes("refinement") || key.includes("query")) continue;
+    params[key] = val;
+  }
+
+  state.otherParams = params;
+
+  await tracking.init(hooks.config.public.segmentId);
+
+  pageTrack();
+});
 
 onMounted(async () => {
   await loadJobIfSpecified();
 });
 
-// onMounted(async () => {
-// tracking.loadRiveted().then(() =>
-//   // @ts-ignore
-//   (riveted as any).init({
-//     eventHandler: function (data) {
-//       tracking.sendEvent("Stayed on page", data);
-//     },
-//   }),
-// );
-// });
+// track page-stays
+onMounted(() => {
+  riveted();
 
-onBeforeUnmount(() => {
-  timeout(); // clear
 });
 
 watch(state.jobPkCurrent, (jobPkCurrentNew: number | null) => {
@@ -212,17 +222,18 @@ interface RouteState {
       :routing="{
         router: history(),
         stateMapping: {
-          stateToRoute(uiState: { [indexId: string]: IndexUiState }): RouteState {
-            const indexUiState: IndexUiState = uiState[hooks.config.public.algoliaJobsIndex];
+          stateToRoute(uiState: { [indexId: string]: RouteState }): RouteState {
+            const indexUiState: RouteState = uiState[hooks.config.public.algoliaJobsIndex];
             return {
               query: indexUiState.query,
               refinementList: indexUiState.refinementList,
               ...(state.jobPkCurrent.value ? { jobPk: String(state.jobPkCurrent.value) } : {}),
+              ...state.otherParams // don't lose our other params
             };
           },
-          routeToState(routeState: RouteState): { [indexId: string]: IndexUiState } {
+          routeToState(routeState: RouteState): { [indexId: string]: RouteState } {
             if (routeState.jobPk) {
-              state.jobPkCurrent.value = routeState.jobPk;
+              state.jobPkCurrent.value = Number(routeState.jobPk);
             }
             return {
               [hooks.config.public.algoliaJobsIndex]: {

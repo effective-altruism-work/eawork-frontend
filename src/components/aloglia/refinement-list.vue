@@ -111,10 +111,8 @@ function carefulRefine(
           isFromSearch,
           canToggleShowMore,
           refine,
-          createURL,
           toggleShowMore,
           searchForItems,
-          sendEvent,
         }"
       >
         <CInput
