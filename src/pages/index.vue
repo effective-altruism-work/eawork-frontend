@@ -67,15 +67,21 @@ onBeforeMount(async () => {
 });
 
 let timeout: any = null;
-onMounted(() => {});
 
 onMounted(async () => {
-  timeout = setInterval(() => {
-    tracking.sendEvent("Stayed on page", {});
-  }, 30000);
-
   await loadJobIfSpecified();
 });
+
+// onMounted(async () => {
+// tracking.loadRiveted().then(() =>
+//   // @ts-ignore
+//   (riveted as any).init({
+//     eventHandler: function (data) {
+//       tracking.sendEvent("Stayed on page", data);
+//     },
+//   }),
+// );
+// });
 
 onBeforeUnmount(() => {
   timeout(); // clear
