@@ -44,6 +44,7 @@ const state = {
   queryJson: ref<null | { query: string; facetFilters: string[][] }>(null),
   jobPkCurrent: ref<number | null>(null),
   jobFromUrlQuery: ref<JobAlgolia | null>(null),
+  otherParams: ref(null),
   isShowMobileFilters: ref(false),
 };
 
@@ -64,11 +65,19 @@ async function loadJobIfSpecified() {
 }
 
 onBeforeMount(async () => {
+  const url = new URL(window.location.href);
+  const params: { [key: string]: any } = {};
+  for (const [key, val] of url.searchParams.entries()) {
+    if (key.includes("refinement") || key.includes("query")) continue;
+    params[key] = val;
+  }
+
+  state.otherParams = params;
+
   await tracking.init(hooks.config.public.segmentId);
 
-  const url = new URL(window.location.href);
-  const source = url.searchParams.get("utm_source");
-  const campaign = url.searchParams.get("utm_campaign");
+  const source = params["utm_source"];
+  const campaign = params["utm_campaign"];
   tracking.page("Job Board | Home", { source, campaign });
 });
 
@@ -80,17 +89,6 @@ onMounted(async () => {
 onMounted(() => {
   riveted();
 });
-
-// onMounted(async () => {
-// tracking.loadRiveted().then(() =>
-//   // @ts-ignore
-//   (riveted as any).init({
-//     eventHandler: function (data) {
-//       tracking.sendEvent("Stayed on page", data);
-//     },
-//   }),
-// );
-// });
 
 watch(state.jobPkCurrent, (jobPkCurrentNew: number | null) => {
   const url = new URL(window.location as any);
@@ -217,17 +215,18 @@ interface RouteState {
       :routing="{
         router: history(),
         stateMapping: {
-          stateToRoute(uiState: { [indexId: string]: IndexUiState }): RouteState {
-            const indexUiState: IndexUiState = uiState[hooks.config.public.algoliaJobsIndex];
+          stateToRoute(uiState: { [indexId: string]: RouteState }): RouteState {
+            const indexUiState: RouteState = uiState[hooks.config.public.algoliaJobsIndex];
             return {
               query: indexUiState.query,
               refinementList: indexUiState.refinementList,
               ...(state.jobPkCurrent.value ? { jobPk: String(state.jobPkCurrent.value) } : {}),
+              ...state.otherParams // don't lose our other params
             };
           },
-          routeToState(routeState: RouteState): { [indexId: string]: IndexUiState } {
+          routeToState(routeState: RouteState): { [indexId: string]: RouteState } {
             if (routeState.jobPk) {
-              state.jobPkCurrent.value = routeState.jobPk;
+              state.jobPkCurrent.value = Number(routeState.jobPk);
             }
             return {
               [hooks.config.public.algoliaJobsIndex]: {

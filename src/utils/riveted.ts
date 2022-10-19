@@ -25,7 +25,10 @@ class Riveted {
   universalSendCommand = null;
   googleTagManager = null;
   gaGlobal = null;
-  sendEvent = null;
+  sendEvent:
+    | null
+    | ((secondsOnPage: number, nonInteraction: boolean, reportInterval: number) => void) =
+    null;
 
   constructor() {
     this.startTime = new Date().getTime();
@@ -34,8 +37,15 @@ class Riveted {
   init = (options: {
     reportInterval?: number;
     idleTimeout?: number;
-    eventHandler?: (secondsonPage: number) => void;
+    eventHandler?: (
+      secondsOnPage: number,
+      nonInteraction: boolean,
+      reportInterval: number,
+    ) => void;
     gaGlobal?: string;
+    gaTracker?: string;
+    nonInteraction?: boolean;
+    userTimingHandler?: () => void;
   }) => {
     // Set up options and defaults
     this.reportInterval = options?.reportInterval || 5;
@@ -64,18 +74,13 @@ class Riveted {
     }
 
     this.sendEvent =
-      typeof options.eventHandler === "function"
-        ? options.eventHandler
-        : this.defaultSendEvent;
+      "eventHandler" in options ? options.eventHandler : this.defaultSendEvent;
 
     if (typeof options.userTimingHandler == "function") {
       this.sendUserTiming = options.userTimingHandler;
     }
 
-    if (
-      "this.nonInteraction" in options &&
-      (options.this.nonInteraction === false || options.this.nonInteraction === "false")
-    ) {
+    if (options?.nonInteraction === false) {
       this.nonInteraction = false;
     } else {
       this.nonInteraction = true;
@@ -173,7 +178,11 @@ class Riveted {
    * Function for logging ping events
    */
 
-  defaultSendEvent = (time) => {
+  defaultSendEvent = (
+    secondsOnPage: number,
+    nonInteraction: boolean,
+    reportInterval: number,
+  ) => {
     if (this.googleTagManager) {
       //   dataLayer.push({
       //     event: "Riveted",
@@ -185,15 +194,15 @@ class Riveted {
       //   });
     } else {
       if (this.universalGA) {
-        window[this.gaGlobal](
-          this.universalSendCommand,
-          "event",
-          "Riveted",
-          "Time Spent",
-          time.toString(),
-          this.reportInterval,
-          { nonInteraction: this.nonInteraction },
-        );
+        // window[this.gaGlobal](
+        //   this.universalSendCommand,
+        //   "event",
+        //   "Riveted",
+        //   "Time Spent",
+        //   time.toString(),
+        //   this.reportInterval,
+        //   { nonInteraction: this.nonInteraction },
+        // );
       }
 
       if (this.classicGA) {
@@ -215,7 +224,7 @@ class Riveted {
   };
 
   visibilityChange = () => {
-    if (document?.hidden || document?.webkitHidden) {
+    if (document?.hidden) {
       this.setIdle();
     }
   };
@@ -223,7 +232,7 @@ class Riveted {
   clock = () => {
     this.clockTime += 1;
     if (this.clockTime > 0 && this.clockTime % this.reportInterval === 0) {
-      this.sendEvent(this.clockTime);
+      this.sendEvent(this.clockTime, this.nonInteraction, this.reportInterval);
     }
   };
 
@@ -293,9 +302,12 @@ export default function rivetInit() {
   const riveted = new Riveted();
 
   riveted.init({
-    reportInterval: 30,
     idleTimeout: 30,
-    eventHandler: function (secondsOnPage) {
+    eventHandler: function (
+      secondsOnPage: number,
+      nonInteraction: boolean,
+      reportInterval: number,
+    ) {
       // Total fires of this event are tracked a user trait in Mixpanel people,
       // so that we can easily segment by total reading time.
       //
@@ -303,8 +315,9 @@ export default function rivetInit() {
       // https://app.segment.com/80000hours/destinations/mixpanel/sources/80000hours.org-production/configuration
       tracking.sendEvent("Stayed on page", {
         category: "Engagement",
+        nonInteraction,
         label: secondsOnPage.toString(),
-        value: this.reportInterval,
+        value: reportInterval,
       });
     },
   });
