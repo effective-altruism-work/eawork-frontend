@@ -5,6 +5,7 @@ import axios from "axios";
 import { onMounted, ref } from "vue";
 import RefinementListFacets from "~/components/aloglia/refinement-list-facets.vue";
 import { TagDjango, TagTypeName, AlgoliaFilterItem } from "~/utils/types";
+import { chakra } from "@chakra-ui/vue-next";
 
 const props = defineProps<{
   label: string;
