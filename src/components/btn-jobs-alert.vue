@@ -169,7 +169,7 @@ async function createJobAlert() {
           []"
           :key="filter"
         >
-          {{ filter.replace(/tags_\w*:/, "Filter: ") }}
+          {{ filter.replace("company_is_recommended_org:true", "Filter: Recommended orgs").replace(/tags_\w*:/, "Filter: ") }}
         </CText>
       </CText>
 
