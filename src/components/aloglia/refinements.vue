@@ -14,6 +14,7 @@ const props = defineProps<{
     <RefinementList
       attribute="tags_area"
       :count-bg="props.countBg"
+      :limit="40"
       label="Problem Areas"
       :mt="0"
     />

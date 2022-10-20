@@ -69,7 +69,7 @@ function pageTrack() {
 
   const source = url.searchParams.get("utm_source");
   const campaign = url.searchParams.get("utm_campaign");
-  tracking.page("Job Board | Home", { source, campaign });
+  tracking.page("Home", { source, campaign });
 }
 
 onBeforeMount(async () => {
