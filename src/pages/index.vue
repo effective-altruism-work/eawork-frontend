@@ -26,6 +26,7 @@ import { tracking } from "~/utils/tracking";
 import { JobAlgolia } from "~/utils/types";
 import { OhVueIcon } from "oh-vue-icons";
 import riveted from "~/utils/riveted";
+import { chakra } from "@chakra-ui/vue-next";
 
 const hooks = useHooks(() => {
   const config = useRuntimeConfig();
@@ -157,6 +158,8 @@ interface RouteState {
   refinementList: { [key: string]: string[] };
   jobPk: string;
 }
+
+const log = (x) => console.log(x);
 </script>
 
 <template>
@@ -226,18 +229,20 @@ interface RouteState {
             return {
               query: indexUiState.query,
               refinementList: indexUiState.refinementList,
-              ...(state.jobPkCurrent.value ? { jobPk: String(state.jobPkCurrent.value) } : {}),
+              ...(state.jobPkCurrent.value ? { jobPk: String(state.jobPkCurrent.value) } : {jobPk: undefined}),
               ...state.otherParams // don't lose our other params
             };
           },
-          routeToState(routeState: RouteState): { [indexId: string]: RouteState } {
-            if (routeState.jobPk) {
+          routeToState(routeState): { [indexId: string]: RouteState } {
+            if (routeState?.jobPk) {
               state.jobPkCurrent.value = Number(routeState.jobPk);
             }
+            
             return {
               [hooks.config.public.algoliaJobsIndex]: {
                 query: routeState.query,
                 refinementList: routeState.refinementList,
+                jobPk: routeState.jobPk
               },
             };
           },
