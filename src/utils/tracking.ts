@@ -2,6 +2,10 @@ import { Analytics, AnalyticsBrowser, Context } from "@segment/analytics-next";
 import { captureEvent } from "@sentry/vue";
 import { JobAlgolia } from "~/utils/types";
 
+const eightyKProps = {
+  category: "Job board",
+};
+
 export namespace tracking {
   const separator = " / ";
   let analytics: Analytics | null = null;
@@ -68,18 +72,18 @@ export namespace tracking {
     });
   }
 
-  export async function sendEvent(action: Action, data: any) {
+  export async function sendEvent(action: Action, data: { [key: string]: any }) {
     try {
       await waitForInit();
       const action80k = get80KAction(action);
-      analytics.track(action80k, { ...data });
+      analytics.track(action80k, { ...data, ...eightyKProps });
     } catch (err) {
       captureEvent(err);
     }
   }
 
   export async function page(name: string, data: { [key: string]: any }) {
-    analytics.page("", name, data);
+    analytics.page("Job Board", name, { data, ...eightyKProps });
   }
 
   export function get80kLocations(tags_city: string[] = [], tags_country: string[] = []) {
@@ -91,7 +95,7 @@ export namespace tracking {
 
   function get80kJobProps(job: JobAlgolia, action: Action): JobEvent80k {
     const props = {
-      category: "Job board",
+      ...eightyKProps,
       label: job.url_external,
       organization: job.company_name,
       title: job.title,
@@ -133,10 +137,23 @@ export namespace tracking {
           label: "Stayed on page",
           ...props,
         };
+      case "company_ea_forum_url clicked":
+        return {
+          action: get80KAction(action),
+          label: "Stayed on page",
+          ...props,
+        };
+      case "alert sign up":
+        return {
+          action: get80KAction(action),
+          label: "Stayed on page",
+          ...props,
+        };
       default:
         return {
           action,
           label: props.label,
+          ...props,
         };
     }
   }
