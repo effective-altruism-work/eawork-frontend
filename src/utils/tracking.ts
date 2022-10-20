@@ -140,13 +140,13 @@ export namespace tracking {
       case "company_ea_forum_url clicked":
         return {
           action: get80KAction(action),
-          label: "Stayed on page",
+          label: "Viewed organisation ea forum page",
           ...props,
         };
       case "alert sign up":
         return {
           action: get80KAction(action),
-          label: "Stayed on page",
+          label: "Signed up for email alerts",
           ...props,
         };
       default:
