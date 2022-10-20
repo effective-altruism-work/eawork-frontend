@@ -58,6 +58,7 @@ function onNodeClick(event, node) {
 </script>
 
 <template>
+  <!-- max-w="1050px" -->
   <CBox w="100%" mb="-2px">
     <CBox pos="relative">
       <CFlex justify="space-between" align="center">
