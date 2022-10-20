@@ -143,8 +143,8 @@ function isCurrentNode(node: Node) {
                 pb="2"
               >
                 <CLink
-                  :href="category.url"
-                  @click="(event) => onNodeClick(category, event)"
+                  :href="category.url ? category.url : undefined"
+                  @click="(event) => (category.url ? onNodeClick(category, event) : null)"
                   font-weight="bold"
                   :px="comp.linkP"
                   pt="0"
@@ -152,21 +152,46 @@ function isCurrentNode(node: Node) {
                   display="flex"
                   color="gray.900"
                   font-size="0.90rem"
+                  :_hover="!category.url && { color: 'none' }"
+                  :cursor="category.url ? 'pointer' : ''"
                 >
                   {{ category.label }}
                 </CLink>
 
-                <CLink
+                <CBox
                   v-for="node in category.children"
-                  :href="node.url"
                   :px="comp.linkP"
                   py="2"
-                  display="flex"
                   color="gray.900"
                   font-size="0.90rem"
                 >
-                  {{ node.label }}
-                </CLink>
+                  <CLink
+                    :href="node.url ? node.url : undefined"
+                    @click="(event) => (node.url ? onNodeClick(node, event) : null)"
+                    :font-weight="node?.children?.length ? 'bold' : ''"
+                    :cursor="node.url ? 'pointer' : ''"
+                    :_hover="
+                      !node.url ? { color: 'none' } : { 'text-decoration': 'underline' }
+                    "
+                    mb="0.5"
+                    color="gray.900"
+                    font-size="0.90rem"
+                  >
+                    {{ node.label }}
+                  </CLink>
+                  <CLink
+                    v-for="child in node.children"
+                    display="block"
+                    color="gray.900"
+                    font-size="0.90rem"
+                    py="1"
+                    pl="2"
+                    border-left="2px solid rgb(200, 200, 200)"
+                    :href="child.url"
+                    :_hover="{ 'text-decoration': 'underline' }"
+                    >{{ child.label }}
+                  </CLink>
+                </CBox>
               </CBox>
             </CBox>
           </CBox>
