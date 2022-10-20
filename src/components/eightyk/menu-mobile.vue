@@ -138,7 +138,7 @@ function isCurrentNode(node: Node) {
 
               <CBox
                 v-if="isCurrentNode(node)"
-                v-for="category in node.categories"
+                v-for="(category, index) in node.categories"
                 bg="white"
                 pb="2"
               >
@@ -147,21 +147,32 @@ function isCurrentNode(node: Node) {
                   @click="(event) => (category.url ? onNodeClick(category, event) : null)"
                   font-weight="bold"
                   :px="comp.linkP"
-                  pt="0"
+                  :pt="index ? 6 : 2"
                   pb="1"
                   display="flex"
                   color="gray.900"
-                  font-size="0.90rem"
+                  font-size="xl"
                   :_hover="!category.url && { color: 'none' }"
                   :cursor="category.url ? 'pointer' : ''"
                 >
                   {{ category.label }}
                 </CLink>
-
+                <CText ml="5" mb="5" v-if="category?.description" font-size="lg">{{
+                  category.description
+                }}</CText>
+                <CLink
+                  v-if="!!category.extension"
+                  font="bold"
+                  ml="5"
+                  display="block"
+                  pb="10px"
+                  :href="category.extension.url"
+                  >{{ category.extension.label }}</CLink
+                >
                 <CBox
                   v-for="node in category.children"
-                  :px="comp.linkP"
-                  py="2"
+                  :mx="comp.linkP"
+                  :py="node.url ? '1' : '2'"
                   color="gray.900"
                   font-size="0.90rem"
                 >
@@ -170,10 +181,8 @@ function isCurrentNode(node: Node) {
                     @click="(event) => (node.url ? onNodeClick(node, event) : null)"
                     :font-weight="node?.children?.length ? 'bold' : ''"
                     :cursor="node.url ? 'pointer' : ''"
-                    :_hover="
-                      !node.url ? { color: 'none' } : { 'text-decoration': 'underline' }
-                    "
-                    mb="0.5"
+                    :_hover="!node.url ? { color: 'none' } : { color: 'blue.400' }"
+                    :mb="node.url ? '0' : '0.5'"
                     color="gray.900"
                     font-size="0.90rem"
                   >
@@ -188,9 +197,19 @@ function isCurrentNode(node: Node) {
                     pl="2"
                     border-left="2px solid rgb(200, 200, 200)"
                     :href="child.url"
-                    :_hover="{ 'text-decoration': 'underline' }"
+                    :_hover="{ color: 'blue.400' }"
                     >{{ child.label }}
                   </CLink>
+                  <CLink
+                    py="3"
+                    pl="2"
+                    font="bold"
+                    display="block"
+                    border-left="2px solid rgb(200, 200, 200)"
+                    v-if="!!node.extension"
+                    :href="node.extension.url"
+                    >{{ node.extension.label }}</CLink
+                  >
                 </CBox>
               </CBox>
             </CBox>
