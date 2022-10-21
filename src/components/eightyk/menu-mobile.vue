@@ -38,15 +38,6 @@ onUnmounted(() => {
   window.removeEventListener("keyup", onKeyUp);
 });
 
-watch(state.nodeCategoryActive, () => {
-  console.log("node category active");
-  console.log(state.nodeCategoryActive.value);
-});
-watch(state.nodeOpened, () => {
-  console.log("node opened");
-  console.log(state.nodeOpened.value);
-});
-
 function onKeyUp(event) {
   if (event.which === 27) {
     state.isOpen.value = false;
@@ -79,8 +70,8 @@ function isCurrentNode(node: Node) {
 }
 
 function isCurrentCategory(category: NodeCategory) {
-  console.log({ category });
   if (!state.nodeCategoryActive.value) return false;
+  
   return state.nodeCategoryActive.value.label === category.label;
 }
 </script>
@@ -166,7 +157,6 @@ function isCurrentCategory(category: NodeCategory) {
                 bg="white"
                 pb="2"
               >
-                <!-- CONOR -->
                 <CLink
                   :href="category.url ? category.url : undefined"
                   @click="(event) => (category.url ? onNodeClick(category, event) : null)"
