@@ -18,7 +18,9 @@ const props = defineProps<{ job: JobAlgolia }>();
         font-size="sm"
         border-radius="4px"
       >
-        <CText color="#466E35">{{ area }}</CText>
+        <CText color="#466E35">{{
+          area === "Other (pressing)" ? "Climate Change" : area
+        }}</CText>
       </CFlex>
 
       <!--        <CFlex-->

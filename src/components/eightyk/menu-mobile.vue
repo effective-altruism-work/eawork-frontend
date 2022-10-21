@@ -44,21 +44,35 @@ function onKeyUp(event) {
   }
 }
 
-function onNodeClick(node: Node, event: Event) {
+function onNodeClick(node: Node | NodeCategory, event: Event) {
   event.preventDefault();
-  if (node.categories) {
+  if ("categories" in node) {
     if (state.nodeOpened.value?.label === node.label) {
       state.nodeOpened.value = null;
     } else {
       state.nodeOpened.value = node;
     }
   } else {
-    window.location.href = node.url;
+    if ("children" in node) {
+      if (state.nodeCategoryActive.value?.label === node.label) {
+        state.nodeCategoryActive.value = null;
+      } else {
+        state.nodeCategoryActive.value = node;
+      }
+    } else {
+      window.location.href = node.url;
+    }
   }
 }
 
 function isCurrentNode(node: Node) {
   return state.nodeOpened.value?.label === node.label && node.categories;
+}
+
+function isCurrentCategory(category: NodeCategory) {
+  if (!state.nodeCategoryActive.value) return false;
+  
+  return state.nodeCategoryActive.value.label === category.label;
 }
 </script>
 
@@ -88,6 +102,7 @@ function isCurrentNode(node: Node) {
     </CButton>
 
     <CDrawer
+      size="sm"
       v-model="state.isOpen.value"
       placement="right"
       @keyup.esc="state.isOpen.value = false"
@@ -147,29 +162,42 @@ function isCurrentNode(node: Node) {
                   @click="(event) => (category.url ? onNodeClick(category, event) : null)"
                   font-weight="bold"
                   :px="comp.linkP"
-                  :pt="index ? 6 : 2"
+                  :pt="index ? 3 : 2"
                   pb="1"
                   display="flex"
+                  align-items="center"
                   color="gray.900"
-                  font-size="xl"
-                  :_hover="!category.url && { color: 'none' }"
+                  font-size="lg"
+                  :_hover="!category.url && { color: 'black' }"
                   :cursor="category.url ? 'pointer' : ''"
                 >
                   {{ category.label }}
+                  <CIcon
+                    v-if="node.categories"
+                    name="ri-arrow-down-s-fill"
+                    ml="1"
+                    mt="px"
+                    :transform="isCurrentCategory(category) ? 'rotate(180deg)' : ''"
+                    font-size="md"
+                  />
                 </CLink>
-                <CText ml="5" mb="5" v-if="category?.description" font-size="lg">{{
+                <CText ml="5" mb="5" v-if="category?.description" font-size="md">{{
                   category.description
                 }}</CText>
                 <CLink
-                  v-if="!!category.extension"
+                  v-if="!!category.extension && isCurrentCategory(category)"
                   font="bold"
                   ml="5"
                   display="block"
                   pb="10px"
                   :href="category.extension.url"
+                  :_hover="
+                    !category.extension.url ? { color: 'black' } : { color: 'blue.400' }
+                  "
                   >{{ category.extension.label }}</CLink
                 >
                 <CBox
+                  v-if="isCurrentCategory(category)"
                   v-for="node in category.children"
                   :mx="comp.linkP"
                   :py="node.url ? '1' : '2'"
@@ -181,7 +209,7 @@ function isCurrentNode(node: Node) {
                     @click="(event) => (node.url ? onNodeClick(node, event) : null)"
                     :font-weight="node?.children?.length ? 'bold' : ''"
                     :cursor="node.url ? 'pointer' : ''"
-                    :_hover="!node.url ? { color: 'none' } : { color: 'blue.400' }"
+                    :_hover="!node.url ? { color: 'black' } : { color: 'blue.400' }"
                     :mb="node.url ? '0' : '0.5'"
                     color="gray.900"
                     font-size="0.90rem"
