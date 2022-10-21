@@ -159,7 +159,6 @@ interface RouteState {
   jobPk: string;
 }
 
-const log = (x) => console.log(x);
 </script>
 
 <template>

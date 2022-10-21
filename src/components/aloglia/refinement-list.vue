@@ -27,7 +27,6 @@ const state = {
 onMounted(async () => {
   if (props.attribute === "tags_area") {
     const res = await axios.get(`${state.config.public.apiBase}/tags/?is_featured=true`);
-    console.log(res.data);
 
     if (!("data" in res) || !Array.isArray(res.data)) {
       const error = new Error(
