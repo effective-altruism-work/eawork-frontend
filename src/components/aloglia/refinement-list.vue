@@ -204,7 +204,14 @@ function carefulRefine(
             <li v-if="isFromSearch && !items.length">No results.</li>
             <!-- MAIN -->
             <RefinementListFacets
-              :items="filterFacetValuesIfNeeded(items, 'other')"
+              :items="
+                filterFacetValuesIfNeeded(
+                  items.map((i) =>
+                    i.label === 'Other (pressing)' ? { ...i, label: 'Climate Change' } : i,
+                  ),
+                  'other',
+                )
+              "
               :refine="refine"
               :searchable="props.searchable"
               :count-bg="props.countBg"
