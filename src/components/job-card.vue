@@ -24,6 +24,17 @@ const props = defineProps<{
   isMissingAlgoliaContext?: boolean;
 }>();
 
+const timeSincePosting = computed(() => {
+  const millisecondDifference =
+    new Date().getTime() - new Date(props.job.posted_at * 1000).getTime();
+  const isToday = millisecondDifference < 86_400_000; // less than 24 hours
+  return isToday
+    ? "Today"
+    : formatDistance(new Date(props.job.posted_at * 1000), new Date(), {
+        addSuffix: true,
+      });
+});
+
 const emit = defineEmits<{
   (event: "cardExpanded"): void;
   (event: "cardCollapsed"): void;
@@ -186,11 +197,7 @@ function onCardClick() {
             <JobCardLocationShort :job="props.job" />
 
             <CText color="#9BADB6">
-              {{
-                formatDistance(new Date(props.job.posted_at * 1000), new Date(), {
-                  addSuffix: true,
-                })
-              }}
+              {{ timeSincePosting }}
             </CText>
           </CFlex>
         </TransitionCollapseFade>
@@ -268,11 +275,7 @@ function onCardClick() {
               </CHStack>
 
               <CText color="#9BADB6">
-                {{
-                  formatDistance(new Date(props.job.posted_at * 1000), new Date(), {
-                    addSuffix: true,
-                  })
-                }}
+                {{ timeSincePosting }}
               </CText>
             </CFlex>
 
