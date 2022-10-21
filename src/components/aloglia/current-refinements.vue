@@ -27,6 +27,10 @@ function format(refinement: {
     return refinement.value ? "Top recommended orgs" : "All orgs"; // this latter should never happen, to be clear.
   }
 
+  if (refinement.label === 'Other (pressing)') {
+    return "Climate Chage"
+  }
+  
   return refinement.label;
 }
 
