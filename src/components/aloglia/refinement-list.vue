@@ -6,6 +6,7 @@ import { onMounted, ref } from "vue";
 import RefinementListFacets from "~/components/aloglia/refinement-list-facets.vue";
 import { TagDjango, TagTypeName, AlgoliaFilterItem } from "~/utils/types";
 import { chakra } from "@chakra-ui/vue-next";
+import { captureEvent } from "@sentry/vue";
 
 const props = defineProps<{
   label: string;
@@ -26,6 +27,16 @@ const state = {
 onMounted(async () => {
   if (props.attribute === "tags_area") {
     const res = await axios.get(`${state.config.public.apiBase}/tags/?is_featured=true`);
+    console.log(res.data);
+
+    if (!("data" in res) || !Array.isArray(res.data)) {
+      const error = new Error(
+        `No data returned from /tags/?is_featured=true. Data: ${JSON.stringify(res?.data)}`,
+      );
+      captureEvent(error);
+      return;
+    }
+
     state.tagsFeatured.value = res.data;
     state.tagsFeaturedNames.value = res.data.map((tag) => tag.name);
   }
