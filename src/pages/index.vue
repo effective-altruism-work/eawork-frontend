@@ -158,7 +158,6 @@ interface RouteState {
   refinementList: { [key: string]: string[] };
   jobPk: string;
 }
-
 </script>
 
 <template>
@@ -169,15 +168,6 @@ interface RouteState {
           <CHeading line-height="0.8" :font-size="['2.7rem', null, null, '5xl']">
             Jobs
           </CHeading>
-
-          <CButton
-            v-if="hooks.breakpoints.isSmaller('lg')"
-            size="lg"
-            @click="state.isShowMobileFilters.value = true"
-          >
-            <OhVueIcon name="md-filterlist-round" scale="1.1" style="margin-bottom: 1px" />
-            <chakra.span ml="2">Filters</chakra.span>
-          </CButton>
         </CFlex>
         <CText font-size="lg"
           >Handpicked to help you tackle the
@@ -215,6 +205,17 @@ interface RouteState {
           <OhVueIcon name="bi-question-circle-fill" scale="1" style="margin-right: 4px" />
           <chakra.span ml="px">FAQ</chakra.span>
         </CLink>
+      </CFlex>
+      <CFlex justify-content="center" mb="4">
+
+        <CButton
+          v-if="hooks.breakpoints.isSmaller('lg')"
+          width="100%"
+          @click="state.isShowMobileFilters.value = true"
+        >
+          <OhVueIcon name="md-filterlist-round" scale="1.1" style="margin-bottom: 1px" />
+          <chakra.span ml="2">Filters and alerts</chakra.span>
+        </CButton>
       </CFlex>
     </CBox>
 
