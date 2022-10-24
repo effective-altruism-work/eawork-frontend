@@ -40,7 +40,7 @@ const hooks = {
         problem areas</CText
       >
       <CLink
-        href="https://80000hours.org/speak-with-us/"
+        href="https://80000hours.org/speak-with-us/?int_campaign=job_board"
         font-size="13px"
         font-weight="bold"
         color="blue.400"
