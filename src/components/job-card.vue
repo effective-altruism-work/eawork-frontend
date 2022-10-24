@@ -90,7 +90,6 @@ const comp = useComp(() => {
 
 function onMouseDown(e) {
   state.coordinates.value = { x: e.clientX, y: e.clientY };
-  console.log(e.clientX, e.clientY);
 }
 
 function onMouseUp(e) {
@@ -322,7 +321,7 @@ function onMouseUp(e) {
               <CLink
                 :href="props.job.company_url"
                 @click="
-                  (event) => {
+                  (event: MouseEvent) => {
                     event.stopPropagation();
                     tracking.sendJobEvent(props.job, 'company_url clicked');
                   }
@@ -340,7 +339,7 @@ function onMouseUp(e) {
                 v-if="!!props.job?.company_ea_forum_url"
                 :href="props.job?.company_ea_forum_url"
                 @click="
-                  (event) => {
+                  (event: MouseEvent) => {
                     event.stopPropagation();
                     tracking.sendJobEvent(props.job, 'company_ea_forum_url clicked');
                   }
@@ -396,7 +395,7 @@ function onMouseUp(e) {
 
               <CLink
                 @click="
-                  async (event) => {
+                  async (event: MouseEvent) => {
                     event.stopPropagation();
                     await tracking.sendJobEvent(props.job, 'url_external clicked');
                   }

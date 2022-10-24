@@ -207,7 +207,6 @@ interface RouteState {
         </CLink>
       </CFlex>
       <CFlex justify-content="center" mb="4">
-
         <CButton
           v-if="hooks.breakpoints.isSmaller('lg')"
           width="100%"
@@ -270,7 +269,7 @@ interface RouteState {
                   v-slot="{ items, refinePrevious, refineNext, isLastPage, sendEvent }"
                 >
                   <JobCard
-                    v-if="state.jobFromUrlQuery.value"
+                    v-if="state.jobFromUrlQuery.value && !state.queryJson.value"
                     :job="state.jobFromUrlQuery.value"
                     :jobFromURLQuery="true"
                     :is-expanded="true"
@@ -292,7 +291,10 @@ interface RouteState {
                   <JobCard
                     v-for="job in items"
                     :job="job"
-                    :is-hidden="job.post_pk === state.jobFromUrlQuery?.value?.post_pk"
+                    :is-hidden="
+                      job.post_pk === state.jobFromUrlQuery?.value?.post_pk &&
+                      !state.queryJson.value
+                    "
                     :is-has-text-query="Boolean(state.queryJson.value?.query)"
                     :key="job.post_pk"
                     @card-expanded="state.jobPkCurrent.value = job.post_pk"
