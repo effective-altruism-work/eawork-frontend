@@ -206,7 +206,7 @@ function carefulRefine(
               :items="
                 filterFacetValuesIfNeeded(
                   items.map((i) =>
-                    i.label === 'Other (pressing)' ? { ...i, label: 'Climate Change' } : i,
+                    i.label === 'Other (pressing)' ? { ...i, label: 'Climate change' } : i,
                   ),
                   'other',
                 )
