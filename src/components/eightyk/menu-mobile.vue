@@ -71,7 +71,7 @@ function isCurrentNode(node: Node) {
 
 function isCurrentCategory(category: NodeCategory) {
   if (!state.nodeCategoryActive.value) return false;
-  
+
   return state.nodeCategoryActive.value.label === category.label;
 }
 </script>
@@ -173,7 +173,7 @@ function isCurrentCategory(category: NodeCategory) {
                 >
                   {{ category.label }}
                   <CIcon
-                    v-if="node.categories"
+                    v-if="category.children[0]?.children?.length"
                     name="ri-arrow-down-s-fill"
                     ml="1"
                     mt="px"
@@ -197,7 +197,9 @@ function isCurrentCategory(category: NodeCategory) {
                   >{{ category.extension.label }}</CLink
                 >
                 <CBox
-                  v-if="isCurrentCategory(category)"
+                  v-if="
+                    isCurrentCategory(category) || !category.children[0]?.children?.length
+                  "
                   v-for="node in category.children"
                   :mx="comp.linkP"
                   :py="node.url ? '1' : '2'"
