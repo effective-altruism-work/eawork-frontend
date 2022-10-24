@@ -44,7 +44,7 @@ const props = defineProps<{
       :count-bg="props.countBg"
       label="Experience"
     />
-    <RefinementList attribute="tags_role_type" :count-bg="props.countBg" label="Role type" />
+    <RefinementList attribute="tags_role_type" :count-bg="props.countBg" :limit="15" label="Role type" />
     <RefinementList
       attribute="company_name"
       :count-bg="props.countBg"
