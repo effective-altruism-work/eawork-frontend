@@ -51,6 +51,7 @@ const state = {
   isAccordionOpening: ref(props.isExpanded ?? false),
   isHovering: ref(false),
   isStarHovering: ref(false),
+  coordinates: ref({ x: null, y: null }),
 };
 
 const cardRef = ref<HTMLDivElement | null>(null);
@@ -87,7 +88,20 @@ const comp = useComp(() => {
   };
 });
 
-function onCardClick() {
+function onMouseDown(e) {
+  state.coordinates.value = { x: e.clientX, y: e.clientY };
+  console.log(e.clientX, e.clientY);
+}
+
+function onMouseUp(e) {
+  // don't change card state if user is dragging their mouse (i.e. to highlight text)
+  if (
+    Math.abs(e.clientX - state.coordinates.value.x) > 5 ||
+    Math.abs(e.clientY - state.coordinates.value.y) > 5
+  ) {
+    return;
+  }
+
   if (state.isAccordionOpen.value) {
     emit("cardCollapsed");
   } else {
@@ -103,7 +117,8 @@ function onCardClick() {
   <div ref="cardRef">
     <CBox
       v-if="!props.isHidden"
-      @click="onCardClick"
+      @mousedown="onMouseDown"
+      @mouseup="onMouseUp"
       @mouseover="state.isHovering.value = true"
       @focus="state.isHovering.value = true"
       @mouseleave="state.isHovering.value = false"
