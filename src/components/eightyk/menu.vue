@@ -50,7 +50,7 @@ function onNodeClick(event, node) {
   <CBox>
     <CContainer w="100%" m="auto" max-w="8xl">
       <CFlex
-        v-if="hooks.breakpoints.isGreaterOrEqual('xl')"
+        v-if="hooks.breakpoints.greaterOrEqual('xl').value"
         direction="column"
         align="center"
       >
@@ -63,7 +63,7 @@ function onNodeClick(event, node) {
     </CContainer>
 
     <CFlex
-      v-if="hooks.breakpoints.isGreaterOrEqual('xl')"
+      v-if="hooks.breakpoints.greaterOrEqual('xl').value"
       bg="#EEEEEE"
       direction="column"
       align="center"
