@@ -10,7 +10,7 @@ import {
   CBox,
   CText,
 } from "@chakra-ui/vue-next";
-import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
+import { useBreakpoints } from "@vueuse/core";
 import algoliasearch from "algoliasearch";
 import { onBeforeMount, onMounted, ref, watch, onBeforeUnmount } from "vue";
 import CurrentRefinements from "~/components/aloglia/current-refinements.vue";
@@ -27,11 +27,12 @@ import { JobAlgolia } from "~/utils/types";
 import { OhVueIcon } from "oh-vue-icons";
 import riveted from "~/utils/riveted";
 import { chakra } from "@chakra-ui/vue-next";
+import { breakpointsChakra } from "../constants";
 
 const hooks = useHooks(() => {
   const config = useRuntimeConfig();
   return {
-    breakpoints: useBreakpoints(breakpointsTailwind),
+    breakpoints: useBreakpoints(breakpointsChakra),
     config,
     searchClient: algoliasearch(
       config.public.algoliaApplicationId,

@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
 import { CFlex, CBox, CButton, CContainer, CLink, CHeading } from "@chakra-ui/vue-next";
-import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
+import {  useBreakpoints } from "@vueuse/core";
 import { ref } from "vue";
 import { Node, NodeCategory, nodesSecondary } from "~/nodes";
 import { OhVueIcon } from "oh-vue-icons";
 import MenuDesktop from "~/components/eightyk/menu-desktop.vue";
 import MenuMobile from "~/components/eightyk/menu-mobile.vue";
+import { breakpointsChakra } from "~~/src/constants";
 
 const hooks = {
-  breakpoints: useBreakpoints(breakpointsTailwind),
+  breakpoints: useBreakpoints(breakpointsChakra),
   config: useRuntimeConfig(),
 };
 

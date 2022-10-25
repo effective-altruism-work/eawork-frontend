@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
 import { CFlex, CBox, CButton, CHStack, CLink, CIcon, CText } from "@chakra-ui/vue-next";
-import { useBreakpoints } from "@vueuse/core";
+import {  useBreakpoints } from "@vueuse/core";
 import { formatDistance, format } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
 import { ref, onMounted } from "vue";
