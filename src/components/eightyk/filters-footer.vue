@@ -19,20 +19,34 @@ const hooks = {
     gap="3"
     font-size="15px"
   >
-    <CLink is-external href="https://airtable.com/shrD9UEKusc6BYWWc/tbl5zkv6T7WSivZ89">
-      <CIcon name="external-link" mb="px" mr="1" />
-      View all roles in a spreadsheet
+    <CLink
+      display="flex"
+      align-items="center"
+      is-external
+      href="https://airtable.com/shrD9UEKusc6BYWWc/tbl5zkv6T7WSivZ89"
+    >
+      <CIcon name="external-link" mb="px" w="16px" position="relative" left="2px" /><CText
+        ml="2"
+        >View all roles in a spreadsheet</CText
+      >
     </CLink>
-    <CLink href="https://80000hours.typeform.com/to/LG2lzrOC">
-      <CIcon name="message-square" mb="px" mr="1" />
-      Give us feedback
+    <CLink
+      display="flex"
+      align-items="center"
+      href="https://80000hours.typeform.com/to/LG2lzrOC"
+    >
+      <CIcon name="message-square" w="16px" mb="px" position="relative" left="2px" /><CText
+        ml="2"
+        >Give us feedback</CText
+      >
     </CLink>
 
     <CVStack
       mt="1"
       :bg="props.careerConsultancyBg ?? 'white'"
       border-radius="lg"
-      p="5"
+      py="5"
+      px="6"
       gap="1"
     >
       <CText
