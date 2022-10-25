@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useHead, useRuntimeConfig, useRoute, useRouter } from "#app";
 import {
+  chakra,
   CFlex,
   CHeading,
   CButton,
   CVStack,
   CLink,
-  CSpacer,
   CBox,
   CText,
 } from "@chakra-ui/vue-next";
@@ -23,10 +23,10 @@ import JobCard from "~/components/job-card.vue";
 import { history } from "instantsearch.js/es/lib/routers";
 import { useComp, useHooks } from "~/utils/structs";
 import { tracking } from "~/utils/tracking";
+import queryToJson from "~/utils/queryToJson";
 import { JobAlgolia } from "~/utils/types";
 import { OhVueIcon } from "oh-vue-icons";
 import riveted from "~/utils/riveted";
-import { chakra } from "@chakra-ui/vue-next";
 import { breakpointsChakra } from "../constants";
 
 const hooks = useHooks(() => {
@@ -113,44 +113,17 @@ useHead({
   title: "Job board",
 });
 
-function saveQueryJson(uiState: {
-  query: string;
-  disjunctiveFacetsRefinements: Map<string, string[]>;
-  numericRefinements: { company_is_recommended_org: any };
-}) {
-  const queryString = uiState.query;
-  const facetFilters: string[][] = [];
-
-  // disjunctive facets
-  const disjunctiveFacetsRaw: Map<string, string[]> = uiState.disjunctiveFacetsRefinements;
-  for (const [facetName, facetValueArr] of Object.entries(disjunctiveFacetsRaw)) {
-    if (!facetValueArr.length) {
-      continue; // skip empties
-    }
-
-    const set = [];
-    for (const facetValue of facetValueArr) {
-      set.push(`${facetName}:${facetValue}`);
-    }
-
-    // by throwing these into sets of related facets (ex. subarray of tags_area, subarray of experience level),
-    // we tell Algolia to look at these subarrays as OR options.
-    facetFilters.push(set);
-  }
-
-  const isQuerySpecified = queryString || facetFilters.length;
-  if (isQuerySpecified) {
-    state.queryJson.value = {
-      query: queryString,
-      facetFilters: facetFilters,
+function searchFunction(helper: {
+  search: () => void;
+  state: {
+    query: string;
+    disjunctiveFacetsRefinements: Map<string, string[]>;
+    numericRefinements: {
+      company_is_recommended_org: any;
     };
-  } else {
-    state.queryJson.value = null;
-  }
-}
-
-function searchFunction(helper) {
-  saveQueryJson(helper.state);
+  };
+}) {
+  state.queryJson.value = queryToJson(helper.state);
   helper.search();
 }
 
@@ -341,72 +314,13 @@ interface RouteState {
           <FiltersFooter />
         </CFlex>
 
-        <VueFinalModal
+        <!-- mobile -->
+        <FilterModal
           v-else
-          v-model="state.isShowMobileFilters.value"
-          :click-to-close="true"
-          :esc-to-close="true"
-        >
-          <CFlex
-            pos="absolute"
-            left="0"
-            bottom="0"
-            w="100vw"
-            h="92vh"
-            gap="6"
-            p="6"
-            pt="7"
-            direction="column"
-            bg="white"
-            border-radius="12px"
-            border-bottom-radius="0"
-            overflow="scroll"
-          >
-            <CFlex justify="space-between" align="center" my="-1">
-              <CHeading size="lg" line-height="none">Filters</CHeading>
-              <CButton
-                @click="state.isShowMobileFilters.value = false"
-                size="sm"
-                color-scheme="gray"
-                border-radius="full"
-                color="blue.500"
-                bg="#F4F6F7"
-              >
-                <OhVueIcon name="io-close" scale="1" style="position: absolute" />
-              </CButton>
-            </CFlex>
-
-            <SearchBox :is-show-results-count="true" />
-            <CBox mt="3">
-              <CurrentRefinements />
-            </CBox>
-            <CBox mb="7">
-              <BtnJobsAlert :query-json="state.queryJson.value" />
-            </CBox>
-            <Refinements />
-            <FiltersFooter />
-
-            <CSpacer mt="12" />
-            <CFlex
-              pos="fixed"
-              bottom="0"
-              left="0"
-              w="100vw"
-              h="fit-content"
-              p="4"
-              px="6"
-              justify="center"
-              bg="#F4F6F7"
-            >
-              <CButton @click="state.isShowMobileFilters.value = false" font-weight="normal">
-                <chakra.span mr="2">SHOW RESULTS:</chakra.span>
-                <AisStats>
-                  <template v-slot="{ nbHits }">{{ nbHits }}</template>
-                </AisStats>
-              </CButton>
-            </CFlex>
-          </CFlex>
-        </VueFinalModal>
+          :is-show-mobile-filters="state.isShowMobileFilters.value"
+          :query-json="state.queryJson.value"
+          :on-hide-mobile="() => (state.isShowMobileFilters.value = false)"
+        />
       </CFlex>
     </AisInstantSearch>
   </CBox>

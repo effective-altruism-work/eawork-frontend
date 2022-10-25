@@ -199,7 +199,7 @@ function isCurrentCategory(category: NodeCategory) {
                   pb="10px"
                   :href="category.extension.url"
                   :_hover="
-                    !category.extension.url ? { color: 'black' } : { color: 'blue.400' }
+                    !category.extension.url ? { color: 'black' } : { color: 'blue.500' }
                   "
                   >{{ category.extension.label }}</CLink
                 >
