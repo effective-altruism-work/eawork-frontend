@@ -128,7 +128,14 @@ function isCurrentCategory(category: NodeCategory) {
             <CBox v-for="node in nodesAll" :key="node.label">
               <CLink
                 :href="node.url"
-                @click="(event) => onNodeClick(node, event)"
+                @click="
+                  (event) => {
+                    if (!node.categories) {
+                      return;
+                    }
+                    onNodeClick(node, event);
+                  }
+                "
                 py="3"
                 :px="comp.linkP"
                 border-top="1px solid"
@@ -192,7 +199,7 @@ function isCurrentCategory(category: NodeCategory) {
                   pb="10px"
                   :href="category.extension.url"
                   :_hover="
-                    !category.extension.url ? { color: 'black' } : { color: 'blue.400' }
+                    !category.extension.url ? { color: 'black' } : { color: 'blue.500' }
                   "
                   >{{ category.extension.label }}</CLink
                 >

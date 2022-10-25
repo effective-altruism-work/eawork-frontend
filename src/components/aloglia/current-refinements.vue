@@ -11,12 +11,15 @@ function format(refinement: {
   type: any;
 }) {
   if (refinement.attribute === "closes_at" || refinement.attribute === "posted_at") {
-    const dateDistance = formatDistance(
+    let dateDistance = formatDistance(
       new Date((refinement.value as number) * 1000),
       new Date(),
     );
+
+    let hasAbout = dateDistance.includes("about");
+    dateDistance = dateDistance.replace("about", "within");
     if (refinement.attribute === "closes_at") {
-      return `Closes in ${dateDistance}`;
+      return `Closes ${hasAbout ? "" : "in "}${dateDistance}`;
     }
     if (refinement.attribute === "posted_at") {
       return `Posted ${dateDistance} ago`;
@@ -27,10 +30,10 @@ function format(refinement: {
     return refinement.value ? "Top recommended orgs" : "All orgs"; // this latter should never happen, to be clear.
   }
 
-  if (refinement.label === 'Other (pressing)') {
-    return "Climate Chage"
+  if (refinement.label === "Other (pressing)") {
+    return "Climate Chage";
   }
-  
+
   return refinement.label;
 }
 
