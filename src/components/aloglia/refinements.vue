@@ -44,7 +44,12 @@ const props = defineProps<{
       :count-bg="props.countBg"
       label="Experience"
     />
-    <RefinementList attribute="tags_role_type" :count-bg="props.countBg" :limit="15" label="Role type" />
+    <RefinementList
+      attribute="tags_role_type"
+      :count-bg="props.countBg"
+      :limit="15"
+      label="Role type"
+    />
     <RefinementList
       attribute="company_name"
       :count-bg="props.countBg"
@@ -65,9 +70,8 @@ const props = defineProps<{
         { label: 'Anytime' },
         { label: 'Today', start: getUnixTime(subDays(new Date(), 1)) },
         { label: 'In last week', start: getUnixTime(subDays(new Date(), 7)) },
-        // { label: '30d ago', start: getUnixTime(subDays(new Date(), 30)) },
-        { label: 'In last 3m', start: getUnixTime(subDays(new Date(), 91)) },
-        { label: 'In last year', start: getUnixTime(startOfYear(new Date())) },
+        { label: 'In last 2 weeks', start: getUnixTime(subDays(new Date(), 14)) },
+        { label: 'In last month', start: getUnixTime(subDays(new Date(), 30)) },
       ]"
     />
 
@@ -78,9 +82,8 @@ const props = defineProps<{
         { label: 'Anytime' },
         { label: 'Today', end: getUnixTime(addDays(new Date(), 1)) },
         { label: 'In a week', end: getUnixTime(addDays(new Date(), 7)) },
-        // { label: 'In 30d', end: getUnixTime(addDays(new Date(), 30)) },
-        { label: 'In 3m', end: getUnixTime(addDays(new Date(), 91)) },
-        { label: 'This year', end: getUnixTime(endOfYear(new Date())) },
+        { label: 'In next 2 weeks', end: getUnixTime(addDays(new Date(), 14)) },
+        { label: 'In next month', end: getUnixTime(addDays(new Date(), 31)) },
       ]"
     />
   </CBox>
