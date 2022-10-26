@@ -11,12 +11,14 @@ const props = defineProps<{
   countBg?: string;
 }>();
 
-function shortenTagName(tagName: string) {
+function formatTagName(tagName: string) {
   switch (tagName) {
     case "Biosecurity & pandemic preparedness":
       return "Biosecurity & pandemic prep";
     case "International security & cooperation":
       return "International security & coop";
+    case "Global":
+      return "Remote, Global";
     default:
       return tagName;
   }
@@ -32,7 +34,7 @@ function shortenTagName(tagName: string) {
       <CText mt="1px" :_hover="{ color: 'blue.500' }">
         <ais-highlight v-if="props.searchable" attribute="item" :hit="item" />
         <span v-else>
-          {{ shortenTagName(item.label) }}
+          {{ formatTagName(item.label) }}
         </span>
         <CBadge
           ml="2"
