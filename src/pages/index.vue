@@ -319,7 +319,7 @@ interface RouteState {
           v-else
           :is-show-mobile-filters="state.isShowMobileFilters.value"
           :query-json="state.queryJson.value"
-          :on-hide-mobile="() => (state.isShowMobileFilters.value = false)"
+          @hide-mobile="() => (state.isShowMobileFilters.value = false)"
         />
       </CFlex>
     </AisInstantSearch>
