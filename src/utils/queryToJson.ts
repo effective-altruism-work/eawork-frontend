@@ -24,12 +24,12 @@ export default function queryToJson(uiState: {
   }
 
   const isQuerySpecified = queryString || facetFilters.length;
-  if (isQuerySpecified) {
-    return {
-      query: queryString,
-      facetFilters: facetFilters,
-    };
-  } else {
+  if (!isQuerySpecified) {
     return null;
   }
+  
+  return {
+    query: queryString,
+    facetFilters: facetFilters,
+  };
 }

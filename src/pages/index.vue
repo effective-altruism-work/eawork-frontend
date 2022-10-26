@@ -126,7 +126,7 @@ interface RouteState {
 
 <template>
   <CBox>
-    <IndexHeader :on-show-mobile="() => (state.isShowMobileFilters.value = true)" />
+    <IndexHeader @show-mobile="() => (state.isShowMobileFilters.value = true)" />
 
     <AisInstantSearch
       show-loading-indicator
