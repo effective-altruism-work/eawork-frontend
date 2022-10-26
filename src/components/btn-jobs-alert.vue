@@ -15,6 +15,7 @@ const props = defineProps<{
   };
 }>();
 
+
 const hooks = {
   config: useRuntimeConfig(),
 };

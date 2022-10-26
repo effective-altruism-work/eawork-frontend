@@ -6,12 +6,6 @@ export default function queryToJson(uiState: {
   const queryString = uiState.query;
   const facetFilters: string[][] = [];
 
-  // if we have nothing, cut
-  const isQuerySpecified = queryString || facetFilters.length;
-  if (!isQuerySpecified) {
-    return null;
-  }
-
   // disjunctive facets
   const disjunctiveFacetsRaw: Map<string, string[]> = uiState.disjunctiveFacetsRefinements;
   for (const [facetName, facetValueArr] of Object.entries(disjunctiveFacetsRaw)) {
@@ -29,8 +23,13 @@ export default function queryToJson(uiState: {
     facetFilters.push(set);
   }
 
-  return {
-    query: queryString,
-    facetFilters: facetFilters,
-  };
+  const isQuerySpecified = queryString || facetFilters.length;
+  if (isQuerySpecified) {
+    return {
+      query: queryString,
+      facetFilters: facetFilters,
+    };
+  } else {
+    return null;
+  }
 }
