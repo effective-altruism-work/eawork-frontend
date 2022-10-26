@@ -18,6 +18,7 @@ import queryToJson from "~/utils/queryToJson";
 import { JobAlgolia } from "~/utils/types";
 import riveted from "~/utils/riveted";
 import { breakpointsChakra } from "../constants";
+import log from "../utils/log";
 
 const hooks = useHooks(() => {
   const config = useRuntimeConfig();
@@ -143,6 +144,8 @@ interface RouteState {
             };
           },
           routeToState(routeState): { [indexId: string]: RouteState } {
+
+            // side effect
             if (routeState?.jobPk) {
               state.jobPkCurrent.value = Number(routeState.jobPk);
             }
@@ -236,6 +239,7 @@ interface RouteState {
           </CBox>
         </CFlex>
 
+        <!-- desktop -->
         <CFlex
           v-if="!hooks.breakpoints.smaller('lg').value"
           :display="comp.filtersDisplay"
