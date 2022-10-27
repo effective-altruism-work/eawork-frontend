@@ -45,20 +45,26 @@ async function createJobAlert() {
 
   try {
     const params = new URL(window.location.href).searchParams;
-
     let query_string = "";
 
     params.forEach((val, key) => {
       if (key.includes("refinementList")) {
-        query_string = (query_string ? "&" : "?") + key + "=" + val;
+        console.log("includes");
+        query_string =
+          query_string +
+          (query_string ? "&" : "?") +
+          encodeURIComponent(key) +
+          "=" +
+          encodeURIComponent(val);
       }
     });
-    
+
     const res = await axios.post(`${hooks.config.public.apiBase}/jobs/subscribe`, {
       email: state.email.value,
       query_json: props.queryJson,
       query_string,
     });
+
     if (res.data.success) {
       state.isSuccess.value = true;
 
