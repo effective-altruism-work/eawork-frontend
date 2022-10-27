@@ -41,7 +41,7 @@ const emit = defineEmits(["showMobile", "hideMobile"]);
       <CFlex justify="space-between" align="center" my="-1">
         <CHeading size="lg" line-height="none">Filters</CHeading>
         <CButton
-          @click="emit('showMobile')"
+          @click="emit('hideMobile')"
           size="sm"
           color-scheme="gray"
           border-radius="full"
