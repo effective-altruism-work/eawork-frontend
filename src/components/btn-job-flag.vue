@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
 import {
   CFlex,
@@ -39,10 +39,11 @@ async function submit(data: { message: string; email?: string }, node: FormKitNo
     node.setErrors([msg.error]);
   }
 }
-</script>
+</script> -->
 
 <template>
-  <CFlex align="center" class="flag-btn">
+  <div>coming soon...</div>
+  <!-- <CFlex align="center" class="flag-btn">
     <CButton @click="state.isShowModal.value = true" size="sm" variant="link" m="auto">
       Flag
     </CButton>
@@ -95,9 +96,9 @@ async function submit(data: { message: string; email?: string }, node: FormKitNo
         </CAlert>
       </CFlex>
     </VueFinalModal>
-  </CFlex>
+  </CFlex> -->
 </template>
-
+<!-- 
 <style lang="scss">
 @import "~/styles/formkit.scss";
-</style>
+</style> -->

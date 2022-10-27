@@ -1,56 +1,56 @@
 @import "./chakra-ui.scss";
 
-.formkit-actions {
-  margin-top: var(--space-6);
+// .formkit-actions {
+//   margin-top: var(--space-6);
   
-  .formkit-outer[data-type=submit] {
-    margin-bottom: 0;
-  }
-}
+//   .formkit-outer[data-type=submit] {
+//     margin-bottom: 0;
+//   }
+// }
 
-.formkit-outer {
-  max-width: 100%;
-  width: 100%;
-  margin-bottom: var(--space-3) !important;
+// .formkit-outer {
+//   max-width: 100%;
+//   width: 100%;
+//   margin-bottom: var(--space-3) !important;
 
-  &[data-type="textarea"], &[data-type="text"] {
-    margin-bottom: var(--space-6);
-  }
+//   &[data-type="textarea"], &[data-type="text"] {
+//     margin-bottom: var(--space-6);
+//   }
 
-  .formkit-wrapper {
-    max-width: 100%;
+//   .formkit-wrapper {
+//     max-width: 100%;
 
-    .formkit-label {
-      @include chakra-label;
-      padding-bottom: 0;
-    }
-  }
-  .formkit-help {
-    @extend .chakra-form-help-text;
-  }
-  .formkit-inner {
-    box-shadow: none;
+//     .formkit-label {
+//       @include chakra-label;
+//       padding-bottom: 0;
+//     }
+//   }
+//   .formkit-help {
+//     @extend .chakra-form-help-text;
+//   }
+//   .formkit-inner {
+//     box-shadow: none;
 
-    .formkit-input {
-      @include chakra-input;
-    }
-    textarea.formkit-input {
-      @include chakra-input;
-      line-height: 1.3;
-      height: initial;
-    }
-  }
+//     .formkit-input {
+//       @include chakra-input;
+//     }
+//     textarea.formkit-input {
+//       @include chakra-input;
+//       line-height: 1.3;
+//       height: initial;
+//     }
+//   }
 
-  .formkit-input[type="submit"] {
-    @include chakra-button-solid;
+//   .formkit-input[type="submit"] {
+//     @include chakra-button-solid;
     
-    display: flex;
-    margin-left: auto;
-    margin-right: 0;
+//     display: flex;
+//     margin-left: auto;
+//     margin-right: 0;
     
-  }
-}
+//   }
+// }
 
-:root {
-  --fk-border-radius: var(--radii-md);
-}
+// :root {
+//   --fk-border-radius: var(--radii-md);
+// }

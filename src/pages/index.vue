@@ -11,7 +11,7 @@ import SearchBox from "~/components/aloglia/search-box.vue";
 import FiltersFooter from "~/components/eightyk/filters-footer.vue";
 import JobCardSkeleton from "~/components/job-card-skeleton.vue";
 import JobCard from "~/components/job-card.vue";
-import { history } from "instantsearch.js/es/lib/routers";
+// import { history } from "instantsearch.js/es/lib/routers";
 import { useComp, useHooks } from "~/utils/structs";
 import { tracking } from "~/utils/tracking";
 import queryToJson from "~/utils/queryToJson";
@@ -132,7 +132,7 @@ interface RouteState {
     <AisInstantSearch
       show-loading-indicator
       :routing="{
-        router: history(),
+        // router: history(),
         stateMapping: {
           stateToRoute(uiState: { [indexId: string]: RouteState }): RouteState {
             const indexUiState: RouteState = uiState[hooks.config.public.algoliaJobsIndex];
