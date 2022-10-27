@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<!-- <script lang="ts" setup>
 import { useRuntimeConfig } from "#app";
 import { CFlex, CBox, CButton } from "@chakra-ui/vue-next";
 import { FormKitNode } from "@formkit/core";
@@ -43,10 +43,10 @@ async function submitComment(
     captureEvent(error);
   }
 }
-</script>
+</script> -->
 
 <template>
-  <CBox class="comment comment-form">
+  <!-- <CBox class="comment comment-form">
     <FormKit type="form" :actions="false" @submit="submitComment">
       <CFlex gap="3">
         <FormKit name="email" validation="required|email" placeholder="joe@example.com" />
@@ -66,10 +66,10 @@ async function submitComment(
         </CButton>
       </CFlex>
     </FormKit>
-  </CBox>
+  </CBox> -->
 </template>
 
-<style lang="scss">
+<!-- <style lang="scss">
 .comment {
   .formkit-outer {
     width: fit-content;
@@ -87,4 +87,4 @@ async function submitComment(
     }
   }
 }
-</style>
+</style> -->

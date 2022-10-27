@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
 import { CFlex, CBox, CButton, CHStack, CLink, CIcon, CText } from "@chakra-ui/vue-next";
-import {  useBreakpoints } from "@vueuse/core";
+import { useBreakpoints } from "@vueuse/core";
 import { formatDistance, format } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
 import { ref, onMounted } from "vue";
 import JobCardLocationShort from "~/components/job-card-location-short.vue";
 import JobCardTags from "~/components/job-card-tags.vue";
-import JobView from "~/components/job-view.vue";
+// import JobView from "~/components/job-view.vue";
 import { breakpointsChakra, strings } from "~/constants";
-import { theme } from "~/styles/theme";
+// import { theme } from "~/styles/theme";
 import { useComp } from "~/utils/structs";
 import { JobAlgolia } from "~/utils/types";
 import { tracking } from "~/utils/tracking";
@@ -455,7 +455,7 @@ function onMouseUp(e) {
         </TransitionCollapseFade>
       </CBox>
 
-      <VueFinalModal
+      <!-- <VueFinalModal
         v-if="state.isShowModal.value"
         v-model="state.isShowModal.value"
         :lock-scroll="false"
@@ -483,7 +483,7 @@ function onMouseUp(e) {
             :is-visible="state.isShowModal.value"
           />
         </CFlex>
-      </VueFinalModal>
+      </VueFinalModal> -->
     </CBox>
   </div>
 </template>

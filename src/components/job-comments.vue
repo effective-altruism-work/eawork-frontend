@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<!-- <script lang="ts" setup>
 import { useRuntimeConfig } from "#app";
 import { CFlex, CBox, CText } from "@chakra-ui/vue-next";
 import { captureEvent } from "@sentry/vue";
@@ -29,10 +29,10 @@ async function loadComments(args?: { isReload?: boolean }) {
 onMounted(loadComments);
 
 onUpdated(loadComments);
-</script>
+</script> -->
 
 <template>
-  <div>
+  <!-- <div>
     <CText mt="10" font-size="lg" font-weight="bold" line-height="1">Comments</CText>
 
     <CBox mt="3" v-for="comment in comments" v-if="comments?.length" :key="comment.pk">
@@ -81,5 +81,5 @@ onUpdated(loadComments);
         @comment-posted="loadComments({ isReload: true })"
       />
     </CFlex>
-  </div>
+  </div> -->
 </template>

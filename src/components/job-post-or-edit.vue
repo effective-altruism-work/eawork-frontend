@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
 import {
   CBox,
@@ -101,10 +101,11 @@ async function postJob(
 function tagsChanged(tagTypeName: TagTypeName, tagsNew: Tag[]) {
   state.form.tags.value[tagTypeName] = tagsNew.map((tag) => tag.text);
 }
-</script>
+</script> -->
 
 <template>
-  <CBox :mb="theme.spaces.md * 4" pt="0.5" v-if="state.isLoaded.value">
+  <div>coming soon...</div>
+  <!-- <CBox :mb="theme.spaces.md * 4" pt="0.5" v-if="state.isLoaded.value">
     <FormKit
       type="form"
       :submit-label="props.jobPk ? 'Submit Revision' : 'Post'"
@@ -256,9 +257,9 @@ function tagsChanged(tagTypeName: TagTypeName, tagsNew: Tag[]) {
         </CAlertDescription>
       </CAlert>
     </CFlex>
-  </CBox>
+  </CBox> -->
 </template>
 
-<style lang="scss">
+<!-- <style lang="scss">
 @import "~/styles/formkit.scss";
-</style>
+</style> -->

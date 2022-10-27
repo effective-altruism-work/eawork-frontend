@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<!-- <script lang="ts" setup>
 import { CFlex, CBox, CButton, CText } from "@chakra-ui/vue-next";
 import { formatDistance } from "date-fns";
 import { ref } from "vue";
@@ -27,11 +27,11 @@ function onCommentPosted() {
   state.isEditorVisible.value = false;
   emit("commentPosted");
 }
-</script>
+</script> -->
 
 <template>
   <CBox class="comment">
-    <CBox bg="#f3f6fa" border-radius="md" p="3" py="2" mt="3">
+    <!-- <CBox bg="#f3f6fa" border-radius="md" p="3" py="2" mt="3">
       <CFlex align="center" gap="3">
         <CText color="gray.500" font-size="sm">{{ comment.author.first_name }}</CText>
       </CFlex>
@@ -61,6 +61,6 @@ function onCommentPosted() {
         @cancel-clicked="state.isEditorVisible.value = false"
         @comment-posted="onCommentPosted"
       />
-    </CBox>
+    </CBox> -->
   </CBox>
 </template>
