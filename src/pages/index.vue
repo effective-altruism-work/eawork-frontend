@@ -1,15 +1,6 @@
 <script setup lang="ts">
 import { useHead, useRuntimeConfig, useRoute, useRouter } from "#app";
-import {
-  chakra,
-  CFlex,
-  CHeading,
-  CButton,
-  CVStack,
-  CLink,
-  CBox,
-  CText,
-} from "@chakra-ui/vue-next";
+import { chakra, CFlex, CVStack, CLink, CBox, CText } from "@chakra-ui/vue-next";
 import { useBreakpoints } from "@vueuse/core";
 import algoliasearch from "algoliasearch";
 import { onBeforeMount, onMounted, ref, watch, onBeforeUnmount } from "vue";
@@ -25,9 +16,9 @@ import { useComp, useHooks } from "~/utils/structs";
 import { tracking } from "~/utils/tracking";
 import queryToJson from "~/utils/queryToJson";
 import { JobAlgolia } from "~/utils/types";
-import { OhVueIcon } from "oh-vue-icons";
 import riveted from "~/utils/riveted";
 import { breakpointsChakra } from "../constants";
+import log from "../utils/log";
 
 const hooks = useHooks(() => {
   const config = useRuntimeConfig();
@@ -136,57 +127,7 @@ interface RouteState {
 
 <template>
   <CBox>
-    <CBox>
-      <CVStack :mt="[8, null, null, 14]" :mb="[6, null, null, 14]" :gap="[4, null, null, 3]">
-        <CFlex justify="space-between" align="center">
-          <CHeading line-height="0.8" :font-size="['2.7rem', null, null, '5xl']">
-            Jobs
-          </CHeading>
-        </CFlex>
-        <CText font-size="lg"
-          >Handpicked to help you tackle the
-          <CLink href="https://80000hours.org/problem-profiles/">
-            world’s most pressing problems
-          </CLink>
-          with your career.
-        </CText>
-      </CVStack>
-
-      <CFlex
-        gap="7"
-        :mt="{ lg: -2 }"
-        :mb="{ base: 8, lg: 6 }"
-        :font-size="{ base: 'sm', md: 'md' }"
-        align="center"
-      >
-        <CLink
-          display="flex"
-          align-items="center"
-          href="https://80000hours.org/job-board/top-orgs/"
-          text-decoration="underline"
-          color="gray.400"
-        >
-          <OhVueIcon name="md-starrate-round" scale="1.1" style="margin-bottom: 1px" />
-          <chakra.span ml="1">Top recommended organisations</chakra.span>
-        </CLink>
-        <CLink
-          display="flex"
-          align-items="center"
-          href="https://80000hours.org/job-board/faq/"
-          text-decoration="underline"
-          color="gray.400"
-        >
-          <OhVueIcon name="bi-question-circle-fill" scale="1" style="margin-right: 4px" />
-          <chakra.span ml="px">FAQ</chakra.span>
-        </CLink>
-      </CFlex>
-      <CFlex v-if="hooks.breakpoints.smaller('lg').value" justify-content="center" mb="4">
-        <CButton width="100%" @click="state.isShowMobileFilters.value = true">
-          <OhVueIcon name="md-filterlist-round" scale="1.1" style="margin-bottom: 1px" />
-          <chakra.span ml="2">Filters and alerts</chakra.span>
-        </CButton>
-      </CFlex>
-    </CBox>
+    <IndexHeader @show-mobile="() => (state.isShowMobileFilters.value = true)" />
 
     <AisInstantSearch
       show-loading-indicator
@@ -203,6 +144,8 @@ interface RouteState {
             };
           },
           routeToState(routeState): { [indexId: string]: RouteState } {
+
+            // side effect
             if (routeState?.jobPk) {
               state.jobPkCurrent.value = Number(routeState.jobPk);
             }
@@ -296,6 +239,7 @@ interface RouteState {
           </CBox>
         </CFlex>
 
+        <!-- desktop -->
         <CFlex
           v-if="!hooks.breakpoints.smaller('lg').value"
           :display="comp.filtersDisplay"
