@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
 import { CBox, CFormLabel } from "@chakra-ui/vue-next";
 import algoliasearch, { SearchClient } from "algoliasearch";
@@ -67,10 +67,11 @@ function onTagsChanged(newTags: Array<Tag>) {
   state.tags.value = newTags;
   emit("tagsChanged", props.typeName, newTags);
 }
-</script>
+</script> -->
 
 <template>
-  <CBox :mt="theme.spaces.md" w="100%">
+  <div>coming soon...</div>
+  <!-- <CBox :mt="theme.spaces.md" w="100%">
     <CFormLabel size="sm">{{ props.typeLabel }}</CFormLabel>
     <CBox :mt="theme.spaces.md / 3">
       <VueTagsInput
@@ -91,7 +92,7 @@ function onTagsChanged(newTags: Array<Tag>) {
       </VueTagsInput>
     </CBox>
     <FormHelperText v-if="helpText" :text="props.helpText" />
-  </CBox>
+  </CBox> -->
 </template>
 
 <style lang="scss">
