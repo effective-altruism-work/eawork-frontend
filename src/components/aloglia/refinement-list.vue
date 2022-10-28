@@ -24,6 +24,22 @@ const state = {
   config: useRuntimeConfig(),
 };
 
+const placeholder = computed(() => {
+  if (!props.searchable) return "";
+
+  if (!props.label) return "Search...";
+  switch (props.label[0].toLowerCase()) {
+    case "a":
+    case "e":
+    case "i":
+    case "o":
+    case "u":
+      return `Find an ${props.label.toLocaleLowerCase()}...`;
+    default:
+      return `Find a ${props.label.toLocaleLowerCase()}...`;
+  }
+});
+
 onMounted(async () => {
   if (props.attribute === "tags_area") {
     const res = await axios.get(`${state.config.public.apiBase}/tags/?is_featured=true`);
@@ -127,7 +143,7 @@ function carefulRefine(
       >
         <CInput
           v-if="props.searchable"
-          placeholder="Search..."
+          :placeholder="placeholder"
           @input="searchForItems($event.currentTarget.value)"
           mb="1"
           border-radius="md"

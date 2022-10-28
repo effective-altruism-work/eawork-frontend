@@ -31,7 +31,7 @@ function format(refinement: {
   }
 
   if (refinement.label === "Other (pressing)") {
-    return "Climate Chage";
+    return "Climate change";
   }
 
   return refinement.label;
