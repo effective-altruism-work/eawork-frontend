@@ -1,8 +1,9 @@
 import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
-  modules: ["@nuxt/ui", "@formkit/nuxt"],
-  // modules: ["@nuxt/ui", "@formkit/nuxt", "nuxt-purgecss"],
+  modules: ["@nuxt/ui"],
+  // modules: ["@nuxt/ui", "@formkit/nuxt"],
+  // modules: ["@nuxt/ui", "nuxt-purgecss"],
   meta: [{ name: "viewport", content: "width=device-width, initial-scale=1" }],
   build: {
     transpile: ["oh-vue-icons"],
