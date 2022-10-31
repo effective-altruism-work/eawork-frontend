@@ -6,7 +6,8 @@ import { onMounted, ref } from "vue";
 import RefinementListFacets from "~/components/aloglia/refinement-list-facets.vue";
 import { TagDjango, TagTypeName, AlgoliaFilterItem } from "~/utils/types";
 import { chakra } from "@chakra-ui/vue-next";
-import { captureEvent } from "@sentry/vue";
+import * as Sentry from "@sentry/vue";
+const { captureEvent } = Sentry;
 
 const props = defineProps<{
   label: string;

@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
 import { CFlex, CButton, CInput, CText, CBox } from "@chakra-ui/vue-next";
-import { captureEvent } from "@sentry/vue";
+// import { captureEvent } from "@sentry/vue";
 import axios from "axios";
 import { OhVueIcon } from "oh-vue-icons";
 import { ref, watch } from "vue";
 import { theme } from "~/styles/theme";
 import { tracking } from "~/utils/tracking";
+import * as Sentry from '@sentry/vue';
+const { captureEvent } = Sentry;
+
 
 const props = defineProps<{
   queryJson: null | {

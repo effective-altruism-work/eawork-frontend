@@ -1,12 +1,17 @@
 import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
-  modules: ["@nuxt/ui"],
-  // modules: ["@nuxt/ui", "@formkit/nuxt"],
-  // modules: ["@nuxt/ui", "nuxt-purgecss"],
-  meta: [{ name: "viewport", content: "width=device-width, initial-scale=1" }],
+  modules: ["@nuxt/ui", "vue-final-modal"],
+  // modules: ["@nuxt/ui", "vue-final-modal", "@formkit/nuxt"],
+  // modules: ["@nuxt/ui", "vue-final-modal", "nuxt-purgecss"],
+  meta: { viewport: "width=device-width, initial-scale=1" },
   build: {
-    transpile: ["oh-vue-icons"],
+    transpile: [
+      "oh-vue-icons",
+      "vue-instantsearch",
+      "instantsearch.js/es",
+      "vue3-observe-visibility",
+    ],
   },
   runtimeConfig: {
     public: {
@@ -18,6 +23,9 @@ export default defineNuxtConfig({
       algoliaJobsIndex: "jobs_prod",
       segmentId: "",
     },
+  },
+  sentry: {
+    dsn: "https://dd139303defc491b9710df6eac619379@o1376636.ingest.sentry.io/6685828",
   },
   ssr: false,
   srcDir: "src/",

@@ -80,14 +80,16 @@ onBeforeMount(async () => {
   pageTrack();
 });
 
-onMounted(async () => {
-  await loadJobIfSpecified();
-});
-
 // track page-stays
 onMounted(() => {
   riveted();
 });
+
+onMounted(async () => {
+  await loadJobIfSpecified();
+});
+
+
 
 watch(state.jobPkCurrent, (jobPkCurrentNew: number | null) => {
   const url = new URL(window.location as any);
