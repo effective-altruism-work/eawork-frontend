@@ -6,12 +6,8 @@ export default defineNuxtConfig({
   // modules: ["@nuxt/ui", "vue-final-modal", "nuxt-purgecss"],
   meta: { viewport: "width=device-width, initial-scale=1" },
   build: {
-    transpile: [
-      "oh-vue-icons",
-      "vue-instantsearch",
-      "instantsearch.js/es",
-      "vue3-observe-visibility",
-    ],
+    transpile: ["oh-vue-icons"],
+    // transpile: ["oh-vue-icons", "vue-instantsearch","instantsearch.js/es","vue3-observe-visibility",
   },
   runtimeConfig: {
     public: {
