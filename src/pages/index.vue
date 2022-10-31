@@ -89,8 +89,6 @@ onMounted(async () => {
   await loadJobIfSpecified();
 });
 
-
-
 watch(state.jobPkCurrent, (jobPkCurrentNew: number | null) => {
   const url = new URL(window.location as any);
   if (jobPkCurrentNew) {
@@ -242,8 +240,9 @@ interface RouteState {
         </CFlex>
 
         <!-- desktop -->
+        <!-- v-if="!hooks.breakpoints.smaller('lg').value" -->
+
         <CFlex
-          v-if="!hooks.breakpoints.smaller('lg').value"
           :display="comp.filtersDisplay"
           direction="column"
           :min-w="comp.filtersW"
@@ -253,6 +252,7 @@ interface RouteState {
         >
           <SearchBox :is-show-results-count="true" />
           <CurrentRefinements />
+
           <CBox mb="7">
             <BtnJobsAlert :query-json="state.queryJson.value" />
           </CBox>
@@ -261,8 +261,8 @@ interface RouteState {
         </CFlex>
 
         <!-- mobile -->
+        <!-- v-else -->
         <FilterModal
-          v-else
           :is-show-mobile-filters="state.isShowMobileFilters.value"
           :query-json="state.queryJson.value"
           @hide-mobile="() => (state.isShowMobileFilters.value = false)"
