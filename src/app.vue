@@ -10,7 +10,7 @@ const state = {
 
 useHead({
   titleTemplate: (titleChunk) =>
-    titleChunk ? `${titleChunk} - 80,000 hours` : "80,000 hours",
+    titleChunk ? `${titleChunk} - 80,000 Hours` : "80,000 Hours",
   link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.ico" }],
   meta: [
     { name: "og:title", content: "80,000 Hours Job Board" },
