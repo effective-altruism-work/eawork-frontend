@@ -44,6 +44,12 @@ export default defineNuxtPlugin((nuxtApp) => {
 });
 
 const theme = extendTheme({
+  colors: {
+    "lightest-gray": "#f1f1f1",
+    "light-gray": "#aaaaaa",
+    "dark-gray": "#2a2e30",
+    "mid-gray": "#484e51",
+  },
   fonts: {
     // heading: `Open Sans, Helvetica, Arial, sans-serif`,
     // body: `Open Sans, Helvetica, Arial, sans-serif`,

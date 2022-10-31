@@ -3,6 +3,7 @@ import { useHead, useRuntimeConfig } from "#app";
 
 import { CContainer, CFlex, CBox } from "@chakra-ui/vue-next";
 import Menu from "~/components/eightyk/menu.vue";
+import EightykFooter from "./components/eightyk/eightyk-footer.vue";
 
 const state = {
   config: useRuntimeConfig(),
@@ -10,7 +11,7 @@ const state = {
 
 useHead({
   titleTemplate: (titleChunk) =>
-    titleChunk ? `${titleChunk} - 80,000 hours` : "80,000 hours",
+    titleChunk ? `${titleChunk} - 80,000 Hours` : "80,000 Hours",
   link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.ico" }],
   meta: [
     { name: "og:title", content: "80,000 Hours Job Board" },
@@ -49,6 +50,7 @@ useHead({
         <NuxtPage />
       </CContainer>
     </CBox>
+    <EightykFooter />
   </CFlex>
 </template>
 

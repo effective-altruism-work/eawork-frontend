@@ -70,7 +70,6 @@ function onNodeClick(event, node) {
       align="center"
       py="2"
     >
-      <!-- max-w="1050px"  -->
       <CContainer display="flex" justify-content="space-between" w="100%" max-w="8xl">
         <CFlex>Home</CFlex>
 

@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
 import { CFlex, CButton, CInput, CText, CBox } from "@chakra-ui/vue-next";
-import { captureEvent } from "@sentry/vue";
+// import { captureEvent } from "@sentry/vue";
 import axios from "axios";
 import { OhVueIcon } from "oh-vue-icons";
 import { ref, watch } from "vue";
 import { theme } from "~/styles/theme";
 import { tracking } from "~/utils/tracking";
+import * as Sentry from "@sentry/vue";
+const { captureEvent } = Sentry;
 
 const props = defineProps<{
   queryJson: null | {
@@ -20,28 +22,21 @@ const hooks = {
 };
 
 const state = {
-  isShowModal: ref(false),
   email: ref(""),
-  isSubmitting: ref(false),
-  isSuccess: ref(null),
-  isError: ref(false),
+  isShowModal: ref(false),
+  fsm: ref<"ready" | "success" | "submitting" | "error">("ready"),
 };
 
 watch(state.isShowModal, () => {
-  state.isSuccess.value = false;
-  state.isError.value = false;
+  state.fsm.value = "ready";
 });
 
 async function createJobAlert() {
-  state.isSubmitting.value = true;
-  state.isSuccess.value = null;
-  state.isError.value = false;
-
   if (state.email.value === "") {
-    state.isError.value = true;
-    state.isSubmitting.value = false;
     return;
   }
+
+  state.fsm.value = "submitting";
 
   try {
     const res = await axios.post(`${hooks.config.public.apiBase}/jobs/subscribe`, {
@@ -51,7 +46,7 @@ async function createJobAlert() {
     });
 
     if (res.data.success) {
-      state.isSuccess.value = true;
+      state.fsm.value = "success";
 
       const separated: { [key: string]: string[] } = {};
 
@@ -89,14 +84,13 @@ async function createJobAlert() {
       });
     } else {
       console.log("non success");
-      state.isError.value = true;
+      state.fsm.value = "error";
     }
   } catch (e) {
     captureEvent(e);
     console.log("error", e);
-    state.isError.value = true;
+    state.fsm.value = "error";
   }
-  state.isSubmitting.value = false;
 }
 </script>
 
@@ -195,18 +189,25 @@ async function createJobAlert() {
 
         <CButton
           @click="createJobAlert()"
-          :is-loading="state.isSubmitting.value"
+          :is-loading="state.fsm.value === 'submitting'"
           max-w="fit-content"
+          :disabled="!state.email.value"
           align-self="flex-end"
           color-scheme="blue"
+          :opacity="state.email.value ? 1 : 0.5"
           font-size="lg"
+          :_hover="
+            state.email.value
+              ? { cursor: 'pointer', backgroundColor: 'blue.700' }
+              : { backgroundColor: null, cursor: 'default' }
+          "
         >
           Subscribe
         </CButton>
       </CFlex>
 
-      <CText v-if="state.isSuccess.value" color="green.500">Subscribed!</CText>
-      <CText v-if="state.isError.value" color="red.500">An error occurred</CText>
+      <CText v-if="state.fsm.value === 'success'" color="green.500">Subscribed!</CText>
+      <CText v-if="state.fsm.value === 'error'" color="red.500">An error occurred</CText>
     </CFlex>
   </VueFinalModal>
 </template>

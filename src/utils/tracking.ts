@@ -1,6 +1,9 @@
 import { Analytics, AnalyticsBrowser, Context } from "@segment/analytics-next";
-import { captureEvent } from "@sentry/vue";
+// import { captureEvent } from "@sentry/vue";
 import { JobAlgolia } from "~/utils/types";
+import * as Sentry from '@sentry/vue';
+const { captureEvent } = Sentry;
+
 
 const eightyKProps = {
   category: "Job board",
