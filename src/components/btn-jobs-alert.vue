@@ -191,10 +191,16 @@ async function createJobAlert() {
           @click="createJobAlert()"
           :is-loading="state.fsm.value === 'submitting'"
           max-w="fit-content"
-          :disabled="!state.email"
+          :disabled="!state.email.value"
           align-self="flex-end"
           color-scheme="blue"
+          :opacity="state.email.value ? 1 : 0.5"
           font-size="lg"
+          :_hover="
+            state.email.value
+              ? { cursor: 'pointer', backgroundColor: 'blue.700' }
+              : { backgroundColor: null, cursor: 'default' }
+          "
         >
           Subscribe
         </CButton>
