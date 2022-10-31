@@ -28,11 +28,13 @@ const timeSincePosting = computed(() => {
   const millisecondDifference =
     new Date().getTime() - new Date(props.job.posted_at * 1000).getTime();
   const isToday = millisecondDifference < 86_400_000; // less than 24 hours
-  return isToday
-    ? "Today"
-    : formatDistance(new Date(props.job.posted_at * 1000), new Date(), {
-        addSuffix: true,
-      });
+
+  let formatted = formatDistance(new Date(props.job.posted_at * 1000), new Date(), {
+    addSuffix: true,
+  });
+
+  formatted = formatted.replace("about ", "");
+  return isToday ? "Today" : formatted;
 });
 
 const emit = defineEmits<{
