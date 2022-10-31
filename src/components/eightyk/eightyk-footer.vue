@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { chakra, CFlex, CVStack, CLink, CBox, CText, CHeading } from "@chakra-ui/vue-next";
 import FooterImageLink from "./footer-image-link.vue";
+import FooterBoxLink from "./footer-box-link.vue";
 </script>
 
 <template>
@@ -41,45 +42,77 @@ import FooterImageLink from "./footer-image-link.vue";
               <CBox pr="12" w="33.3%" class="col-xxs-12 col-xs-6 col-sm-4">
                 <CHeading font-size="lg" color="light-gray">Our research</CHeading>
                 <chakra.ul color="lightest-gray">
-                  <li><a href="/key-ideas/">Overview: Key ideas</a></li>
                   <li>
-                    <a href="/problem-profiles/">Especially pressing world problems</a>
+                    <FooterBoxLink href="/key-ideas/">Overview: Key ideas</FooterBoxLink>
                   </li>
-                  <li><a href="/key-ideas/#effective-altruism">Effective altruism</a></li>
-                  <li><a href="/articles/future-generations/">Future generations</a></li>
-                  <li><a href="/career-reviews/">List of careers</a></li>
-                  <li><a href="/career-guide/">Career guide (2017)</a></li>
-                  <li><a href="/research/">All our research</a></li>
+                  <li>
+                    <FooterBoxLink href="/problem-profiles/"
+                      >Especially pressing world problems</FooterBoxLink
+                    >
+                  </li>
+                  <li>
+                    <FooterBoxLink href="/key-ideas/#effective-altruism"
+                      >Effective altruism</FooterBoxLink
+                    >
+                  </li>
+                  <li>
+                    <FooterBoxLink href="/articles/future-generations/"
+                      >Future generations</FooterBoxLink
+                    >
+                  </li>
+                  <li>
+                    <FooterBoxLink href="/career-reviews/">List of careers</FooterBoxLink>
+                  </li>
+                  <li>
+                    <FooterBoxLink href="/career-guide/">Career guide (2017)</FooterBoxLink>
+                  </li>
+                  <li><FooterBoxLink href="/research/">All our research</FooterBoxLink></li>
                 </chakra.ul>
               </CBox>
               <CBox w="33.3%" pr="12" class="col-xxs-12 col-xs-6 col-sm-4">
                 <CHeading font-size="lg" color="light-gray">Take action</CHeading>
                 <chakra.ul color="lightest-gray">
-                  <li><a href="/career-planning/">Plan your career</a></li>
-                  <li><a href="/job-board/">Find a job</a></li>
                   <li>
-                    <a href="/advising/?int_campaign=2021-04__footer-navigation"
-                      >Get 1-1 advice</a
+                    <FooterBoxLink href="/career-planning/">Plan your career</FooterBoxLink>
+                  </li>
+                  <li><FooterBoxLink href="/job-board/">Find a job</FooterBoxLink></li>
+                  <li>
+                    <FooterBoxLink href="/advising/?int_campaign=2021-04__footer-navigation"
+                      >Get 1-1 advice</FooterBoxLink
                     >
                   </li>
-                  <li><a href="/community/">Join our community</a></li>
+                  <li>
+                    <FooterBoxLink href="/community/">Join our community</FooterBoxLink>
+                  </li>
                 </chakra.ul>
                 <CHeading font-size="lg" color="light-gray">Follow us</CHeading>
                 <chakra.ul color="lightest-gray">
-                  <li><a href="/podcast/">Subscribe to our podcast</a></li>
-                  <li><a href="/newsletter/">Join our newsletter</a></li>
-                  <li><a href="https://twitter.com/80000hours">Follow us on Twitter</a></li>
                   <li>
-                    <a href="https://www.linkedin.com/groups/5057625/"
-                      >Join our LinkedIn group</a
+                    <FooterBoxLink href="/podcast/">Subscribe to our podcast</FooterBoxLink>
+                  </li>
+                  <li>
+                    <FooterBoxLink href="/newsletter/">Join our newsletter</FooterBoxLink>
+                  </li>
+                  <li>
+                    <FooterBoxLink external href="https://twitter.com/80000hours"
+                      >Follow us on Twitter</FooterBoxLink
                     >
                   </li>
                   <li>
-                    <a href="https://www.facebook.com/80000Hours/">Follow us on Facebook</a>
+                    <FooterBoxLink external href="https://www.linkedin.com/groups/5057625/"
+                      >Join our LinkedIn group</FooterBoxLink
+                    >
                   </li>
                   <li>
-                    <a href="https://www.youtube.com/user/eightythousandhours"
-                      >Follow us on YouTube</a
+                    <FooterBoxLink external href="https://www.facebook.com/80000Hours/"
+                      >Follow us on Facebook</FooterBoxLink
+                    >
+                  </li>
+                  <li>
+                    <FooterBoxLink
+                      external
+                      href="https://www.youtube.com/user/eightythousandhours"
+                      >Follow us on YouTube</FooterBoxLink
                     >
                   </li>
                 </chakra.ul>
@@ -87,12 +120,20 @@ import FooterImageLink from "./footer-image-link.vue";
               <CBox pr="12" w="33.3%" class="col-xxs-12 col-xs-6 col-sm-4">
                 <CHeading font-size="lg" color="light-gray">About us</CHeading>
                 <chakra.ul color="lightest-gray">
-                  <li><a href="/about/">Why 80,000 Hours?</a></li>
-                  <li><a href="/about/meet-the-team/">Meet the team</a></li>
-                  <li><a href="/about/donors/">Our donors</a></li>
-                  <li><a href="/about/media-coverage/">Media coverage</a></li>
+                  <li><FooterBoxLink href="/about/">Why 80,000 Hours?</FooterBoxLink></li>
                   <li>
-                    <a href="/about/credibility/evaluations/mistakes/">Our mistakes</a>
+                    <FooterBoxLink href="/about/meet-the-team/">Meet the team</FooterBoxLink>
+                  </li>
+                  <li><FooterBoxLink href="/about/donors/">Our donors</FooterBoxLink></li>
+                  <li>
+                    <FooterBoxLink href="/about/media-coverage/"
+                      >Media coverage</FooterBoxLink
+                    >
+                  </li>
+                  <li>
+                    <FooterBoxLink href="/about/credibility/evaluations/mistakes/"
+                      >Our mistakes</FooterBoxLink
+                    >
                   </li>
                 </chakra.ul>
               </CBox>
