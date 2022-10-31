@@ -123,6 +123,36 @@ interface RouteState {
   refinementList: { [key: string]: string[] };
   jobPk: string;
 }
+
+function stateToRoute(uiState: { [indexId: string]: RouteState }): RouteState {
+  const indexUiState: RouteState = uiState[hooks.config.public.algoliaJobsIndex];
+  return {
+    query: indexUiState.query,
+    refinementList: indexUiState.refinementList,
+    ...(state.jobPkCurrent.value
+      ? { jobPk: String(state.jobPkCurrent.value) }
+      : { jobPk: undefined }),
+    ...state.otherParams, // don't lose our other params
+  };
+}
+
+function routeToState(routeState: RouteState): { [indexId: string]: RouteState } {
+  // side effect
+  if (routeState?.jobPk) {
+    state.jobPkCurrent.value = Number(routeState.jobPk);
+  }
+
+  return {
+    [hooks.config.public.algoliaJobsIndex]: {
+      query: routeState.query,
+      refinementList: routeState.refinementList,
+      jobPk: routeState.jobPk,
+    },
+  };
+}
+
+const stateMapping = { stateToRoute, routeToState };
+const routing = { stateMapping };
 </script>
 
 <template>
@@ -131,35 +161,7 @@ interface RouteState {
 
     <AisInstantSearch
       show-loading-indicator
-      :routing="{
-        // router: history(),
-        stateMapping: {
-          stateToRoute(uiState: { [indexId: string]: RouteState }): RouteState {
-            const indexUiState: RouteState = uiState[hooks.config.public.algoliaJobsIndex];
-            return {
-              query: indexUiState.query,
-              refinementList: indexUiState.refinementList,
-              ...(state.jobPkCurrent.value ? { jobPk: String(state.jobPkCurrent.value) } : {jobPk: undefined}),
-              ...state.otherParams // don't lose our other params
-            };
-          },
-          routeToState(routeState): { [indexId: string]: RouteState } {
-
-            // side effect
-            if (routeState?.jobPk) {
-              state.jobPkCurrent.value = Number(routeState.jobPk);
-            }
-            
-            return {
-              [hooks.config.public.algoliaJobsIndex]: {
-                query: routeState.query,
-                refinementList: routeState.refinementList,
-                jobPk: routeState.jobPk
-              },
-            };
-          },
-        },
-      }"
+      :routing="routing"
       :search-client="hooks.searchClient"
       :search-function="searchFunction"
       :index-name="hooks.config.public.algoliaJobsIndex"
