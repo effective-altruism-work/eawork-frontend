@@ -3,6 +3,7 @@ import { useHead, useRuntimeConfig } from "#app";
 
 import { CContainer, CFlex, CBox } from "@chakra-ui/vue-next";
 import Menu from "~/components/eightyk/menu.vue";
+import EightykFooter from "./components/eightyk/eightyk-footer.vue";
 
 const state = {
   config: useRuntimeConfig(),
@@ -49,6 +50,7 @@ useHead({
         <NuxtPage />
       </CContainer>
     </CBox>
+    <EightykFooter />
   </CFlex>
 </template>
 
