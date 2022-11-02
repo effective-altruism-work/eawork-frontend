@@ -130,7 +130,7 @@ async function createJobAlert() {
         <CBox v-else>
           <CText w="fit-content" font-size="lg">Subscribe to all new job posts</CText>
           <CText w="fit-content" color="gray.500" font-size="sm"
-            >(because your search query is unspecified)</CText
+            >(because you haven't selected any filters or searched for any keywords)</CText
           >
         </CBox>
 
