@@ -73,6 +73,17 @@ onBeforeMount(async () => {
     params[key] = val;
   }
 
+  // if (window.location.href.includes("tags_location_type")) {
+  //   const url = window.location.href;
+  //   window.history.replaceState(
+  //     {},
+  //     "",
+  //     url
+  //       .replace("refinementList%5Btags_location_type%5D%5B0%5D=Remote", "")
+  //       .replace("refinementList[tags_location_type][0]=Remote", ""),
+  //   );
+  // }
+
   state.otherParams = params;
 
   await tracking.init(hooks.config.public.segmentId);
@@ -91,6 +102,7 @@ onMounted(async () => {
 
 watch(state.jobPkCurrent, (jobPkCurrentNew: number | null) => {
   const url = new URL(window.location as any);
+  console.log({ url });
   if (jobPkCurrentNew) {
     url.searchParams.set("jobPk", jobPkCurrentNew as any);
     window.history.pushState({}, "", url);
@@ -137,6 +149,15 @@ function stateToRoute(uiState: { [indexId: string]: RouteState }): RouteState {
 }
 
 function routeToState(routeState: RouteState): { [indexId: string]: RouteState } {
+  let refinementList = routeState?.refinementList;
+
+  // let { tags_location_type, ...remaining } =
+  //   typeof refinementList !== "object"
+  //     ? { tags_location_type: undefined }
+  //     : "tags_location_type" in refinementList
+  //     ? refinementList
+  //     : { tags_location_type: undefined, ...refinementList };
+
   // side effect
   if (routeState?.jobPk) {
     state.jobPkCurrent.value = Number(routeState.jobPk);
@@ -145,7 +166,7 @@ function routeToState(routeState: RouteState): { [indexId: string]: RouteState }
   return {
     [hooks.config.public.algoliaJobsIndex]: {
       query: routeState.query,
-      refinementList: routeState.refinementList,
+      refinementList: refinementList,
       jobPk: routeState.jobPk,
     },
   };

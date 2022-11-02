@@ -59,7 +59,6 @@ const props = defineProps<{
       :searchable="true"
     />
 
-    <!--<RefinementList attribute="tags_location_type" label="Location" />-->
     <!--<RefinementList attribute="tags_skill" label="Skills" />-->
     <!--<RefinementList attribute="tags_generic" label="Tags" />-->
 
