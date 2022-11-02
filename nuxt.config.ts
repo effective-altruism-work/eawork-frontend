@@ -20,9 +20,6 @@ export default defineNuxtConfig({
       segmentId: "",
     },
   },
-  sentry: {
-    dsn: "https://dd139303defc491b9710df6eac619379@o1376636.ingest.sentry.io/6685828",
-  },
   ssr: false,
   srcDir: "src/",
 });

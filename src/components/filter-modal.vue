@@ -53,7 +53,7 @@ const emit = defineEmits(["showMobile", "hideMobile"]);
       </CFlex>
 
       <SearchBox :is-show-results-count="true" />
-      <CBox mt="3">
+      <CBox mt="12">
         <CurrentRefinements />
       </CBox>
       <CBox mb="7">
