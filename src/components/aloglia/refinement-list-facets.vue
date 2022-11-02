@@ -20,7 +20,9 @@ function formatTagName(tagName: string) {
     case "Global":
       return "Remote, Global";
     case "Global health & poverty":
-      return "Global health & development"
+      return "Global health & development";
+    case "Software Engineering":
+      return "Software engineering"; 
     default:
       return tagName;
   }
