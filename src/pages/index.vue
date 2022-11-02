@@ -102,7 +102,6 @@ onMounted(async () => {
 
 watch(state.jobPkCurrent, (jobPkCurrentNew: number | null) => {
   const url = new URL(window.location as any);
-  console.log({ url });
   if (jobPkCurrentNew) {
     url.searchParams.set("jobPk", jobPkCurrentNew as any);
     window.history.pushState({}, "", url);
