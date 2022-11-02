@@ -19,6 +19,8 @@ function formatTagName(tagName: string) {
       return "International security & coop";
     case "Global":
       return "Remote, Global";
+    case "Global health & poverty":
+      return "Global health & development"
     default:
       return tagName;
   }
