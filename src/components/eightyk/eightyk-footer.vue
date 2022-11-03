@@ -213,7 +213,7 @@ import FooterBoxLink from "./footer-box-link.vue";
           </CBox>
           <CBox width="33%" font-size="13px" class="col-md-4 smallest footer__disclaimer">
             <CText mb="4">
-              Please <CLink is-external href="/about/contact/">contact us</CLink> to suggest
+              Please <CLink is-external href="https://80000hours.org/about/contact/">contact us</CLink> to suggest
               ideas, improvements, or corrections.
             </CText>
             <CText mb="4">
@@ -221,14 +221,14 @@ import FooterBoxLink from "./footer-box-link.vue";
               is up to you. We don’t take responsibility for any loss that results from the
               use of information on the site. Please consult our&nbsp;<CLink
                 is-external
-                href="/legal/"
+                href="https://80000hours.org/legal/"
                 >full legal disclaimer</CLink
               >
-              and <CLink is-external href="/privacy-policy/">privacy policy</CLink>.
+              and <CLink is-external href="https://80000hours.org/about/privacy-policy/">privacy policy</CLink>.
             </CText>
             <CText mb="4">
               © 2021 – all rights reserved. Please
-              <CLink is-external href="/about/contact/">contact us</CLink> if you wish to
+              <CLink is-external href="https://80000hours.org/about/contact/">contact us</CLink> if you wish to
               redistribute, translate, or adapt this work.
             </CText>
           </CBox>
