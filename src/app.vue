@@ -5,6 +5,9 @@ import { CContainer, CFlex, CBox } from "@chakra-ui/vue-next";
 import Menu from "~/components/eightyk/menu.vue";
 import EightykFooter from "./components/eightyk/eightyk-footer.vue";
 
+import { breakpointsChakra } from "~/constants";
+const breakpoints = useBreakpoints(breakpointsChakra);
+
 const state = {
   config: useRuntimeConfig(),
 };
@@ -50,7 +53,7 @@ useHead({
         <NuxtPage />
       </CContainer>
     </CBox>
-    <EightykFooter />
+    <EightykFooter v-if="breakpoints.greaterOrEqual('lg').value" />
   </CFlex>
 </template>
 
