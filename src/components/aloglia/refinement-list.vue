@@ -59,15 +59,16 @@ onMounted(async () => {
 });
 
 function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other") {
-  if (props.attribute === "tags_area") {
-    if (section === "featured") {
-      return items.filter((item) => state.tagsFeaturedNames.value.includes(item.value));
-    }
-    if (section === "other") {
-      return items.filter((item) => !state.tagsFeaturedNames.value.includes(item.value));
-    }
-  }
   return items;
+  // if (props.attribute === "tags_area") {
+  //   if (section === "featured") {
+  //     return items.filter((item) => state.tagsFeaturedNames.value.includes(item.value));
+  //   }
+  //   if (section === "other") {
+  //     return items.filter((item) => !state.tagsFeaturedNames.value.includes(item.value));
+  //   }
+  // }
+  // return items;
 }
 
 function carefulRefine(
@@ -174,7 +175,7 @@ function carefulRefine(
           </template>
         </AisRefinementList>
 
-        <CText
+        <!-- <CText
           v-if="props.attribute === 'tags_area'"
           mt="3"
           font-weight="bold"
@@ -189,7 +190,7 @@ function carefulRefine(
             href="https://80000hours.org/articles/existential-risks/"
             >existential risks</CLink
           >
-        </CText>
+        </CText> -->
 
         <chakra.ul mt="px">
           <li v-if="isFromSearch && !items.length">No results.</li>
@@ -199,6 +200,9 @@ function carefulRefine(
               filterFacetValuesIfNeeded(
                 items
                   .filter((i) => i.value !== 'Global priorities research')
+                  .map((i) =>
+                    i.label === 'Other (pressing)' ? { ...i, label: 'Climate change' } : i,
+                  )
                   .map((i) => ({
                     ...i,
                     hover:
@@ -215,14 +219,13 @@ function carefulRefine(
           />
         </chakra.ul>
 
-        <CBox v-if="props.attribute === 'tags_area'">
+        <!-- <CBox v-if="props.attribute === 'tags_area'">
           <CText mt="3" font-weight="bold" color="gray.500" font-size="15px">
             Other pressing problems
           </CText>
 
           <chakra.ul mt="1px">
             <li v-if="isFromSearch && !items.length">No results.</li>
-            <!-- MAIN -->
             <RefinementListFacets
               :items="
                 filterFacetValuesIfNeeded(
@@ -237,7 +240,7 @@ function carefulRefine(
               :count-bg="props.countBg"
             />
           </chakra.ul>
-        </CBox>
+        </CBox> -->
 
         <CButton size="sm" v-if="canToggleShowMore" @click="toggleShowMore">
           {{ !isShowingMore ? "Show more" : "Show less" }}
