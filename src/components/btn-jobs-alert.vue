@@ -8,6 +8,7 @@ import { ref, watch } from "vue";
 import { theme } from "~/styles/theme";
 import { tracking } from "~/utils/tracking";
 import * as Sentry from "@sentry/vue";
+import emailIsValid from "../utils/emailIsValid";
 const { captureEvent } = Sentry;
 
 const props = defineProps<{
@@ -25,6 +26,7 @@ const state = {
   email: ref(""),
   isShowModal: ref(false),
   fsm: ref<"ready" | "success" | "submitting" | "error">("ready"),
+  error: ref(""),
 };
 
 watch(state.isShowModal, () => {
@@ -32,10 +34,17 @@ watch(state.isShowModal, () => {
 });
 
 async function createJobAlert() {
+  state.error.value = "";
   if (state.email.value === "") {
     return;
   }
 
+  if (!emailIsValid(state.email.value)) {
+    state.fsm.value = "error";
+    state.error.value = "Email is invalid";
+    return;
+  }
+  
   state.fsm.value = "submitting";
 
   try {
@@ -207,7 +216,9 @@ async function createJobAlert() {
       </CFlex>
 
       <CText v-if="state.fsm.value === 'success'" color="green.500">Subscribed!</CText>
-      <CText v-if="state.fsm.value === 'error'" color="red.500">An error occurred</CText>
+      <CText v-if="state.fsm.value === 'error'" color="red.500">{{
+        state.error.value || "An error occurred"
+      }}</CText>
     </CFlex>
   </VueFinalModal>
 </template>

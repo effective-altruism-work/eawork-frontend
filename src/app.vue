@@ -3,7 +3,7 @@ import { useHead, useRuntimeConfig } from "#app";
 
 import { CContainer, CFlex, CBox } from "@chakra-ui/vue-next";
 import Menu from "~/components/eightyk/menu.vue";
-import EightykFooter from "./components/eightyk/eightyk-footer.vue";
+// import LazyEightykFooter from "./components/eightyk/eightyk-footer.vue";
 
 import { breakpointsChakra } from "~/constants";
 const breakpoints = useBreakpoints(breakpointsChakra);
@@ -11,6 +11,13 @@ const breakpoints = useBreakpoints(breakpointsChakra);
 const state = {
   config: useRuntimeConfig(),
 };
+
+const show = ref(false);
+onMounted(() => {
+  setTimeout(() => {
+    show.value = true;
+  }, 10);
+});
 
 useHead({
   titleTemplate: (titleChunk) =>
@@ -53,7 +60,7 @@ useHead({
         <NuxtPage />
       </CContainer>
     </CBox>
-    <EightykFooter v-if="breakpoints.greaterOrEqual('lg').value" />
+    <LazyEightykFooter v-if="show && breakpoints.greaterOrEqual('lg').value" />
   </CFlex>
 </template>
 

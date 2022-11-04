@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
-import { CBox, CText, CButton, CInput, CFormLabel } from "@chakra-ui/vue-next";
+import { CBox, CText, CButton, CInput, CFormLabel, CLink } from "@chakra-ui/vue-next";
 import axios from "axios";
 import { onMounted, ref } from "vue";
 import RefinementListFacets from "~/components/aloglia/refinement-list-facets.vue";
@@ -59,15 +59,16 @@ onMounted(async () => {
 });
 
 function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other") {
-  if (props.attribute === "tags_area") {
-    if (section === "featured") {
-      return items.filter((item) => state.tagsFeaturedNames.value.includes(item.value));
-    }
-    if (section === "other") {
-      return items.filter((item) => !state.tagsFeaturedNames.value.includes(item.value));
-    }
-  }
   return items;
+  // if (props.attribute === "tags_area") {
+  //   if (section === "featured") {
+  //     return items.filter((item) => state.tagsFeaturedNames.value.includes(item.value));
+  //   }
+  //   if (section === "other") {
+  //     return items.filter((item) => !state.tagsFeaturedNames.value.includes(item.value));
+  //   }
+  // }
+  // return items;
 }
 
 function carefulRefine(
@@ -174,32 +175,57 @@ function carefulRefine(
           </template>
         </AisRefinementList>
 
-        <CText
+        <!-- <CText
           v-if="props.attribute === 'tags_area'"
           mt="3"
           font-weight="bold"
+          color="gray.500"
           font-size="15px"
         >
-          Top recommended problems
-        </CText>
+          Reducing
+          <CLink
+            is-external
+            text-decoration="underline"
+            color="gray.500"
+            href="https://80000hours.org/articles/existential-risks/"
+            >existential risks</CLink
+          >
+        </CText> -->
 
         <chakra.ul mt="px">
           <li v-if="isFromSearch && !items.length">No results.</li>
           <RefinementListFacets
             :attribute="props.attribute"
-            :items="filterFacetValuesIfNeeded(items, 'featured')"
+            :items="
+              filterFacetValuesIfNeeded(
+                items
+                  .filter((i) => i.value !== 'Global priorities research')
+                  .map((i) =>
+                    i.label === 'Other (pressing)' ? { ...i, label: 'Climate change' } : i,
+                  )
+                  .map((i) => ({
+                    ...i,
+                    hover:
+                      i.value === 'Other policy-focused'
+                        ? 'We expect these to be good opportunities for career-building, and potentially help you directly contribute to existential risk reduction in the future'
+                        : '',
+                  })),
+                'featured',
+              )
+            "
             :refine="refine"
             :searchable="props.searchable"
             :count-bg="props.countBg"
           />
         </chakra.ul>
 
-        <CBox v-if="props.attribute === 'tags_area'">
-          <CText mt="3" font-weight="bold" font-size="15px"> Other pressing problems </CText>
+        <!-- <CBox v-if="props.attribute === 'tags_area'">
+          <CText mt="3" font-weight="bold" color="gray.500" font-size="15px">
+            Other pressing problems
+          </CText>
 
           <chakra.ul mt="1px">
             <li v-if="isFromSearch && !items.length">No results.</li>
-            <!-- MAIN -->
             <RefinementListFacets
               :items="
                 filterFacetValuesIfNeeded(
@@ -214,7 +240,7 @@ function carefulRefine(
               :count-bg="props.countBg"
             />
           </chakra.ul>
-        </CBox>
+        </CBox> -->
 
         <CButton size="sm" v-if="canToggleShowMore" @click="toggleShowMore">
           {{ !isShowingMore ? "Show more" : "Show less" }}
