@@ -206,7 +206,7 @@ function carefulRefine(
                   .map((i) => ({
                     ...i,
                     hover:
-                      i.value === 'Other-policy-focused'
+                      i.value === 'Other policy-focused'
                         ? 'We expect these to be good opportunities for career-building, and potentially help you directly contribute to existential risk reduction in the future'
                         : '',
                   })),
