@@ -37,6 +37,8 @@ const { href, alt, src, src2 } = props;
         ${src}    1x,
         ${src2} 2x
       `"
+      width="84"
+      height="84"
     />
   </CLink>
 </template>

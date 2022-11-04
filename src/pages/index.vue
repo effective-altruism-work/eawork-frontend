@@ -178,7 +178,6 @@ const routing = { stateMapping };
 <template>
   <CBox>
     <IndexHeader @show-mobile="() => (state.isShowMobileFilters.value = true)" />
-
     <AisInstantSearch
       show-loading-indicator
       :routing="routing"

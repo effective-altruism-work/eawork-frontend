@@ -2,6 +2,9 @@
 import { chakra, CFlex, CVStack, CLink, CBox, CText, CHeading } from "@chakra-ui/vue-next";
 import FooterImageLink from "./footer-image-link.vue";
 import FooterBoxLink from "./footer-box-link.vue";
+import { breakpointsChakra } from "~/constants";
+
+const breakpoints = useBreakpoints(breakpointsChakra);
 </script>
 
 <template>
@@ -21,27 +24,40 @@ import FooterBoxLink from "./footer-box-link.vue";
       justify-content="center"
       align-items="center"
       background-color="dark-gray"
-      py="10"
+      :py="{ base: 5, lg: 10 }"
     >
       <CFlex
         justify-content="center"
         align-items="center"
         flex-direction="column"
+        w="100%"
         max-w="1050px"
       >
-        <CFlex mb="4" font-size="17.5px" w="100%" class="navigation-footer">
+        <CFlex
+          mb="4"
+          :font-size="{ base: '14.875px', lg: '17.5px' }"
+          w="100%"
+          class="navigation-footer"
+        >
           <CBox
             background-color="mid-gray"
             p="4"
+            :m="{ base: 2, lg: 0 }"
             rounded="lg"
             w="100%"
             mb="4"
             class="bg-gray-dark border-radius-small padding-left padding-right"
           >
-            <CFlex w="100%" justify-content="between" class="list-no-bullet">
-              <CBox pr="12" w="33.3%" class="col-xxs-12 col-xs-6 col-sm-4">
-                <CHeading font-size="lg" color="light-gray">Our research</CHeading>
-                <chakra.ul color="lightest-gray">
+            <CFlex
+              w="100%"
+              :flex-direction="{ base: 'column', lg: 'row' }"
+              justify-content="between"
+            >
+              <CBox :pr="{ base: 0, lg: 12 }" :w="{ base: '100%', lg: '33%' }">
+                <CHeading :font-size="{ base: 'md', lg: 'lg' }" color="light-gray"
+                  >Our research</CHeading
+                >
+                <chakra.ul width="100%" color="lightest-gray">
                   <li>
                     <FooterBoxLink href="/key-ideas/">Overview: Key ideas</FooterBoxLink>
                   </li>
@@ -69,9 +85,14 @@ import FooterBoxLink from "./footer-box-link.vue";
                   <li><FooterBoxLink href="/research/">All our research</FooterBoxLink></li>
                 </chakra.ul>
               </CBox>
-              <CBox w="33.3%" pr="12" class="col-xxs-12 col-xs-6 col-sm-4">
-                <CHeading font-size="lg" color="light-gray">Take action</CHeading>
-                <chakra.ul color="lightest-gray">
+              <CBox :w="{ base: '100%', lg: '33%' }" :pr="{ base: 0, lg: 12 }">
+                <CHeading
+                  :mt="{ base: 4, lg: 0 }"
+                  :font-size="{ base: 'md', lg: 'lg' }"
+                  color="light-gray"
+                  >Take action</CHeading
+                >
+                <chakra.ul width="100%" color="lightest-gray">
                   <li>
                     <FooterBoxLink href="/career-planning/">Plan your career</FooterBoxLink>
                   </li>
@@ -85,8 +106,13 @@ import FooterBoxLink from "./footer-box-link.vue";
                     <FooterBoxLink href="/community/">Join our community</FooterBoxLink>
                   </li>
                 </chakra.ul>
-                <CHeading font-size="lg" color="light-gray">Follow us</CHeading>
-                <chakra.ul color="lightest-gray">
+                <CHeading
+                  :mt="{ base: 4, lg: 0 }"
+                  :font-size="{ base: 'md', lg: 'lg' }"
+                  color="light-gray"
+                  >Follow us</CHeading
+                >
+                <chakra.ul width="100%" color="lightest-gray">
                   <li>
                     <FooterBoxLink href="/podcast/">Subscribe to our podcast</FooterBoxLink>
                   </li>
@@ -117,8 +143,13 @@ import FooterBoxLink from "./footer-box-link.vue";
                   </li>
                 </chakra.ul>
               </CBox>
-              <CBox pr="12" w="33.3%" class="col-xxs-12 col-xs-6 col-sm-4">
-                <CHeading font-size="lg" color="light-gray">About us</CHeading>
+              <CBox :pr="{ base: 0, lg: 12 }" :w="{ base: '100%', lg: '33%' }">
+                <CHeading
+                  :mt="{ base: 4, lg: 0 }"
+                  :font-size="{ base: 'md', lg: 'lg' }"
+                  color="light-gray"
+                  >About us</CHeading
+                >
                 <chakra.ul color="lightest-gray">
                   <li><FooterBoxLink href="/about/">Why 80,000 Hours?</FooterBoxLink></li>
                   <li>
@@ -140,11 +171,20 @@ import FooterBoxLink from "./footer-box-link.vue";
             </CFlex>
           </CBox>
         </CFlex>
-        <CFlex color="light-gray" flex-wrap="nowrap">
-          <CBox width="66%" pr="8" class="col-md-8">
-            <CFlex mb="4">
-              <CBox width="67%" pr="7">
-                <CFlex mb="4" class="col-xxs-12 col-xxs-offset-0 col-md-7">
+        <CFlex
+          :px="{ base: 4, lg: 0 }"
+          color="light-gray"
+          :flex-dir="{ base: 'column', lg: 'row' }"
+          flex-wrap="nowrap"
+        >
+          <CBox :width="{ base: '100%', lg: '66%' }" :pr="{ base: 0, lg: 8 }">
+            <CFlex :flex-dir="{ base: 'column', lg: 'row' }" mb="4">
+              <CBox
+                :width="{ base: '100%', lg: '67%' }"
+                :pr="{ base: 0, lg: 7 }"
+                :pb="{ base: 4, lg: 0 }"
+              >
+                <CFlex mb="4">
                   <FooterImageLink
                     href="https://www.ox.ac.uk/"
                     alt="Oxford-fb"
@@ -165,15 +205,15 @@ import FooterBoxLink from "./footer-box-link.vue";
                     src2="https://80000hours.org/wp-content/themes/80000hours/assets/img/footer/gpi-logo_2x.gif"
                   />
                 </CFlex>
-                <CBox class="col-xxs-12 visible-xxs margin-bottom-small">
-                  <CText font-size="13px" color="#8e9092" class="smallest">
+                <CBox>
+                  <CText font-size="13px" color="#8e9092">
                     We're affiliated with the Future of Humanity Institute and the Global
                     Priorities Institute at the University of Oxford.
                   </CText>
                 </CBox>
               </CBox>
-              <CBox width="33%">
-                <CFlex mb="4" class="col-xxs-12 col-xxs-offset-0 col-md-5">
+              <CBox :width="{ base: '100%', lg: '33%' }">
+                <CFlex mb="4">
                   <FooterImageLink
                     href="https://centreforeffectivealtruism.org/"
                     alt="CEA
@@ -211,10 +251,17 @@ import FooterBoxLink from "./footer-box-link.vue";
               </CBox>
             </CFlex>
           </CBox>
-          <CBox width="33%" font-size="13px" class="col-md-4 smallest footer__disclaimer">
+          <CBox
+            :width="{ base: '100%', lg: '33%' }"
+            font-size="13px"
+            class="col-md-4 smallest footer__disclaimer"
+          >
             <CText mb="4">
-              Please <CLink is-external href="https://80000hours.org/about/contact/">contact us</CLink> to suggest
-              ideas, improvements, or corrections.
+              Please
+              <CLink is-external href="https://80000hours.org/about/contact/"
+                >contact us</CLink
+              >
+              to suggest ideas, improvements, or corrections.
             </CText>
             <CText mb="4">
               We do our best to provide useful information, but how you use the information
@@ -224,25 +271,36 @@ import FooterBoxLink from "./footer-box-link.vue";
                 href="https://80000hours.org/legal/"
                 >full legal disclaimer</CLink
               >
-              and <CLink is-external href="https://80000hours.org/about/privacy-policy/">privacy policy</CLink>.
+              and
+              <CLink is-external href="https://80000hours.org/about/privacy-policy/"
+                >privacy policy</CLink
+              >.
             </CText>
             <CText mb="4">
               © 2021 – all rights reserved. Please
-              <CLink is-external href="https://80000hours.org/about/contact/">contact us</CLink> if you wish to
-              redistribute, translate, or adapt this work.
+              <CLink is-external href="https://80000hours.org/about/contact/"
+                >contact us</CLink
+              >
+              if you wish to redistribute, translate, or adapt this work.
             </CText>
           </CBox>
         </CFlex>
       </CFlex>
     </CFlex>
     <CFlex
+      bg="white"
       justify-content="center"
       align-items="center"
       py="30px"
-      height="60px"
+      :px="{ base: 2, lg: 0 }"
+      :height="{ lg: '60px' }"
       box-sizing="content-box"
     >
-      <CFlex gap="12">
+      <CFlex
+        :flex-wrap="{ base: 'wrap', lg: 'nowrap' }"
+        justify-content="center"
+        :gap="{ base: 8, lg: 12 }"
+      >
         <CLink
           is-external
           href="https://www.economist.com/international/2018/05/31/to-help-save-the-world-become-a-banker-not-a-doctor"

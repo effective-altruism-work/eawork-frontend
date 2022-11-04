@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { CText, CBadge, chakra } from "@chakra-ui/vue-next";
 import Checkbox from "~/components/chakra/checkbox.vue";
+import FacetHoverText from "~/components/facet-hover-text.vue";
 import { AlgoliaFilterItem } from "~~/src/utils/types";
 
 const props = defineProps<{
@@ -10,6 +11,8 @@ const props = defineProps<{
   refine: (string) => void;
   countBg?: string;
 }>();
+
+const isHovering = ref("");
 
 function formatTagName(tagName: string) {
   switch (tagName) {
@@ -22,7 +25,7 @@ function formatTagName(tagName: string) {
     case "Global health & poverty":
       return "Global health & development";
     case "Software Engineering":
-      return "Software engineering"; 
+      return "Software engineering";
     default:
       return tagName;
   }
@@ -30,7 +33,16 @@ function formatTagName(tagName: string) {
 </script>
 
 <template>
-  <chakra.li v-for="item in props.items" :key="item.value" mt="1">
+  <chakra.li
+    v-for="item in props.items"
+    :key="item.value"
+    @mouseover="isHovering = item.value"
+    @focus="isHovering = item.value"
+    @mouseleave="isHovering = ''"
+    @blur="isHovering = ''"
+    position="relative"
+    mt="1"
+  >
     <Checkbox
       :model-value="item.isRefined"
       @update:model-value="() => props.refine(item.value)"
@@ -54,6 +66,7 @@ function formatTagName(tagName: string) {
           {{ item.count.toLocaleString() }}
         </CBadge>
       </CText>
+      <FacetHoverText v-if="item?.hover && isHovering === item.value" :text="item?.hover" />
     </Checkbox>
   </chakra.li>
 </template>
