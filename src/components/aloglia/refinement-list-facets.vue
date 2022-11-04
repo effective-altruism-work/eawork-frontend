@@ -66,7 +66,10 @@ function formatTagName(tagName: string) {
           {{ item.count.toLocaleString() }}
         </CBadge>
       </CText>
-      <FacetHoverText v-if="item?.hover && isHovering === item.value" :text="item?.hover" />
+      <FacetHoverText
+        v-if="false && item?.hover && isHovering === item.value"
+        :text="item?.hover"
+      />
     </Checkbox>
   </chakra.li>
 </template>
