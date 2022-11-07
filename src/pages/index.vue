@@ -20,6 +20,8 @@ import riveted from "~/utils/riveted";
 import { breakpointsChakra } from "../constants";
 import log from "../utils/log";
 
+const breakpoints = useBreakpoints(breakpointsChakra);
+
 const hooks = useHooks(() => {
   const config = useRuntimeConfig();
   return {
@@ -205,6 +207,7 @@ const routing = { stateMapping };
       :search-function="searchFunction"
       :index-name="hooks.config.public.algoliaJobsIndex"
     >
+      <CurrentRefinements v-if="breakpoints.smaller('lg').value" />
       <CFlex :mb="comp.space * 4">
         <CFlex direction="column" :min-w="comp.cardW">
           <CFlex justify="flex-end" :gap="comp.space">

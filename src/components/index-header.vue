@@ -12,6 +12,7 @@ import {
 import { OhVueIcon } from "oh-vue-icons";
 import { breakpointsChakra } from "../constants";
 import { useHooks } from "../utils/structs";
+import CurrentRefinements from "./aloglia/current-refinements.vue";
 
 const breakpoints = useBreakpoints(breakpointsChakra);
 
@@ -67,11 +68,17 @@ const emit = defineEmits(["showMobile"]);
     <CFlex v-if="breakpoints.smaller('lg').value" justify-content="center" mb="4">
       <CButton width="100%" @click="emit('showMobile')">
         <OhVueIcon name="md-filterlist-round" scale="1.1" style="margin-bottom: 1px" />
-        <chakra.span ml="2"
-          >Filters {{ props.filterCount ? ` (${props.filterCount})` : "" }} and
-          alerts</chakra.span
-        >
+        <chakra.span ml="2">Filters and alerts</chakra.span>
       </CButton>
     </CFlex>
+    <!-- <AisInstantSearch
+      show-loading-indicator
+      :routing="routing"
+      :search-client="hooks.searchClient"
+      :search-function="searchFunction"
+      :index-name="hooks.config.public.algoliaJobsIndex"
+    >
+      <CurrentRefinements v-if="breakpoints.smaller('lg').value" />
+    </AisInstantSearch> -->
   </CBox>
 </template>
