@@ -33,7 +33,6 @@ const state = {
 
 const placeholder = computed(() => {
   let label = props.label.toLowerCase();
-  console.log(label);
   switch (label) {
     case "organisation":
       label = "organisations";
