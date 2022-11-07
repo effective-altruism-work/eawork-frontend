@@ -6,7 +6,9 @@ import { onMounted, ref } from "vue";
 import RefinementListFacets from "~/components/aloglia/refinement-list-facets.vue";
 import { TagDjango, TagTypeName, AlgoliaFilterItem } from "~/utils/types";
 import { chakra } from "@chakra-ui/vue-next";
+import { SearchClient, SearchIndex } from "algoliasearch";
 import * as Sentry from "@sentry/vue";
+
 const { captureEvent } = Sentry;
 
 const props = defineProps<{
@@ -16,6 +18,8 @@ const props = defineProps<{
   limit?: number;
   showMoreLimit?: number;
   mt?: number | string;
+  trueItems?: string[];
+  locationType?: "country" | "city";
   amount?: number;
   countBg?: string;
 }>();
@@ -24,6 +28,7 @@ const state = {
   tagsFeatured: ref<TagDjango[]>([]),
   tagsFeaturedNames: ref<string[]>([]),
   config: useRuntimeConfig(),
+  // inputRef: ref<HTMLInputElement>(null),
 };
 
 const placeholder = computed(() => {
@@ -55,8 +60,33 @@ onMounted(async () => {
   }
 });
 
-function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other") {
-  return items;
+const trueLimit = computed(() => {
+  return !!props.locationType ? 24 : props.limit;
+});
+
+function filterFacetValuesIfNeeded(
+  items: AlgoliaFilterItem[],
+  section?: "featured" | "other",
+) {
+  if (!props.locationType || !props?.trueItems) {
+    return items;
+  }
+
+  let filteredItems: AlgoliaFilterItem[] = [];
+  if (props.locationType === "country") {
+    filteredItems = items.filter((i) => props.trueItems.includes(i.value));
+  } else {
+    filteredItems = items.filter((i) => props.trueItems.includes(i.value));
+  }
+
+  console.log({
+    items: items.map((i) => i.value),
+    trueItems: props.trueItems,
+    filtered: filteredItems,
+  });
+
+  return filteredItems.slice(0, 8);
+
   // if (props.attribute === "tags_area") {
   //   if (section === "featured") {
   //     return items.filter((item) => state.tagsFeaturedNames.value.includes(item.value));
@@ -126,7 +156,7 @@ function carefulRefine(
       v-else
       :attribute="props.attribute"
       :searchable="props.searchable"
-      :limit="props.limit"
+      :limit="trueLimit"
       :show-more-limit="props.showMoreLimit"
     >
       <template

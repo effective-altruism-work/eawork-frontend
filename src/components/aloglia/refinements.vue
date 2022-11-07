@@ -3,16 +3,18 @@ import { CBox } from "@chakra-ui/vue-next";
 import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns";
 import NumericMenu from "~/components/aloglia/numeric-menu.vue";
 import RefinementList from "~/components/aloglia/refinement-list.vue";
-import algoliasearch, { SearchIndex } from "algoliasearch";
+import { SearchClient, SearchIndex } from "algoliasearch";
 
 const props = defineProps<{
   countBg?: string;
   index: SearchIndex;
+  // searchClient: SearchClient;
 }>();
 
 const orgCount = ref(0);
 const cityCount = ref(0);
 const countryCount = ref(0);
+const initialFacets = reactive<{ [key: string]: string[] }>({});
 
 onMounted(async () => {
   const res = await props.index.search("", {
@@ -28,6 +30,11 @@ onMounted(async () => {
   orgCount.value = Object.keys(company_name).length;
   cityCount.value = Object.keys(tags_city).length;
   countryCount.value = Object.keys(tags_country).length;
+
+  for (const facetName in res.facets) {
+    const list = Object.keys(res.facets[facetName]);
+    initialFacets[facetName] = list;
+  }
 });
 </script>
 
@@ -41,20 +48,24 @@ onMounted(async () => {
       :mt="0"
     />
     <RefinementList
-      attribute="tags_country"
+      attribute="tags_location_80k"
       :amount="countryCount"
       :count-bg="props.countBg"
       label="Country"
       :limit="8"
+      :trueItems="initialFacets.tags_country"
+      location-type="country"
       :show-more-limit="20"
       :searchable="true"
     />
     <RefinementList
-      attribute="tags_city"
+      attribute="tags_location_80k"
       :amount="cityCount"
       :count-bg="props.countBg"
       label="City"
       :limit="8"
+      :trueItems="initialFacets.tags_city"
+      location-type="city"
       :show-more-limit="20"
       :searchable="true"
     />

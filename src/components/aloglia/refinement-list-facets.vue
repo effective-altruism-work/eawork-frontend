@@ -10,6 +10,7 @@ const props = defineProps<{
   searchable: boolean;
   refine: (string) => void;
   countBg?: string;
+  // searchStatement?: string;
 }>();
 
 const isHovering = ref("");
