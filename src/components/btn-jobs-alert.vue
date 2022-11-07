@@ -18,6 +18,18 @@ const props = defineProps<{
   };
 }>();
 
+const totalLength = computed(() => {
+  let tL = 0;
+
+  for (const FF of props.queryJson.facetFilters) {
+    for (const f of FF) {
+      tL += 1;
+    }
+  }
+
+  return tL;
+});
+
 const hooks = {
   config: useRuntimeConfig(),
 };
@@ -121,7 +133,7 @@ async function createJobAlert() {
     <!-- max-h="fit-content" -->
     <CFlex
       pos="absolute"
-      :top="{ base: '48px', lg: 44 }"
+      :top="{ base: '48px', lg: totalLength > 8 ? 24 : 44 }"
       right="0"
       left="0"
       max-w="390px"
@@ -164,7 +176,10 @@ async function createJobAlert() {
         py="3"
         px="4"
         mt="-1"
-        :font-size="{ base: 'xs', lg: 'md' }"
+        :font-size="{
+          base: 'xs',
+          lg: totalLength > 16 ? 'xs' : totalLength > 8 ? 'sm' : 'md',
+        }"
       >
         <CText v-if="props.queryJson.query">Query: {{ props.queryJson.query }}</CText>
         <CText
