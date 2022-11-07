@@ -15,6 +15,7 @@ import { useHooks } from "../utils/structs";
 
 const breakpoints = useBreakpoints(breakpointsChakra);
 
+const props = defineProps<{ filterCount: number }>();
 const emit = defineEmits(["showMobile"]);
 </script>
 
@@ -66,7 +67,10 @@ const emit = defineEmits(["showMobile"]);
     <CFlex v-if="breakpoints.smaller('lg').value" justify-content="center" mb="4">
       <CButton width="100%" @click="emit('showMobile')">
         <OhVueIcon name="md-filterlist-round" scale="1.1" style="margin-bottom: 1px" />
-        <chakra.span ml="2">Filters and alerts</chakra.span>
+        <chakra.span ml="2"
+          >Filters {{ props.filterCount ? ` (${props.filterCount})` : "" }} and
+          alerts</chakra.span
+        >
       </CButton>
     </CFlex>
   </CBox>

@@ -60,7 +60,7 @@ useHead({
         <NuxtPage />
       </CContainer>
     </CBox>
-    <LazyEightykFooter v-if="show && breakpoints.greaterOrEqual('lg').value" />
+    <LazyEightykFooter v-if="show" />
   </CFlex>
 </template>
 

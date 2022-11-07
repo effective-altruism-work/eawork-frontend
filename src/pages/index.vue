@@ -42,6 +42,22 @@ const state = {
   // featuredList: ref([])
 };
 
+const totalFiltersLength = computed(() => {
+  let tL = 0;
+
+  if (!state?.queryJson.value?.facetFilters) {
+    return tL;
+  }
+
+  for (const FF of state.queryJson.value?.facetFilters) {
+    for (const f of FF) {
+      tL += 1;
+    }
+  }
+
+  return tL;
+});
+
 const comp = useComp(() => ({
   cardW: { base: "100%", lg: "70%", xl: "74%" },
   filtersW: { base: 0, lg: "30%", xl: "26%" },
@@ -178,7 +194,10 @@ const routing = { stateMapping };
 
 <template>
   <CBox>
-    <IndexHeader @show-mobile="() => (state.isShowMobileFilters.value = true)" />
+    <IndexHeader
+      :filter-count="totalFiltersLength"
+      @show-mobile="() => (state.isShowMobileFilters.value = true)"
+    />
     <AisInstantSearch
       show-loading-indicator
       :routing="routing"
@@ -276,7 +295,10 @@ const routing = { stateMapping };
           <CurrentRefinements />
 
           <CBox mb="7">
-            <BtnJobsAlert :query-json="state.queryJson.value" />
+            <BtnJobsAlert
+              :total-filters-length="totalFiltersLength"
+              :query-json="state.queryJson.value"
+            />
           </CBox>
           <Refinements :index="state.searchIndex" />
           <FiltersFooter />

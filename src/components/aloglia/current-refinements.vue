@@ -117,7 +117,7 @@ function carefulRefine(
           <button
             v-if="i == items.length - 1 && j === item.refinements.length - 1"
             @click="() => clearAll(items)"
-            style="color: #076875"
+            style="color: #076875; margin-left: 4px;"
             :_hover="{ color: 'black' }"
           >
             <CText>Clear all filters </CText>
