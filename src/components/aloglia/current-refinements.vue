@@ -117,19 +117,10 @@ function carefulRefine(
           <button
             v-if="i == items.length - 1 && j === item.refinements.length - 1"
             @click="() => clearAll(items)"
-            style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              border-radius: 9999px;
-              background-color: white;
-              color: #484e51;
-              border: 1.5px solid #484e51;
-              width: 20px;
-              height: 20px;
-            "
+            style="color: #076875"
+            :_hover="{ color: 'black' }"
           >
-            <CIcon size="2" name="close" />
+            <CText>Clear all filters </CText>
           </button>
         </CFlex>
       </CFlex>
