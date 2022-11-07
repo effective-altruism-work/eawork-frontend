@@ -68,24 +68,18 @@ function filterFacetValuesIfNeeded(
   items: AlgoliaFilterItem[],
   section?: "featured" | "other",
 ) {
-  if (!props.locationType || !props?.trueItems) {
-    return items;
+  if (props?.locationType && props?.trueItems) {
+    let filteredItems: AlgoliaFilterItem[] = [];
+    if (props.locationType === "country") {
+      filteredItems = items.filter((i) => props.trueItems.includes(i.value));
+    } else {
+      filteredItems = items.filter((i) => props.trueItems.includes(i.value));
+    }
+
+    return filteredItems.slice(0, 8);
   }
-
-  let filteredItems: AlgoliaFilterItem[] = [];
-  if (props.locationType === "country") {
-    filteredItems = items.filter((i) => props.trueItems.includes(i.value));
-  } else {
-    filteredItems = items.filter((i) => props.trueItems.includes(i.value));
-  }
-
-  console.log({
-    items: items.map((i) => i.value),
-    trueItems: props.trueItems,
-    filtered: filteredItems,
-  });
-
-  return filteredItems.slice(0, 8);
+  
+  return items;
 
   // if (props.attribute === "tags_area") {
   //   if (section === "featured") {

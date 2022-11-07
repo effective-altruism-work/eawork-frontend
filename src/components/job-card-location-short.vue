@@ -9,6 +9,23 @@ const props = defineProps<{
   job: JobAlgolia;
 }>();
 
+const countriesWithRemotes = computed(() => {
+  const remoteLocations = props.job.tags_location_80k.filter((location) =>
+    location.includes("Remote"),
+  );
+
+  const remoteLocationsBare = remoteLocations.map((location) =>
+    location.replace("Remote, ", ""),
+  );
+
+  return [
+    ...new Set([
+      ...props.job.tags_country.filter((c) => !remoteLocationsBare.includes(c)),
+      ...remoteLocations,
+    ]),
+  ];
+});
+
 const comp = useComp(() => {
   const isJobRemote = props.job.tags_location_type.includes("Remote");
   const remoteLocation = isJobRemote
@@ -46,27 +63,18 @@ const comp = useComp(() => {
     />
 
     <CFlex :no-of-lines="1">
-      <CFlex v-if="comp.remoteLocation" align="center" display="inline" color="#9BADB6">
-        <CText display="inline">{{ comp.remoteLocation }}</CText>
-      </CFlex>
-
-      <CText
-        mx="2"
-        display="inline"
-        v-if="comp.remoteLocation && !comp.isRemoteOnly"
-        color="#9BADB6"
-      >
-        ▪
-      </CText>
-
       <CFlex display="inline" v-if="comp.isShouldShowCity" align="center" color="#9BADB6">
         <CText display="inline" v-for="(city, index) of comp.cities" :key="city"
           ><CText mx="2" display="inline" v-if="index">▪</CText>{{ city }}</CText
         >
       </CFlex>
 
-      <CFlex v-if="comp.isShouldShowCountry" align="center" color="#9BADB6">
-        <CText v-for="(country, index) in props.job.tags_country" :key="country">
+      <CFlex
+        v-if="!job.tags_city.length && countriesWithRemotes.length > 0"
+        align="center"
+        color="#9BADB6"
+      >
+        <CText v-for="(country, index) in countriesWithRemotes" :key="country">
           <CText mx="2" display="inline" v-if="index">▪</CText>{{ country }}</CText
         >
       </CFlex>

@@ -57,6 +57,23 @@ const state = {
   coordinates: ref({ x: null, y: null }),
 };
 
+const countriesWithRemotes = computed(() => {
+  const remoteLocations = props.job.tags_location_80k.filter((location) =>
+    location.includes("Remote"),
+  );
+
+  const remoteLocationsBare = remoteLocations.map((location) =>
+    location.replace("Remote, ", ""),
+  );
+
+  return [
+    ...new Set([
+      ...props.job.tags_country.filter((c) => !remoteLocationsBare.includes(c)),
+      ...remoteLocations,
+    ]),
+  ];
+});
+
 const cardRef = ref<HTMLDivElement | null>(null);
 
 function scrollToCard() {
@@ -251,7 +268,7 @@ function onMouseUp(e) {
                   :align="{ lg: 'center' }"
                   :gap="{ base: 'px', lg: 3 }"
                 >
-                  <CFlex v-if="comp.remoteLocation">
+                  <!-- <CFlex v-if="comp.remoteLocation">
                     {{ comp.remoteLocation }}
                   </CFlex>
                   <CBox
@@ -260,7 +277,7 @@ function onMouseUp(e) {
                     w="3px"
                     h="3px"
                     bg="gray.300"
-                  />
+                  /> -->
 
                   <CFlex
                     v-if="job.tags_city.length"
@@ -281,8 +298,8 @@ function onMouseUp(e) {
                   </CFlex>
 
                   <CFlex
-                    v-if="!job.tags_city.length && !comp.remoteLocation"
-                    v-for="(country, index) in job.tags_country"
+                    v-if="!job.tags_city.length && countriesWithRemotes.length > 0"
+                    v-for="(country, index) in countriesWithRemotes"
                     :key="country"
                   >
                     <CFlex align="center" gap="3" v-if="country !== strings.remoteLiteral">
