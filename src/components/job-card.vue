@@ -14,6 +14,7 @@ import { useComp } from "~/utils/structs";
 import { JobAlgolia } from "~/utils/types";
 import { tracking } from "~/utils/tracking";
 import JobHoverText from "~/components/job-hover-text.vue";
+import log from "../utils/log";
 
 const props = defineProps<{
   job: JobAlgolia;
@@ -99,6 +100,16 @@ function onMouseUp(e) {
   if (
     Math.abs(e.clientX - state.coordinates.value.x) > 5 ||
     Math.abs(e.clientY - state.coordinates.value.y) > 5
+  ) {
+    return;
+  }
+
+  // don't change card state if user is clicking a link
+  // brittle
+  console.log(e.target.classList);
+  if (
+    e.target.classList.contains("chakra-button") ||
+    e.target.classList.contains("chakra-link")
   ) {
     return;
   }
@@ -321,6 +332,7 @@ function onMouseUp(e) {
             <CFlex :mt="job.company_description ? 4 : 3" align="baseline" gap="4">
               <CText font-size="sm" color="gray.400">LINKS</CText>
               <CLink
+                class="link"
                 :href="props.job.company_url"
                 @click="
                   (event: MouseEvent) => {
@@ -338,6 +350,7 @@ function onMouseUp(e) {
                 Homepage
               </CLink>
               <CLink
+                class="link"
                 v-if="!!props.job?.company_ea_forum_url"
                 :href="props.job?.company_ea_forum_url"
                 @click="
@@ -397,11 +410,13 @@ function onMouseUp(e) {
 
               <CLink
                 @click="
-                  async (event: MouseEvent) => {
+                   (event: MouseEvent) => {
+                    log('CLICK');
                     event.stopPropagation();
-                    await tracking.sendJobEvent(props.job, 'url_external clicked');
+                    tracking.sendJobEvent(props.job, 'url_external clicked');
                   }
                 "
+                class="link"
                 @auxclick="tracking.sendJobEvent(props.job, 'url_external clicked')"
                 :href="job.url_external"
                 is-external

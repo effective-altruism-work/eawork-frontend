@@ -19,8 +19,6 @@ onMounted(async () => {
     facets: ["tags_country", "tags_city", "company_name"],
   });
 
-  console.log(res);
-
   const {
     company_name,
     tags_city,
@@ -30,10 +28,6 @@ onMounted(async () => {
   orgCount.value = Object.keys(company_name).length;
   cityCount.value = Object.keys(tags_city).length;
   countryCount.value = Object.keys(tags_country).length;
-});
-
-watchEffect(() => {
-  console.log(orgCount.value, cityCount.value, countryCount.value);
 });
 </script>
 
@@ -67,7 +61,7 @@ watchEffect(() => {
     <RefinementList
       attribute="tags_degree_required"
       :count-bg="props.countBg"
-      label="Education"
+      label="Education required"
     />
     <RefinementList
       attribute="tags_exp_required"
