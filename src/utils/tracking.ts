@@ -6,7 +6,7 @@ const { captureEvent } = Sentry;
 
 
 const eightyKProps = {
-  category: "Job board",
+  category: "Engagement"
 };
 
 export namespace tracking {
@@ -163,7 +163,7 @@ export namespace tracking {
 
   interface JobEvent80k {
     action: Action80k;
-    category: string | "Job board" | null;
+    category: string | "Engagement" | null;
     degreeRequirement: string | "Master's degree";
     experienceRequirement: string | "5+ years of experience";
     label: JobExternalURL | CompanyExternalURL;
