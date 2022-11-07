@@ -1,12 +1,11 @@
 import { Analytics, AnalyticsBrowser, Context } from "@segment/analytics-next";
 // import { captureEvent } from "@sentry/vue";
 import { JobAlgolia } from "~/utils/types";
-import * as Sentry from '@sentry/vue';
+import * as Sentry from "@sentry/vue";
 const { captureEvent } = Sentry;
 
-
 const eightyKProps = {
-  category: "Job board",
+  category: "Engagement",
 };
 
 export namespace tracking {
@@ -50,7 +49,11 @@ export namespace tracking {
     [analytics, context] = await AnalyticsBrowser.load({ writeKey });
   }
 
-  export async function sendJobEvent(job: JobAlgolia, action: Action) {
+  export async function sendJobEvent(
+    job: JobAlgolia,
+    action: Action,
+    // featuredList: string[],
+  ) {
     await waitForInit();
 
     const eventProps = get80kJobProps(job, action);
@@ -96,7 +99,24 @@ export namespace tracking {
     };
   }
 
-  function get80kJobProps(job: JobAlgolia, action: Action): JobEvent80k {
+  // function problemAreaIsRecommended(areas: string[], featuredList: string[]) {
+  //   let recommended = false;
+
+  //   const featuredLowercase = featuredList.map((s) => s.toLowerCase());
+  //   for (const area of areas) {
+  //     // if any of the role's areas are recommended, the role is recommended.
+  //     if (featuredLowercase.includes(area.toLowerCase())) {
+  //       recommended = true;
+  //     }
+  //   }
+  //   return recommended;
+  // }
+
+  function get80kJobProps(
+    job: JobAlgolia,
+    action: Action,
+    // featuredList: string[],
+  ): JobEvent80k {
     const props = {
       ...eightyKProps,
       label: job.url_external,
@@ -104,6 +124,7 @@ export namespace tracking {
       title: job.title,
       tier: "", // todo add to algolia
       problemArea: job.tags_area,
+      // problemAreaIsRecommended: problemAreaIsRecommended(job.tags_area, featuredList),
       roleType: job.tags_role_type,
       ...get80kLocations(job.tags_city, job.tags_country),
       experienceRequirement: job.tags_exp_required[0],
@@ -163,7 +184,7 @@ export namespace tracking {
 
   interface JobEvent80k {
     action: Action80k;
-    category: string | "Job board" | null;
+    category: string | "Engagement" | null;
     degreeRequirement: string | "Master's degree";
     experienceRequirement: string | "5+ years of experience";
     label: JobExternalURL | CompanyExternalURL;

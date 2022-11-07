@@ -80,11 +80,12 @@ class Riveted {
       this.sendUserTiming = options.userTimingHandler;
     }
 
-    if (options?.nonInteraction === false) {
-      this.nonInteraction = false;
-    } else {
-      this.nonInteraction = true;
-    }
+    // if (options?.nonInteraction === false) {
+    this.nonInteraction = false;
+    // } else {
+    //   this.nonInteraction = true;
+    // }
+
     // Basic activity event listeners
     this.addListener(document, "keydown", this.trigger);
     this.addListener(document, "click", this.trigger);
@@ -319,6 +320,7 @@ export default function rivetInit() {
         nonInteraction,
         label: secondsOnPage.toString(),
         value: reportInterval,
+        action: "Stayed on page",
       });
     },
   });

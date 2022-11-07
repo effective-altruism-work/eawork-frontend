@@ -6,7 +6,9 @@ import { onMounted, ref } from "vue";
 import RefinementListFacets from "~/components/aloglia/refinement-list-facets.vue";
 import { TagDjango, TagTypeName, AlgoliaFilterItem } from "~/utils/types";
 import { chakra } from "@chakra-ui/vue-next";
+import { SearchClient, SearchIndex } from "algoliasearch";
 import * as Sentry from "@sentry/vue";
+
 const { captureEvent } = Sentry;
 
 const props = defineProps<{
@@ -16,6 +18,9 @@ const props = defineProps<{
   limit?: number;
   showMoreLimit?: number;
   mt?: number | string;
+  trueItems?: string[];
+  locationType?: "country" | "city";
+  amount?: number;
   countBg?: string;
 }>();
 
@@ -23,28 +28,28 @@ const state = {
   tagsFeatured: ref<TagDjango[]>([]),
   tagsFeaturedNames: ref<string[]>([]),
   config: useRuntimeConfig(),
+  // inputRef: ref<HTMLInputElement>(null),
 };
 
 const placeholder = computed(() => {
-  if (!props.searchable) return "";
-
-  if (!props.label) return "Search...";
-  switch (props.label[0].toLowerCase()) {
-    case "a":
-    case "e":
-    case "i":
-    case "o":
-    case "u":
-      return `Find an ${props.label.toLocaleLowerCase()}...`;
-    default:
-      return `Find a ${props.label.toLocaleLowerCase()}...`;
+  let label = props.label.toLowerCase();
+  switch (label) {
+    case "organisation":
+      label = "organisations";
+      break;
+    case "city":
+      label = "cities";
+      break;
+    case "country":
+      label = "countries";
+      break;
   }
+  return `Search all ${props.amount} ${label}...`;
 });
 
 onMounted(async () => {
   if (props.attribute === "tags_area") {
     const res = await axios.get(`${state.config.public.apiBase}/tags/?is_featured=true`);
-
     if (!("data" in res) || !Array.isArray(res.data)) {
       const error = new Error(
         `No data returned from /tags/?is_featured=true. Data: ${JSON.stringify(res?.data)}`,
@@ -58,8 +63,27 @@ onMounted(async () => {
   }
 });
 
-function filterFacetValuesIfNeeded(items: any[], section?: "featured" | "other") {
+const trueLimit = computed(() => {
+  return !!props.locationType ? 24 : props.limit;
+});
+
+function filterFacetValuesIfNeeded(
+  items: AlgoliaFilterItem[],
+  section?: "featured" | "other",
+) {
+  if (props?.locationType && props?.trueItems) {
+    let filteredItems: AlgoliaFilterItem[] = [];
+    if (props.locationType === "country") {
+      filteredItems = items.filter((i) => props.trueItems.includes(i.value));
+    } else {
+      filteredItems = items.filter((i) => props.trueItems.includes(i.value));
+    }
+
+    return filteredItems.slice(0, 8);
+  }
+
   return items;
+
   // if (props.attribute === "tags_area") {
   //   if (section === "featured") {
   //     return items.filter((item) => state.tagsFeaturedNames.value.includes(item.value));
@@ -129,7 +153,7 @@ function carefulRefine(
       v-else
       :attribute="props.attribute"
       :searchable="props.searchable"
-      :limit="props.limit"
+      :limit="trueLimit"
       :show-more-limit="props.showMoreLimit"
     >
       <template

@@ -16,6 +16,7 @@ const props = defineProps<{
     query: string;
     facetFilters: string[][];
   };
+  totalFiltersLength: number;
 }>();
 
 const hooks = {
@@ -44,7 +45,7 @@ async function createJobAlert() {
     state.error.value = "Email is invalid";
     return;
   }
-  
+
   state.fsm.value = "submitting";
 
   try {
@@ -118,19 +119,19 @@ async function createJobAlert() {
     :click-to-close="true"
     :esc-to-close="true"
   >
+    <!-- max-h="fit-content" -->
     <CFlex
       pos="absolute"
-      top="44"
+      :top="{ base: '48px', lg: totalFiltersLength > 8 ? 24 : 44 }"
       right="0"
       left="0"
       max-w="390px"
-      max-h="fit-content"
       m="auto"
+      max-height="fit-content"
       :gap="theme.spaces.md"
       :p="theme.spaces.md"
       direction="column"
       bg="white"
-      border-radius="8"
     >
       <CFlex justify="space-between">
         <CText v-if="props.queryJson" w="fit-content" font-size="lg">
@@ -164,7 +165,10 @@ async function createJobAlert() {
         py="3"
         px="4"
         mt="-1"
-        font-size="md"
+        :font-size="{
+          base: 'xs',
+          lg: totalFiltersLength > 16 ? 'xs' : totalFiltersLength > 8 ? 'sm' : 'md',
+        }"
       >
         <CText v-if="props.queryJson.query">Query: {{ props.queryJson.query }}</CText>
         <CText
@@ -177,6 +181,7 @@ async function createJobAlert() {
           {{
             filter
               .replace("company_is_recommended_org:true", "Filter: Recommended orgs")
+              .replace("company_name", "Org")
               .replace(/tags_\w*:/, "Filter: ")
           }}
         </CText>

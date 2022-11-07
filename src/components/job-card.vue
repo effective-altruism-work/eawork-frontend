@@ -14,6 +14,7 @@ import { useComp } from "~/utils/structs";
 import { JobAlgolia } from "~/utils/types";
 import { tracking } from "~/utils/tracking";
 import JobHoverText from "~/components/job-hover-text.vue";
+import log from "../utils/log";
 
 const props = defineProps<{
   job: JobAlgolia;
@@ -34,6 +35,12 @@ const timeSincePosting = computed(() => {
   });
 
   formatted = formatted.replace("about ", "");
+
+  // flatten dates from over two months ago
+  if (formatted.includes("months ago") && formatted !== "2 months ago") {
+    formatted = ">2 months ago";
+  }
+
   return isToday ? "Today" : formatted;
 });
 
@@ -55,6 +62,23 @@ const state = {
   isStarHovering: ref(false),
   coordinates: ref({ x: null, y: null }),
 };
+
+const countriesWithRemotes = computed(() => {
+  const remoteLocations = props.job.tags_location_80k.filter((location) =>
+    location.includes("Remote"),
+  );
+
+  const remoteLocationsBare = remoteLocations.map((location) =>
+    location.replace("Remote, ", ""),
+  );
+
+  return [
+    ...new Set([
+      ...props.job.tags_country.filter((c) => !remoteLocationsBare.includes(c)),
+      ...remoteLocations,
+    ]),
+  ];
+});
 
 const cardRef = ref<HTMLDivElement | null>(null);
 
@@ -99,6 +123,15 @@ function onMouseUp(e) {
   if (
     Math.abs(e.clientX - state.coordinates.value.x) > 5 ||
     Math.abs(e.clientY - state.coordinates.value.y) > 5
+  ) {
+    return;
+  }
+
+  // don't change card state if user is clicking a link
+  // brittle
+  if (
+    e.target.classList.contains("chakra-button") ||
+    e.target.classList.contains("chakra-link")
   ) {
     return;
   }
@@ -241,7 +274,7 @@ function onMouseUp(e) {
                   :align="{ lg: 'center' }"
                   :gap="{ base: 'px', lg: 3 }"
                 >
-                  <CFlex v-if="comp.remoteLocation">
+                  <!-- <CFlex v-if="comp.remoteLocation">
                     {{ comp.remoteLocation }}
                   </CFlex>
                   <CBox
@@ -250,7 +283,7 @@ function onMouseUp(e) {
                     w="3px"
                     h="3px"
                     bg="gray.300"
-                  />
+                  /> -->
 
                   <CFlex
                     v-if="job.tags_city.length"
@@ -271,8 +304,8 @@ function onMouseUp(e) {
                   </CFlex>
 
                   <CFlex
-                    v-if="!job.tags_city.length && !comp.remoteLocation"
-                    v-for="(country, index) in job.tags_country"
+                    v-if="!job.tags_city.length && countriesWithRemotes.length > 0"
+                    v-for="(country, index) in countriesWithRemotes"
                     :key="country"
                   >
                     <CFlex align="center" gap="3" v-if="country !== strings.remoteLiteral">
@@ -321,6 +354,7 @@ function onMouseUp(e) {
             <CFlex :mt="job.company_description ? 4 : 3" align="baseline" gap="4">
               <CText font-size="sm" color="gray.400">LINKS</CText>
               <CLink
+                class="link"
                 :href="props.job.company_url"
                 @click="
                   (event: MouseEvent) => {
@@ -338,6 +372,7 @@ function onMouseUp(e) {
                 Homepage
               </CLink>
               <CLink
+                class="link"
                 v-if="!!props.job?.company_ea_forum_url"
                 :href="props.job?.company_ea_forum_url"
                 @click="
@@ -397,11 +432,13 @@ function onMouseUp(e) {
 
               <CLink
                 @click="
-                  async (event: MouseEvent) => {
+                   (event: MouseEvent) => {
+                    log('CLICK');
                     event.stopPropagation();
-                    await tracking.sendJobEvent(props.job, 'url_external clicked');
+                    tracking.sendJobEvent(props.job, 'url_external clicked');
                   }
                 "
+                class="link"
                 @auxclick="tracking.sendJobEvent(props.job, 'url_external clicked')"
                 :href="job.url_external"
                 is-external

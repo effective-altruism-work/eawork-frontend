@@ -20,6 +20,8 @@ import riveted from "~/utils/riveted";
 import { breakpointsChakra } from "../constants";
 import log from "../utils/log";
 
+const breakpoints = useBreakpoints(breakpointsChakra);
+
 const hooks = useHooks(() => {
   const config = useRuntimeConfig();
   return {
@@ -39,7 +41,24 @@ const state = {
   jobFromUrlQuery: ref<JobAlgolia | null>(null),
   otherParams: ref(null),
   isShowMobileFilters: ref(false),
+  // featuredList: ref([])
 };
+
+const totalFiltersLength = computed(() => {
+  let tL = 0;
+
+  if (!state?.queryJson.value?.facetFilters) {
+    return tL;
+  }
+
+  for (const FF of state.queryJson.value?.facetFilters) {
+    for (const f of FF) {
+      tL += 1;
+    }
+  }
+
+  return tL;
+});
 
 const comp = useComp(() => ({
   cardW: { base: "100%", lg: "70%", xl: "74%" },
@@ -177,7 +196,10 @@ const routing = { stateMapping };
 
 <template>
   <CBox>
-    <IndexHeader @show-mobile="() => (state.isShowMobileFilters.value = true)" />
+    <IndexHeader
+      :filter-count="totalFiltersLength"
+      @show-mobile="() => (state.isShowMobileFilters.value = true)"
+    />
     <AisInstantSearch
       show-loading-indicator
       :routing="routing"
@@ -185,6 +207,7 @@ const routing = { stateMapping };
       :search-function="searchFunction"
       :index-name="hooks.config.public.algoliaJobsIndex"
     >
+      <CurrentRefinements v-if="breakpoints.smaller('lg').value" />
       <CFlex :mb="comp.space * 4">
         <CFlex direction="column" :min-w="comp.cardW">
           <CFlex justify="flex-end" :gap="comp.space">
@@ -275,9 +298,12 @@ const routing = { stateMapping };
           <CurrentRefinements />
 
           <CBox mb="7">
-            <BtnJobsAlert :query-json="state.queryJson.value" />
+            <BtnJobsAlert
+              :total-filters-length="totalFiltersLength"
+              :query-json="state.queryJson.value"
+            />
           </CBox>
-          <Refinements />
+          <Refinements :index="state.searchIndex" />
           <FiltersFooter />
         </CFlex>
 

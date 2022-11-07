@@ -22,6 +22,7 @@ const emit = defineEmits(["showMobile", "hideMobile"]);
     v-model="props.isShowMobileFilters"
     :click-to-close="true"
     :esc-to-close="true"
+    @click-outside="emit('hideMobile')"
   >
     <CFlex
       pos="absolute"

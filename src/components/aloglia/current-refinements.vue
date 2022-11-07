@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { CButton, CFlex, CIcon } from "@chakra-ui/vue-next";
 import { formatDistance } from "date-fns";
-import { AlgoliaFilterItem } from "~~/src/utils/types";
+
+type Item = {
+  attribute: string;
+  refine: (r: Refinement) => any;
+  refinements: Refinement[];
+};
 
 function format(refinement: {
   attribute: string;
@@ -35,6 +40,14 @@ function format(refinement: {
   }
 
   return refinement.label;
+}
+
+function clearAll(items: Item[]) {
+  for (const item of items) {
+    for (const refinement of item.refinements) {
+      item.refine(refinement);
+    }
+  }
 }
 
 type Refinement = {
@@ -73,9 +86,10 @@ function carefulRefine(
 <template>
   <ais-current-refinements>
     <template v-slot="{ items, createURL }">
-      <CFlex v-for="item in items" :key="item.attribute" wrap="wrap" gap="2">
+      <CFlex v-for="(item, i) in items" :key="item.attribute" wrap="wrap" gap="2">
         <CFlex
-          v-for="refinement in item.refinements"
+          align-items="center"
+          v-for="(refinement, j) in item.refinements"
           :key="
             [
               refinement.attribute,
@@ -100,6 +114,14 @@ function carefulRefine(
             {{ format(refinement) }}
             <CIcon ml="2" mt="0.5" size="2" name="close" />
           </CButton>
+          <button
+            v-if="i == items.length - 1 && j === item.refinements.length - 1"
+            @click="() => clearAll(items)"
+            style="color: #076875; margin-left: 4px;"
+            :_hover="{ color: 'black' }"
+          >
+            <CText>Clear all filters </CText>
+          </button>
         </CFlex>
       </CFlex>
     </template>
