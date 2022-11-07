@@ -35,6 +35,12 @@ const timeSincePosting = computed(() => {
   });
 
   formatted = formatted.replace("about ", "");
+
+  // flatten dates from over two months ago
+  if (formatted.includes("months ago") && formatted !== "2 months ago") {
+    formatted = ">2 months ago";
+  }
+
   return isToday ? "Today" : formatted;
 });
 

@@ -88,6 +88,7 @@ function carefulRefine(
     <template v-slot="{ items, createURL }">
       <CFlex v-for="(item, i) in items" :key="item.attribute" wrap="wrap" gap="2">
         <CFlex
+          align-items="center"
           v-for="(refinement, j) in item.refinements"
           :key="
             [
@@ -124,11 +125,11 @@ function carefulRefine(
               background-color: white;
               color: #484e51;
               border: 1.5px solid #484e51;
-              width: 24px;
-              height: 24px;
+              width: 20px;
+              height: 20px;
             "
           >
-            <CIcon size="3" name="close" />
+            <CIcon size="2" name="close" />
           </button>
         </CFlex>
       </CFlex>

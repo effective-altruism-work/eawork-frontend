@@ -21,7 +21,11 @@ const props = defineProps<{
 const totalLength = computed(() => {
   let tL = 0;
 
-  for (const FF of props.queryJson.facetFilters) {
+  if (!props || !props?.queryJson || !props?.queryJson?.facetFilters) {
+    return tL;
+  }
+
+  for (const FF of props.queryJson?.facetFilters) {
     for (const f of FF) {
       tL += 1;
     }
