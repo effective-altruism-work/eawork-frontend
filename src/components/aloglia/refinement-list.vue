@@ -32,14 +32,18 @@ const state = {
 };
 
 const placeholder = computed(() => {
-  let label = "";
-  switch (props.label.toLowerCase()) {
+  let label = props.label.toLowerCase();
+  console.log(label);
+  switch (label) {
     case "organisation":
       label = "organisations";
+      break;
     case "city":
       label = "cities";
+      break;
     case "country":
       label = "countries";
+      break;
   }
   return `Search all ${props.amount} ${label}...`;
 });
