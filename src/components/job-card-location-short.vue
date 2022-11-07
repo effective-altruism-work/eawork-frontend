@@ -34,14 +34,10 @@ const comp = useComp(() => {
 
   const showCity =
     props.job.tags_city.length && !props.job.tags_city.includes(strings.remoteLiteral);
-  const isRemoteOnly = !showCity;
-  const showCountry = !showCity && !isJobRemote;
 
   return {
     remoteLocation,
-    isRemoteOnly,
     isShouldShowCity: showCity,
-    isShouldShowCountry: showCountry,
     cities: props.job.tags_city.map((city) =>
       city.replace("Washington, DC metro area", "Washington, DC"),
     ),
