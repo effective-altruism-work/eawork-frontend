@@ -277,7 +277,7 @@ const routing = { stateMapping };
           <CBox mb="7">
             <BtnJobsAlert :query-json="state.queryJson.value" />
           </CBox>
-          <Refinements />
+          <Refinements :index="state.searchIndex" />
           <FiltersFooter />
         </CFlex>
 

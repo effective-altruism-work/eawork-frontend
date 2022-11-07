@@ -16,6 +16,7 @@ const props = defineProps<{
   limit?: number;
   showMoreLimit?: number;
   mt?: number | string;
+  amount?: number;
   countBg?: string;
 }>();
 
@@ -26,19 +27,16 @@ const state = {
 };
 
 const placeholder = computed(() => {
-  if (!props.searchable) return "";
-
-  if (!props.label) return "Search...";
-  switch (props.label[0].toLowerCase()) {
-    case "a":
-    case "e":
-    case "i":
-    case "o":
-    case "u":
-      return `Find an ${props.label.toLocaleLowerCase()}...`;
-    default:
-      return `Find a ${props.label.toLocaleLowerCase()}...`;
+  let label = "";
+  switch (props.label.toLowerCase()) {
+    case "organisation":
+      label = "organisations";
+    case "city":
+      label = "cities";
+    case "country":
+      label = "countries";
   }
+  return `Search all ${props.amount} ${label}...`;
 });
 
 onMounted(async () => {

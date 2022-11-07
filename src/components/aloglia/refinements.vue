@@ -3,10 +3,38 @@ import { CBox } from "@chakra-ui/vue-next";
 import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns";
 import NumericMenu from "~/components/aloglia/numeric-menu.vue";
 import RefinementList from "~/components/aloglia/refinement-list.vue";
+import algoliasearch, { SearchIndex } from "algoliasearch";
 
 const props = defineProps<{
   countBg?: string;
+  index: SearchIndex;
 }>();
+
+const orgCount = ref(0);
+const cityCount = ref(0);
+const countryCount = ref(0);
+
+onMounted(async () => {
+  const res = await props.index.search("", {
+    facets: ["tags_country", "tags_city", "company_name"],
+  });
+
+  console.log(res);
+
+  const {
+    company_name,
+    tags_city,
+    tags_country,
+  }: { [key: string]: { [key: string]: number } } = res.facets;
+
+  orgCount.value = Object.keys(company_name).length;
+  cityCount.value = Object.keys(tags_city).length;
+  countryCount.value = Object.keys(tags_country).length;
+});
+
+watchEffect(() => {
+  console.log(orgCount.value, cityCount.value, countryCount.value);
+});
 </script>
 
 <template>
@@ -20,6 +48,7 @@ const props = defineProps<{
     />
     <RefinementList
       attribute="tags_country"
+      :amount="countryCount"
       :count-bg="props.countBg"
       label="Country"
       :limit="8"
@@ -28,6 +57,7 @@ const props = defineProps<{
     />
     <RefinementList
       attribute="tags_city"
+      :amount="cityCount"
       :count-bg="props.countBg"
       label="City"
       :limit="8"
@@ -52,6 +82,7 @@ const props = defineProps<{
     />
     <RefinementList
       attribute="company_name"
+      :amount="orgCount"
       :count-bg="props.countBg"
       label="Organisation"
       :limit="6"
