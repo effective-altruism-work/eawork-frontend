@@ -39,6 +39,7 @@ const state = {
   jobFromUrlQuery: ref<JobAlgolia | null>(null),
   otherParams: ref(null),
   isShowMobileFilters: ref(false),
+  // featuredList: ref([])
 };
 
 const comp = useComp(() => ({

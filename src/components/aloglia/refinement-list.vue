@@ -42,7 +42,6 @@ const placeholder = computed(() => {
 onMounted(async () => {
   if (props.attribute === "tags_area") {
     const res = await axios.get(`${state.config.public.apiBase}/tags/?is_featured=true`);
-
     if (!("data" in res) || !Array.isArray(res.data)) {
       const error = new Error(
         `No data returned from /tags/?is_featured=true. Data: ${JSON.stringify(res?.data)}`,
