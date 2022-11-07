@@ -122,8 +122,8 @@ function carefulRefine(
               align-items: center;
               border-radius: 9999px;
               background-color: white;
-              color: black;
-              border: 1.5px solid black;
+              color: #484e51;
+              border: 1.5px solid #484e51;
               width: 24px;
               height: 24px;
             "
