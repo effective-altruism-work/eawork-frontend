@@ -68,6 +68,7 @@ function filterFacetValuesIfNeeded(
   items: AlgoliaFilterItem[],
   section?: "featured" | "other",
 ) {
+  console.log(items.length);
   if (props?.locationType && props?.trueItems) {
     let filteredItems: AlgoliaFilterItem[] = [];
     if (props.locationType === "country") {
@@ -78,7 +79,7 @@ function filterFacetValuesIfNeeded(
 
     return filteredItems.slice(0, 8);
   }
-  
+
   return items;
 
   // if (props.attribute === "tags_area") {
