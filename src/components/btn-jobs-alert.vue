@@ -182,6 +182,7 @@ async function createJobAlert() {
             filter
               .replace("company_is_recommended_org:true", "Filter: Recommended orgs")
               .replace("company_name:", "Org: ")
+              .replace("org_data:", "Org: ")
               .replace(/tags_\w*:/, "Filter: ")
           }}
         </CText>
