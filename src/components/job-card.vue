@@ -63,10 +63,14 @@ const state = {
   coordinates: ref({ x: null, y: null }),
 };
 
-const countriesWithRemotes = computed(() => {
+const remotesAndMaybeCountries = computed(() => {
   const remoteLocations = props.job.tags_location_80k.filter((location) =>
     location.includes("Remote"),
   );
+
+  if (props.job.tags_city.length) {
+    return remoteLocations;
+  }
 
   const remoteLocationsBare = remoteLocations.map((location) =>
     location.replace("Remote, ", ""),
@@ -303,9 +307,18 @@ function onMouseUp(e) {
                     <CFlex>{{ city }}</CFlex>
                   </CFlex>
 
+                  <CBox
+                    :display="{ base: 'none', lg: 'block' }"
+                    v-if="job.tags_city.length && remotesAndMaybeCountries.length"
+                    w="3px"
+                    h="3px"
+                    bg="gray.300"
+                  />
+                  <!-- v-if="!job.tags_city.length && countriesWithRemotes.length > 0" -->
+
                   <CFlex
-                    v-if="!job.tags_city.length && countriesWithRemotes.length > 0"
-                    v-for="(country, index) in countriesWithRemotes"
+                    v-if="remotesAndMaybeCountries.length"
+                    v-for="(country, index) in remotesAndMaybeCountries"
                     :key="country"
                   >
                     <CFlex align="center" gap="3" v-if="country !== strings.remoteLiteral">

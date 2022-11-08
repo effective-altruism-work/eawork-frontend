@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CButton, CFlex, CIcon } from "@chakra-ui/vue-next";
+import { CButton, CFlex, CIcon, CText } from "@chakra-ui/vue-next";
 import { formatDistance } from "date-fns";
 
 type Item = {
@@ -31,8 +31,8 @@ function format(refinement: {
     }
   }
 
-  if (refinement.attribute === "company_is_recommended_org") {
-    return refinement.value ? "Top recommended orgs" : "All orgs"; // this latter should never happen, to be clear.
+  if (refinement.label === "is_recommended_org") {
+    return "Top recommended orgs";
   }
 
   if (refinement.label === "Other (pressing)") {
@@ -99,6 +99,7 @@ function carefulRefine(
             ].join(':')
           "
           gap="2"
+          :wrap="refinement.value.length > 20 ? 'wrap' : 'nowrap'"
         >
           <CButton
             v-if="refinement.value !== 'Multiple experience levels'"
@@ -117,10 +118,9 @@ function carefulRefine(
           <button
             v-if="i == items.length - 1 && j === item.refinements.length - 1"
             @click="() => clearAll(items)"
-            style="color: #076875; margin-left: 4px;"
-            :_hover="{ color: 'black' }"
+            style="color: #076875; margin-left: 4px"
           >
-            <CText>Clear all filters </CText>
+            <CText :_hover="{ textDecoration: 'underline' }">Clear all filters </CText>
           </button>
         </CFlex>
       </CFlex>

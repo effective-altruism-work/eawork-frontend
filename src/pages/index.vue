@@ -277,6 +277,18 @@ const routing = { stateMapping };
                     <JobCardSkeleton />
                     <JobCardSkeleton />
                   </CBox>
+                  <!-- <CBox
+                    ><button
+                      @click="
+                        () => {
+                          log('refine next');
+                          refineNext();
+                        }
+                      "
+                    >
+                      click me
+                    </button></CBox
+                  > -->
                 </template>
               </AisInfiniteHits>
             </CBox>
@@ -310,6 +322,7 @@ const routing = { stateMapping };
         <!-- mobile -->
         <!-- v-else -->
         <FilterModal
+          :total-filters-length="totalFiltersLength"
           :index="state.searchIndex"
           :is-show-mobile-filters="state.isShowMobileFilters.value"
           :query-json="state.queryJson.value"

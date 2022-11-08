@@ -5,8 +5,8 @@ import * as Sentry from "@sentry/vue";
 const { captureEvent } = Sentry;
 
 const eightyKProps = {
-  category: "Engagement",
-};
+  category: "Job Board",
+} as const;
 
 export namespace tracking {
   const separator = " / ";
@@ -184,7 +184,7 @@ export namespace tracking {
 
   interface JobEvent80k {
     action: Action80k;
-    category: string | "Engagement" | null;
+    category: "Engagement" | "Job Board";
     degreeRequirement: string | "Master's degree";
     experienceRequirement: string | "5+ years of experience";
     label: JobExternalURL | CompanyExternalURL;

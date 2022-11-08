@@ -28,7 +28,6 @@ const state = {
   tagsFeatured: ref<TagDjango[]>([]),
   tagsFeaturedNames: ref<string[]>([]),
   config: useRuntimeConfig(),
-  // inputRef: ref<HTMLInputElement>(null),
 };
 
 const placeholder = computed(() => {
@@ -67,22 +66,33 @@ const trueLimit = computed(() => {
   return !!props.locationType ? 24 : props.limit;
 });
 
-function filterFacetValuesIfNeeded(
-  items: AlgoliaFilterItem[],
-  section?: "featured" | "other",
-) {
+function morphFacetValues(items: AlgoliaFilterItem[], section?: "featured" | "other") {
+  let filteredItems = items
+    .filter(
+      (i) =>
+        i.value !== "Global priorities research" && i.value !== "Multiple experience levels",
+    )
+    .map((i) => (i.label === "Other (pressing)" ? { ...i, label: "Climate change" } : i))
+    .map((i) => ({
+      ...i,
+      hover:
+        i.value === "Other policy-focused"
+          ? "We expect these to be good opportunities for career-building, and potentially help you directly contribute to existential risk reduction in the future"
+          : "",
+    }));
+
   if (props?.locationType && props?.trueItems) {
-    let filteredItems: AlgoliaFilterItem[] = [];
+    let locationedItems: AlgoliaFilterItem[] = [];
     if (props.locationType === "country") {
-      filteredItems = items.filter((i) => props.trueItems.includes(i.value));
+      locationedItems = filteredItems.filter((i) => props.trueItems.includes(i.value));
     } else {
-      filteredItems = items.filter((i) => props.trueItems.includes(i.value));
+      locationedItems = filteredItems.filter((i) => props.trueItems.includes(i.value));
     }
 
-    return filteredItems.slice(0, 8);
+    return locationedItems.slice(0, 8);
   }
 
-  return items;
+  return filteredItems;
 
   // if (props.attribute === "tags_area") {
   //   if (section === "featured") {
@@ -101,19 +111,25 @@ function carefulRefine(
 
   items: AlgoliaFilterItem[],
 ) {
-  const howManyRefinedBefore = items.reduce(
-    (acc, currItem) => (currItem.isRefined ? acc + 1 : acc),
-    0,
-  );
+  if (props.attribute === "tags_exp_required") {
+    const howManyRefinedBefore = items.reduce(
+      (acc, currItem) => (currItem.isRefined ? acc + 1 : acc),
+      0,
+    );
+
+    basicRefine(currItemValue);
+
+    const currItem = items.find((i) => i.value === currItemValue);
+    const isRemoval = howManyRefinedBefore === 2 && currItem.isRefined;
+
+    if (howManyRefinedBefore === 0 || isRemoval) {
+      basicRefine("Multiple experience levels"); // only trigger this when we move between 0 and 1 filters.
+    }
+
+    return;
+  }
 
   basicRefine(currItemValue);
-
-  const currItem = items.find((i) => i.value === currItemValue);
-  const isRemoval = howManyRefinedBefore === 2 && currItem.isRefined;
-
-  if (howManyRefinedBefore === 0 || isRemoval) {
-    basicRefine("Multiple experience levels"); // only trigger this when we move between 0 and 1 filters.
-  }
 }
 </script>
 
@@ -123,37 +139,11 @@ function carefulRefine(
       {{ props.label }}
     </CFormLabel>
 
-    <!-- EXPERIENCE -->
     <AisRefinementList
-      v-if="props.attribute == 'tags_exp_required'"
-      :attribute="props.attribute"
-      :searchable="props.searchable"
-      :limit="props.limit"
-      :sort-by="['name:asc']"
-      :show-more-limit="props.showMoreLimit"
-    >
-      <template v-slot="{ items, refine }">
-        <chakra.ul mt="px">
-          <RefinementListFacets
-            :searchable="props.searchable"
-            :items="items.filter((item) => item.value !== 'Multiple experience levels')"
-            :refine="
-              (currItem) => {
-                carefulRefine(refine, currItem, items);
-              }
-            "
-            :count-bg="props.countBg"
-          />
-        </chakra.ul>
-      </template>
-    </AisRefinementList>
-
-    <!-- MAIN -->
-    <AisRefinementList
-      v-else
       :attribute="props.attribute"
       :searchable="props.searchable"
       :limit="trueLimit"
+      :sort-by="[props.attribute == 'tags_exp_required' ? 'name:asc' : '']"
       :show-more-limit="props.showMoreLimit"
     >
       <template
@@ -176,7 +166,6 @@ function carefulRefine(
           bg="white"
         />
 
-
         <!-- <CText
           v-if="props.attribute === 'tags_area'"
           mt="3"
@@ -198,24 +187,12 @@ function carefulRefine(
           <li v-if="isFromSearch && !items.length">No results.</li>
           <RefinementListFacets
             :attribute="props.attribute"
-            :items="
-              filterFacetValuesIfNeeded(
-                items
-                  .filter((i) => i.value !== 'Global priorities research')
-                  .map((i) =>
-                    i.label === 'Other (pressing)' ? { ...i, label: 'Climate change' } : i,
-                  )
-                  .map((i) => ({
-                    ...i,
-                    hover:
-                      i.value === 'Other policy-focused'
-                        ? 'We expect these to be good opportunities for career-building, and potentially help you directly contribute to existential risk reduction in the future'
-                        : '',
-                  })),
-                'featured',
-              )
+            :items="morphFacetValues(items, 'featured')"
+            :refine="
+              (currItem) => {
+                carefulRefine(refine, currItem, items);
+              }
             "
-            :refine="refine"
             :searchable="props.searchable"
             :count-bg="props.countBg"
           />
@@ -229,15 +206,12 @@ function carefulRefine(
           <chakra.ul mt="1px">
             <li v-if="isFromSearch && !items.length">No results.</li>
             <RefinementListFacets
-              :items="
-                filterFacetValuesIfNeeded(
-                  items.map((i) =>
-                    i.label === 'Other (pressing)' ? { ...i, label: 'Climate change' } : i,
-                  ),
-                  'other',
-                )
-              "
-              :refine="refine"
+              :items="morphFacetValues(items, 'other')"
+:refine="
+              (currItem) => {
+                carefulRefine(refine, currItem, items);
+              }
+            "
               :searchable="props.searchable"
               :count-bg="props.countBg"
             />

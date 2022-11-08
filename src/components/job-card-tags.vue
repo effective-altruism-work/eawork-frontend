@@ -19,7 +19,11 @@ const props = defineProps<{ job: JobAlgolia }>();
         border-radius="4px"
       >
         <CText color="#466E35">{{
-          area === "Other (pressing)" ? "Climate change" : area
+          area === "Other (pressing)"
+            ? "Climate change"
+            : area === "Global health & poverty"
+            ? "Global health & development"
+            : area
         }}</CText>
       </CFlex>
 
