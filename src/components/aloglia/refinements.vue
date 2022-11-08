@@ -86,7 +86,7 @@ onMounted(async () => {
       label="Role type"
     />
     <RefinementList
-      attribute="company_name"
+      attribute="org_data"
       :amount="orgCount"
       :count-bg="props.countBg"
       label="Organisation"

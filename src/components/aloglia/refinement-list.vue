@@ -176,28 +176,6 @@ function carefulRefine(
           bg="white"
         />
 
-        <!-- bonus fellow we sneak inside the company_name section -->
-        <AisRefinementList
-          v-if="props.attribute === 'company_name'"
-          attribute="company_is_recommended_org"
-        >
-          <template v-slot="{ items, refine }">
-            <chakra.ul mt="px">
-              <!-- at present we just want to include an for top organizations only, not an option for bottom orgs only -->
-              <RefinementListFacets
-                :items="
-                  filterFacetValuesIfNeeded(
-                    items.filter((i) => i.value !== 'false'),
-                    'other',
-                  ).map((i) => ({ ...i, label: 'Top recommended orgs' }))
-                "
-                :refine="refine"
-                :searchable="false"
-                :count-bg="props.countBg"
-              />
-            </chakra.ul>
-          </template>
-        </AisRefinementList>
 
         <!-- <CText
           v-if="props.attribute === 'tags_area'"

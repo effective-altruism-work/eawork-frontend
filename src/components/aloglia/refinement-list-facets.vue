@@ -27,6 +27,8 @@ function formatTagName(tagName: string) {
       return "Global health & development";
     case "Software Engineering":
       return "Software engineering";
+    case "is_recommended_org":
+      return "Top recommended orgs";
     default:
       return tagName;
   }
@@ -49,10 +51,12 @@ function formatTagName(tagName: string) {
       @update:model-value="() => props.refine(item.value)"
     >
       <CText mt="1px" :_hover="{ color: 'blue.500' }">
-        <ais-highlight v-if="props.searchable" attribute="item" :hit="item" />
-        <span v-else>
-          {{ formatTagName(item.label) }}
-        </span>
+        <ais-highlight
+          v-if="props.searchable && item.value != 'is_recommended_org'"
+          attribute="item"
+          :hit="item"
+        />
+        <span v-else>{{ formatTagName(item.label) }}</span>
         <CBadge
           ml="2"
           mt="0"

@@ -3,8 +3,7 @@ export default function queryToJson(uiState: {
   disjunctiveFacetsRefinements: Map<string, string[]>;
   numericRefinements: { company_is_recommended_org: any };
 }) {
-  
-  const queryString = uiState.query;
+  const query = uiState.query;
   const facetFilters: string[][] = [];
 
   // disjunctive facets
@@ -24,13 +23,10 @@ export default function queryToJson(uiState: {
     facetFilters.push(set);
   }
 
-  const isQuerySpecified = queryString || facetFilters.length;
+  const isQuerySpecified = query || facetFilters.length;
   if (!isQuerySpecified) {
     return null;
   }
 
-  return {
-    query: queryString,
-    facetFilters: facetFilters,
-  };
+  return { query, facetFilters };
 }
