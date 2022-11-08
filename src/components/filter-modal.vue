@@ -10,6 +10,7 @@ import { SearchIndex } from "algoliasearch";
 const props = defineProps<{
   isShowMobileFilters: boolean;
   index: SearchIndex;
+  totalFiltersLength: number;
   queryJson: {
     query: string;
     facetFilters: string[][];
@@ -60,7 +61,7 @@ const emit = defineEmits(["showMobile", "hideMobile"]);
         <CurrentRefinements />
       </CBox>
       <CBox mb="7">
-        <BtnJobsAlert :query-json="props.queryJson" />
+        <BtnJobsAlert :total-filters-length="props.totalFiltersLength" :query-json="props.queryJson" />
       </CBox>
       <Refinements :index="props.index" />
       <FiltersFooter />

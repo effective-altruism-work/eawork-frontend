@@ -20,9 +20,13 @@ const props = defineProps<{
       </template>
     </AisSearchBox>
     <AisStats v-if="props.isShowResultsCount">
-      <template v-slot="{ nbHits }">
+      <template v-slot="{ nbHits, page, nbSortedHits, hitsPerPage, nbPages }">
         <CFlex my="5" gap="1" justify="flex-end">
           <CText font-weight="bold">{{ nbHits }}</CText> roles
+          <!-- <CText
+            >Page: {{ page }}, nbSortedHits: {{ nbSortedHits }}, hits per page:
+            {{ hitsPerPage }}, nbPages: {{ nbPages }}</CText
+          > -->
         </CFlex>
       </template>
     </AisStats>

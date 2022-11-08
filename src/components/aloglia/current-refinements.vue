@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CButton, CFlex, CIcon } from "@chakra-ui/vue-next";
+import { CButton, CFlex, CIcon, CText } from "@chakra-ui/vue-next";
 import { formatDistance } from "date-fns";
 
 type Item = {
@@ -119,9 +119,8 @@ function carefulRefine(
             v-if="i == items.length - 1 && j === item.refinements.length - 1"
             @click="() => clearAll(items)"
             style="color: #076875; margin-left: 4px"
-            :_hover="{ color: 'black' }"
           >
-            <CText>Clear all filters </CText>
+            <CText :_hover="{ textDecoration: 'underline' }">Clear all filters </CText>
           </button>
         </CFlex>
       </CFlex>
