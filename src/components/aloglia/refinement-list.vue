@@ -28,7 +28,6 @@ const state = {
   tagsFeatured: ref<TagDjango[]>([]),
   tagsFeaturedNames: ref<string[]>([]),
   config: useRuntimeConfig(),
-  // inputRef: ref<HTMLInputElement>(null),
 };
 
 const placeholder = computed(() => {
@@ -124,8 +123,8 @@ function carefulRefine(
     </CFormLabel>
 
     <!-- EXPERIENCE -->
-    <AisRefinementList
-      v-if="props.attribute == 'tags_exp_required'"
+    <!-- <AisRefinementList
+      v-if="props.attribute == 'tags_exp_required' && false"
       :attribute="props.attribute"
       :searchable="props.searchable"
       :limit="props.limit"
@@ -146,14 +145,14 @@ function carefulRefine(
           />
         </chakra.ul>
       </template>
-    </AisRefinementList>
+    </AisRefinementList> -->
 
     <!-- MAIN -->
     <AisRefinementList
-      v-else
       :attribute="props.attribute"
       :searchable="props.searchable"
       :limit="trueLimit"
+      :sort-by="[props.attribute == 'tags_exp_required' ? 'name:asc' : '']"
       :show-more-limit="props.showMoreLimit"
     >
       <template
@@ -175,7 +174,6 @@ function carefulRefine(
           border-radius="md"
           bg="white"
         />
-
 
         <!-- <CText
           v-if="props.attribute === 'tags_area'"
@@ -201,7 +199,11 @@ function carefulRefine(
             :items="
               filterFacetValuesIfNeeded(
                 items
-                  .filter((i) => i.value !== 'Global priorities research')
+                  .filter(
+                    (i) =>
+                      i.value !== 'Global priorities research' &&
+                      i.value !== 'Multiple experience levels',
+                  )
                   .map((i) =>
                     i.label === 'Other (pressing)' ? { ...i, label: 'Climate change' } : i,
                   )

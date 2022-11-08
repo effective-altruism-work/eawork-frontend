@@ -31,8 +31,8 @@ function format(refinement: {
     }
   }
 
-  if (refinement.attribute === "company_is_recommended_org") {
-    return refinement.value ? "Top recommended orgs" : "All orgs"; // this latter should never happen, to be clear.
+  if (refinement.label === "is_recommended_org") {
+    return "Top recommended orgs";
   }
 
   if (refinement.label === "Other (pressing)") {
