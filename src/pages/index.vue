@@ -310,6 +310,7 @@ const routing = { stateMapping };
         <!-- mobile -->
         <!-- v-else -->
         <FilterModal
+          :index="state.searchIndex"
           :is-show-mobile-filters="state.isShowMobileFilters.value"
           :query-json="state.queryJson.value"
           @hide-mobile="() => (state.isShowMobileFilters.value = false)"

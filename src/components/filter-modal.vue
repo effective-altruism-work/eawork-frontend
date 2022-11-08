@@ -5,9 +5,11 @@ import Refinements from "~/components/aloglia/refinements.vue";
 import FiltersFooter from "~/components/eightyk/filters-footer.vue";
 import SearchBox from "~/components/aloglia/search-box.vue";
 import { OhVueIcon } from "oh-vue-icons";
+import { SearchIndex } from "algoliasearch";
 
 const props = defineProps<{
   isShowMobileFilters: boolean;
+  index: SearchIndex;
   queryJson: {
     query: string;
     facetFilters: string[][];
@@ -60,7 +62,7 @@ const emit = defineEmits(["showMobile", "hideMobile"]);
       <CBox mb="7">
         <BtnJobsAlert :query-json="props.queryJson" />
       </CBox>
-      <Refinements />
+      <Refinements :index="props.index" />
       <FiltersFooter />
 
       <CSpacer mt="12" />
