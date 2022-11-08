@@ -18,16 +18,13 @@ const initialFacets = reactive<{ [key: string]: string[] }>({});
 
 onMounted(async () => {
   const res = await props.index.search("", {
-    facets: ["tags_country", "tags_city", "company_name"],
+    facets: ["tags_country", "tags_city", "org_data"],
   });
 
-  const {
-    company_name,
-    tags_city,
-    tags_country,
-  }: { [key: string]: { [key: string]: number } } = res.facets;
+  const { org_data, tags_city, tags_country }: { [key: string]: { [key: string]: number } } =
+    res.facets;
 
-  orgCount.value = Object.keys(company_name).length;
+  orgCount.value = Object.keys(org_data).length;
   cityCount.value = Object.keys(tags_city).length;
   countryCount.value = Object.keys(tags_country).length;
 
@@ -86,7 +83,7 @@ onMounted(async () => {
       label="Role type"
     />
     <RefinementList
-      attribute="company_name"
+      attribute="org_data"
       :amount="orgCount"
       :count-bg="props.countBg"
       label="Organisation"
