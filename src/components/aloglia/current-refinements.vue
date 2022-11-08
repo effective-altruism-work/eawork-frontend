@@ -99,6 +99,7 @@ function carefulRefine(
             ].join(':')
           "
           gap="2"
+          :wrap="refinement.value.length > 20 ? 'wrap' : 'nowrap'"
         >
           <CButton
             v-if="refinement.value !== 'Multiple experience levels'"
@@ -117,7 +118,7 @@ function carefulRefine(
           <button
             v-if="i == items.length - 1 && j === item.refinements.length - 1"
             @click="() => clearAll(items)"
-            style="color: #076875; margin-left: 4px;"
+            style="color: #076875; margin-left: 4px"
             :_hover="{ color: 'black' }"
           >
             <CText>Clear all filters </CText>
