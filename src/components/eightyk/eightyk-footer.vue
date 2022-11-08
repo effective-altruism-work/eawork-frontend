@@ -338,6 +338,7 @@ const breakpoints = useBreakpoints(breakpointsChakra);
         >
           <noscript
             ><img
+              loading="lazy"
               alt="FT logo"
               width="98"
               height="36"
@@ -348,7 +349,7 @@ const breakpoints = useBreakpoints(breakpointsChakra);
               "
           /></noscript>
           <img
-            class="lazyloaded"
+            loading="lazy"
             alt="FT logo"
             width="98"
             height="36"
@@ -368,6 +369,7 @@ const breakpoints = useBreakpoints(breakpointsChakra);
         >
           <noscript
             ><img
+              loading="lazy"
               alt="The Guardian logo"
               width="102"
               height="34"
@@ -378,7 +380,7 @@ const breakpoints = useBreakpoints(breakpointsChakra);
               "
           /></noscript>
           <img
-            class="lazyloaded"
+            loading="lazy"
             alt="The Guardian logo"
             width="102"
             height="34"
@@ -398,6 +400,7 @@ const breakpoints = useBreakpoints(breakpointsChakra);
         >
           <noscript
             ><img
+              loading="lazy"
               alt="TED logo"
               width="147"
               height="34"
@@ -408,7 +411,7 @@ const breakpoints = useBreakpoints(breakpointsChakra);
               "
           /></noscript>
           <img
-            class="lazyloaded"
+            loading="lazy"
             alt="TED logo"
             width="147"
             height="34"
@@ -430,6 +433,7 @@ const breakpoints = useBreakpoints(breakpointsChakra);
             ><img
               alt="Vox logo"
               width="70"
+              loading="lazy"
               height="34"
               src="https://80000hours.org/wp-content/themes/80000hours/assets/img/footer/vox-logo.gif"
               srcset="
@@ -438,7 +442,7 @@ const breakpoints = useBreakpoints(breakpointsChakra);
               "
           /></noscript>
           <img
-            class="ls-is-cached lazyloaded"
+            loading="lazy"
             alt="Vox logo"
             width="70"
             height="34"
@@ -458,6 +462,7 @@ const breakpoints = useBreakpoints(breakpointsChakra);
         >
           <noscript
             ><img
+              loading="lazy"
               alt="Y Combinator logo"
               width="141"
               height="34"
@@ -468,7 +473,7 @@ const breakpoints = useBreakpoints(breakpointsChakra);
               "
           /></noscript>
           <img
-            class="ls-is-cached lazyloaded"
+            loading="lazy"
             alt="Y Combinator logo"
             width="141"
             height="34"

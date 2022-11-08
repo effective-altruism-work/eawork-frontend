@@ -225,6 +225,9 @@ const routing = { stateMapping };
                 <template
                   v-slot="{ items, refinePrevious, refineNext, isLastPage, sendEvent }"
                 >
+                  <p style="position: fixed; right: 100px;">
+                    {{ items.length }}, is last page: {{ isLastPage }}
+                  </p>
                   <JobCard
                     v-if="state.jobFromUrlQuery.value && !state.queryJson.value"
                     :job="state.jobFromUrlQuery.value"
