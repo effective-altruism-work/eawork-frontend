@@ -10,9 +10,15 @@ const props = defineProps<{
 
 <template>
   <CBox position="relative" w="4" h="4">
-    <OhVueIcon name="fe-info" scale="0.8" top="-1.5px" ml="0.5" position="relative" />
+    <OhVueIcon
+      name="io-information-circle"
+      scale="0.8"
+      top="-1.5px"
+      ml="0.5"
+      position="relative"
+    />
 
-    <CBox v-if="isHovering" position="absolute" z-index="10" bottom="0" left="-8">
+    <CBox v-if="isHovering" position="absolute" z-index="10" bottom="0" left="-12">
       <CBox
         margin="4"
         padding="6"
