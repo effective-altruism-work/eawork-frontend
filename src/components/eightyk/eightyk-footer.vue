@@ -95,16 +95,16 @@ const breakpoints = useBreakpoints(breakpointsChakra);
                 >
                 <chakra.ul width="100%" color="lightest-gray">
                   <li>
-                    <FooterBoxLink href="/career-planning/">Plan your career</FooterBoxLink>
+                    <FooterBoxLink href="/career-planning">Plan your career</FooterBoxLink>
                   </li>
-                  <li><FooterBoxLink href="/job-board/">Find a job</FooterBoxLink></li>
+                  <li><FooterBoxLink href="/job-board">Find a job</FooterBoxLink></li>
                   <li>
                     <FooterBoxLink href="/advising/?int_campaign=2021-04__footer-navigation"
                       >Get 1-1 advice</FooterBoxLink
                     >
                   </li>
                   <li>
-                    <FooterBoxLink href="/community/">Join our community</FooterBoxLink>
+                    <FooterBoxLink href="/community">Join our community</FooterBoxLink>
                   </li>
                 </chakra.ul>
                 <CHeading
@@ -115,10 +115,10 @@ const breakpoints = useBreakpoints(breakpointsChakra);
                 >
                 <chakra.ul width="100%" color="lightest-gray">
                   <li>
-                    <FooterBoxLink href="/podcast/">Subscribe to our podcast</FooterBoxLink>
+                    <FooterBoxLink href="/podcast">Subscribe to our podcast</FooterBoxLink>
                   </li>
                   <li>
-                    <FooterBoxLink href="/newsletter/">Join our newsletter</FooterBoxLink>
+                    <FooterBoxLink href="/newsletter">Join our newsletter</FooterBoxLink>
                   </li>
                   <li>
                     <FooterBoxLink external href="https://twitter.com/80000hours"
@@ -152,9 +152,9 @@ const breakpoints = useBreakpoints(breakpointsChakra);
                   >About us</CHeading
                 >
                 <chakra.ul color="lightest-gray">
-                  <li><FooterBoxLink href="/about/">Why 80,000 Hours?</FooterBoxLink></li>
+                  <li><FooterBoxLink href="/about">Why 80,000 Hours?</FooterBoxLink></li>
                   <li>
-                    <FooterBoxLink href="/about/meet-the-team/">Meet the team</FooterBoxLink>
+                    <FooterBoxLink href="/about/meet-the-team">Meet the team</FooterBoxLink>
                   </li>
                   <li><FooterBoxLink href="/about/donors/">Our donors</FooterBoxLink></li>
                   <li>

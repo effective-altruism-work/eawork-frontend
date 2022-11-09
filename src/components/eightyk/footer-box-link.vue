@@ -14,7 +14,11 @@ const { href, external } = props;
     :href="href"
     ><slot
   /></CLink>
-  <CLink v-else color="lightest-gray" :_hover="{ textDecoration: 'underline' }" :path="href"
+  <EightyKLink
+    v-else
+    color="lightest-gray"
+    :_hover="{ textDecoration: 'underline' }"
+    :path="href"
     ><slot
-  /></CLink>
+  /></EightyKLink>
 </template>
