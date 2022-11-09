@@ -3,19 +3,21 @@ import { CFlex, CBox, CText, CLink } from "@chakra-ui/vue-next";
 import JobCardTagInfo from "./job-card-tag-info.vue";
 
 const props = defineProps<{
-  area: string;
+  tag: string;
+  bg: string;
+  color: string;
 }>();
 
 const isHovering = ref(false);
 
-function linkArea(area: string) {
-  switch (area) {
+const linkArea = computed(() => {
+  switch (props.tag) {
     case "Other (pressing)":
       return "https://80000hours.org/problem-profiles/climate-change";
     case "Global health & poverty":
       return "https://80000hours.org/problem-profiles/health-in-poor-countries";
     case "Other policy-focused":
-      return "";
+      return null;
     case "AI safety & policy":
       return "https://80000hours.org/problem-profiles/artificial-intelligence";
     case "Factory farming":
@@ -32,8 +34,10 @@ function linkArea(area: string) {
       return "https://80000hours.org/career-reviews/forecasting";
     case "Global priorities research":
       return "https://80000hours.org/problem-profiles/global-priorities-research";
+    default:
+      return null;
   }
-}
+});
 </script>
 
 <template>
@@ -44,23 +48,31 @@ function linkArea(area: string) {
     @blur="isHovering = false"
     direction="column"
     gap="3"
-    bg="#F3FAF0"
+    :bg="props.bg"
     px="2"
     font-size="sm"
     border-radius="4px"
   >
-    <CLink color="#466E35" is-external display="flex" align-items="center" target="_blank" :href="linkArea(area)">
+    <CLink
+      :color="props.color"
+      is-external
+      display="flex"
+      align-items="center"
+      target="_blank"
+      :href="linkArea"
+      :_hover="linkArea ? { color: 'black' } : null"
+    >
       {{
-        area === "Other (pressing)"
+        tag === "Other (pressing)"
           ? "Climate change"
-          : area === "Global health & poverty"
+          : tag === "Global health & poverty"
           ? "Global health & development"
-          : area
+          : tag
       }}
       <JobCardTagInfo
         :isHovering="isHovering"
-        v-if="area === 'Other policy-focused' || area === 'Information security'"
-        :area="area"
+        v-if="tag === 'Other policy-focused' || tag === 'Information security'"
+        :area="tag"
       />
     </CLink>
   </CFlex>
