@@ -40,7 +40,6 @@ onMounted(async () => {
     <RefinementList
       attribute="tags_area"
       :count-bg="props.countBg"
-      :limit="40"
       label="Problem areas"
       :mt="0"
     />
@@ -87,7 +86,7 @@ onMounted(async () => {
       :amount="orgCount"
       :count-bg="props.countBg"
       label="Organisation"
-      :limit="6"
+      :limit="8"
       :show-more-limit="20"
       :searchable="true"
     />
