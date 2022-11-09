@@ -30,7 +30,7 @@ const emit = defineEmits(["showMobile"]);
       </CFlex>
       <CText font-size="lg"
         >Handpicked to help you tackle the
-        <CLink href="https://80000hours.org/problem-profiles/">
+        <CLink is-external href="https://80000hours.org/problem-profiles/">
           world’s most pressing problems
         </CLink>
         with your career.

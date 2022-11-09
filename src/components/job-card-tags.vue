@@ -1,8 +1,35 @@
 <script setup lang="ts">
-import { CFlex, CBox, CText } from "@chakra-ui/vue-next";
+import { CFlex, CBox, CText, CLink } from "@chakra-ui/vue-next";
 import { JobAlgolia } from "~/utils/types";
 
 const props = defineProps<{ job: JobAlgolia }>();
+
+function linkArea(area: string) {
+  switch (area) {
+    case "Other (pressing)":
+      return "https://80000hours.org/problem-profiles/climate-change";
+    case "Global health & poverty":
+      return "https://80000hours.org/problem-profiles/health-in-poor-countries";
+    case "Other policy-focused":
+      return "";
+    case "AI safety & policy":
+      return "https://80000hours.org/problem-profiles/artificial-intelligence";
+    case "Factory farming":
+      return "https://80000hours.org/problem-profiles/factory-farming";
+    case "Biosecurity & pandemic preparedness":
+      return "https://80000hours.org/problem-profiles/preventing-catastrophic-pandemics";
+    case "Building effective altruism":
+      return "https://80000hours.org/problem-profiles/promoting-effective-altruism";
+    case "Information security":
+      return "https://80000hours.org/career-reviews/information-security";
+    case "Nuclear security":
+      return "https://80000hours.org/problem-profiles/nuclear-security";
+    case "Forecasting":
+      return "https://80000hours.org/career-reviews/forecasting";
+    case 'Global priorities research':
+      return "https://80000hours.org/problem-profiles/global-priorities-research"
+  }
+}
 </script>
 
 <template>
@@ -18,13 +45,17 @@ const props = defineProps<{ job: JobAlgolia }>();
         font-size="sm"
         border-radius="4px"
       >
-        <CText color="#466E35">{{
-          area === "Other (pressing)"
-            ? "Climate change"
-            : area === "Global health & poverty"
-            ? "Global health & development"
-            : area
-        }}</CText>
+        <CLink color="#466E35" is-external target="_blank" :href="linkArea(area)">
+          <!-- <CText> -->
+          {{
+            area === "Other (pressing)"
+              ? "Climate change"
+              : area === "Global health & poverty"
+              ? "Global health & development"
+              : area
+          }}
+          <!-- </CText> -->
+        </CLink>
       </CFlex>
 
       <!--        <CFlex-->
