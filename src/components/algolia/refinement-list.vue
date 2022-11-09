@@ -10,6 +10,7 @@ import { SearchClient, SearchIndex } from "algoliasearch";
 import * as Sentry from "@sentry/vue";
 import { xRiskProblemAreas, acrossEAProblemAreas, otherProblemAreas } from "~/constants";
 import EightykLink from "../eightyk/eightyk-link.vue";
+import log from "~~/src/utils/log";
 
 const { captureEvent } = Sentry;
 
@@ -31,6 +32,8 @@ const state = {
   tagsFeaturedNames: ref<string[]>([]),
   config: useRuntimeConfig(),
 };
+
+const inputVal = ref("");
 
 const placeholder = computed(() => {
   let label = props.label.toLowerCase();
@@ -170,10 +173,16 @@ function carefulRefine(
       >
         <CInput
           v-if="props.searchable"
+          :value="inputVal"
+          @input="
+            (e) => {
+              inputVal = e.currentTarget.value;
+              searchForItems(e.currentTarget.value);
+            }
+          "
           :placeholder="`Search all ${
             props.locationType ? locationCountRef : items.length
           } ${placeholder}...`"
-          @input="searchForItems($event.currentTarget.value)"
           mb="1"
           border-radius="md"
           bg="white"
