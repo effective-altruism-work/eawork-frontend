@@ -34,16 +34,14 @@ const placeholder = computed(() => {
   let label = props.label.toLowerCase();
   switch (label) {
     case "organisation":
-      label = "organisations";
-      break;
+      return "organisations";
     case "city":
-      label = "cities";
-      break;
+      return "cities";
     case "country":
-      label = "countries";
-      break;
+      return "countries";
+    default:
+      return "";
   }
-  return `Search all ${props.amount} ${label}...`;
 });
 
 onMounted(async () => {
@@ -66,6 +64,8 @@ const trueLimit = computed(() => {
   return !!props.locationType ? 24 : props.limit;
 });
 
+const locationCountRef = ref(0);
+
 function morphFacetValues(items: AlgoliaFilterItem[], section?: "featured" | "other") {
   let filteredItems = items
     .filter(
@@ -81,18 +81,16 @@ function morphFacetValues(items: AlgoliaFilterItem[], section?: "featured" | "ot
           : "",
     }));
 
+  // city or country
   if (props?.locationType && props?.trueItems) {
     let locationedItems: AlgoliaFilterItem[] = [];
-    if (props.locationType === "country") {
-      locationedItems = filteredItems.filter((i) => props.trueItems.includes(i.value));
-    } else {
-      locationedItems = filteredItems.filter((i) => props.trueItems.includes(i.value));
-    }
+    locationedItems = filteredItems.filter((i) => props.trueItems.includes(i.value));
+    locationCountRef.value = locationedItems.length;
 
     return locationedItems.slice(0, 8);
   }
 
-  return filteredItems;
+  return filteredItems.slice(0, props.limit || 1000);
 
   // if (props.attribute === "tags_area") {
   //   if (section === "featured") {
@@ -139,12 +137,14 @@ function carefulRefine(
       {{ props.label }}
     </CFormLabel>
 
+    <!-- :limit="trueLimit" -->
+    <!-- :show-more-limit="props.showMoreLimit" -->
+
     <AisRefinementList
       :attribute="props.attribute"
       :searchable="props.searchable"
-      :limit="trueLimit"
+      :limit="1000"
       :sort-by="[props.attribute == 'tags_exp_required' ? 'name:asc' : '']"
-      :show-more-limit="props.showMoreLimit"
     >
       <template
         v-slot="{
@@ -159,7 +159,9 @@ function carefulRefine(
       >
         <CInput
           v-if="props.searchable"
-          :placeholder="placeholder"
+          :placeholder="`Search all ${
+            props.locationType ? locationCountRef : items.length
+          } ${placeholder}...`"
           @input="searchForItems($event.currentTarget.value)"
           mb="1"
           border-radius="md"
