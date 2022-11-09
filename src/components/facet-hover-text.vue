@@ -10,7 +10,6 @@ const props = defineProps<{
 
 <template>
   <CBox position="absolute" z-index="10" bottom="4" left="12">
-    <p>{{ area }}</p>
     <CBox
       margin="4"
       padding="6"

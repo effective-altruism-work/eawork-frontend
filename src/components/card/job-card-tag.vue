@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { CFlex, CBox, CText, CLink } from "@chakra-ui/vue-next";
+import { breakpointsChakra } from "~~/src/constants";
 import JobCardTagInfo from "./job-card-tag-info.vue";
 
 const props = defineProps<{
@@ -8,9 +9,16 @@ const props = defineProps<{
   color: string;
 }>();
 
+const breakpoints = useBreakpoints(breakpointsChakra);
+
 const isHovering = ref(false);
 
 const linkArea = computed(() => {
+  // do not link on mobile.
+  if (breakpoints.smaller("lg").value) {
+    return null;
+  }
+
   switch (props.tag) {
     case "Other (pressing)":
       return "https://80000hours.org/problem-profiles/climate-change";
@@ -38,6 +46,13 @@ const linkArea = computed(() => {
       return null;
   }
 });
+
+function handleClick() {
+  if (linkArea.value) {
+    return;
+  }
+}
+
 </script>
 
 <template>
@@ -56,6 +71,7 @@ const linkArea = computed(() => {
     <CLink
       :color="props.color"
       is-external
+      @click="handleClick"
       display="flex"
       align-items="center"
       target="_blank"
