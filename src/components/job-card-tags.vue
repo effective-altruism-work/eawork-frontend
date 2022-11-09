@@ -3,60 +3,12 @@ import { CFlex, CBox, CText, CLink } from "@chakra-ui/vue-next";
 import { JobAlgolia } from "~/utils/types";
 
 const props = defineProps<{ job: JobAlgolia }>();
-
-function linkArea(area: string) {
-  switch (area) {
-    case "Other (pressing)":
-      return "https://80000hours.org/problem-profiles/climate-change";
-    case "Global health & poverty":
-      return "https://80000hours.org/problem-profiles/health-in-poor-countries";
-    case "Other policy-focused":
-      return "";
-    case "AI safety & policy":
-      return "https://80000hours.org/problem-profiles/artificial-intelligence";
-    case "Factory farming":
-      return "https://80000hours.org/problem-profiles/factory-farming";
-    case "Biosecurity & pandemic preparedness":
-      return "https://80000hours.org/problem-profiles/preventing-catastrophic-pandemics";
-    case "Building effective altruism":
-      return "https://80000hours.org/problem-profiles/promoting-effective-altruism";
-    case "Information security":
-      return "https://80000hours.org/career-reviews/information-security";
-    case "Nuclear security":
-      return "https://80000hours.org/problem-profiles/nuclear-security";
-    case "Forecasting":
-      return "https://80000hours.org/career-reviews/forecasting";
-    case 'Global priorities research':
-      return "https://80000hours.org/problem-profiles/global-priorities-research"
-  }
-}
 </script>
 
 <template>
   <CBox>
     <CFlex w="100%" gap="3" mt="3" wrap="wrap">
-      <CFlex
-        v-for="area in props.job.tags_area"
-        :key="area"
-        direction="column"
-        gap="3"
-        bg="#F3FAF0"
-        px="2"
-        font-size="sm"
-        border-radius="4px"
-      >
-        <CLink color="#466E35" is-external target="_blank" :href="linkArea(area)">
-          <!-- <CText> -->
-          {{
-            area === "Other (pressing)"
-              ? "Climate change"
-              : area === "Global health & poverty"
-              ? "Global health & development"
-              : area
-          }}
-          <!-- </CText> -->
-        </CLink>
-      </CFlex>
+      <JobCardTag v-for="area in props.job.tags_area" :key="area" :area="area" />
 
       <!--        <CFlex-->
       <!--          v-for="workload in props.job.tags_workload"-->

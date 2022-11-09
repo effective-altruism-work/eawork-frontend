@@ -3,6 +3,7 @@ import { chakra, CFlex, CVStack, CLink, CBox, CText, CHeading } from "@chakra-ui
 import FooterImageLink from "./footer-image-link.vue";
 import FooterBoxLink from "./footer-box-link.vue";
 import { breakpointsChakra } from "~/constants";
+import EightyKLink from "./eightyk-link.vue";
 
 const breakpoints = useBreakpoints(breakpointsChakra);
 </script>
@@ -258,29 +259,22 @@ const breakpoints = useBreakpoints(breakpointsChakra);
           >
             <CText mb="4">
               Please
-              <CLink is-external href="https://80000hours.org/about/contact/"
-                >contact us</CLink
-              >
+              <EightyKLink path="/about/contact/">contact us</EightyKLink>
               to suggest ideas, improvements, or corrections.
             </CText>
             <CText mb="4">
               We do our best to provide useful information, but how you use the information
               is up to you. We don’t take responsibility for any loss that results from the
-              use of information on the site. Please consult our&nbsp;<CLink
-                is-external
-                href="https://80000hours.org/legal/"
-                >full legal disclaimer</CLink
+              use of information on the site. Please consult our&nbsp;<EightyKLink
+                path="/legal"
+                >full legal disclaimer</EightyKLink
               >
               and
-              <CLink is-external href="https://80000hours.org/about/privacy-policy/"
-                >privacy policy</CLink
-              >.
+              <EightyKLink path="/about/privacy-policy">privacy policy</EightyKLink>.
             </CText>
             <CText mb="4">
               © 2021 – all rights reserved. Please
-              <CLink is-external href="https://80000hours.org/about/contact/"
-                >contact us</CLink
-              >
+              <EightyKLink path="/about/contact">contact us</EightyKLink>
               if you wish to redistribute, translate, or adapt this work.
             </CText>
           </CBox>
