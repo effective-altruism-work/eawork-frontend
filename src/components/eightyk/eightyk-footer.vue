@@ -3,6 +3,7 @@ import { chakra, CFlex, CVStack, CLink, CBox, CText, CHeading } from "@chakra-ui
 import FooterImageLink from "./footer-image-link.vue";
 import FooterBoxLink from "./footer-box-link.vue";
 import { breakpointsChakra } from "~/constants";
+import EightyKLink from "./eightyk-link.vue";
 
 const breakpoints = useBreakpoints(breakpointsChakra);
 </script>
@@ -94,16 +95,16 @@ const breakpoints = useBreakpoints(breakpointsChakra);
                 >
                 <chakra.ul width="100%" color="lightest-gray">
                   <li>
-                    <FooterBoxLink href="/career-planning/">Plan your career</FooterBoxLink>
+                    <FooterBoxLink href="/career-planning">Plan your career</FooterBoxLink>
                   </li>
-                  <li><FooterBoxLink href="/job-board/">Find a job</FooterBoxLink></li>
+                  <li><FooterBoxLink href="/job-board">Find a job</FooterBoxLink></li>
                   <li>
                     <FooterBoxLink href="/advising/?int_campaign=2021-04__footer-navigation"
                       >Get 1-1 advice</FooterBoxLink
                     >
                   </li>
                   <li>
-                    <FooterBoxLink href="/community/">Join our community</FooterBoxLink>
+                    <FooterBoxLink href="/community">Join our community</FooterBoxLink>
                   </li>
                 </chakra.ul>
                 <CHeading
@@ -114,10 +115,10 @@ const breakpoints = useBreakpoints(breakpointsChakra);
                 >
                 <chakra.ul width="100%" color="lightest-gray">
                   <li>
-                    <FooterBoxLink href="/podcast/">Subscribe to our podcast</FooterBoxLink>
+                    <FooterBoxLink href="/podcast">Subscribe to our podcast</FooterBoxLink>
                   </li>
                   <li>
-                    <FooterBoxLink href="/newsletter/">Join our newsletter</FooterBoxLink>
+                    <FooterBoxLink href="/newsletter">Join our newsletter</FooterBoxLink>
                   </li>
                   <li>
                     <FooterBoxLink external href="https://twitter.com/80000hours"
@@ -151,9 +152,9 @@ const breakpoints = useBreakpoints(breakpointsChakra);
                   >About us</CHeading
                 >
                 <chakra.ul color="lightest-gray">
-                  <li><FooterBoxLink href="/about/">Why 80,000 Hours?</FooterBoxLink></li>
+                  <li><FooterBoxLink href="/about">Why 80,000 Hours?</FooterBoxLink></li>
                   <li>
-                    <FooterBoxLink href="/about/meet-the-team/">Meet the team</FooterBoxLink>
+                    <FooterBoxLink href="/about/meet-the-team">Meet the team</FooterBoxLink>
                   </li>
                   <li><FooterBoxLink href="/about/donors/">Our donors</FooterBoxLink></li>
                   <li>
@@ -258,29 +259,22 @@ const breakpoints = useBreakpoints(breakpointsChakra);
           >
             <CText mb="4">
               Please
-              <CLink is-external href="https://80000hours.org/about/contact/"
-                >contact us</CLink
-              >
+              <EightyKLink path="/about/contact/">contact us</EightyKLink>
               to suggest ideas, improvements, or corrections.
             </CText>
             <CText mb="4">
               We do our best to provide useful information, but how you use the information
               is up to you. We don’t take responsibility for any loss that results from the
-              use of information on the site. Please consult our&nbsp;<CLink
-                is-external
-                href="https://80000hours.org/legal/"
-                >full legal disclaimer</CLink
+              use of information on the site. Please consult our&nbsp;<EightyKLink
+                path="/legal"
+                >full legal disclaimer</EightyKLink
               >
               and
-              <CLink is-external href="https://80000hours.org/about/privacy-policy/"
-                >privacy policy</CLink
-              >.
+              <EightyKLink path="/about/privacy-policy">privacy policy</EightyKLink>.
             </CText>
             <CText mb="4">
               © 2021 – all rights reserved. Please
-              <CLink is-external href="https://80000hours.org/about/contact/"
-                >contact us</CLink
-              >
+              <EightyKLink path="/about/contact">contact us</EightyKLink>
               if you wish to redistribute, translate, or adapt this work.
             </CText>
           </CBox>

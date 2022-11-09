@@ -3,7 +3,7 @@ import { CFlex, CBox, CButton, CLink, CHeading, CText, chakra } from "@chakra-ui
 import { onMounted, onUnmounted, ref } from "vue";
 import { nodes, Node, NodeCategory } from "~/nodes";
 import { OhVueIcon } from "oh-vue-icons";
-// import { useComp } from "~/utils/structs";
+import EightyKLink from "~/components/eightyk/eightyk-link.vue";
 
 const state = {
   nodeOpened: ref<Node>(null),
@@ -62,9 +62,9 @@ function onNodeClick(event, node) {
   <CBox w="100%" mb="-2px">
     <CBox pos="relative">
       <CFlex justify="space-between" align="center">
-        <CLink is-external href="https://80000hours.org/">
+        <EightyKLink path="/">
           <chakra.img w="72px" src="/80k-logo.png" />
-        </CLink>
+        </EightyKLink>
         <CFlex>
           <CBox v-for="node in nodes" :key="node.label" z-index="modal">
             <CLink :href="node.url" @click="(event) => onNodeClick(event, node)">

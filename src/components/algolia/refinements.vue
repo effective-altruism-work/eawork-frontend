@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { CBox } from "@chakra-ui/vue-next";
 import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns";
-import NumericMenu from "~/components/aloglia/numeric-menu.vue";
-import RefinementList from "~/components/aloglia/refinement-list.vue";
+import NumericMenu from "~/components/algolia/numeric-menu.vue";
+import RefinementList from "~/components/algolia/refinement-list.vue";
 import { SearchClient, SearchIndex } from "algoliasearch";
 
 const props = defineProps<{
@@ -40,7 +40,6 @@ onMounted(async () => {
     <RefinementList
       attribute="tags_area"
       :count-bg="props.countBg"
-      :limit="40"
       label="Problem areas"
       :mt="0"
     />
@@ -87,7 +86,7 @@ onMounted(async () => {
       :amount="orgCount"
       :count-bg="props.countBg"
       label="Organisation"
-      :limit="6"
+      :limit="8"
       :show-more-limit="20"
       :searchable="true"
     />

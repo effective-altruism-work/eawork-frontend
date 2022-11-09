@@ -5,8 +5,8 @@ import { useBreakpoints } from "@vueuse/core";
 import { formatDistance, format } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
 import { ref, onMounted } from "vue";
-import JobCardLocationShort from "~/components/job-card-location-short.vue";
-import JobCardTags from "~/components/job-card-tags.vue";
+import JobCardLocationShort from "~/components/card/job-card-location-short.vue";
+import JobCardTags from "~/components/card/job-card-tags.vue";
 // import JobView from "~/components/job-view.vue";
 import { breakpointsChakra, strings } from "~/constants";
 // import { theme } from "~/styles/theme";
@@ -14,7 +14,7 @@ import { useComp } from "~/utils/structs";
 import { JobAlgolia } from "~/utils/types";
 import { tracking } from "~/utils/tracking";
 import JobHoverText from "~/components/job-hover-text.vue";
-import log from "../utils/log";
+import log from "~/utils/log";
 
 const props = defineProps<{
   job: JobAlgolia;

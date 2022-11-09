@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/vue-next";
 import { onMounted, onUnmounted, ref } from "vue";
 import { Node, NodeCategory, nodesAll } from "~/nodes";
+import EightyKLink from "~/components/eightyk/eightyk-link.vue";
 
 const state = {
   isOpen: ref(false),
@@ -78,9 +79,9 @@ function isCurrentCategory(category: NodeCategory) {
 
 <template>
   <CFlex direction="row" align="center" justify="space-between" py="2">
-    <CLink is-external href="https://80000hours.org/">
+    <EightyKLink path="/">
       <chakra.img w="55px" mb="px" src="/80k-logo.png" />
-    </CLink>
+    </EightyKLink>
 
     <CButton
       @click="state.isOpen.value = true"

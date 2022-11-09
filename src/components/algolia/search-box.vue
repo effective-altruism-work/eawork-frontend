@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { CBox, CText, CFlex, CIcon } from "@chakra-ui/vue-next";
-// import AlgoliaLogo from "~/components/aloglia/algolia-logo.vue";
+// import AlgoliaLogo from "~/components/algolia/algolia-logo.vue";
 
 const props = defineProps<{
   isShowResultsCount: boolean;

@@ -29,3 +29,25 @@ export const strings = {
   error: msg.error,
   remoteLiteral: "Global",
 } as const;
+
+export const xRiskProblemAreas = [
+  "AI safety & policy",
+  "Biosecurity & pandemic preparedness",
+  "Nuclear security",
+  "Information security",
+  "Forecasting",
+  "Other policy-focused",
+] as const;
+
+export const acrossEAProblemAreas = [
+  "Building effective altruism",
+  "Global priorities research",
+] as const;
+
+export const otherProblemAreas = [
+  "Global health & development",
+  "Global health & poverty",
+  "Factory farming",
+  "Climate change",
+  "Other (pressing)",
+] as const;

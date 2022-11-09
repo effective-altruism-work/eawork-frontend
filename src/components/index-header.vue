@@ -11,8 +11,8 @@ import {
 } from "@chakra-ui/vue-next";
 import { OhVueIcon } from "oh-vue-icons";
 import { breakpointsChakra } from "../constants";
-import { useHooks } from "../utils/structs";
-import CurrentRefinements from "./aloglia/current-refinements.vue";
+import CurrentRefinements from "./algolia/current-refinements.vue";
+import EightyKLink from "~/components/eightyk/eightyk-link.vue";
 
 const breakpoints = useBreakpoints(breakpointsChakra);
 
@@ -30,9 +30,7 @@ const emit = defineEmits(["showMobile"]);
       </CFlex>
       <CText font-size="lg"
         >Handpicked to help you tackle the
-        <CLink href="https://80000hours.org/problem-profiles/">
-          world’s most pressing problems
-        </CLink>
+        <EightykLink path="/problem-profiles/"> world’s most pressing problems </EightykLink>
         with your career.
       </CText>
     </CVStack>
@@ -44,26 +42,26 @@ const emit = defineEmits(["showMobile"]);
       :font-size="{ base: 'sm', md: 'md' }"
       align="center"
     >
-      <CLink
+      <EightyKLink
         display="flex"
         align-items="center"
-        href="https://80000hours.org/job-board/top-orgs/"
+        path="/job-board/top-orgs/"
         text-decoration="underline"
         color="gray.400"
       >
         <OhVueIcon name="md-starrate-round" scale="1.1" style="margin-bottom: 1px" />
         <chakra.span ml="1">Top recommended organisations</chakra.span>
-      </CLink>
-      <CLink
+      </EightyKLink>
+      <EightyKLink
         display="flex"
         align-items="center"
-        href="https://80000hours.org/job-board/faq/"
+        path="/job-board/faq/"
         text-decoration="underline"
         color="gray.400"
       >
         <OhVueIcon name="bi-question-circle-fill" scale="1" style="margin-right: 4px" />
         <chakra.span ml="px">FAQ</chakra.span>
-      </CLink>
+      </EightyKLink>
     </CFlex>
     <CFlex v-if="breakpoints.smaller('lg').value" justify-content="center" mb="4">
       <CButton width="100%" @click="emit('showMobile')">
