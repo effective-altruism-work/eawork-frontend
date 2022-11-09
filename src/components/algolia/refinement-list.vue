@@ -27,11 +27,11 @@ const props = defineProps<{
   countBg?: string;
 }>();
 
-const state = {
-  tagsFeatured: ref<TagDjango[]>([]),
-  tagsFeaturedNames: ref<string[]>([]),
-  config: useRuntimeConfig(),
-};
+// const state = {
+//   tagsFeatured: ref<TagDjango[]>([]),
+//   tagsFeaturedNames: ref<string[]>([]),
+//   config: useRuntimeConfig(),
+// };
 
 const inputVal = ref("");
 
@@ -49,21 +49,21 @@ const placeholder = computed(() => {
   }
 });
 
-onMounted(async () => {
-  if (props.attribute === "tags_area") {
-    const res = await axios.get(`${state.config.public.apiBase}/tags/?is_featured=true`);
-    if (!("data" in res) || !Array.isArray(res.data)) {
-      const error = new Error(
-        `No data returned from /tags/?is_featured=true. Data: ${JSON.stringify(res?.data)}`,
-      );
-      captureEvent(error);
-      return;
-    }
+// onMounted(async () => {
+//   if (props.attribute === "tags_area") {
+//     const res = await axios.get(`${state.config.public.apiBase}/tags/?is_featured=true`);
+//     if (!("data" in res) || !Array.isArray(res.data)) {
+//       const error = new Error(
+//         `No data returned from /tags/?is_featured=true. Data: ${JSON.stringify(res?.data)}`,
+//       );
+//       captureEvent(error);
+//       return;
+//     }
 
-    state.tagsFeatured.value = res.data;
-    state.tagsFeaturedNames.value = res.data.map((tag) => tag.name);
-  }
-});
+//     state.tagsFeatured.value = res.data;
+//     state.tagsFeaturedNames.value = res.data.map((tag) => tag.name);
+//   }
+// });
 
 const trueLimit = computed(() => {
   return !!props.locationType ? 24 : props.limit;
