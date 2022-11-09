@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { chakra, CFlex, CHeading, CButton, CBox, CText, CSpacer } from "@chakra-ui/vue-next";
-import CurrentRefinements from "~/components/aloglia/current-refinements.vue";
-import Refinements from "~/components/aloglia/refinements.vue";
+import CurrentRefinements from "~/components/algolia/current-refinements.vue";
+import Refinements from "~/components/algolia/refinements.vue";
 import FiltersFooter from "~/components/eightyk/filters-footer.vue";
-import SearchBox from "~/components/aloglia/search-box.vue";
+import SearchBox from "~/components/algolia/search-box.vue";
 import { OhVueIcon } from "oh-vue-icons";
 import { SearchIndex } from "algoliasearch";
 

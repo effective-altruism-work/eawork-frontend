@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { CFlex, CBox, CText, CLink } from "@chakra-ui/vue-next";
 import { JobAlgolia } from "~/utils/types";
+import JobCardTag from "./job-card-tag.vue";
 
 const props = defineProps<{ job: JobAlgolia }>();
 </script>

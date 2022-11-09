@@ -4,13 +4,13 @@ import { chakra, CFlex, CVStack, CLink, CBox, CText } from "@chakra-ui/vue-next"
 import { useBreakpoints } from "@vueuse/core";
 import algoliasearch from "algoliasearch";
 import { onBeforeMount, onMounted, ref, watch, onBeforeUnmount } from "vue";
-import CurrentRefinements from "~/components/aloglia/current-refinements.vue";
-import Refinements from "~/components/aloglia/refinements.vue";
+import CurrentRefinements from "~/components/algolia/current-refinements.vue";
+import Refinements from "~/components/algolia/refinements.vue";
 import BtnJobsAlert from "~/components/btn-jobs-alert.vue";
-import SearchBox from "~/components/aloglia/search-box.vue";
+import SearchBox from "~/components/algolia/search-box.vue";
 import FiltersFooter from "~/components/eightyk/filters-footer.vue";
-import JobCardSkeleton from "~/components/job-card-skeleton.vue";
-import JobCard from "~/components/job-card.vue";
+import JobCardSkeleton from "~/components/card/job-card-skeleton.vue";
+import JobCard from "~/components/card/job-card.vue";
 // import { history } from "instantsearch.js/es/lib/routers";
 import { useComp, useHooks } from "~/utils/structs";
 import { tracking } from "~/utils/tracking";

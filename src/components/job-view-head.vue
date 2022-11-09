@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { CFlex, CBox, CLink, CText } from "@chakra-ui/vue-next";
-import JobCardTags from "~/components/job-card-tags.vue";
+import JobCardTags from "~/components/card/job-card-tags.vue";
 import { JobAlgolia } from "~/utils/types";
 import { formatDistance } from "date-fns";
 

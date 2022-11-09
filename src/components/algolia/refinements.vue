@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { CBox } from "@chakra-ui/vue-next";
 import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns";
-import NumericMenu from "~/components/aloglia/numeric-menu.vue";
-import RefinementList from "~/components/aloglia/refinement-list.vue";
+import NumericMenu from "~/components/algolia/numeric-menu.vue";
+import RefinementList from "~/components/algolia/refinement-list.vue";
 import { SearchClient, SearchIndex } from "algoliasearch";
 
 const props = defineProps<{
