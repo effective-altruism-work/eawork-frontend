@@ -16,6 +16,7 @@ const props = defineProps<{
       scale="0.8"
       top="-1.5px"
       ml="0.5"
+      style="opacity: 0.6"
       position="relative"
     />
 

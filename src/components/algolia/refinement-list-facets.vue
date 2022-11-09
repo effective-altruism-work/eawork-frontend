@@ -3,6 +3,7 @@ import { CText, CBadge, chakra } from "@chakra-ui/vue-next";
 import Checkbox from "~/components/chakra/checkbox.vue";
 import FacetHoverText from "~/components/facet-hover-text.vue";
 import { AlgoliaFilterItem } from "~~/src/utils/types";
+import { OhVueIcon } from "oh-vue-icons"; 
 
 const props = defineProps<{
   attribute?: string;
@@ -57,6 +58,14 @@ function formatTagName(tagName: string) {
           :hit="item"
         />
         <span v-else>{{ formatTagName(item.label) }}</span>
+        <OhVueIcon
+          v-if="item?.hover"
+          name="io-information-circle"
+          scale="0.8"
+          ml="1"
+          color="#aaaaaa"
+          position="relative"
+        />
         <CBadge
           ml="2"
           mt="0"

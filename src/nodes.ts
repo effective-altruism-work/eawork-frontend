@@ -542,7 +542,7 @@ export const nodes: Node[] = [
           }),
           Node.create({
             label: "Effective Altruism: Ten Global Problems",
-            url: urlWrap`/podcast/effective-altruism-ten-global-problems//`,
+            url: urlWrap`/podcast/effective-altruism-ten-global-problems/`,
           }),
         ],
       }),
