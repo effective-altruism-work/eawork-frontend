@@ -133,8 +133,6 @@ function onMouseUp(e) {
 
   // don't change card state if user is clicking a link
   // brittle
-  console.log(e.target.classList);
-  
   if (
     e.target.classList.contains("chakra-button") ||
     e.target.classList.contains("chakra-link")

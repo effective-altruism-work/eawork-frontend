@@ -68,17 +68,14 @@ const locationCountRef = ref(0);
 
 function morphFacetValues(items: AlgoliaFilterItem[], section?: "featured" | "other") {
   let filteredItems = items
-    .filter(
-      (i) =>
-        i.value !== "Global priorities research" && i.value !== "Multiple experience levels",
-    )
+    .filter((i) => i.value !== "Multiple experience levels")
     .map((i) => (i.label === "Other (pressing)" ? { ...i, label: "Climate change" } : i))
     .map((i) => ({
       ...i,
       hover:
-        i.value === "Other policy-focused"
-          ? "We expect these to be good opportunities for career-building, and potentially help you directly contribute to existential risk reduction in the future"
-          : "",
+        i.value === "Other policy-focused" || i.value === "Information security"
+          ? true
+          : false,
     }));
 
   // city or country
