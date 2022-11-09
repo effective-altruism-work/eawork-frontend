@@ -290,6 +290,11 @@ const routing = { stateMapping };
                     </button></CBox
                   > -->
                 </template>
+
+                <!-- this overrides the 'show more results' button that pops up -->
+                <template v-slot:loadMore="{ page, isLastPage, refineNext }"
+                  ><span
+                /></template>
               </AisInfiniteHits>
             </CBox>
           </CBox>
