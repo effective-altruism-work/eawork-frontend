@@ -42,26 +42,26 @@ const emit = defineEmits(["showMobile"]);
       :font-size="{ base: 'sm', md: 'md' }"
       align="center"
     >
-      <EightyKLink
+      <CLink
         display="flex"
         align-items="center"
-        path="/job-board/top-orgs/"
+        href="https://80000hours.org/job-board/top-orgs/"
         text-decoration="underline"
         color="gray.400"
       >
         <OhVueIcon name="md-starrate-round" scale="1.1" style="margin-bottom: 1px" />
         <chakra.span ml="1">Top recommended organisations</chakra.span>
-      </EightyKLink>
-      <EightyKLink
+      </CLink>
+      <CLink
         display="flex"
         align-items="center"
-        path="/job-board/faq/"
+        href="https://80000hours.org/job-board/faq/"
         text-decoration="underline"
         color="gray.400"
       >
         <OhVueIcon name="bi-question-circle-fill" scale="1" style="margin-right: 4px" />
         <chakra.span ml="px">FAQ</chakra.span>
-      </EightyKLink>
+      </CLink>
     </CFlex>
     <CFlex v-if="breakpoints.smaller('lg').value" justify-content="center" mb="4">
       <CButton width="100%" @click="emit('showMobile')">

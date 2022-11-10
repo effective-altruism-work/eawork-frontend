@@ -6,11 +6,11 @@ import { onMounted, ref } from "vue";
 import RefinementListFacets from "~/components/algolia/refinement-list-facets.vue";
 import { TagDjango, TagTypeName, AlgoliaFilterItem } from "~/utils/types";
 import { chakra } from "@chakra-ui/vue-next";
-import { SearchClient, SearchIndex } from "algoliasearch";
 import * as Sentry from "@sentry/vue";
 import { xRiskProblemAreas, acrossEAProblemAreas, otherProblemAreas } from "~/constants";
 import EightykLink from "../eightyk/eightyk-link.vue";
 import log from "~~/src/utils/log";
+import { AisRefinementList } from "vue-instantsearch/vue3/es";
 
 const { captureEvent } = Sentry;
 
@@ -90,6 +90,8 @@ function morphFacetValues(
   if (props?.locationType && props?.trueItems) {
     let locationedItems: AlgoliaFilterItem[] = [];
     locationedItems = filteredItems.filter((i) => props.trueItems.includes(i.value));
+
+    // side effect!!!
     locationCountRef.value = locationedItems.length;
 
     return locationedItems.slice(0, 8);
@@ -98,9 +100,14 @@ function morphFacetValues(
   if (section) {
     if (section === "x-risk") {
       const ind = filteredItems.findIndex((i) => i.value === "Other policy-focused");
-      filteredItems.push(filteredItems.splice(ind, 1)[0]);
 
-      return filteredItems.filter((item) => xRiskProblemAreas.includes(item.value as any));
+      if (ind !== -1) {
+        filteredItems.push(filteredItems.splice(ind, 1)[0]);
+      }
+
+      return filteredItems.filter((item) => {
+        return xRiskProblemAreas.includes(item.value as any);
+      });
     }
 
     if (section === "across") {
@@ -216,6 +223,8 @@ function carefulRefine(
             Reducing
             <EightykLink
               text-decoration="underline"
+              text-decoration-thickness="1px"
+              text-underline-offset="0.11em"
               color="gray.500"
               path="/articles/existential-risks"
               >existential risks</EightykLink

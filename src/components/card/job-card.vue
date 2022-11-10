@@ -15,6 +15,7 @@ import { JobAlgolia } from "~/utils/types";
 import { tracking } from "~/utils/tracking";
 import JobHoverText from "~/components/job-hover-text.vue";
 import log from "~/utils/log";
+import { AisSnippet } from "vue-instantsearch/vue3/es";
 
 const props = defineProps<{
   job: JobAlgolia;
@@ -37,7 +38,10 @@ const timeSincePosting = computed(() => {
   formatted = formatted.replace("about ", "");
 
   // flatten dates from over two months ago
-  if (formatted.includes("months ago") && formatted !== "2 months ago") {
+  if (
+    (formatted.includes("months ago") && formatted !== "2 months ago") ||
+    formatted.includes("year")
+  ) {
     formatted = ">2 months ago";
   }
 
@@ -446,7 +450,6 @@ function onMouseUp(e) {
               <CLink
                 @click="
                    (event: MouseEvent) => {
-                    log('CLICK');
                     event.stopPropagation();
                     tracking.sendJobEvent(props.job, 'url_external clicked');
                   }

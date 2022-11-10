@@ -10,7 +10,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <CBox position="relative" w="4" h="4">
+  <CBox w="4" h="4">
     <OhVueIcon
       name="io-information-circle"
       scale="0.8"
@@ -20,7 +20,7 @@ const props = defineProps<{
       position="relative"
     />
 
-    <CBox v-if="isHovering" position="absolute" z-index="10" bottom="0" left="-12">
+    <CBox v-if="isHovering" position="absolute" z-index="10" bottom="2" left="0">
       <CBox
         margin="4"
         padding="6"

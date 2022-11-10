@@ -18,5 +18,8 @@ todo.md
 .output
 
 /dist/
+dist/
+/dist
+dist
 back.sh
 notes.txt

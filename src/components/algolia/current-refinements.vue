@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { CButton, CFlex, CIcon, CText } from "@chakra-ui/vue-next";
 import { formatDistance } from "date-fns";
-
+import { AisCurrentRefinements } from "vue-instantsearch/vue3/es";
 type Item = {
   attribute: string;
   refine: (r: Refinement) => any;

@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { CText, CBadge, chakra } from "@chakra-ui/vue-next";
+import { CText, CBadge, chakra, CBox } from "@chakra-ui/vue-next";
 import Checkbox from "~/components/chakra/checkbox.vue";
 import FacetHoverText from "~/components/facet-hover-text.vue";
 import { AlgoliaFilterItem } from "~~/src/utils/types";
-import { OhVueIcon } from "oh-vue-icons"; 
+import { OhVueIcon } from "oh-vue-icons";
+import { AisHighlight } from "vue-instantsearch/vue3/es";
 
 const props = defineProps<{
   attribute?: string;
@@ -37,35 +38,40 @@ function formatTagName(tagName: string) {
 </script>
 
 <template>
-  <chakra.li
-    v-for="item in props.items"
-    :key="item.value"
-    @mouseover="isHovering = item.value"
-    @focus="isHovering = item.value"
-    @mouseleave="isHovering = ''"
-    @blur="isHovering = ''"
-    position="relative"
-    mt="1"
-  >
+  <chakra.li v-for="item in props.items" :key="item.value" position="relative" mt="1">
     <Checkbox
       :model-value="item.isRefined"
       @update:model-value="() => props.refine(item.value)"
     >
-      <CText mt="1px" :_hover="{ color: 'blue.500' }">
-        <ais-highlight
-          v-if="props.searchable && item.value != 'is_recommended_org'"
-          attribute="item"
-          :hit="item"
-        />
-        <span v-else>{{ formatTagName(item.label) }}</span>
-        <OhVueIcon
-          v-if="item?.hover"
-          name="io-information-circle"
-          scale="0.8"
-          ml="1"
-          color="#aaaaaa"
-          position="relative"
-        />
+      <CText mt="1px">
+        <CText display="inline" :_hover="{ color: 'blue.500' }">
+          <ais-highlight
+            v-if="props.searchable && item.value != 'is_recommended_org'"
+            attribute="item"
+            :hit="item"
+          />
+          <span v-else>{{ formatTagName(item.label) }}</span>
+        </CText>
+        <span
+          @mouseover="isHovering = item.value"
+          @focus="isHovering = item.value"
+          @mouseleave="isHovering = ''"
+          @blur="isHovering = ''"
+        >
+          <OhVueIcon
+            v-if="item?.hover"
+            name="io-information-circle"
+            scale="0.8"
+            ml="1"
+            color="#aaaaaa"
+            style="opacity: 0.6"
+            position="relative"
+          />
+          <FacetHoverText
+            v-if="item?.hover && isHovering === item.value"
+            :area="item.value"
+          />
+        </span>
         <CBadge
           ml="2"
           mt="0"
@@ -80,7 +86,6 @@ function formatTagName(tagName: string) {
           {{ item.count.toLocaleString() }}
         </CBadge>
       </CText>
-      <FacetHoverText v-if="item?.hover && isHovering === item.value" :area="item.value" />
     </Checkbox>
   </chakra.li>
 </template>
