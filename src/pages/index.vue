@@ -2,7 +2,8 @@
 import { useHead, useRuntimeConfig, useRoute, useRouter } from "#app";
 import { chakra, CFlex, CVStack, CLink, CBox, CText } from "@chakra-ui/vue-next";
 import { useBreakpoints } from "@vueuse/core";
-import algoliasearch from "algoliasearch";
+import algoliasearch from "algoliasearch/lite";
+import { AisInstantSearch, AisInfiniteHits } from "vue-instantsearch/vue3/es";
 import { onBeforeMount, onMounted, ref, watch, onBeforeUnmount } from "vue";
 import CurrentRefinements from "~/components/algolia/current-refinements.vue";
 import Refinements from "~/components/algolia/refinements.vue";
@@ -11,7 +12,6 @@ import SearchBox from "~/components/algolia/search-box.vue";
 import FiltersFooter from "~/components/eightyk/filters-footer.vue";
 import JobCardSkeleton from "~/components/card/job-card-skeleton.vue";
 import JobCard from "~/components/card/job-card.vue";
-// import { history } from "instantsearch.js/es/lib/routers";
 import { useComp, useHooks } from "~/utils/structs";
 import { tracking } from "~/utils/tracking";
 import queryToJson from "~/utils/queryToJson";
@@ -225,6 +225,9 @@ const routing = { stateMapping };
                 <template
                   v-slot="{ items, refinePrevious, refineNext, isLastPage, sendEvent }"
                 >
+                  <!-- <p style="position: fixed; top: 0; left: 0">
+                    {{ items.length }} lastpage: {{ isLastPage }}
+                  </p> -->
                   <JobCard
                     v-if="state.jobFromUrlQuery.value && !state.queryJson.value"
                     :job="state.jobFromUrlQuery.value"
@@ -277,7 +280,7 @@ const routing = { stateMapping };
                     <JobCardSkeleton />
                     <JobCardSkeleton />
                   </CBox>
-                  <!-- <CBox
+                  <CBox
                     ><button
                       @click="
                         () => {
@@ -288,7 +291,7 @@ const routing = { stateMapping };
                     >
                       click me
                     </button></CBox
-                  > -->
+                  >
                 </template>
 
                 <!-- this overrides the 'show more results' button that pops up -->
@@ -299,9 +302,6 @@ const routing = { stateMapping };
             </CBox>
           </CBox>
         </CFlex>
-
-        <!-- desktop -->
-        <!-- v-if="!hooks.breakpoints.smaller('lg').value" -->
 
         <CFlex
           :display="comp.filtersDisplay"

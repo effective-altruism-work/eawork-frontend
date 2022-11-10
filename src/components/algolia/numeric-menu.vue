@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { CFormLabel, CBox } from "@chakra-ui/vue-next";
-
+import { AisNumericMenu } from "vue-instantsearch/vue3/es";
 const props = defineProps<{
   attribute: string;
   label: string;

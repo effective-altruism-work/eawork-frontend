@@ -3,7 +3,7 @@ import { CBox } from "@chakra-ui/vue-next";
 import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns";
 import NumericMenu from "~/components/algolia/numeric-menu.vue";
 import RefinementList from "~/components/algolia/refinement-list.vue";
-import { SearchClient, SearchIndex } from "algoliasearch";
+import { SearchIndex } from "algoliasearch/lite";
 
 const props = defineProps<{
   countBg?: string;

@@ -6,11 +6,11 @@ import { onMounted, ref } from "vue";
 import RefinementListFacets from "~/components/algolia/refinement-list-facets.vue";
 import { TagDjango, TagTypeName, AlgoliaFilterItem } from "~/utils/types";
 import { chakra } from "@chakra-ui/vue-next";
-import { SearchClient, SearchIndex } from "algoliasearch";
 import * as Sentry from "@sentry/vue";
 import { xRiskProblemAreas, acrossEAProblemAreas, otherProblemAreas } from "~/constants";
 import EightykLink from "../eightyk/eightyk-link.vue";
 import log from "~~/src/utils/log";
+import { AisRefinementList } from "vue-instantsearch/vue3/es";
 
 const { captureEvent } = Sentry;
 

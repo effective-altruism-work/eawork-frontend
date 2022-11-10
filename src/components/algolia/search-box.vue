@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { CBox, CText, CFlex, CIcon } from "@chakra-ui/vue-next";
 // import AlgoliaLogo from "~/components/algolia/algolia-logo.vue";
+import { AisSearchBox, AisStats } from "vue-instantsearch/vue3/es";
 
 const props = defineProps<{
   isShowResultsCount: boolean;

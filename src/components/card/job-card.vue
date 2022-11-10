@@ -15,6 +15,7 @@ import { JobAlgolia } from "~/utils/types";
 import { tracking } from "~/utils/tracking";
 import JobHoverText from "~/components/job-hover-text.vue";
 import log from "~/utils/log";
+import { AisSnippet } from "vue-instantsearch/vue3/es";
 
 const props = defineProps<{
   job: JobAlgolia;

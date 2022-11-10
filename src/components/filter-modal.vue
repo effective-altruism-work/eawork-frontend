@@ -5,7 +5,8 @@ import Refinements from "~/components/algolia/refinements.vue";
 import FiltersFooter from "~/components/eightyk/filters-footer.vue";
 import SearchBox from "~/components/algolia/search-box.vue";
 import { OhVueIcon } from "oh-vue-icons";
-import { SearchIndex } from "algoliasearch";
+import { SearchIndex } from "algoliasearch/lite";
+import { AisStats } from "vue-instantsearch/vue3/es";
 
 const props = defineProps<{
   isShowMobileFilters: boolean;
@@ -61,7 +62,10 @@ const emit = defineEmits(["showMobile", "hideMobile"]);
         <CurrentRefinements />
       </CBox>
       <CBox mb="7">
-        <BtnJobsAlert :total-filters-length="props.totalFiltersLength" :query-json="props.queryJson" />
+        <BtnJobsAlert
+          :total-filters-length="props.totalFiltersLength"
+          :query-json="props.queryJson"
+        />
       </CBox>
       <Refinements :index="props.index" />
       <FiltersFooter />

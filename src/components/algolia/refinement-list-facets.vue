@@ -4,6 +4,7 @@ import Checkbox from "~/components/chakra/checkbox.vue";
 import FacetHoverText from "~/components/facet-hover-text.vue";
 import { AlgoliaFilterItem } from "~~/src/utils/types";
 import { OhVueIcon } from "oh-vue-icons";
+import { AisHighlight } from "vue-instantsearch/vue3/es";
 
 const props = defineProps<{
   attribute?: string;
