@@ -100,9 +100,15 @@ function morphFacetValues(
   if (section) {
     if (section === "x-risk") {
       const ind = filteredItems.findIndex((i) => i.value === "Other policy-focused");
-      filteredItems.push(filteredItems.splice(ind, 1)[0]);
 
-      return filteredItems.filter((item) => xRiskProblemAreas.includes(item.value as any));
+      if (ind !== -1) {
+        filteredItems.push(filteredItems.splice(ind, 1)[0]);
+      }
+
+      return filteredItems.filter((item) => {
+        console.log(item);
+        return xRiskProblemAreas.includes(item.value as any);
+      });
     }
 
     if (section === "across") {

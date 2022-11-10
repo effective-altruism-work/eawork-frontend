@@ -280,7 +280,7 @@ const routing = { stateMapping };
                     <JobCardSkeleton />
                     <JobCardSkeleton />
                   </CBox>
-                  <CBox
+                  <!-- <CBox
                     ><button
                       @click="
                         () => {
@@ -291,7 +291,7 @@ const routing = { stateMapping };
                     >
                       click me
                     </button></CBox
-                  >
+                  > -->
                 </template>
 
                 <!-- this overrides the 'show more results' button that pops up -->
