@@ -2,6 +2,7 @@
 import { CFlex, CBox, CText, CLink } from "@chakra-ui/vue-next";
 import { breakpointsChakra } from "~~/src/constants";
 import JobCardTagInfo from "./job-card-tag-info.vue";
+import urlWrap from "~~/src/utils/urlWrap";
 
 const props = defineProps<{
   tag: string;
@@ -21,27 +22,27 @@ const linkArea = computed(() => {
 
   switch (props.tag) {
     case "Other (pressing)":
-      return "https://80000hours.org/problem-profiles/climate-change";
+      return urlWrap`/problem-profiles/climate-change`;
     case "Global health & poverty":
-      return "https://80000hours.org/problem-profiles/health-in-poor-countries";
+      return urlWrap`/problem-profiles/health-in-poor-countries`;
     case "Other policy-focused":
       return null;
     case "AI safety & policy":
-      return "https://80000hours.org/problem-profiles/artificial-intelligence";
+      return urlWrap`/problem-profiles/artificial-intelligence`;
     case "Factory farming":
-      return "https://80000hours.org/problem-profiles/factory-farming";
+      return urlWrap`/problem-profiles/factory-farming`;
     case "Biosecurity & pandemic preparedness":
-      return "https://80000hours.org/problem-profiles/preventing-catastrophic-pandemics";
+      return urlWrap`/problem-profiles/preventing-catastrophic-pandemics`;
     case "Building effective altruism":
-      return "https://80000hours.org/problem-profiles/promoting-effective-altruism";
+      return urlWrap`/problem-profiles/promoting-effective-altruism`;
     case "Information security":
-      return "https://80000hours.org/career-reviews/information-security";
+      return urlWrap`/career-reviews/information-security`;
     case "Nuclear security":
-      return "https://80000hours.org/problem-profiles/nuclear-security";
+      return urlWrap`/problem-profiles/nuclear-security`;
     case "Forecasting":
-      return "https://80000hours.org/career-reviews/forecasting";
+      return urlWrap`/career-reviews/forecasting`;
     case "Global priorities research":
-      return "https://80000hours.org/problem-profiles/global-priorities-research";
+      return urlWrap`/problem-profiles/global-priorities-research`;
     default:
       return null;
   }
@@ -52,7 +53,6 @@ function handleClick() {
     return;
   }
 }
-
 </script>
 
 <template>
@@ -67,6 +67,7 @@ function handleClick() {
     px="2"
     font-size="sm"
     border-radius="4px"
+    position="relative"
   >
     <CLink
       :color="props.color"

@@ -90,6 +90,8 @@ function morphFacetValues(
   if (props?.locationType && props?.trueItems) {
     let locationedItems: AlgoliaFilterItem[] = [];
     locationedItems = filteredItems.filter((i) => props.trueItems.includes(i.value));
+
+    // side effect!!!
     locationCountRef.value = locationedItems.length;
 
     return locationedItems.slice(0, 8);
@@ -216,6 +218,8 @@ function carefulRefine(
             Reducing
             <EightykLink
               text-decoration="underline"
+              text-decoration-thickness="1px"
+              text-underline-offset="0.11em"
               color="gray.500"
               path="/articles/existential-risks"
               >existential risks</EightykLink
