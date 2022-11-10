@@ -24,11 +24,11 @@ useHead({
     titleChunk ? `${titleChunk} - 80,000 Hours` : "80,000 Hours",
   link: [
     { rel: "icon", type: "image/svg+xml", href: "/favicon.ico" },
-    {
-      rel: "preconnect",
-      crossorigin: true,
-      href: `https://${state.config.public.algoliaApplicationId}-dsn.algolia.net`,
-    },
+    // {
+    //   rel: "preconnect",
+    //   crossorigin: true,
+    //   href: `https://${state.config.public.algoliaApplicationId}-dsn.algolia.net`,
+    // },
   ],
   meta: [
     { name: "og:title", content: "80,000 Hours Job Board" },
