@@ -450,7 +450,6 @@ function onMouseUp(e) {
               <CLink
                 @click="
                    (event: MouseEvent) => {
-                    log('CLICK');
                     event.stopPropagation();
                     tracking.sendJobEvent(props.job, 'url_external clicked');
                   }

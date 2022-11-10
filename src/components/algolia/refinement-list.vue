@@ -106,7 +106,6 @@ function morphFacetValues(
       }
 
       return filteredItems.filter((item) => {
-        console.log(item);
         return xRiskProblemAreas.includes(item.value as any);
       });
     }
