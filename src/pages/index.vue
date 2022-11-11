@@ -2,7 +2,7 @@
 import { useHead, useRuntimeConfig, useRoute, useRouter } from "#app";
 import { chakra, CFlex, CVStack, CLink, CBox, CText } from "@chakra-ui/vue-next";
 import { useBreakpoints } from "@vueuse/core";
-import algoliasearch from "algoliasearch/lite";
+import algoliasearch from "algoliasearch";
 import { AisInstantSearch, AisInfiniteHits } from "vue-instantsearch/vue3/es";
 import { onBeforeMount, onMounted, ref, watch, onBeforeUnmount } from "vue";
 import CurrentRefinements from "~/components/algolia/current-refinements.vue";
