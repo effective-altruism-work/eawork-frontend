@@ -169,13 +169,6 @@ function stateToRoute(uiState: { [indexId: string]: RouteState }): RouteState {
 function routeToState(routeState: RouteState): { [indexId: string]: RouteState } {
   let refinementList = routeState?.refinementList;
 
-  // let { tags_location_type, ...remaining } =
-  //   typeof refinementList !== "object"
-  //     ? { tags_location_type: undefined }
-  //     : "tags_location_type" in refinementList
-  //     ? refinementList
-  //     : { tags_location_type: undefined, ...refinementList };
-
   // side effect
   if (routeState?.jobPk) {
     state.jobPkCurrent.value = Number(routeState.jobPk);

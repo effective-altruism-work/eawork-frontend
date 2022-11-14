@@ -26,7 +26,6 @@ export default {
     // this is a little untethered from index state, so we have to shimmy this in.
     const url = new URL(window.location.href);
     for (const [key, val] of url.searchParams.entries()) {
-      console.log(key, val);
       if (key === "query") {
         this.localQuery = val;
       }

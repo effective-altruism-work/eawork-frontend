@@ -48,22 +48,6 @@ const placeholder = computed(() => {
   }
 });
 
-// onMounted(async () => {
-//   if (props.attribute === "tags_area") {
-//     const res = await axios.get(`${state.config.public.apiBase}/tags/?is_featured=true`);
-//     if (!("data" in res) || !Array.isArray(res.data)) {
-//       const error = new Error(
-//         `No data returned from /tags/?is_featured=true. Data: ${JSON.stringify(res?.data)}`,
-//       );
-//       captureEvent(error);
-//       return;
-//     }
-
-//     state.tagsFeatured.value = res.data;
-//     state.tagsFeaturedNames.value = res.data.map((tag) => tag.name);
-//   }
-// });
-
 const trueLimit = computed(() => {
   return !!props.locationType ? 24 : props.limit;
 });
@@ -212,13 +196,7 @@ function carefulRefine(
 
         <!-- problem areas -->
         <CBox v-else>
-          <CText
-            v-if="props.attribute === 'tags_area'"
-            mt="3"
-            font-weight="bold"
-            color="gray.500"
-            font-size="15px"
-          >
+          <CText mt="3" font-weight="bold" color="gray.500" font-size="15px">
             Reducing
             <EightykLink
               text-decoration="underline"

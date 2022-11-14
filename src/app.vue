@@ -8,6 +8,7 @@ const state = {
   config: useRuntimeConfig(),
 };
 
+// delay loading footer to avoid safari issue
 const show = ref(false);
 onMounted(() => {
   setTimeout(() => {

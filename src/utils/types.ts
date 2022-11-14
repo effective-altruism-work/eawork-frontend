@@ -5,6 +5,7 @@ export const tagTypes = [
   "tags_city",
   "tags_workload",
   "tags_area",
+  "tags_exp_required",
   "tags_degree_required",
   "tags_immigration",
   "tags_location_type",

@@ -14,7 +14,6 @@ import { breakpointsChakra } from "../constants";
 
 const breakpoints = useBreakpoints(breakpointsChakra);
 
-const props = defineProps<{ filterCount: number }>();
 const emit = defineEmits(["showMobile"]);
 </script>
 
