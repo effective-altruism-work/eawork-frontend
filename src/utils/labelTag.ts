@@ -1,9 +1,3 @@
-import { problemAreas, ProblemArea } from "./types";
-
-// function isProblemArea(s: string): s is ProblemArea {
-//   return problemAreas.includes(s as any);
-// }
-
 export default function labelTag(s: string): string {
   switch (s) {
     case "Biosecurity & pandemic preparedness":

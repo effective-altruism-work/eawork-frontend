@@ -11,8 +11,6 @@ import {
 } from "@chakra-ui/vue-next";
 import { OhVueIcon } from "oh-vue-icons";
 import { breakpointsChakra } from "../constants";
-import CurrentRefinements from "./algolia/current-refinements.vue";
-import EightyKLink from "~/components/eightyk/eightyk-link.vue";
 
 const breakpoints = useBreakpoints(breakpointsChakra);
 

@@ -4,7 +4,7 @@ import { CFlex, CBox, CButton, CHStack, CLink, CIcon, CText } from "@chakra-ui/v
 import { useBreakpoints } from "@vueuse/core";
 import { formatDistance, format } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import JobCardLocationShort from "~/components/card/job-card-location-short.vue";
 import JobCardTags from "~/components/card/job-card-tags.vue";
 // import JobView from "~/components/job-view.vue";
@@ -14,7 +14,6 @@ import { useComp } from "~/utils/structs";
 import { JobAlgolia } from "~/utils/types";
 import { tracking } from "~/utils/tracking";
 import JobHoverText from "~/components/job-hover-text.vue";
-import log from "~/utils/log";
 import { AisSnippet } from "vue-instantsearch/vue3/es";
 
 const props = defineProps<{

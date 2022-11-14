@@ -34,6 +34,7 @@ rules:
   operator-linebreak: 0 # a good one, but broken linter
   object-curly-newline: 0 # a good one, but broken linter
   no-unused-vars: 0 # a good one, but many exceptions + broken linter
+  typescript-eslint/no-unused-vars: 0
   no-underscore-dangle: 0 # not applicable
   prefer-destructuring: 0 # poor code style
   max-classes-per-file: 0 # why?
@@ -43,7 +44,7 @@ rules:
   import/extensions: 0
   no-continue: 0 # fights my personal strong pref for left-aligned happy path.
   unused-imports/no-unused-imports: 2
-  @typescript-eslint/dot-notation: 0 # doesn't matter
+  typescript-eslint/dot-notation: 0 # doesn't matter
   vue/no-v-text-v-html-on-component: 0 # we need this
   vue/multi-word-component-names: 0 # "index.vue", "about.vue"...
 env:

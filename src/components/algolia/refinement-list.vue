@@ -9,14 +9,13 @@ import { chakra } from "@chakra-ui/vue-next";
 import * as Sentry from "@sentry/vue";
 import { xRiskProblemAreas, acrossEAProblemAreas, otherProblemAreas } from "~/constants";
 import EightykLink from "../eightyk/eightyk-link.vue";
-import log from "~~/src/utils/log";
 import { AisRefinementList } from "vue-instantsearch/vue3/es";
 
 const { captureEvent } = Sentry;
 
 const props = defineProps<{
   label: string;
-  attribute: string | TagTypeName;
+  attribute: TagTypeName;
   searchable?: boolean;
   limit?: number;
   showMoreLimit?: number;

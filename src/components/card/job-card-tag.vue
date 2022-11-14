@@ -1,9 +1,11 @@
 <script lang="ts" setup>
-import { CFlex, CBox, CText, CLink } from "@chakra-ui/vue-next";
+import { useBreakpoints } from "@vueuse/core";
+import { CFlex, CLink } from "@chakra-ui/vue-next";
+import { ref, computed } from "vue";
 import { breakpointsChakra } from "~~/src/constants";
-import JobCardTagInfo from "./job-card-tag-info.vue";
 import urlWrap from "~~/src/utils/urlWrap";
 import labelTag from "~/utils/labelTag";
+import JobCardTagInfo from "./job-card-tag-info.vue";
 
 const props = defineProps<{
   tag: string;
@@ -77,6 +79,7 @@ function handleClick() {
       display="flex"
       align-items="center"
       target="_blank"
+      rel="noopener noreferrer"
       :href="linkArea"
       :_hover="linkArea ? { color: 'black' } : null"
     >
