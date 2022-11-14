@@ -60,7 +60,6 @@ function morphFacetValues(
 ) {
   let filteredItems = items
     .filter((i) => i.value !== "Multiple experience levels")
-    .map((i) => (i.label === "Other (pressing)" ? { ...i, label: "Climate change" } : i))
     .map((i) => ({
       ...i,
       hover:
