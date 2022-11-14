@@ -216,7 +216,19 @@ const routing = { stateMapping };
             <CBox>
               <AisInfiniteHits>
                 <template
-                  v-slot="{ items, refinePrevious, refineNext, isLastPage, sendEvent }"
+                  v-slot="{
+                    items,
+                    refinePrevious,
+                    refineNext,
+                    isLastPage,
+                    sendEvent,
+                  }: {
+                    items: JobAlgolia[],
+                    refinePrevious: () => void,
+                    refineNext: () => void,
+                    isLastPage: boolean,
+                    sendEvent: (x: any) => void,
+                  }"
                 >
                   <!-- <p style="position: fixed; top: 0; left: 0">
                     {{ items.length }} lastpage: {{ isLastPage }}
