@@ -8,7 +8,8 @@ import { ref, watch } from "vue";
 import { theme } from "~/styles/theme";
 import { tracking } from "~/utils/tracking";
 import * as Sentry from "@sentry/vue";
-import emailIsValid from "../utils/emailIsValid";
+import emailIsValid from "~/utils/emailIsValid";
+import labelTag from "~/utils/labelTag";
 const { captureEvent } = Sentry;
 
 const props = defineProps<{
@@ -102,6 +103,14 @@ async function createJobAlert() {
     state.fsm.value = "error";
   }
 }
+
+function replacer(s: string): string {
+  return s
+    .replace("company_is_recommended_org", "Filter")
+    .replace("company_name:", "Org")
+    .replace("org_data:", "Org")
+    .replace(/tags_\w*/, "Filter");
+}
 </script>
 
 <template>
@@ -180,10 +189,9 @@ async function createJobAlert() {
         >
           {{
             filter
-              .replace("company_is_recommended_org:true", "Filter: Recommended orgs")
-              .replace("company_name:", "Org: ")
-              .replace("org_data:", "Org: ")
-              .replace(/tags_\w*:/, "Filter: ")
+              .split(":")
+              .map((x, i) => (i ? labelTag(x) : replacer(x)))
+              .join(": ")
           }}
         </CText>
       </CText>

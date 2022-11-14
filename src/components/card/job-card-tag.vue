@@ -3,6 +3,7 @@ import { CFlex, CBox, CText, CLink } from "@chakra-ui/vue-next";
 import { breakpointsChakra } from "~~/src/constants";
 import JobCardTagInfo from "./job-card-tag-info.vue";
 import urlWrap from "~~/src/utils/urlWrap";
+import labelTag from "~/utils/labelTag";
 
 const props = defineProps<{
   tag: string;
@@ -79,13 +80,7 @@ function handleClick() {
       :href="linkArea"
       :_hover="linkArea ? { color: 'black' } : null"
     >
-      {{
-        tag === "Other (pressing)"
-          ? "Climate change"
-          : tag === "Global health & poverty"
-          ? "Global health & development"
-          : tag
-      }}
+      {{ labelTag(tag) }}
       <JobCardTagInfo
         :isHovering="isHovering"
         v-if="tag === 'Other policy-focused' || tag === 'Information security'"

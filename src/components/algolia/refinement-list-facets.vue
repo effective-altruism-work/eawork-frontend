@@ -2,9 +2,10 @@
 import { CText, CBadge, chakra, CBox } from "@chakra-ui/vue-next";
 import Checkbox from "~/components/chakra/checkbox.vue";
 import FacetHoverText from "~/components/facet-hover-text.vue";
-import { AlgoliaFilterItem } from "~~/src/utils/types";
+import { AlgoliaFilterItem } from "~/utils/types";
 import { OhVueIcon } from "oh-vue-icons";
 import { AisHighlight } from "vue-instantsearch/vue3/es";
+import labelTag from "~/utils/labelTag";
 
 const props = defineProps<{
   attribute?: string;
@@ -16,25 +17,6 @@ const props = defineProps<{
 }>();
 
 const isHovering = ref("");
-
-function formatTagName(tagName: string) {
-  switch (tagName) {
-    case "Biosecurity & pandemic preparedness":
-      return "Biosecurity & pandemic prep";
-    case "International security & cooperation":
-      return "International security & coop";
-    case "Global":
-      return "Remote, Global";
-    case "Global health & poverty":
-      return "Global health & development";
-    case "Software Engineering":
-      return "Software engineering";
-    case "is_recommended_org":
-      return "Top recommended orgs";
-    default:
-      return tagName;
-  }
-}
 </script>
 
 <template>
@@ -50,7 +32,7 @@ function formatTagName(tagName: string) {
             attribute="item"
             :hit="item"
           />
-          <span v-else>{{ formatTagName(item.label) }}</span>
+          <span v-else>{{ labelTag(item.label) }}</span>
         </CText>
         <span
           @mouseover="isHovering = item.value"

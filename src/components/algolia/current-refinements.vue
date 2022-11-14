@@ -2,6 +2,7 @@
 import { CButton, CFlex, CIcon, CText } from "@chakra-ui/vue-next";
 import { formatDistance } from "date-fns";
 import { AisCurrentRefinements } from "vue-instantsearch/vue3/es";
+import labelTag from "../../utils/labelTag";
 type Item = {
   attribute: string;
   refine: (r: Refinement) => any;
@@ -31,19 +32,7 @@ function format(refinement: {
     }
   }
 
-  if (refinement.label === "is_recommended_org") {
-    return "Top recommended orgs";
-  }
-
-  if (refinement.label === "Other (pressing)") {
-    return "Climate change";
-  }
-
-  if (refinement.label === "Global health & poverty") {
-    return "Global health & development";
-  }
-
-  return refinement.label;
+  return labelTag(refinement.label);
 }
 
 function clearAll(items: Item[]) {
