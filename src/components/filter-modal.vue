@@ -62,7 +62,7 @@ const emit = defineEmits(["showMobile", "hideMobile"]);
         <CurrentRefinements />
       </CBox>
       <CBox mb="7">
-        <BtnJobsAlert
+        <Alerts
           :total-filters-length="props.totalFiltersLength"
           :query-json="props.queryJson"
         />

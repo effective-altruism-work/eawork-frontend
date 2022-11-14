@@ -2,6 +2,7 @@ import { Analytics, AnalyticsBrowser, Context } from "@segment/analytics-next";
 // import { captureEvent } from "@sentry/vue";
 import { JobAlgolia } from "~/utils/types";
 import * as Sentry from "@sentry/vue";
+import getProblemSubarea from "./getProblemSubarea";
 const { captureEvent } = Sentry;
 
 const eightyKProps = {
@@ -124,6 +125,7 @@ export namespace tracking {
       title: job.title,
       tier: "", // todo add to algolia
       problemArea: job.tags_area,
+      problemSubarea: getProblemSubarea(job.tags_area),
       // problemAreaIsRecommended: problemAreaIsRecommended(job.tags_area, featuredList),
       roleType: job.tags_role_type,
       ...get80kLocations(job.tags_city, job.tags_country),

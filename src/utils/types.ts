@@ -5,6 +5,7 @@ export const tagTypes = [
   "tags_city",
   "tags_workload",
   "tags_area",
+  "tags_exp_required",
   "tags_degree_required",
   "tags_immigration",
   "tags_location_type",
@@ -19,7 +20,7 @@ export type TagDjango = { pk?: number; name: string; count?: number; is_featured
 
 export type AlgoliaTagFields = { [Property in keyof TagTypeName]: string[] };
 
-export interface  JobAlgolia {
+export interface JobAlgolia {
   objectID: string;
   post_pk: number;
   id_external_80_000_hours: string | "";

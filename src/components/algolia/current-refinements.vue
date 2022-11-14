@@ -2,6 +2,8 @@
 import { CButton, CFlex, CIcon, CText } from "@chakra-ui/vue-next";
 import { formatDistance } from "date-fns";
 import { AisCurrentRefinements } from "vue-instantsearch/vue3/es";
+import { JobAlgolia } from "~~/src/utils/types";
+import labelTag from "../../utils/labelTag";
 type Item = {
   attribute: string;
   refine: (r: Refinement) => any;
@@ -31,15 +33,7 @@ function format(refinement: {
     }
   }
 
-  if (refinement.label === "is_recommended_org") {
-    return "Top recommended orgs";
-  }
-
-  if (refinement.label === "Other (pressing)") {
-    return "Climate change";
-  }
-
-  return refinement.label;
+  return labelTag(refinement.label);
 }
 
 function clearAll(items: Item[]) {
@@ -57,7 +51,9 @@ type Refinement = {
   label: string;
   count: number;
   exhaustive: boolean;
+  operator: string;
 };
+
 function carefulRefine(
   item: {
     attribute: string;
@@ -85,7 +81,9 @@ function carefulRefine(
 
 <template>
   <ais-current-refinements>
-    <template v-slot="{ items, createURL }">
+    <template
+      v-slot="{ items, createURL }: { items: Item[], createURL: (r: Refinement) => void }"
+    >
       <CFlex v-for="(item, i) in items" :key="item.attribute" wrap="wrap" gap="2">
         <CFlex
           align-items="center"

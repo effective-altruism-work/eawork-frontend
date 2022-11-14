@@ -7,7 +7,7 @@ import { AisInstantSearch, AisInfiniteHits } from "vue-instantsearch/vue3/es";
 import { onBeforeMount, onMounted, ref, watch, onBeforeUnmount } from "vue";
 import CurrentRefinements from "~/components/algolia/current-refinements.vue";
 import Refinements from "~/components/algolia/refinements.vue";
-import BtnJobsAlert from "~/components/btn-jobs-alert.vue";
+import BtnJobsAlert from "~~/src/components/alerts-button.vue";
 import SearchBox from "~/components/algolia/search-box.vue";
 import FiltersFooter from "~/components/eightyk/filters-footer.vue";
 import JobCardSkeleton from "~/components/card/job-card-skeleton.vue";
@@ -169,13 +169,6 @@ function stateToRoute(uiState: { [indexId: string]: RouteState }): RouteState {
 function routeToState(routeState: RouteState): { [indexId: string]: RouteState } {
   let refinementList = routeState?.refinementList;
 
-  // let { tags_location_type, ...remaining } =
-  //   typeof refinementList !== "object"
-  //     ? { tags_location_type: undefined }
-  //     : "tags_location_type" in refinementList
-  //     ? refinementList
-  //     : { tags_location_type: undefined, ...refinementList };
-
   // side effect
   if (routeState?.jobPk) {
     state.jobPkCurrent.value = Number(routeState.jobPk);
@@ -223,7 +216,19 @@ const routing = { stateMapping };
             <CBox>
               <AisInfiniteHits>
                 <template
-                  v-slot="{ items, refinePrevious, refineNext, isLastPage, sendEvent }"
+                  v-slot="{
+                    items,
+                    refinePrevious,
+                    refineNext,
+                    isLastPage,
+                    sendEvent,
+                  }: {
+                    items: JobAlgolia[],
+                    refinePrevious: () => void,
+                    refineNext: () => void,
+                    isLastPage: boolean,
+                    sendEvent: (x: any) => void,
+                  }"
                 >
                   <!-- <p style="position: fixed; top: 0; left: 0">
                     {{ items.length }} lastpage: {{ isLastPage }}
@@ -315,7 +320,7 @@ const routing = { stateMapping };
           <CurrentRefinements />
 
           <CBox mb="7">
-            <BtnJobsAlert
+            <Alerts
               :total-filters-length="totalFiltersLength"
               :query-json="state.queryJson.value"
             />
@@ -325,8 +330,7 @@ const routing = { stateMapping };
         </CFlex>
 
         <!-- mobile -->
-        <!-- v-else -->
-        <FilterModal
+        <LazyFilterModal
           :total-filters-length="totalFiltersLength"
           :index="state.searchIndex"
           :is-show-mobile-filters="state.isShowMobileFilters.value"

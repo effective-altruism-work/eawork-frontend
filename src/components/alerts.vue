@@ -8,7 +8,8 @@ import { ref, watch } from "vue";
 import { theme } from "~/styles/theme";
 import { tracking } from "~/utils/tracking";
 import * as Sentry from "@sentry/vue";
-import emailIsValid from "../utils/emailIsValid";
+import emailIsValid from "~/utils/emailIsValid";
+import labelTag from "~/utils/labelTag";
 const { captureEvent } = Sentry;
 
 const props = defineProps<{
@@ -52,7 +53,6 @@ async function createJobAlert() {
     const res = await axios.post(`${hooks.config.public.apiBase}/jobs/subscribe`, {
       email: state.email.value,
       query_json: props.queryJson,
-      query_string: "",
     });
 
     if (res.data.success) {
@@ -102,16 +102,21 @@ async function createJobAlert() {
     state.fsm.value = "error";
   }
 }
+
+function replacer(s: string): string {
+  return s
+    .replace("company_is_recommended_org", "Filter")
+    .replace("company_name:", "Org")
+    .replace("org_data:", "Org")
+    .replace(/tags_\w*/, "Filter");
+}
 </script>
 
 <template>
-  <CButton color-scheme="blue" @click="state.isShowModal.value = true">
-    <OhVueIcon name="md-addalert-round" scale="1" color="white" />
-    <CText ml="2">
-      <span>Set up alerts</span>
-      <span v-if="props.queryJson"> for this filter</span>
-    </CText>
-  </CButton>
+  <AlertsButton
+    :filtered="!!props?.queryJson"
+    @show-modal="() => (state.isShowModal.value = true)"
+  />
 
   <VueFinalModal
     v-model="state.isShowModal.value"
@@ -180,10 +185,9 @@ async function createJobAlert() {
         >
           {{
             filter
-              .replace("company_is_recommended_org:true", "Filter: Recommended orgs")
-              .replace("company_name:", "Org: ")
-              .replace("org_data:", "Org: ")
-              .replace(/tags_\w*:/, "Filter: ")
+              .split(":")
+              .map((x, i) => (i ? labelTag(x) : replacer(x)))
+              .join(": ")
           }}
         </CText>
       </CText>

@@ -2,9 +2,9 @@
 import { useRuntimeConfig } from "#app";
 import { CFlex, CBox, CButton, CHStack, CLink, CIcon, CText } from "@chakra-ui/vue-next";
 import { useBreakpoints } from "@vueuse/core";
-import { formatDistance, format } from "date-fns";
+import { format } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import JobCardLocationShort from "~/components/card/job-card-location-short.vue";
 import JobCardTags from "~/components/card/job-card-tags.vue";
 // import JobView from "~/components/job-view.vue";
@@ -13,8 +13,8 @@ import { breakpointsChakra, strings } from "~/constants";
 import { useComp } from "~/utils/structs";
 import { JobAlgolia } from "~/utils/types";
 import { tracking } from "~/utils/tracking";
+import relativePostingTime from "~/utils/relativePostingTime";
 import JobHoverText from "~/components/job-hover-text.vue";
-import log from "~/utils/log";
 import { AisSnippet } from "vue-instantsearch/vue3/es";
 
 const props = defineProps<{
@@ -26,27 +26,7 @@ const props = defineProps<{
   isMissingAlgoliaContext?: boolean;
 }>();
 
-const timeSincePosting = computed(() => {
-  const millisecondDifference =
-    new Date().getTime() - new Date(props.job.posted_at * 1000).getTime();
-  const isToday = millisecondDifference < 86_400_000; // less than 24 hours
-
-  let formatted = formatDistance(new Date(props.job.posted_at * 1000), new Date(), {
-    addSuffix: true,
-  });
-
-  formatted = formatted.replace("about ", "");
-
-  // flatten dates from over two months ago
-  if (
-    (formatted.includes("months ago") && formatted !== "2 months ago") ||
-    formatted.includes("year")
-  ) {
-    formatted = ">2 months ago";
-  }
-
-  return isToday ? "Today" : formatted;
-});
+const timeSincePosting = computed(() => relativePostingTime(props.job.posted_at));
 
 const emit = defineEmits<{
   (event: "cardExpanded"): void;
@@ -91,8 +71,6 @@ const remotesAndMaybeCountries = computed(() => {
 const cardRef = ref<HTMLDivElement | null>(null);
 
 function scrollToCard() {
-  console.log(props.jobFromURLQuery, cardRef.value);
-
   if (!props.jobFromURLQuery || !cardRef.value) {
     return;
   }
@@ -284,17 +262,6 @@ function onMouseUp(e) {
                   :align="{ lg: 'center' }"
                   :gap="{ base: 'px', lg: 3 }"
                 >
-                  <!-- <CFlex v-if="comp.remoteLocation">
-                    {{ comp.remoteLocation }}
-                  </CFlex>
-                  <CBox
-                    v-if="comp.remoteLocation && props.job.tags_country.length !== 1"
-                    :display="{ base: 'none', lg: 'block' }"
-                    w="3px"
-                    h="3px"
-                    bg="gray.300"
-                  /> -->
-
                   <CFlex
                     v-if="job.tags_city.length"
                     v-for="(city, index) in job.tags_city"
@@ -354,20 +321,20 @@ function onMouseUp(e) {
               <CText mt="2" v-html="job.description_short + ' [...]'" />
             </CBox>
 
-            <CBox mt="4" v-if="job.closes_at">
+            <CBox mt="4">
               <CText color="gray.400" font-size="sm">APPLICATIONS CLOSE</CText>
               <CText mt="2">
-                {{ format(new Date(props.job.closes_at * 1000), "do MMMM yyyy") }}
+                {{
+                  job.closes_at
+                    ? format(new Date(props.job.closes_at * 1000), "do MMMM yyyy")
+                    : "Rolling applications"
+                }}
               </CText>
             </CBox>
 
-            <CBox :mt="4 - 1">
+            <CBox :mt="4 - 1" v-if="job.company_description">
               <CText color="gray.400" font-size="sm">ABOUT THIS ORGANISATION</CText>
-              <CText
-                mt="2"
-                v-if="job.company_description"
-                v-html="job.company_description"
-              />
+              <CText mt="2" v-html="job.company_description" />
             </CBox>
 
             <CFlex :mt="job.company_description ? 4 : 3" align="baseline" gap="4">
@@ -409,46 +376,9 @@ function onMouseUp(e) {
               >
                 EA Forum Page
               </CLink>
-              <!-- <CLink
-              :href="props.job.company_career_page_url"
-              @click="
-                (event) => {
-                  event.stopPropagation();
-                  tracking.sendJobEvent(props.job, 'company_career_page_url clicked');
-                }
-              "
-              @auxclick="
-                async (event) => {
-                  await tracking.sendJobEvent(props.job, 'company_career_page_url clicked');
-                }
-              "
-              is-external
-            >
-              Vacancies page
-            </CLink> -->
             </CFlex>
 
             <CFlex :gap="comp.space" mt="4">
-              <!--<CLink-->
-              <!--  :href="urls.jobs.view(props.job.post_pk)"-->
-              <!--  @click.left.prevent="state.isShowModal.value = true"-->
-              <!--  :_hover="{textDecoration: 'none'}"-->
-              <!-- >-->
-              <!--  <CButton-->
-              <!--    size="sm"-->
-              <!--    color-scheme="blue"-->
-              <!--    variant="outline"-->
-              <!--  >-->
-              <!--    <OhVueIcon-->
-              <!--      name="oi-eye"-->
-              <!--      scale="1"-->
-              <!--      color="var(&#45;&#45;colors-blue-500)"-->
-              <!--      style="margin-right: 5px;"-->
-              <!--    />-->
-              <!--    View-->
-              <!--  </CButton>-->
-              <!--</CLink>-->
-
               <CLink
                 @click="
                    (event: MouseEvent) => {
@@ -474,73 +404,10 @@ function onMouseUp(e) {
                   />
                 </CButton>
               </CLink>
-
-              <!--                <Transition name="fade">-->
-              <!--                  <CButton-->
-              <!--                    v-if="state.isHovering.value"-->
-              <!--                    variant="link"-->
-              <!--                    color="gray.500"-->
-              <!--                    font-size="sm"-->
-              <!--                  >-->
-              <!--                    <CBox-->
-              <!--                      :transform="state.isAccordionOpen.value ? 'rotate(180deg)' : 'rotate(0)'"-->
-              <!--                      :mt="'2px'"-->
-              <!--                      :mr="'5px'"-->
-              <!--                    >-->
-              <!--                      <OhVueIcon-->
-              <!--                        name="hi-chevron-down"-->
-              <!--                        scale="1.1"-->
-              <!--                        color="var(&#45;&#45;colors-gray-400)"-->
-              <!--                      />-->
-              <!--                    </CBox>-->
-              <!--                    <span v-if="state.isAccordionOpen.value">Collapse</span>-->
-              <!--                    <span v-else>Expand</span>-->
-              <!--                  </CButton>-->
-              <!--                </Transition>-->
-
-              <!--<CFlex align="center">-->
-              <!--  <NuxtLink :to="urls.jobs.edit(props.job.post_pk)">-->
-              <!--    <CButton size="sm" variant="link">-->
-              <!--      Edit-->
-              <!--    </CButton>-->
-              <!--  </NuxtLink>-->
-              <!--</CFlex>-->
-
-              <!--<BtnJobFlag :job="props.job" />-->
             </CFlex>
           </CBox>
         </TransitionCollapseFade>
       </CBox>
-
-      <!-- <VueFinalModal
-        v-if="state.isShowModal.value"
-        v-model="state.isShowModal.value"
-        :lock-scroll="false"
-        :click-to-close="true"
-        :esc-to-close="true"
-        :key="props.job.objectID"
-      >
-        <CFlex
-          pos="absolute"
-          top="44"
-          right="0"
-          left="0"
-          max-w="6xl"
-          max-h="fit-content"
-          m="auto"
-          :gap="theme.spaces.md"
-          :p="theme.spaces.md"
-          direction="column"
-          bg="white"
-          border-radius="md"
-        >
-          <JobView
-            :job-pk="props.job.objectID"
-            :job="props.job"
-            :is-visible="state.isShowModal.value"
-          />
-        </CFlex>
-      </VueFinalModal> -->
     </CBox>
   </div>
 </template>

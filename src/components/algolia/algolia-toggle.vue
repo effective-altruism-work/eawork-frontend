@@ -16,7 +16,7 @@ const props = defineProps<{
 
 <template>
   <ais-toggle-refinement :attribute="props.attribute">
-    <template v-slot="{ value, refine, createURL, sendEvent }">
+    <template v-slot="{ value, refine }">
       <!-- <a :href="createURL(value)" @click.prevent="refine(value)"> -->
       <Checkbox
         :modelValue="value.isRefined"

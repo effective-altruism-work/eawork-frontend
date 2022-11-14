@@ -1,17 +1,14 @@
 <script setup lang="ts">
 import { useHead, useRuntimeConfig } from "#app";
-
+import { ref, onMounted } from "vue";
 import { CContainer, CFlex, CBox } from "@chakra-ui/vue-next";
 import Menu from "~/components/eightyk/menu.vue";
-// import LazyEightykFooter from "./components/eightyk/eightyk-footer.vue";
-
-import { breakpointsChakra } from "~/constants";
-const breakpoints = useBreakpoints(breakpointsChakra);
 
 const state = {
   config: useRuntimeConfig(),
 };
 
+// delay loading footer to avoid safari issue
 const show = ref(false);
 onMounted(() => {
   setTimeout(() => {

@@ -9,14 +9,13 @@ import { chakra } from "@chakra-ui/vue-next";
 import * as Sentry from "@sentry/vue";
 import { xRiskProblemAreas, acrossEAProblemAreas, otherProblemAreas } from "~/constants";
 import EightykLink from "../eightyk/eightyk-link.vue";
-import log from "~~/src/utils/log";
 import { AisRefinementList } from "vue-instantsearch/vue3/es";
 
 const { captureEvent } = Sentry;
 
 const props = defineProps<{
   label: string;
-  attribute: string | TagTypeName;
+  attribute: TagTypeName;
   searchable?: boolean;
   limit?: number;
   showMoreLimit?: number;
@@ -49,22 +48,6 @@ const placeholder = computed(() => {
   }
 });
 
-// onMounted(async () => {
-//   if (props.attribute === "tags_area") {
-//     const res = await axios.get(`${state.config.public.apiBase}/tags/?is_featured=true`);
-//     if (!("data" in res) || !Array.isArray(res.data)) {
-//       const error = new Error(
-//         `No data returned from /tags/?is_featured=true. Data: ${JSON.stringify(res?.data)}`,
-//       );
-//       captureEvent(error);
-//       return;
-//     }
-
-//     state.tagsFeatured.value = res.data;
-//     state.tagsFeaturedNames.value = res.data.map((tag) => tag.name);
-//   }
-// });
-
 const trueLimit = computed(() => {
   return !!props.locationType ? 24 : props.limit;
 });
@@ -77,7 +60,6 @@ function morphFacetValues(
 ) {
   let filteredItems = items
     .filter((i) => i.value !== "Multiple experience levels")
-    .map((i) => (i.label === "Other (pressing)" ? { ...i, label: "Climate change" } : i))
     .map((i) => ({
       ...i,
       hover:
@@ -213,13 +195,7 @@ function carefulRefine(
 
         <!-- problem areas -->
         <CBox v-else>
-          <CText
-            v-if="props.attribute === 'tags_area'"
-            mt="3"
-            font-weight="bold"
-            color="gray.500"
-            font-size="15px"
-          >
+          <CText mt="3" font-weight="bold" color="gray.500" font-size="15px">
             Reducing
             <EightykLink
               text-decoration="underline"
