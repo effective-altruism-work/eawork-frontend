@@ -7,7 +7,7 @@ import { AisInstantSearch, AisInfiniteHits } from "vue-instantsearch/vue3/es";
 import { onBeforeMount, onMounted, ref, watch, onBeforeUnmount } from "vue";
 import CurrentRefinements from "~/components/algolia/current-refinements.vue";
 import Refinements from "~/components/algolia/refinements.vue";
-import BtnJobsAlert from "~/components/btn-jobs-alert.vue";
+import BtnJobsAlert from "~~/src/components/alerts-button.vue";
 import SearchBox from "~/components/algolia/search-box.vue";
 import FiltersFooter from "~/components/eightyk/filters-footer.vue";
 import JobCardSkeleton from "~/components/card/job-card-skeleton.vue";
@@ -308,7 +308,7 @@ const routing = { stateMapping };
           <CurrentRefinements />
 
           <CBox mb="7">
-            <BtnJobsAlert
+            <Alerts
               :total-filters-length="totalFiltersLength"
               :query-json="state.queryJson.value"
             />

@@ -113,13 +113,10 @@ function replacer(s: string): string {
 </script>
 
 <template>
-  <CButton color-scheme="blue" @click="state.isShowModal.value = true">
-    <OhVueIcon name="md-addalert-round" scale="1" color="white" />
-    <CText ml="2">
-      <span>Set up alerts</span>
-      <span v-if="props.queryJson"> for this filter</span>
-    </CText>
-  </CButton>
+  <AlertsButton
+    :filtered="!!props?.queryJson"
+    @show-modal="() => (state.isShowModal.value = true)"
+  />
 
   <VueFinalModal
     v-model="state.isShowModal.value"
