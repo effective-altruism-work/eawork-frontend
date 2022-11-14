@@ -325,8 +325,7 @@ const routing = { stateMapping };
         </CFlex>
 
         <!-- mobile -->
-        <!-- v-else -->
-        <FilterModal
+        <LazyFilterModal
           :total-filters-length="totalFiltersLength"
           :index="state.searchIndex"
           :is-show-mobile-filters="state.isShowMobileFilters.value"
