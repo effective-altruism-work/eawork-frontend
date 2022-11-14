@@ -352,20 +352,20 @@ function onMouseUp(e) {
               <CText mt="2" v-html="job.description_short + ' [...]'" />
             </CBox>
 
-            <CBox mt="4" v-if="job.closes_at">
+            <CBox mt="4">
               <CText color="gray.400" font-size="sm">APPLICATIONS CLOSE</CText>
               <CText mt="2">
-                {{ format(new Date(props.job.closes_at * 1000), "do MMMM yyyy") }}
+                {{
+                  job.closes_at
+                    ? format(new Date(props.job.closes_at * 1000), "do MMMM yyyy")
+                    : "Rolling applications"
+                }}
               </CText>
             </CBox>
 
-            <CBox :mt="4 - 1">
+            <CBox :mt="4 - 1" v-if="job.company_description">
               <CText color="gray.400" font-size="sm">ABOUT THIS ORGANISATION</CText>
-              <CText
-                mt="2"
-                v-if="job.company_description"
-                v-html="job.company_description"
-              />
+              <CText mt="2" v-html="job.company_description" />
             </CBox>
 
             <CFlex :mt="job.company_description ? 4 : 3" align="baseline" gap="4">

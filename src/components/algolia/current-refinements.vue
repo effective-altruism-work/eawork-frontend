@@ -39,6 +39,10 @@ function format(refinement: {
     return "Climate change";
   }
 
+  if (refinement.label === "Global health & poverty") {
+    return "Global health & development";
+  }
+
   return refinement.label;
 }
 
