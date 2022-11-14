@@ -16,9 +16,10 @@ const props = defineProps<{
     :mb="props.isShowResultsCount ? 0 : 6"
   >
     <AisSearchBox placeholder="Keywords">
-      <template v-slot:submit-icon>
+      <AlgoliaDebouncedSearchbox :delay="300"/>
+      <!-- <template v-slot:submit-icon>
         <CIcon w="6" h="6" name="search" color="grey" />
-      </template>
+      </template> -->
     </AisSearchBox>
     <AisStats v-if="props.isShowResultsCount">
       <template v-slot="{ nbHits, page, nbSortedHits, hitsPerPage, nbPages }">

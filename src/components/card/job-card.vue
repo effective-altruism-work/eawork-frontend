@@ -91,8 +91,6 @@ const remotesAndMaybeCountries = computed(() => {
 const cardRef = ref<HTMLDivElement | null>(null);
 
 function scrollToCard() {
-  console.log(props.jobFromURLQuery, cardRef.value);
-
   if (!props.jobFromURLQuery || !cardRef.value) {
     return;
   }
