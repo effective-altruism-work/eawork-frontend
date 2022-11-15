@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CBox, CText, CFlex, CIcon } from "@chakra-ui/vue-next";
+// import { CBox, CText, CFlex, CIcon } from "@chakra-ui/vue-next";
 // import AlgoliaLogo from "~/components/algolia/algolia-logo.vue";
 import { AisSearchBox, AisStats } from "vue-instantsearch/vue3/es";
 
@@ -9,12 +9,12 @@ const props = defineProps<{
 </script>
 
 <template>
-  <CBox
+  <!-- <CBox
     min-h="40px"
     class="algolia-search-box-main"
     pos="relative"
     :mb="props.isShowResultsCount ? 0 : 6"
-  >
+  > -->
     <AisSearchBox placeholder="Keywords">
       <AlgoliaDebouncedSearchbox :delay="300"/>
       <!-- <template v-slot:submit-icon>
@@ -23,20 +23,20 @@ const props = defineProps<{
     </AisSearchBox>
     <AisStats v-if="props.isShowResultsCount">
       <template v-slot="{ nbHits, page, nbSortedHits, hitsPerPage, nbPages }">
-        <CFlex my="5" gap="1" justify="flex-end">
-          <CText font-weight="bold">{{ nbHits }}</CText> roles
+        <!-- <CFlex my="5" gap="1" justify="flex-end"> -->
+          <!-- <CText font-weight="bold">{{ nbHits }}</CText> roles -->
           <!-- <CText
             >Page: {{ page }}, nbSortedHits: {{ nbSortedHits }}, hits per page:
             {{ hitsPerPage }}, nbPages: {{ nbPages }}</CText
           > -->
-        </CFlex>
+        <!-- </CFlex> -->
       </template>
     </AisStats>
     <!--    <AlgoliaLogo/>-->
-  </CBox>
+  <!-- </CBox> -->
 </template>
 
-<style lang="scss">
+<!-- <style lang="scss">
 @import "~/styles/chakra-ui.scss";
 
 .algolia-search-box-main {
@@ -86,4 +86,4 @@ const props = defineProps<{
     }
   }
 }
-</style>
+</style> -->

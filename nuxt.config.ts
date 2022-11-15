@@ -1,7 +1,7 @@
 import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
-  modules: ["@nuxt/ui", "vue-final-modal"],
+  modules: ["vue-final-modal"],
   // modules: ["@nuxt/ui", "vue-final-modal", "@formkit/nuxt"],
   // modules: ["@nuxt/ui", "vue-final-modal", "nuxt-purgecss"],
   meta: [{ viewport: "name", content: "width=device-width, initial-scale=1" }],
@@ -20,14 +20,9 @@ export default defineNuxtConfig({
       segmentId: "",
     },
   },
-  postcss: {
-    plugins: {
-      "tailwindcss/nesting": {},
-      tailwindcss: {},
-      autoprefixer: {},
-    },
+  tailwindcss: {
+    cssPath: "~/styles/tailwind.css",
   },
-  css: ["~/src/styles/app.css"],
   ssr: false,
   srcDir: "src/",
 });

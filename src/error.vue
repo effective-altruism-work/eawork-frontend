@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Menu from "~/components/eightyk/menu.vue";
-import { CContainer, CFlex, CBox, CIcon, CLink, CHeading, CText } from "@chakra-ui/vue-next";
+// import Menu from "~/components/eightyk/menu.vue";
+// import { CContainer, CFlex, CBox, CIcon, CLink, CHeading, CText } from "@chakra-ui/vue-next";
 
 const props = defineProps<{
   error: { statusCode: number };
@@ -8,7 +8,8 @@ const props = defineProps<{
 </script>
 
 <template>
-  <Menu />
+  <div />
+  <!-- <Menu />
   <CBox overflow="hidden">
     <CContainer max-w="8xl" :px="[3, null, 4]">
       <CFlex justify-content="center" align-items="center" h="70vh">
@@ -26,5 +27,5 @@ const props = defineProps<{
         </CBox>
       </CFlex>
     </CContainer>
-  </CBox>
+  </CBox> -->
 </template>

@@ -1,20 +1,20 @@
 <script lang="ts">
-import { CBox } from "@chakra-ui/vue-next";
-import { vueThemingProps } from "@chakra-ui/vue-utils";
+// import { CBox } from "@chakra-ui/vue-next";
+// import { vueThemingProps } from "@chakra-ui/vue-utils";
 
-export default {
-  props: vueThemingProps,
-  components: {
-    CBox,
-  },
-};
+// export default {
+//   props: vueThemingProps,
+//   components: {
+//     CBox,
+//   },
+// };
 </script>
 
 <template>
-  <CBox class="chakra-skeleton" v-bind="$props" />
+  <!-- <CBox class="chakra-skeleton" v-bind="$props" /> -->
 </template>
 
-<style lang="scss" scoped>
+<!-- <style lang="scss" scoped>
 @import "~/styles/chakra-ui.scss";
 
 @keyframes blink {
@@ -35,4 +35,4 @@ export default {
   background: padding-box var(--colors-gray-300);
   animation: blink normal 1.2s infinite linear;
 }
-</style>
+</style> -->

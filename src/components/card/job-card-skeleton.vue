@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { CFlex, CBox } from "@chakra-ui/vue-next";
+// import { CFlex, CBox } from "@chakra-ui/vue-next";
 import Skeleton from "~/components/chakra/skeleton.vue";
 </script>
 
 <template>
-  <CBox mb="6" bg="white" pl="6" pt="6" pb="6" pr="5" border-radius="md">
+  <!-- <CBox mb="6" bg="white" pl="6" pt="6" pb="6" pr="5" border-radius="md">
     <CBox w="100%">
       <CFlex w="100%">
         <Skeleton w="62px" h="62px" />
@@ -19,9 +19,9 @@ import Skeleton from "~/components/chakra/skeleton.vue";
         </CFlex>
       </CFlex>
     </CBox>
-  </CBox>
+  </CBox> -->
 </template>
 
-<style lang="scss">
+<!-- <style lang="scss">
 @import "~/styles/chakra-ui.scss";
-</style>
+</style> -->

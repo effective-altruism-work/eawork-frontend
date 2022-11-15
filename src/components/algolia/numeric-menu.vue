@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CFormLabel, CBox } from "@chakra-ui/vue-next";
+// import { CFormLabel, CBox } from "@chakra-ui/vue-next";
 import { AisNumericMenu } from "vue-instantsearch/vue3/es";
 const props = defineProps<{
   attribute: string;
@@ -18,7 +18,7 @@ const props = defineProps<{
   </CBox>
 </template>
 
-<style lang="scss">
+<!-- <style lang="scss">
 @import "~/styles/chakra-ui.scss";
 
 .ais-NumericMenu-label {
@@ -33,5 +33,5 @@ const props = defineProps<{
       color: var(--colors-blue-500);
     }
   }
-}
+} -->
 </style>

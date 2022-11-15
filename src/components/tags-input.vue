@@ -95,7 +95,7 @@ function onTagsChanged(newTags: Array<Tag>) {
   </CBox> -->
 </template>
 
-<style lang="scss">
+<!-- <style lang="scss">
 @import "~/styles/chakra-ui.scss";
 
 .vue-tags-input {
@@ -124,4 +124,4 @@ function onTagsChanged(newTags: Array<Tag>) {
     padding-left: 9px;
   }
 }
-</style>
+</style> -->

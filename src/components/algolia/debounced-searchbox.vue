@@ -1,5 +1,5 @@
 <script lang="ts">
-import { CBox, CIcon } from "@chakra-ui/vue-next";
+// import { CBox, CIcon } from "@chakra-ui/vue-next";
 import { connectSearchBox } from "instantsearch.js/es/connectors";
 import { createWidgetMixin } from "vue-instantsearch/vue3/es";
 
@@ -14,8 +14,8 @@ export default {
   },
 
   components: {
-    CBox,
-    CIcon,
+    // CBox,
+    // CIcon,
   },
   data() {
     return {
@@ -58,14 +58,14 @@ export default {
 </script>
 
 <template>
-  <CBox position="relative" display="flex" align-items="center">
-    <input id="debounced-box" type="search" placeholder="Keywords" v-model="query" />
-    <CIcon id="icon" w="6" h="6" name="search" color="grey" />
-  </CBox>
+  <!-- <CBox position="relative" display="flex" align-items="center"> -->
+  <input id="debounced-box" type="search" placeholder="Keywords" v-model="query" />
+  <!-- <CIcon id="icon" w="6" h="6" name="search" color="grey" /> -->
+  <!-- </CBox> -->
 </template>
-
+<!-- 
 <style lang="scss">
-@import "~/styles/chakra-ui.scss";
+// @import "~/styles/chakra-ui.scss";
 
 #debounced-box {
   width: 100%;
@@ -103,4 +103,4 @@ export default {
   left: var(--space-4);
   margin-top: 1px;
 }
-</style>
+</style> -->
