@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useHead, useRuntimeConfig, useRoute, useRouter } from "#app";
 import { chakra, CFlex, CVStack, CLink, CBox, CText } from "@chakra-ui/vue-next";
-import { useBreakpoints } from "@vueuse/core";
+import { useBreakpoints, useThrottleFn, useElementVisibility } from "@vueuse/core";
 import algoliasearch from "algoliasearch";
 import { AisInstantSearch, AisInfiniteHits } from "vue-instantsearch/vue3/es";
 import { onBeforeMount, onMounted, ref, watch, onBeforeUnmount } from "vue";
@@ -19,6 +19,7 @@ import { JobAlgolia } from "~/utils/types";
 import riveted from "~/utils/riveted";
 import { breakpointsChakra } from "../constants";
 import log from "../utils/log";
+import InternalTrigger from "~/components/internal-trigger.vue";
 
 const breakpoints = useBreakpoints(breakpointsChakra);
 
@@ -43,6 +44,13 @@ const state = {
   isShowMobileFilters: ref(false),
   // featuredList: ref([])
 };
+
+const target = ref<HTMLDivElement>(null);
+const targetIsVisible = useElementVisibility(target);
+
+const throttleFn = useThrottleFn((fn: () => void) => {
+  fn();
+}, 1000);
 
 const totalFiltersLength = computed(() => {
   let tL = 0;
@@ -218,10 +226,8 @@ const routing = { stateMapping };
                 <template
                   v-slot="{
                     items,
-                    refinePrevious,
                     refineNext,
                     isLastPage,
-                    sendEvent,
                   }: {
                     items: JobAlgolia[],
                     refinePrevious: () => void,
@@ -230,9 +236,6 @@ const routing = { stateMapping };
                     sendEvent: (x: any) => void,
                   }"
                 >
-                  <!-- <p style="position: fixed; top: 0; left: 0">
-                    {{ items.length }} lastpage: {{ isLastPage }}
-                  </p> -->
                   <JobCard
                     v-if="state.jobFromUrlQuery.value && !state.queryJson.value"
                     :job="state.jobFromUrlQuery.value"
@@ -272,31 +275,16 @@ const routing = { stateMapping };
                     "
                   />
 
-                  <CBox v-if="!isLastPage">
-                    <JobCardSkeleton
-                      v-observe-visibility="{
-                      callback: (isVisible: boolean) => {
-                        if (isVisible && !isLastPage) {
-                          refineNext();
-                        }
-                      },
-                    }"
-                    />
+                  <div ref="target" v-if="!isLastPage">
                     <JobCardSkeleton />
                     <JobCardSkeleton />
-                  </CBox>
-                  <!-- <CBox
-                    ><button
-                      @click="
-                        () => {
-                          log('refine next');
-                          refineNext();
-                        }
-                      "
-                    >
-                      click me
-                    </button></CBox
-                  > -->
+                    <JobCardSkeleton />
+                  </div>
+                  <!-- this is a hack to trigger refineNext, because useElementVisibility doesn't include a way to trigger a callback -->
+                  <InternalTrigger
+                    v-if="targetIsVisible"
+                    :fn="() => throttleFn(refineNext)"
+                  />
                 </template>
 
                 <!-- this overrides the 'show more results' button that pops up -->
@@ -320,7 +308,7 @@ const routing = { stateMapping };
           <CurrentRefinements />
 
           <CBox mb="7">
-            <Alerts
+            <LazyAlerts
               :total-filters-length="totalFiltersLength"
               :query-json="state.queryJson.value"
             />

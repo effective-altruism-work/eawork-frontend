@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { useRuntimeConfig } from "#app";
 import { CBox, CText, CButton, CInput, CFormLabel, CLink } from "@chakra-ui/vue-next";
-import axios from "axios";
 import { onMounted, ref } from "vue";
 import RefinementListFacets from "~/components/algolia/refinement-list-facets.vue";
 import { TagDjango, TagTypeName, AlgoliaFilterItem } from "~/utils/types";
