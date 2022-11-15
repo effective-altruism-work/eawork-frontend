@@ -61,8 +61,8 @@ function onNodeClick(event, node) {
   <CBox w="100%" mb="-2px">
     <CBox pos="relative">
       <CFlex justify="space-between" align="center">
-        <EightyKLink path="/">
-          <chakra.img w="72px" h="50px" src="/80k-logo.png" />
+        <EightyKLink name="Home" path="/">
+          <chakra.img alt="80,000 Hours Logo" w="72px" h="50px" src="/80k-logo.png" />
         </EightyKLink>
         <CFlex>
           <CBox v-for="node in nodes" :key="node.label" z-index="modal">

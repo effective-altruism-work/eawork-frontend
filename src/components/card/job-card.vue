@@ -160,6 +160,7 @@ function onMouseUp(e) {
         <CFlex pos="relative">
           <chakra.img
             v-if="props.job"
+            :alt="`${job.company_name} logo`"
             :src="job.company_logo_url"
             w="60px"
             min-w="60px"

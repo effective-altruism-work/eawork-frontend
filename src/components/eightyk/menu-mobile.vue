@@ -79,13 +79,14 @@ function isCurrentCategory(category: NodeCategory) {
 
 <template>
   <CFlex direction="row" align="center" justify="space-between" py="2">
-    <EightyKLink path="/">
-      <chakra.img w="55px" h="38.19px" mb="px" src="/80k-logo.png" />
+    <EightyKLink name="Home" path="/">
+      <chakra.img alt="80,000 Hours Logo" w="55px" h="38.19px" mb="px" src="/80k-logo.png" />
     </EightyKLink>
 
     <CButton
       @click="state.isOpen.value = true"
       variant="none"
+      name="Menu Toggle"
       px="0"
       w="fit-content"
       mx="-11px"

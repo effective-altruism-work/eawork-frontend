@@ -12,6 +12,7 @@ export default {
       required: false,
     },
   },
+
   components: {
     CBox,
     CIcon,

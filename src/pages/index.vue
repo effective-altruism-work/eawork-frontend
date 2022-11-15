@@ -276,31 +276,14 @@ const routing = { stateMapping };
                       v-observe-visibility="{
                       callback: (isVisible: boolean) => {
                         if (isVisible && !isLastPage) {
-                          throttleFn(() => {
-                            log(`refinenext! ${new Date().toISOString()}`)
-                          refineNext();
-                          }
-                          )
-                          
+                            throttleFn(refineNext)
                         }
-                      },
-                    }"
+                      }
+                     }"
                     />
                     <JobCardSkeleton />
                     <JobCardSkeleton />
                   </CBox>
-                  <!-- <CBox
-                    ><button
-                      @click="
-                        () => {
-                          log('refine next');
-                          refineNext();
-                        }
-                      "
-                    >
-                      click me
-                    </button></CBox
-                  > -->
                 </template>
 
                 <!-- this overrides the 'show more results' button that pops up -->

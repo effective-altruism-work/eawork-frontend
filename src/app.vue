@@ -17,6 +17,7 @@ onMounted(() => {
 });
 
 useHead({
+  htmlAttrs: { lang: "en" },
   titleTemplate: (titleChunk) =>
     titleChunk ? `${titleChunk} - 80,000 Hours` : "80,000 Hours",
   link: [
@@ -29,6 +30,11 @@ useHead({
   ],
   meta: [
     { name: "og:title", content: "80,000 Hours Job Board" },
+    {
+      name: "description",
+      content:
+        "A curated list of the most promising vacancies we're aware of. If you’re a good fit for one of these, it could be your best opportunity to help solve one of the world’s most pressing problems.",
+    },
     {
       name: "og:description",
       content:
