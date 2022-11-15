@@ -1,5 +1,5 @@
 // https://ui.dev/validate-email-address-javascript
 
-export default function emailIsValid (email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-  }
+export default function emailIsValid(email: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
