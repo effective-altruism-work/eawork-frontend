@@ -329,7 +329,7 @@ const routing = { stateMapping };
     </AisInstantSearch>
   </CBox>
 </template>
-
+<!-- 
 <style lang="scss">
 @import "~/styles/chakra-ui.scss";
 
@@ -337,4 +337,4 @@ html,
 html.dark {
   background: #f4f6f7;
 }
-</style>
+</style> -->
