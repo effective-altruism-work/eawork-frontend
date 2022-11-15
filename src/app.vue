@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useHead, useRuntimeConfig } from "#app";
 import { ref, onMounted } from "vue";
-import { CContainer, CFlex, CBox } from "@chakra-ui/vue-next";
-import Menu from "~/components/eightyk/menu.vue";
+// import { CContainer, CFlex, CBox } from "@chakra-ui/vue-next";
+// import Menu from "~/components/eightyk/menu.vue";
 
 const state = {
   config: useRuntimeConfig(),
@@ -63,17 +63,17 @@ useHead({
 
 <template>
   <CFlex direction="column" overflowX="hidden">
-    <Menu />
+    <!-- <Menu />
 
     <CBox bg="#F4F6F7">
       <CContainer max-w="8xl" :px="[3, null, 4]">
         <NuxtPage />
       </CContainer>
     </CBox>
-    <LazyEightykFooter v-if="show" />
+    <LazyEightykFooter v-if="show" /> -->
   </CFlex>
 </template>
 
-<style>
+<!-- <style>
 @import "~/styles/font-80k";
-</style>
+</style> -->

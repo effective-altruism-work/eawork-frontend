@@ -20,6 +20,14 @@ export default defineNuxtConfig({
       segmentId: "",
     },
   },
+  postcss: {
+    plugins: {
+      "tailwindcss/nesting": {},
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
+  css: ["~/src/styles/app.css"],
   ssr: false,
   srcDir: "src/",
 });
