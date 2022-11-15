@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { CBox, CText, CButton, CInput, CFormLabel, CLink } from "@chakra-ui/vue-next";
+// import { CBox, CText, CButton, CInput, CFormLabel, CLink } from "@chakra-ui/vue-next";
 import { onMounted, ref } from "vue";
 import RefinementListFacets from "~/components/algolia/refinement-list-facets.vue";
 import { TagDjango, TagTypeName, AlgoliaFilterItem } from "~/utils/types";
-import { chakra } from "@chakra-ui/vue-next";
+// import { chakra } from "@chakra-ui/vue-next";
 import * as Sentry from "@sentry/vue";
 import { xRiskProblemAreas, acrossEAProblemAreas, otherProblemAreas } from "~/constants";
 import EightykLink from "../eightyk/eightyk-link.vue";
@@ -133,10 +133,10 @@ function carefulRefine(
 </script>
 
 <template>
-  <CBox :mt="props.mt ?? 6">
-    <CFormLabel mb="3" font-size="xl" font-weight="bold" line-height="none">
+  <div :style="props.mt ? `margin-top: ${props.mt * 4}px` : 'margin-top: 24px'">
+    <label class="text-xl mb-3 font-bold leading-none">
       {{ props.label }}
-    </CFormLabel>
+    </label>
 
     <!-- :limit="trueLimit" -->
     <!-- :show-more-limit="props.showMoreLimit" -->
@@ -158,7 +158,8 @@ function carefulRefine(
           searchForItems,
         }"
       >
-        <CInput
+        <input
+          class="mb-1 rounded-md bg-white"
           v-if="props.searchable"
           :value="inputVal"
           @input="
@@ -170,13 +171,10 @@ function carefulRefine(
           :placeholder="`Search all ${
             props.locationType ? locationCountRef : items.length
           } ${placeholder}...`"
-          mb="1"
-          border-radius="md"
-          bg="white"
         />
 
         <!-- MAIN. Non problem areas. -->
-        <chakra.ul v-if="props.attribute !== 'tags_area'" mt="px">
+        <ul v-if="props.attribute !== 'tags_area'">
           <li v-if="isFromSearch && !items.length">No results.</li>
           <RefinementListFacets
             :attribute="props.attribute"
@@ -189,25 +187,25 @@ function carefulRefine(
             :searchable="props.searchable"
             :count-bg="props.countBg"
           />
-        </chakra.ul>
+        </ul>
 
         <!-- problem areas -->
-        <CBox v-else>
-          <CText mt="3" font-weight="bold" color="gray.500" font-size="15px">
+        <div v-else>
+          <p class="mt-3 font-bold text-gray-500">
             Reducing
-            <EightykLink
+            <!-- <EightykLink
               text-decoration="underline"
               text-decoration-thickness="1px"
               text-underline-offset="0.11em"
               color="gray.500"
               path="/articles/existential-risks"
               >existential risks</EightykLink
-            >
-          </CText>
+            > -->
+          </p>
 
-          <chakra.ul mt="px">
+          <ul mt="px">
             <li v-if="isFromSearch && !items.length">No results.</li>
-            <RefinementListFacets
+            <!-- <RefinementListFacets
               :attribute="props.attribute"
               :items="morphFacetValues(items, 'x-risk')"
               :refine="
@@ -217,15 +215,13 @@ function carefulRefine(
               "
               :searchable="props.searchable"
               :count-bg="props.countBg"
-            />
-          </chakra.ul>
+            /> -->
+          </ul>
 
-          <CBox v-if="props.attribute === 'tags_area'">
-            <CText mt="3" font-weight="bold" color="gray.500" font-size="15px">
-              Work across areas
-            </CText>
+          <div v-if="props.attribute === 'tags_area'">
+            <p class="mt-3 font-bold text-gray-500">Work across areas</p>
 
-            <chakra.ul mt="1px">
+            <ul class="mt-[1px]">
               <li v-if="isFromSearch && !items.length">No results.</li>
               <RefinementListFacets
                 :items="morphFacetValues(items, 'across')"
@@ -237,17 +233,15 @@ function carefulRefine(
                 :searchable="props.searchable"
                 :count-bg="props.countBg"
               />
-            </chakra.ul>
-          </CBox>
+            </ul>
+          </div>
 
-          <CBox v-if="props.attribute === 'tags_area'">
-            <CText mt="3" font-weight="bold" color="gray.500" font-size="15px">
-              Other important problems
-            </CText>
+          <div v-if="props.attribute === 'tags_area'">
+            <p class="mt-3 font-bold text-gray-500">Other important problems</p>
 
-            <chakra.ul mt="1px">
+            <ul class="mt-[1px]">
               <li v-if="isFromSearch && !items.length">No results.</li>
-              <RefinementListFacets
+              <!-- <RefinementListFacets
                 :items="morphFacetValues(items, 'other')"
                 :refine="
                   (currItem) => {
@@ -256,15 +250,15 @@ function carefulRefine(
                 "
                 :searchable="props.searchable"
                 :count-bg="props.countBg"
-              />
-            </chakra.ul>
-          </CBox>
+              /> -->
+            </ul>
+          </div>
 
-          <CButton size="sm" v-if="canToggleShowMore" @click="toggleShowMore">
+          <!-- <CButton size="sm" v-if="canToggleShowMore" @click="toggleShowMore">
             {{ !isShowingMore ? "Show more" : "Show less" }}
-          </CButton>
-        </CBox>
+          </CButton> -->
+        </div>
       </template>
     </AisRefinementList>
-  </CBox>
+  </div>
 </template>

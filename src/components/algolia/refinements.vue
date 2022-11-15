@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CBox } from "@chakra-ui/vue-next";
+// import { CBox } from "@chakra-ui/vue-next";
 import { subDays, startOfYear, getUnixTime, endOfYear, addDays } from "date-fns";
 import NumericMenu from "~/components/algolia/numeric-menu.vue";
 import RefinementList from "~/components/algolia/refinement-list.vue";
@@ -36,7 +36,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <CBox>
+  <div>
     <RefinementList
       attribute="tags_area"
       :count-bg="props.countBg"
@@ -94,7 +94,7 @@ onMounted(async () => {
     <!--<RefinementList attribute="tags_skill" label="Skills" />-->
     <!--<RefinementList attribute="tags_generic" label="Tags" />-->
 
-    <NumericMenu
+    <!-- <NumericMenu
       label="Posted"
       attribute="posted_at"
       :items="[
@@ -116,6 +116,6 @@ onMounted(async () => {
         { label: 'In next 2 weeks', end: getUnixTime(addDays(new Date(), 14)) },
         { label: 'In next month', end: getUnixTime(addDays(new Date(), 31)) },
       ]"
-    />
-  </CBox>
+    /> -->
+  </div>
 </template>

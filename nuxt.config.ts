@@ -1,7 +1,7 @@
 import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
-  modules: ["vue-final-modal"],
+  modules: ["vue-final-modal", "@nuxtjs/tailwindcss"],
   // modules: ["@nuxt/ui", "vue-final-modal", "@formkit/nuxt"],
   // modules: ["@nuxt/ui", "vue-final-modal", "nuxt-purgecss"],
   meta: [{ viewport: "name", content: "width=device-width, initial-scale=1" }],

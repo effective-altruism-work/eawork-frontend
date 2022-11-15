@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
-import { CFlex, CBox, CButton, CContainer, CLink, CHeading } from "@chakra-ui/vue-next";
-import {  useBreakpoints } from "@vueuse/core";
+// import { CFlex, CBox, CButton, CContainer, CLink, CHeading } from "@chakra-ui/vue-next";
+import { useBreakpoints } from "@vueuse/core";
 import { ref } from "vue";
 import { Node, NodeCategory, nodesSecondary } from "~/nodes";
 import { OhVueIcon } from "oh-vue-icons";
-import MenuDesktop from "~/components/eightyk/menu-desktop.vue";
-import MenuMobile from "~/components/eightyk/menu-mobile.vue";
+// import MenuDesktop from "~/components/eightyk/menu-desktop.vue";
+// import MenuMobile from "~/components/eightyk/menu-mobile.vue";
 import { breakpointsChakra } from "~~/src/constants";
 
 const hooks = {
@@ -48,34 +48,30 @@ function onNodeClick(event, node) {
 </script>
 
 <template>
-  <CBox>
-    <CContainer w="100%" m="auto" max-w="8xl">
-      <CFlex
+  <div>
+    <div class="w-full m-auto max-w-7xl">
+      <div
+        class="flex items-center flex-col"
         v-if="hooks.breakpoints.greaterOrEqual('xl').value"
-        direction="column"
-        align="center"
       >
-        <CFlex w="100%" grow="1" max-w="8xl" justify="center" :py="4 - 1" bg="white">
-          <MenuDesktop />
-        </CFlex>
-      </CFlex>
+        <div class="flex w-full flex-grow max-w-7xl justify-center py-3 bg-white">
+          <!-- <MenuDesktop /> -->
+        </div>
+      </div>
 
-      <MenuMobile v-else />
-    </CContainer>
+      <!-- <MenuMobile v-else /> -->
+    </div>
 
-    <CFlex
+    <div
+      class="flex flex-col items-center py-2 bg-[#EEEEEE]"
       v-if="hooks.breakpoints.greaterOrEqual('xl').value"
-      bg="#EEEEEE"
-      direction="column"
-      align="center"
-      py="2"
     >
-      <CContainer display="flex" justify-content="space-between" w="100%" max-w="8xl">
-        <CFlex>Home</CFlex>
+      <div class="flex justify-between w-full max-w-7xl">
+        <div class="flex">Home</div>
 
-        <CFlex gap="6">
-          <CBox v-for="node in nodesSecondary" :key="node.label" pos="relative">
-            <CLink :href="node.url" @click="(event) => onNodeClick(event, node)">
+        <div class="flex gap-6">
+          <div class="relative" v-for="node in nodesSecondary" :key="node.label">
+            <NuxtLink :href="node.url" @click="(event) => onNodeClick(event, node)">
               <CButton
                 variant="link"
                 :ml="comp.spaces.md"
@@ -89,56 +85,39 @@ function onNodeClick(event, node) {
                   :color="isCurrentNode(node) ? 'blue.500' : comp.black50"
                 />
               </CButton>
-            </CLink>
+            </NuxtLink>
 
-            <CFlex
+            <div
+              class="flex absolute w-fit h-fit right-0 mt-2 z-10 bg-white border-2 py-4 border-[#eee]"
               v-if="!node.isMegaNode && isCurrentNode(node)"
-              pos="absolute"
-              w="fit-content"
-              h="fit-content"
-              right="0"
-              :py="comp.spaces.md"
-              :mt="2"
-              z-index="modal"
-              bg="white"
-              border="2px solid #eee"
             >
-              <CFlex :gap="comp.spaces.md">
-                <CFlex
+              <div class="flex gap-4">
+                <div
+                  class="flex flex-col px-6 gap-2"
                   v-for="category in node.categories"
                   :key="category.label"
-                  direction="column"
-                  :px="comp.spaces.lg"
-                  :gap="comp.spaces.sm"
                 >
-                  <CHeading size="sm" white-space="nowrap">{{ category.label }}</CHeading>
-                  <CLink
+                  <h4 class="font-sm whitespace-nowrap">{{ category.label }}</h4>
+                  <NuxtLink
+                    class="whitespace-nowrap"
                     v-for="catNode in category.children"
                     :key="catNode.url"
                     :href="catNode.url"
-                    white-space="nowrap"
                   >
                     {{ catNode.label }}
-                  </CLink>
-                </CFlex>
-              </CFlex>
-            </CFlex>
-          </CBox>
-        </CFlex>
-      </CContainer>
-    </CFlex>
+                  </NuxtLink>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <CBox
+    <div
+      class="absolute w-full h-full inset-0 z-10"
       v-if="state.nodeOpened.value"
       @click="state.nodeOpened.value = null"
-      pos="absolute"
-      w="100%"
-      h="100%"
-      left="0"
-      right="0"
-      top="0"
-      bottom="0"
-      z-index="overlay"
     />
-  </CBox>
+  </div>
 </template>

@@ -2,7 +2,7 @@
 import { useHead, useRuntimeConfig } from "#app";
 import { ref, onMounted } from "vue";
 // import { CContainer, CFlex, CBox } from "@chakra-ui/vue-next";
-// import Menu from "~/components/eightyk/menu.vue";
+import Menu from "~/components/eightyk/menu.vue";
 
 const state = {
   config: useRuntimeConfig(),
@@ -64,15 +64,13 @@ useHead({
 <template>
   <div class="flex flex-col overflow-x-hidden">
     <p>yo</p>
-    <!-- <Menu />
-
-    <CBox bg="#F4F6F7">
-      <CContainer max-w="8xl" :px="[3, null, 4]">
+    <Menu />
+    <div class="bg-[#F4F6F7]">
+      <div class="max-w-7xl px-3 lg:px-4">
         <NuxtPage />
-      </CContainer>
-    </CBox>
+      </div>
+    </div>
+    <!-- 
     <LazyEightykFooter v-if="show" /> -->
-
-    
   </div>
 </template>
