@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useHead, useRuntimeConfig, useRoute, useRouter } from "#app";
 import { chakra, CFlex, CVStack, CLink, CBox, CText } from "@chakra-ui/vue-next";
-import { useBreakpoints, useThrottle } from "@vueuse/core";
+import { useBreakpoints, useThrottleFn, useElementVisibility } from "@vueuse/core";
 import algoliasearch from "algoliasearch";
 import { AisInstantSearch, AisInfiniteHits } from "vue-instantsearch/vue3/es";
 import { onBeforeMount, onMounted, ref, watch, onBeforeUnmount } from "vue";
@@ -19,6 +19,7 @@ import { JobAlgolia } from "~/utils/types";
 import riveted from "~/utils/riveted";
 import { breakpointsChakra } from "../constants";
 import log from "../utils/log";
+import InternalTrigger from "~/components/internal-trigger.vue";
 
 const breakpoints = useBreakpoints(breakpointsChakra);
 
@@ -43,6 +44,9 @@ const state = {
   isShowMobileFilters: ref(false),
   // featuredList: ref([])
 };
+
+const target = ref<HTMLDivElement>(null);
+const targetIsVisible = useElementVisibility(target);
 
 const throttleFn = useThrottleFn((fn: () => void) => {
   fn();
@@ -271,19 +275,16 @@ const routing = { stateMapping };
                     "
                   />
 
-                  <CBox v-if="!isLastPage">
-                    <JobCardSkeleton
-                      v-observe-visibility="{
-                      callback: (isVisible: boolean) => {
-                        if (isVisible && !isLastPage) {
-                            throttleFn(refineNext)
-                        }
-                      }
-                     }"
-                    />
+                  <div ref="target" v-if="!isLastPage">
                     <JobCardSkeleton />
                     <JobCardSkeleton />
-                  </CBox>
+                    <JobCardSkeleton />
+                  </div>
+                  <!-- this is a hack to trigger refineNext, because useElementVisibility doesn't include a way to trigger a callback -->
+                  <InternalTrigger
+                    v-if="targetIsVisible"
+                    :fn="() => throttleFn(refineNext)"
+                  />
                 </template>
 
                 <!-- this overrides the 'show more results' button that pops up -->
