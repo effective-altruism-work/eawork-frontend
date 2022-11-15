@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useHead, useRuntimeConfig, useRoute, useRouter } from "#app";
 import { chakra, CFlex, CVStack, CLink, CBox, CText } from "@chakra-ui/vue-next";
-import { useBreakpoints } from "@vueuse/core";
+import { useBreakpoints, useThrottle } from "@vueuse/core";
 import algoliasearch from "algoliasearch";
 import { AisInstantSearch, AisInfiniteHits } from "vue-instantsearch/vue3/es";
 import { onBeforeMount, onMounted, ref, watch, onBeforeUnmount } from "vue";
@@ -43,6 +43,10 @@ const state = {
   isShowMobileFilters: ref(false),
   // featuredList: ref([])
 };
+
+const throttleFn = useThrottleFn((fn: () => void) => {
+  fn();
+}, 1000);
 
 const totalFiltersLength = computed(() => {
   let tL = 0;
@@ -218,10 +222,8 @@ const routing = { stateMapping };
                 <template
                   v-slot="{
                     items,
-                    refinePrevious,
                     refineNext,
                     isLastPage,
-                    sendEvent,
                   }: {
                     items: JobAlgolia[],
                     refinePrevious: () => void,
@@ -230,9 +232,6 @@ const routing = { stateMapping };
                     sendEvent: (x: any) => void,
                   }"
                 >
-                  <!-- <p style="position: fixed; top: 0; left: 0">
-                    {{ items.length }} lastpage: {{ isLastPage }}
-                  </p> -->
                   <JobCard
                     v-if="state.jobFromUrlQuery.value && !state.queryJson.value"
                     :job="state.jobFromUrlQuery.value"
@@ -277,7 +276,12 @@ const routing = { stateMapping };
                       v-observe-visibility="{
                       callback: (isVisible: boolean) => {
                         if (isVisible && !isLastPage) {
+                          throttleFn(() => {
+                            log(`refinenext! ${new Date().toISOString()}`)
                           refineNext();
+                          }
+                          )
+                          
                         }
                       },
                     }"
@@ -320,7 +324,7 @@ const routing = { stateMapping };
           <CurrentRefinements />
 
           <CBox mb="7">
-            <Alerts
+            <LazyAlerts
               :total-filters-length="totalFiltersLength"
               :query-json="state.queryJson.value"
             />

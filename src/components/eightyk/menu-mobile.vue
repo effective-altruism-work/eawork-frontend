@@ -80,7 +80,7 @@ function isCurrentCategory(category: NodeCategory) {
 <template>
   <CFlex direction="row" align="center" justify="space-between" py="2">
     <EightyKLink path="/">
-      <chakra.img w="55px" mb="px" src="/80k-logo.png" />
+      <chakra.img w="55px" h="38.19px" mb="px" src="/80k-logo.png" />
     </EightyKLink>
 
     <CButton
