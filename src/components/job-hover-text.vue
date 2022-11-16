@@ -38,6 +38,35 @@ const props = defineProps<{
           one of their top-rated charities</CLink
         >.
       </template>
+      <template v-else-if="props.companyName === 'Effective Ventures Operations'">
+        Disclaimer:
+        <em
+          >EV Operations
+          <a style="color: #0aa9bf" href="https://ev.org/ops/about/"
+            >provides operations support</a
+          >
+          to 80,000 Hours.
+        </em>
+      </template>
+      <template v-else-if="props.companyName === 'Open Philanthropy'">
+        Disclaimer:
+        <em
+          >Open Philanthropy is 80,000 Hours'
+          <a style="color: #0aa9bf" href="https://80000hours.org/about/donors/"
+            >larget funder</a
+          >.
+        </em>
+      </template>
+      <template v-else-if="props.companyName === 'Berkeley Existential Risk Initiative'">
+        Disclaimer:
+        <em
+          >80,000 Hours
+          <a style="color: #0aa9bf" href="https://80000hours.org/about/donors/"
+            >has received funding</a
+          >
+          from the Berkeley Existential Risk Initiative.
+        </em>
+      </template>
     </CBox>
   </CBox>
 </template>
