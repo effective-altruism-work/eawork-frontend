@@ -6,8 +6,8 @@ import EightykLink from "~/components/eightyk/eightyk-link.vue";
 <template>
   <CText>
     We think that
-    <EightykLink path="/career-reviews/">information security</EightykLink>
-    may be crucial for addressing risks related to AI and biosecurity, with roles in this
+    <EightykLink path="/career-reviews/information-security">information security</EightykLink>
+    may become very important for addressing risks related to AI and biosecurity, with roles in this
     area being an opportunity to build potentially valuable skills.
   </CText>
 </template>

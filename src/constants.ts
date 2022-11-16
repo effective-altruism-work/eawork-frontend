@@ -51,3 +51,9 @@ export const otherProblemAreas = [
   "Climate change",
   "Other (pressing)",
 ] as const;
+
+export const allProblemAreas = [
+  ...xRiskProblemAreas,
+  ...acrossEAProblemAreas,
+  ...otherProblemAreas,
+] as const;

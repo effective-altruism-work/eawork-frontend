@@ -5,7 +5,12 @@ import RefinementListFacets from "~/components/algolia/refinement-list-facets.vu
 import { TagDjango, TagTypeName, AlgoliaFilterItem } from "~/utils/types";
 import { chakra } from "@chakra-ui/vue-next";
 import * as Sentry from "@sentry/vue";
-import { xRiskProblemAreas, acrossEAProblemAreas, otherProblemAreas } from "~/constants";
+import {
+  xRiskProblemAreas,
+  acrossEAProblemAreas,
+  otherProblemAreas,
+  allProblemAreas,
+} from "~/constants";
 import EightykLink from "../eightyk/eightyk-link.vue";
 import { AisRefinementList } from "vue-instantsearch/vue3/es";
 
@@ -77,29 +82,37 @@ function morphFacetValues(
     return locationedItems.slice(0, 8);
   }
 
-  if (section) {
-    if (section === "x-risk") {
-      const ind = filteredItems.findIndex((i) => i.value === "Other policy-focused");
-
-      if (ind !== -1) {
-        filteredItems.push(filteredItems.splice(ind, 1)[0]);
-      }
-
-      return filteredItems.filter((item) => {
-        return xRiskProblemAreas.includes(item.value as any);
-      });
+  if (props.attribute === "tags_area") {
+    const ind = filteredItems.findIndex((i) => i.value === "Other policy-focused");
+    if (ind !== -1) {
+      filteredItems.push(filteredItems.splice(ind, 1)[0]);
     }
 
-    if (section === "across") {
-      return filteredItems.filter((item) =>
-        acrossEAProblemAreas.includes(item.value as any),
-      );
-    }
-
-    if (section === "other") {
-      return filteredItems.filter((item) => otherProblemAreas.includes(item.value as any));
-    }
+    return filteredItems.filter((item) => allProblemAreas.includes(item.value as any));
   }
+  // if (section) {
+  //   if (section === "x-risk") {
+  //     const ind = filteredItems.findIndex((i) => i.value === "Other policy-focused");
+
+  //     if (ind !== -1) {
+  //       filteredItems.push(filteredItems.splice(ind, 1)[0]);
+  //     }
+
+  //     return filteredItems.filter((item) => {
+  //       return xRiskProblemAreas.includes(item.value as any);
+  //     });
+  //   }
+
+  //   if (section === "across") {
+  //     return filteredItems.filter((item) =>
+  //       acrossEAProblemAreas.includes(item.value as any),
+  //     );
+  //   }
+
+  //   if (section === "other") {
+  //     return filteredItems.filter((item) => otherProblemAreas.includes(item.value as any));
+  //   }
+  // }
 
   return filteredItems.slice(0, props.limit || 1000);
 }
@@ -176,7 +189,8 @@ function carefulRefine(
         />
 
         <!-- MAIN. Non problem areas. -->
-        <chakra.ul v-if="props.attribute !== 'tags_area'" mt="px">
+        <!-- <chakra.ul v-if="props.attribute !== 'tags_area'" mt="px"> -->
+        <chakra.ul mt="px">
           <li v-if="isFromSearch && !items.length">No results.</li>
           <RefinementListFacets
             :attribute="props.attribute"
@@ -192,7 +206,7 @@ function carefulRefine(
         </chakra.ul>
 
         <!-- problem areas -->
-        <CBox v-else>
+        <!-- <CBox v-else>
           <CText mt="3" font-weight="bold" color="gray.500" font-size="15px">
             Reducing
             <EightykLink
@@ -263,7 +277,7 @@ function carefulRefine(
           <CButton size="sm" v-if="canToggleShowMore" @click="toggleShowMore">
             {{ !isShowingMore ? "Show more" : "Show less" }}
           </CButton>
-        </CBox>
+        </CBox> -->
       </template>
     </AisRefinementList>
   </CBox>
