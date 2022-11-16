@@ -78,20 +78,18 @@ function isCurrentCategory(category: NodeCategory) {
 </script>
 
 <template>
-  <CFlex direction="row" align="center" justify="space-between" py="2">
+  <div class="flex justify-between items-center py-2">
     <EightyKLink name="Home" path="/">
-      <chakra.img alt="80,000 Hours Logo" w="55px" h="38.19px" mb="px" src="/80k-logo.png" />
+      <img alt="80,000 Hours Logo" width="55" height="38.19" src="/80k-logo.png" />
     </EightyKLink>
 
-    <CButton
+    <button
+      class="px-0 w-fit -mx-3"
       @click="state.isOpen.value = true"
       variant="none"
       name="Menu Toggle"
-      px="0"
-      w="fit-content"
-      mx="-11px"
     >
-      <chakra.svg width="25" height="30" viewBox="0 0 512 512" fill="currentColor">
+      <svg width="25" height="30" viewBox="0 0 512 512" fill="currentColor">
         <path
           fill="none"
           stroke="currentColor"
@@ -100,8 +98,8 @@ function isCurrentCategory(category: NodeCategory) {
           stroke-width="48"
           d="M88 152h336M88 256h336M88 360h336"
         ></path>
-      </chakra.svg>
-    </CButton>
+      </svg>
+    </button>
 
     <CDrawer
       size="sm"
@@ -267,7 +265,7 @@ function isCurrentCategory(category: NodeCategory) {
       top="0"
       z-index="1399"
     />
-  </CFlex>
+  </div>
 </template>
 
 <style lang="scss">

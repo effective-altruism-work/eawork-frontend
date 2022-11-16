@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
-import { CFlex, CButton, CInput, CText, CBox } from "@chakra-ui/vue-next";
 // import { captureEvent } from "@sentry/vue";
 import axios from "axios";
 import { OhVueIcon } from "oh-vue-icons";
@@ -125,58 +124,41 @@ function replacer(s: string): string {
     :esc-to-close="true"
   >
     <!-- max-h="fit-content" -->
-    <CFlex
-      pos="absolute"
-      :top="{ base: '48px', lg: totalFiltersLength > 8 ? 24 : 44 }"
-      right="0"
-      left="0"
-      max-w="390px"
-      m="auto"
-      max-height="fit-content"
-      :gap="theme.spaces.md"
-      :p="theme.spaces.md"
-      direction="column"
-      bg="white"
+    <div
+      class="flex absolute top-12 right-0 left-0 max-w-[390px] m-auto max-h-fit gap-2 p-2 flex-col bg-white"
+      :class="totalFiltersLength > 8 ? 'top-8' : 'top-11'"
     >
-      <CFlex justify="space-between">
-        <CText v-if="props.queryJson" w="fit-content" font-size="lg">
+      <div class="flex justify-between">
+        <p class="w-fit text-lg" v-if="props.queryJson">
           Subscribe to new jobs that match your query
-        </CText>
-        <CBox v-else>
-          <CText w="fit-content" font-size="lg">Subscribe to all new job posts</CText>
-          <CText w="fit-content" color="gray.500" font-size="sm"
-            >(because you haven't selected any filters or searched for any keywords)</CText
-          >
-        </CBox>
+        </p>
+        <div v-else>
+          <p class="w-fit text-lg">Subscribe to all new job posts</p>
+          <p class="w-fit text-gray-500 text-sm">
+            (because you haven't selected any filters or searched for any keywords)
+          </p>
+        </div>
 
-        <CBox
-          font-size="xs"
-          color="blue.500"
-          border="1px solid"
-          border-color="blue.500"
-          border-radius="5"
-          px="1"
-          m="2"
-          h="fit-content"
+        <div
+          class="text-xs text-eightyk-500 border border-eightyk-500 rounded px-1 m-2 h-fit"
         >
           BETA
-        </CBox>
-      </CFlex>
+        </div>
+      </div>
 
-      <CText
+      <div
         v-if="props.queryJson"
-        bg="gray.100"
-        border-radius="md"
-        py="3"
-        px="4"
-        mt="-1"
-        :font-size="{
-          base: 'xs',
-          lg: totalFiltersLength > 16 ? 'xs' : totalFiltersLength > 8 ? 'sm' : 'md',
-        }"
+        class="bg-gray-100 rounded py-3 px-4 -mt-1 text-xs"
+        :class="
+          totalFiltersLength > 16
+            ? 'lg:text-xs'
+            : totalFiltersLength > 8
+            ? 'lg:text-sm'
+            : 'lg:text-md'
+        "
       >
-        <CText v-if="props.queryJson.query">Query: {{ props.queryJson.query }}</CText>
-        <CText
+        <p v-if="props.queryJson.query">Query: {{ props.queryJson.query }}</p>
+        <p
           v-for="filter in props.queryJson?.facetFilters
             .flat()
             .filter((f) => !f.includes('Multiple experience levels')) || // don't need to display this
@@ -189,46 +171,42 @@ function replacer(s: string): string {
               .map((x, i) => (i ? labelTag(x) : replacer(x)))
               .join(": ")
           }}
-        </CText>
-      </CText>
+        </p>
+      </div>
 
-      <CInput
+      <input
+        class="text-base"
         v-model="state.email.value"
         type="email"
         name="email"
-        font-size="md"
         placeholder="joe@example.com"
       />
 
-      <CFlex justify="space-between">
-        <CText font-size="12px" max-w="200px" line-height="1.3" color="gray.600">
+      <div class="flex justify-between">
+        <p class="text-xs max-w-[200px] text-gray-600 leading-tight">
           You will receive updates daily (if there are new roles that match your query) and
           you can unsubscribe at any time
-        </CText>
+        </p>
 
-        <CButton
+        <button
+          class="max-w-fit self-end text-lg"
+          :class="
+            state.email.value
+              ? 'opacity-100 hover:cursor-pointer hover:bg-eightyk-700'
+              : 'opacity-50'
+          "
           @click="createJobAlert()"
           :is-loading="state.fsm.value === 'submitting'"
-          max-w="fit-content"
           :disabled="!state.email.value"
-          align-self="flex-end"
-          color-scheme="blue"
-          :opacity="state.email.value ? 1 : 0.5"
-          font-size="lg"
-          :_hover="
-            state.email.value
-              ? { cursor: 'pointer', backgroundColor: 'blue.700' }
-              : { backgroundColor: null, cursor: 'default' }
-          "
         >
           Subscribe
-        </CButton>
-      </CFlex>
+        </button>
+      </div>
 
-      <CText v-if="state.fsm.value === 'success'" color="green.500">Subscribed!</CText>
-      <CText v-if="state.fsm.value === 'error'" color="red.500">{{
-        state.error.value || "An error occurred"
-      }}</CText>
-    </CFlex>
+      <p class="text-green-500" v-if="state.fsm.value === 'success'">Subscribed!</p>
+      <p class="text-red-500" v-if="state.fsm.value === 'error'">
+        {{ state.error.value || "An error occurred" }}
+      </p>
+    </div>
   </VueFinalModal>
 </template>

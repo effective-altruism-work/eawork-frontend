@@ -19,9 +19,10 @@ const comp = {
   black50: "#2a2e30",
 };
 
-function getCategoryDisplay(category: NodeCategory): string {
+function getCategoryDisplay(category: NodeCategory): boolean {
   // must be in <script> due to the vue templating bug
-  return state.nodeCategoryActive.value?.label === category.label ? "flex" : "none";
+  // flex, none
+  return state.nodeCategoryActive.value?.label === category.label;
 }
 
 function onKeyUp(event) {
@@ -58,20 +59,19 @@ function onNodeClick(event, node) {
 </script>
 
 <template>
-  <CBox w="100%" mb="-2px">
-    <CBox pos="relative">
-      <CFlex justify="space-between" align="center">
+  <div class="w-full -mb-0.5">
+    <div class="relative" pos="relative">
+      <div class="flex justify-between items-center">
         <EightyKLink name="Home" path="/">
-          <chakra.img alt="80,000 Hours Logo" w="72px" h="50px" src="/80k-logo.png" />
+          <img alt="80,000 Hours Logo" width="72" height="50" src="/80k-logo.png" />
         </EightyKLink>
-        <CFlex>
-          <CBox v-for="node in nodes" :key="node.label" z-index="modal">
-            <CLink :href="node.url" @click="(event) => onNodeClick(event, node)">
-              <CButton
+        <div class="flex">
+          <div class="z-10" v-for="node in nodes" :key="node.label">
+            <a :href="node.url" @click="(event) => onNodeClick(event, node)">
+              <button
+                class="ml-6 font-bold"
                 variant="link"
-                :ml="comp.spaces.lg"
-                :color="isCurrentNode(node) ? 'blue.500' : comp.black50"
-                font-weight="bold"
+                :class="isCurrentNode(node) ? 'text-blue-500' : 'text-black-50'"
               >
                 {{ node.label }}
                 <OhVueIcon
@@ -80,151 +80,105 @@ function onNodeClick(event, node) {
                   scale="1"
                   :color="isCurrentNode(node) ? 'blue.500' : comp.black50"
                 />
-              </CButton>
-            </CLink>
+              </button>
+            </a>
 
-            <CFlex
+            <div
+              class="flex absolute w-full h-fit mt-6 max-h-fit z-10 left-0 bg-[#f5f5f5] border-2 border-[#eee]"
               v-if="node.isMegaNode && isCurrentNode(node)"
-              pos="absolute"
-              w="100%"
-              h="fit-content"
-              :mt="comp.spaces.lg"
-              max-h="fit-content"
-              z-index="modal"
-              left="0"
-              bg="#f5f5f5"
-              border="2px solid #eee"
             >
-              <CFlex direction="column" max-w="30%">
-                <CLink
+              <div class="flex max-w-[30%] flex-col">
+                <a
+                  class="flex flex-col p-4 hover:cursor-pointer text-gray-900"
                   v-for="category in node.categories"
                   :key="category.label"
                   :href="category.url"
                   @mouseenter="state.nodeCategoryActive.value = category"
                   @focus="state.nodeCategoryActive.value = category"
-                  display="flex"
-                  flex-direction="column"
-                  :p="comp.spaces.md"
-                  :bg="category === state.nodeCategoryActive.value ? 'white' : 'initial'"
-                  :_hover="{ cursor: 'pointer' }"
-                  color="gray.900"
+                  :class="
+                    category === state.nodeCategoryActive.value ? 'bg-white' : 'bg-initial'
+                  "
                 >
-                  <CHeading size="sm">{{ category.label }}</CHeading>
-                  <CText>{{ category.description }}</CText>
-                </CLink>
-              </CFlex>
+                  <h2 class="text-sm">{{ category.label }}</h2>
+                  <p>{{ category.description }}</p>
+                </a>
+              </div>
 
-              <CFlex
-                bg="white"
-                grow="1"
-                max-h="580px"
-                :p="comp.spaces.md"
-                px="5"
-                pos="relative"
-              >
-                <CFlex
+              <div class="flex bg-white grow max-h-[580px] p-4 px-5 relative">
+                <div
+                  class="flex flex-col flex-wrap w-full -mt-4"
                   v-for="category in node.categories"
                   :key="category.label"
-                  :display="getCategoryDisplay(category)"
-                  direction="column"
-                  wrap="wrap"
-                  w="100%"
-                  mt="-4"
+                  :class="getCategoryDisplay(category) ? 'flex' : 'hidden'"
                 >
-                  <CFlex
+                  <div
+                    class="flex w-1/2 flex-col"
                     v-if="state.nodeCategoryActive.value?.label === category.label"
                     v-for="childCategory in category.children"
                     :key="childCategory.label"
-                    w="50%"
-                    direction="column"
                   >
-                    <CHeading size="sm" mt="4" mb="1">{{ childCategory.label }}</CHeading>
-                    <CLink
+                    <h2 class="text-sm mt-4 mb-1">{{ childCategory.label }}</h2>
+                    <a
+                      class="text-gray-900 mb-1"
                       v-for="childNode in childCategory.children"
                       :key="childNode.label"
                       :href="childNode.url"
-                      color="gray.900"
-                      mb="1"
                     >
                       {{ childNode.label }}
-                    </CLink>
+                    </a>
 
                     <!-- these are the internal extensions, such as are currently used in 'browse all our content' -->
-                    <CLink
-                      my="6"
-                      font="bold"
+                    <a
+                      class="my-6 font-bold"
                       v-if="!!childCategory.extension"
                       :href="childCategory.extension.url"
-                      >{{ childCategory.extension.label }}</CLink
+                      >{{ childCategory.extension.label }}</a
                     >
-                  </CFlex>
+                  </div>
 
-                  <CLink
-                    mt="6"
-                    font="bold"
+                  <a
+                    class="mt-6 font-bold"
                     v-if="
                       !!category.extension &&
                       state.nodeCategoryActive.value?.label === category.label
                     "
                     :href="category.extension.url"
-                    >{{ category.extension.label }}</CLink
+                    >{{ category.extension.label }}</a
                   >
-                </CFlex>
-              </CFlex>
-            </CFlex>
+                </div>
+              </div>
+            </div>
 
-            <CFlex
+            <div
+              class="flex absolute w-fit h-fit py-4 mt-6 z-10 bg-white border-2 border-[#eee]"
               v-if="!node.isMegaNode && isCurrentNode(node)"
-              pos="absolute"
-              w="fit-content"
-              h="fit-content"
-              :py="comp.spaces.md"
-              :mt="comp.spaces.lg"
-              z-index="modal"
-              bg="white"
-              border="2px solid #eee"
             >
-              <CFlex direction="column" :gap="comp.spaces.md">
-                <CFlex
+              <div class="flex flex-col gap-4">
+                <div
+                  class="flex flex-col px-6 gap-2"
                   v-for="category in node.categories"
                   :key="category.label"
-                  direction="column"
-                  :px="comp.spaces.lg"
-                  :gap="comp.spaces.sm"
                 >
-                  <CHeading size="sm">{{ category.label }}</CHeading>
-                  <CLink
+                  <h2 class="text-sm">{{ category.label }}</h2>
+                  <a
                     v-for="catNode in category.children"
                     :key="catNode.url"
                     :href="catNode.url"
                   >
                     {{ catNode.label }}
-                  </CLink>
-                </CFlex>
-              </CFlex>
-            </CFlex>
-          </CBox>
-        </CFlex>
-      </CFlex>
-    </CBox>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <CBox
+    <div
+      class="absolute w-full h-full inset-0 z-10"
       v-if="state.nodeOpened.value"
       @click="state.nodeOpened.value = null"
-      pos="absolute"
-      w="100%"
-      h="100%"
-      left="0"
-      right="0"
-      top="0"
-      bottom="0"
-      z-index="overlay"
     />
-  </CBox>
+  </div>
 </template>
-
-<style>
-body {
-  position: relative;
-}
-</style>

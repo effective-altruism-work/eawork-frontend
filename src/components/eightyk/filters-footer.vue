@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
-import { CFlex, CIcon, CLink, CText, CVStack, chakra } from "@chakra-ui/vue-next";
+import { OhVueIcon } from "oh-vue-icons";
 
 const props = defineProps<{
   careerConsultancyBg?: string;
@@ -12,56 +12,31 @@ const hooks = {
 </script>
 
 <template>
-  <CFlex
-    :mt="{ base: 2, lg: 7 }"
-    :mb="{ base: 2, lg: 0 }"
-    direction="column"
-    gap="3"
-    font-size="15px"
-  >
-    <CLink
-      display="flex"
-      align-items="center"
-      is-external
+  <div class="flex mt-2 lg:mt-7 mb-2 lg:mb-0 flex-col gap-3">
+    <a
+      class="flex items-center"
       href="https://airtable.com/shrD9UEKusc6BYWWc/tbl5zkv6T7WSivZ89"
     >
-      <CIcon name="external-link" mb="px" w="16px" position="relative" left="2px" /><CText
-        ml="2"
-        >View all roles in a spreadsheet</CText
-      >
-    </CLink>
-    <CLink
-      display="flex"
-      align-items="center"
-      href="https://80000hours.typeform.com/to/LG2lzrOC"
-    >
-      <CIcon name="message-square" w="16px" mb="px" position="relative" left="2px" /><CText
-        ml="2"
-        >Give us feedback</CText
-      >
-    </CLink>
+      <OhVueIcon class="w-4 relative left-0.5" name="external-link" />
+      <p class="ml-2">View all roles in a spreadsheet</p>
+    </a>
+    <a class="flex items-center" href="https://80000hours.typeform.com/to/LG2lzrOC">
+      <OhVueIcon class="w-4 relative left-0.5" name="message-square" />
+      <p class="ml-2">Give us feedback</p>
+    </a>
 
-    <CVStack
-      mt="1"
-      :bg="props.careerConsultancyBg ?? 'white'"
-      border-radius="lg"
-      py="5"
-      px="6"
-      gap="1"
-    >
-      <CText
-        >Talk with our team for free if you are interested in working on one of our top
-        problem areas</CText
-      >
-      <CLink
+    <div class="mt-1 rounded-lg py-5 px-6 gap-1" :bg="props.careerConsultancyBg ?? 'white'">
+      <p>
+        Talk with our team for free if you are interested in working on one of our top
+        problem areas
+      </p>
+      <a
+        class="font-bold text-eightyk-400 text-sm"
         href="https://80000hours.org/speak-with-us/?int_campaign=job_board"
-        font-size="13px"
-        font-weight="bold"
-        color="blue.400"
       >
         SPEAK WITH US
-        <chakra.span ml="2" font-size="md">→</chakra.span>
-      </CLink>
-    </CVStack>
-  </CFlex>
+        <span class="ml-2">→</span>
+      </a>
+    </div>
+  </div>
 </template>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { CFlex, CText, CBox } from "@chakra-ui/vue-next";
 import { OhVueIcon } from "oh-vue-icons";
 import { strings } from "~/constants";
 import { useComp } from "~/utils/structs";
@@ -46,48 +45,33 @@ const comp = useComp(() => {
 </script>
 
 <template>
-  <CFlex
-    align="center"
-    gap="1"
-    w="80%"
+  <div
+    class="flex items-center gap-1 w-4/5"
     v-if="props.job.tags_city.length || props.job.tags_country.length"
   >
-    <OhVueIcon
-      name="fa-map-marker-alt"
-      scale="0.75"
-      color="#9BADB6"
-      style="margin-bottom: 1px"
-    />
+    <OhVueIcon name="fa-map-marker-alt" scale="0.75" color="#9BADB6" class="mb-[1px]" />
 
-    <CFlex
-      color="#9BADB6"
-      flex-wrap="nowrap"
-      align-items="center"
-      flex-direction="row"
-      w="100%"
-    >
-      <CFlex display="inline" v-if="props.job.tags_city.length" align="center">
-        <CText display="inline" v-for="(city, index) of comp.cities" :key="city"
-          ><CText mx="2" display="inline" v-if="index">▪</CText>{{ city }}</CText
-        >
-      </CFlex>
+    <div class="flex text-[#9BADB6] flex-nowrap items-center w-full">
+      <div class="inline-flex items-center" v-if="props.job.tags_city.length">
+        <p class="inline" v-for="(city, index) of comp.cities" :key="city">
+          <span class="inline mx-2" v-if="index">▪</span>
+          {{ city }}
+        </p>
+      </div>
 
-      <CText
-        display="inline"
-        v-if="job.tags_city.length && remotesAndMaybeCountries.length"
-        mx="2"
-        >▪</CText
-      >
+      <p class="inline mx-2" v-if="job.tags_city.length && remotesAndMaybeCountries.length">
+        ▪
+      </p>
 
-      <CFlex v-if="remotesAndMaybeCountries.length" display="inline" align-items="center">
-        <CText
-          display="inline"
+      <div class="inline-flex items-center" v-if="remotesAndMaybeCountries.length">
+        <p
+          class="inline"
           v-for="(country, index) in remotesAndMaybeCountries"
           :key="country"
         >
-          <CText mx="2" display="inline" v-if="index">▪</CText>{{ country }}</CText
-        >
-      </CFlex>
-    </CFlex>
-  </CFlex>
+          <span class="mx-2 inline" v-if="index">▪</span>{{ country }}
+        </p>
+      </div>
+    </div>
+  </div>
 </template>

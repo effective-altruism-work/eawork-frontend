@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { useBreakpoints } from "@vueuse/core";
-import { CFlex, CLink } from "@chakra-ui/vue-next";
 import { ref, computed } from "vue";
 import { breakpointsChakra } from "~~/src/constants";
 import urlWrap from "~~/src/utils/urlWrap";
@@ -59,25 +58,19 @@ function handleClick() {
 </script>
 
 <template>
-  <CFlex
+  <div
+    class="flex flex-col gap-3 px-2 text-sm rounded relative"
     @mouseover="isHovering = true"
     @focus="isHovering = true"
     @mouseleave="isHovering = false"
     @blur="isHovering = false"
-    direction="column"
-    gap="3"
     :bg="props.bg"
-    px="2"
-    font-size="sm"
-    border-radius="4px"
-    position="relative"
   >
-    <CLink
+    <a
+      class="flex items-center"
       :color="props.color"
       is-external
       @click="handleClick"
-      display="flex"
-      align-items="center"
       target="_blank"
       rel="noopener noreferrer"
       :href="linkArea"
@@ -89,6 +82,6 @@ function handleClick() {
         v-if="tag === 'Other policy-focused' || tag === 'Information security'"
         :area="tag"
       />
-    </CLink>
-  </CFlex>
+    </a>
+  </div>
 </template>

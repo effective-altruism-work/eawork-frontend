@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { CFlex } from "@chakra-ui/vue-next";
 import { computed, ref } from "vue";
 
 const props = defineProps<{ modelValue: boolean }>();
@@ -21,21 +20,23 @@ const value = computed({
 </script>
 
 <template>
-  <label class="chakra-checkbox" :for="state.id.value" :_hover="{}">
+  <label
+    class="group align-top cursor-pointer inline-flex items-center relative"
+    :for="state.id.value"
+    :_hover="{}"
+  >
     <input
-      class="chakra-checkbox__input"
+      class="border-0 h-[1px] w-[1px] m-[-1px] p-0 overflow-hidden whitespace-nowrap absolute"
       type="checkbox"
       v-model="value"
       :id="state.id.value"
     />
 
     <CFlex
-      class="chakra-checkbox__control"
-      :class="{ 'chakra-checkbox__control__checked': value }"
-      align-self="flex-start"
-      mt="0.25em"
+      class="group-hover:border-blue-100 self-start mt-1 w-4 border-2 border-inherit rounded-sm inline-flex items-center justify-center align-top select-none shrink-0 bg-white"
+      :class="{ 'bg-eightyk-500 border-eightyk-500 text-white': value }"
     >
-      <CFlex align="center" h="100%" w="100%" transform="none" justify="center">
+      <div class="flex items-center h-full w-full justify-center">
         <svg
           viewBox="0 0 12 10"
           style="
@@ -49,68 +50,11 @@ const value = computed({
         >
           <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
         </svg>
-      </CFlex>
+      </div>
     </CFlex>
 
-    <span class="chakra-checkbox__label">
+    <span class="margin-left-0.5 select-none">
       <slot></slot>
     </span>
   </label>
 </template>
-
-<style lang="scss" scoped>
-.chakra-checkbox {
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  vertical-align: top;
-  position: relative;
-
-  &:hover {
-    .chakra-checkbox__control {
-      border-color: var(--colors-blue-100);
-    }
-  }
-
-  .chakra-checkbox__input {
-    border: 0;
-    clip: rect(0px, 0px, 0px, 0px);
-    height: 1px;
-    width: 1px;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    white-space: nowrap;
-    position: absolute;
-  }
-
-  .chakra-checkbox__control {
-    margin-top: 5px;
-    width: var(--sizes-4);
-    transition: box-shadow var(--transition-duration-normal);
-    border: 2px solid;
-    border-color: inherit;
-    border-radius: var(--radii-sm);
-    color: var(--colors-white);
-    height: var(--sizes-4);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    vertical-align: top;
-    user-select: none;
-    flex-shrink: 0;
-    background: white;
-
-    &.chakra-checkbox__control__checked {
-      background: var(--colors-blue-500) !important;
-      border-color: var(--colors-blue-500);
-      color: white;
-    }
-  }
-  .chakra-checkbox__label {
-    margin-inline-start: 0.6rem;
-    user-select: none;
-    font-size: var(--chakra-fontSizes-md);
-  }
-}
-</style>

@@ -1,24 +1,14 @@
 <script setup lang="ts">
-import { CLink } from "@chakra-ui/vue-next";
 import EightyKLink from "~/components/eightyk/eightyk-link.vue";
 const props = defineProps<{ href: string; external?: boolean }>();
 const { href, external } = props;
 </script>
 
 <template>
-  <CLink
-    v-if="external"
-    color="lightest-gray"
-    is-external
-    :_hover="{ textDecoration: 'underline' }"
-    :href="href"
+  <a class="text-lightest-gray hover:underline" v-if="external" is-external :href="href"
     ><slot
-  /></CLink>
-  <EightyKLink
-    v-else
-    color="lightest-gray"
-    :_hover="{ textDecoration: 'underline' }"
-    :path="href"
+  /></a>
+  <EightyKLink v-else :class="'text-lightest-gray hover:underline'" :path="href"
     ><slot
   /></EightyKLink>
 </template>

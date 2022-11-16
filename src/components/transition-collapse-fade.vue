@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import CollapseTransition from "@ivanv/vue-collapse-transition/src/CollapseTransition.vue";
-import { CBox } from "@chakra-ui/vue-next";
 
 const props = defineProps<{
   isVisible: boolean;
@@ -10,13 +9,13 @@ const props = defineProps<{
 
 <template>
   <CollapseTransition :duration="Number(props.durationMs) ?? 200">
-    <CBox v-show="props.isVisible">
+    <div v-show="props.isVisible">
       <Transition name="fade">
-        <CBox v-if="props.isVisible">
+        <div v-if="props.isVisible">
           <slot></slot>
-        </CBox>
+        </div>
       </Transition>
-    </CBox>
+    </div>
   </CollapseTransition>
 </template>
 

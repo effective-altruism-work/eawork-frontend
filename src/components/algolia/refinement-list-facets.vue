@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { CText, CBadge, chakra, CBox } from "@chakra-ui/vue-next";
 import Checkbox from "~/components/chakra/checkbox.vue";
 import FacetHoverText from "~/components/facet-hover-text.vue";
 import { AlgoliaFilterItem } from "~/utils/types";
 import { OhVueIcon } from "oh-vue-icons";
 import { AisHighlight } from "vue-instantsearch/vue3/es";
 import labelTag from "~/utils/labelTag";
+import Badge from "../generics/badge.vue";
 
 const props = defineProps<{
   attribute?: string;
@@ -15,59 +15,38 @@ const props = defineProps<{
   countBg?: string;
   // searchStatement?: string;
 }>();
-
-const isHovering = ref("");
 </script>
 
 <template>
-  <chakra.li v-for="item in props.items" :key="item.value" position="relative" mt="1">
+  <li class="relative mt-1" v-for="item in props.items" :key="item.value">
     <Checkbox
       :model-value="item.isRefined"
       @update:model-value="() => props.refine(item.value)"
     >
-      <CText mt="1px">
-        <CText display="inline" :_hover="{ color: 'blue.500' }">
+      <div class="mt-1">
+        <p class="inline hover:text-blue-500">
           <ais-highlight
             v-if="props.searchable && item.value != 'is_recommended_org'"
             attribute="item"
             :hit="item"
           />
           <span v-else>{{ labelTag(item.label) }}</span>
-        </CText>
-        <span
-          @mouseover="isHovering = item.value"
-          @focus="isHovering = item.value"
-          @mouseleave="isHovering = ''"
-          @blur="isHovering = ''"
-        >
+        </p>
+        <span class="group">
           <OhVueIcon
-            v-if="item?.hover"
+            class="hidden group-hover:block scale-75 ml-1 text-[#aaaaaa] opacity-60 relative"
             name="io-information-circle"
-            scale="0.8"
-            ml="1"
-            color="#aaaaaa"
-            style="opacity: 0.6"
-            position="relative"
           />
           <FacetHoverText
-            v-if="item?.hover && isHovering === item.value"
+            class="hidden group-hover:block"
+            v-if="item?.hover"
             :area="item.value"
           />
         </span>
-        <CBadge
-          ml="2"
-          mt="0"
-          py="2px"
-          px="4px"
-          font-weight="normal"
-          font-size="xs"
-          color="gray.400"
-          border-radius="4px"
-          :bg="props.countBg ?? 'white'"
-        >
+        <Badge class="ml-2 mt-0 py-0.5 px-1 text-xs text-gray-400 rounded bg-white">
           {{ item.count.toLocaleString() }}
-        </CBadge>
-      </CText>
+        </Badge>
+      </div>
     </Checkbox>
-  </chakra.li>
+  </li>
 </template>

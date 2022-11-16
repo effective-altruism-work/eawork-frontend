@@ -1,64 +1,29 @@
 <script setup lang="ts">
-import { chakra, CFlex, CVStack, CLink, CBox, CText, CHeading } from "@chakra-ui/vue-next";
 import FooterImageLink from "./footer-image-link.vue";
 import FooterBoxLink from "./footer-box-link.vue";
-import { breakpointsChakra } from "~/constants";
 import EightyKLink from "./eightyk-link.vue";
-
-const breakpoints = useBreakpoints(breakpointsChakra);
 </script>
 
 <template>
-  <chakra.footer
+  <footer
+    class="flex flex-col justify-center items-center bg-gray-lightest"
     id="footer"
-    color="lightest-gray"
-    style="
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    "
     role="contentinfo"
   >
-    <CFlex
-      w="100%"
-      justify-content="center"
-      align-items="center"
-      background-color="dark-gray"
-      :py="{ base: 5, lg: 10 }"
-    >
-      <CFlex
-        justify-content="center"
-        align-items="center"
-        flex-direction="column"
-        w="100%"
-        max-w="1050px"
-      >
-        <CFlex
-          mb="4"
-          :font-size="{ base: '14.875px', lg: '17.5px' }"
-          w="100%"
-          class="navigation-footer"
-        >
-          <CBox
-            background-color="mid-gray"
-            p="4"
-            :m="{ base: 2, lg: 0 }"
-            rounded="lg"
-            w="100%"
-            mb="4"
-            class="bg-gray-dark border-radius-small padding-left padding-right"
-          >
-            <CFlex
-              w="100%"
-              :flex-direction="{ base: 'column', lg: 'row' }"
-              justify-content="between"
-            >
-              <CBox :pr="{ base: 0, lg: 12 }" :w="{ base: '100%', lg: '33%' }">
-                <CHeading :font-size="{ base: 'md', lg: 'lg' }" color="light-gray"
-                  >Our research</CHeading
+    <div class="flex w-full justify-center items-center bg-gray-dark py-5 lg:py-10">
+      <div class="flex justify-center items-center flex-col w-full max-w-[1050px]">
+        <div class="flex mb-4 text-[14.875px] lg:text-[17.5px] w-full">
+          <div class="bg-gray-mid p-4 m-2 lg:m-0 rounded-lg w-full mb-4">
+            <div class="flex w-full flex-col lg:flex-row justify-between">
+              <div class="pr-0 lg:pr-12 w-full lg:w-1/3">
+                <h3
+                  class="lg:text-lg text-gray-light"
+                  :font-size="{ base: 'md', lg: 'lg' }"
+                  color="light-gray"
                 >
-                <chakra.ul width="100%" color="lightest-gray">
+                  Our research
+                </h3>
+                <ul class="w-full text-gray-lightest">
                   <li>
                     <FooterBoxLink href="/key-ideas/">Overview: Key ideas</FooterBoxLink>
                   </li>
@@ -84,16 +49,11 @@ const breakpoints = useBreakpoints(breakpointsChakra);
                     <FooterBoxLink href="/career-guide/">Career guide (2017)</FooterBoxLink>
                   </li>
                   <li><FooterBoxLink href="/research/">All our research</FooterBoxLink></li>
-                </chakra.ul>
-              </CBox>
-              <CBox :w="{ base: '100%', lg: '33%' }" :pr="{ base: 0, lg: 12 }">
-                <CHeading
-                  :mt="{ base: 4, lg: 0 }"
-                  :font-size="{ base: 'md', lg: 'lg' }"
-                  color="light-gray"
-                  >Take action</CHeading
-                >
-                <chakra.ul width="100%" color="lightest-gray">
+                </ul>
+              </div>
+              <div class="w-full lg:w-1/3 pr-0 lg:pr-12">
+                <h3 class="mt-4 lg:mt-0 lg:text-lg text-gray-light">Take action</h3>
+                <ul class="w-full text-gray-lightest">
                   <li>
                     <FooterBoxLink href="/career-planning">Plan your career</FooterBoxLink>
                   </li>
@@ -106,14 +66,9 @@ const breakpoints = useBreakpoints(breakpointsChakra);
                   <li>
                     <FooterBoxLink href="/community">Join our community</FooterBoxLink>
                   </li>
-                </chakra.ul>
-                <CHeading
-                  :mt="{ base: 4, lg: 0 }"
-                  :font-size="{ base: 'md', lg: 'lg' }"
-                  color="light-gray"
-                  >Follow us</CHeading
-                >
-                <chakra.ul width="100%" color="lightest-gray">
+                </ul>
+                <h3 class="mt-4 lg:mt-0 lg:text-lg text-gray-light">Follow us</h3>
+                <ul class="w-full text-gray-lightest">
                   <li>
                     <FooterBoxLink href="/podcast">Subscribe to our podcast</FooterBoxLink>
                   </li>
@@ -142,16 +97,11 @@ const breakpoints = useBreakpoints(breakpointsChakra);
                       >Follow us on YouTube</FooterBoxLink
                     >
                   </li>
-                </chakra.ul>
-              </CBox>
-              <CBox :pr="{ base: 0, lg: 12 }" :w="{ base: '100%', lg: '33%' }">
-                <CHeading
-                  :mt="{ base: 4, lg: 0 }"
-                  :font-size="{ base: 'md', lg: 'lg' }"
-                  color="light-gray"
-                  >About us</CHeading
-                >
-                <chakra.ul color="lightest-gray">
+                </ul>
+              </div>
+              <div class="lg:pr-12 w-full lg:w-1/3">
+                <h3 class="mt-4 lg:mt-0 lg:text-lg text-gray-light">About us</h3>
+                <ul class="text-gray-lightest">
                   <li><FooterBoxLink href="/about">Why 80,000 Hours?</FooterBoxLink></li>
                   <li>
                     <FooterBoxLink href="/about/meet-the-team">Meet the team</FooterBoxLink>
@@ -167,25 +117,16 @@ const breakpoints = useBreakpoints(breakpointsChakra);
                       >Our mistakes</FooterBoxLink
                     >
                   </li>
-                </chakra.ul>
-              </CBox>
-            </CFlex>
-          </CBox>
-        </CFlex>
-        <CFlex
-          :px="{ base: 4, lg: 0 }"
-          color="light-gray"
-          :flex-dir="{ base: 'column', lg: 'row' }"
-          flex-wrap="nowrap"
-        >
-          <CBox :width="{ base: '100%', lg: '66%' }" :pr="{ base: 0, lg: 8 }">
-            <CFlex :flex-dir="{ base: 'column', lg: 'row' }" mb="4">
-              <CBox
-                :width="{ base: '100%', lg: '67%' }"
-                :pr="{ base: 0, lg: 7 }"
-                :pb="{ base: 4, lg: 0 }"
-              >
-                <CFlex mb="4">
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex px-4 lg:px-0 text-gray-light flex-col lg:flex-row flex-nowrap">
+          <div class="w-full lg:w-2/3 pr-0 lg:pr-8">
+            <div class="flex flex-col lg:flex-row mb-4">
+              <div class="w-full lg-w-2/3 lg:pr-7 pb-4 lg:pb-0">
+                <div class="flex mb-4">
                   <FooterImageLink
                     href="https://www.ox.ac.uk/"
                     alt="Oxford-fb"
@@ -205,16 +146,16 @@ const breakpoints = useBreakpoints(breakpointsChakra);
                     src="https://80000hours.org/wp-content/themes/80000hours/assets/img/footer/gpi-logo.gif"
                     src2="https://80000hours.org/wp-content/themes/80000hours/assets/img/footer/gpi-logo_2x.gif"
                   />
-                </CFlex>
-                <CBox>
-                  <CText font-size="13px" color="#8e9092">
+                </div>
+                <div>
+                  <p class="text-sm text-[#8e9092]">
                     We're affiliated with the Future of Humanity Institute and the Global
                     Priorities Institute at the University of Oxford.
-                  </CText>
-                </CBox>
-              </CBox>
-              <CBox :width="{ base: '100%', lg: '33%' }">
-                <CFlex mb="4">
+                  </p>
+                </div>
+              </div>
+              <div class="w-full lg:w-1/3">
+                <div class="flex mb-4">
                   <FooterImageLink
                     href="https://centreforeffectivealtruism.org/"
                     alt="CEA
@@ -228,41 +169,35 @@ const breakpoints = useBreakpoints(breakpointsChakra);
                     src="https://80000hours.org/wp-content/themes/80000hours/assets/img/footer/gwwc-logo.png"
                     src2="https://80000hours.org/wp-content/themes/80000hours/assets/img/footer/gwwc-logo_2x.png"
                   />
-                </CFlex>
+                </div>
 
-                <CBox class="col-md-5">
-                  <CText font-size="13px" color="#8e9092">
+                <div>
+                  <p class="text-sm text-[#9e9092]">
                     We work closely with the Centre for Effective Altruism and Giving What We
                     Can.
-                  </CText>
-                </CBox>
-              </CBox>
-            </CFlex>
-            <CFlex font-size="13px" class="row-about footer__about">
-              <CBox class="col-sm-12">
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="flex text-sm">
+              <div>
                 <p>
                   80,000 Hours is a project of the
-                  <CLink is-external href="http://ev.org"
-                    >Effective Ventures Foundation</CLink
-                  >
+                  <a href="http://ev.org">Effective Ventures Foundation</a>
                   (England and Wales registered charity number 1149828 and registered company
                   number 07962181) with a registered 501(c)(3) Exempt Organization in the USA
                   (Centre for Effective Altruism USA Inc., EIN 47-1988398).
                 </p>
-              </CBox>
-            </CFlex>
-          </CBox>
-          <CBox
-            :width="{ base: '100%', lg: '33%' }"
-            font-size="13px"
-            class="col-md-4 smallest footer__disclaimer"
-          >
-            <CText mb="4">
+              </div>
+            </div>
+          </div>
+          <div class="w-full lg:w-1/3 text-sm">
+            <p class="mb-4">
               Please
               <EightyKLink path="/about/contact/">contact us</EightyKLink>
               to suggest ideas, improvements, or corrections.
-            </CText>
-            <CText mb="4">
+            </p>
+            <p class="mb-4">
               We do our best to provide useful information, but how you use the information
               is up to you. We don’t take responsibility for any loss that results from the
               use of information on the site. Please consult our&nbsp;<EightyKLink
@@ -271,32 +206,21 @@ const breakpoints = useBreakpoints(breakpointsChakra);
               >
               and
               <EightyKLink path="/about/privacy-policy">privacy policy</EightyKLink>.
-            </CText>
-            <CText mb="4">
+            </p>
+            <p class="mb-4">
               © 2021 – all rights reserved. Please
               <EightyKLink path="/about/contact">contact us</EightyKLink>
               if you wish to redistribute, translate, or adapt this work.
-            </CText>
-          </CBox>
-        </CFlex>
-      </CFlex>
-    </CFlex>
-    <CFlex
-      bg="white"
-      justify-content="center"
-      align-items="center"
-      py="30px"
-      :px="{ base: 2, lg: 0 }"
-      :height="{ lg: '60px' }"
-      box-sizing="content-box"
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex bg-white justify-center items-center py-[30px] px-2 lg:px-0 lg:h-[60px] box-content"
     >
-      <CFlex
-        :flex-wrap="{ base: 'wrap', lg: 'nowrap' }"
-        justify-content="center"
-        :gap="{ base: 8, lg: 12 }"
-      >
-        <CLink
-          is-external
+      <div class="flex flex-wrap lg:flex-nowrap justify-center gap-8 lg:gap-12">
+        <a
           href="https://www.economist.com/international/2018/05/31/to-help-save-the-world-become-a-banker-not-a-doctor"
           title="The Economist coverage of 80,000 Hours"
         >
@@ -324,9 +248,8 @@ const breakpoints = useBreakpoints(breakpointsChakra);
               https://80000hours.org/wp-content/themes/80000hours/assets/img/footer/economist-logo_2x.gif?v=1 2x
             "
           />
-        </CLink>
-        <CLink
-          is-external
+        </a>
+        <a
           href="https://www.ft.com/content/72d90f7a-3c20-11e5-8613-07d16aad2152"
           title="FT coverage of 80,000 Hours"
         >
@@ -355,9 +278,8 @@ const breakpoints = useBreakpoints(breakpointsChakra);
               https://80000hours.org/wp-content/themes/80000hours/assets/img/footer/ft-logo_2x.gif?v=1 2x
             "
           />
-        </CLink>
-        <CLink
-          is-external
+        </a>
+        <a
           href="https://www.theguardian.com/world/2015/sep/22/extreme-altruism-should-you-care-for-strangers-as-much-as-family"
           title="The Guardian coverage of 80,000 Hours"
         >
@@ -386,9 +308,8 @@ const breakpoints = useBreakpoints(breakpointsChakra);
               https://80000hours.org/wp-content/themes/80000hours/assets/img/footer/guardian-logo_2x.gif 2x
             "
           />
-        </CLink>
-        <CLink
-          is-external
+        </a>
+        <a
           href="https://www.ted.com/talks/will_macaskill_what_are_the_most_important_moral_problems_of_our_time"
           title="TED coverage of 80,000 Hours"
         >
@@ -417,9 +338,8 @@ const breakpoints = useBreakpoints(breakpointsChakra);
               https://80000hours.org/wp-content/themes/80000hours/assets/img/footer/ted-logo_2x.gif 2x
             "
           />
-        </CLink>
-        <CLink
-          is-external
+        </a>
+        <a
           href="https://www.vox.com/future-perfect/2018/11/28/18114601/future-perfect-podcast-career-choice"
           title="Vox coverage of 80,000 Hours"
         >
@@ -448,9 +368,8 @@ const breakpoints = useBreakpoints(breakpointsChakra);
               https://80000hours.org/wp-content/themes/80000hours/assets/img/footer/vox-logo_2x.gif 2x
             "
           />
-        </CLink>
-        <CLink
-          is-external
+        </a>
+        <a
           href="https://blog.ycombinator.com/80-000-hours-yc-s15-helps-top-graduates-choose-careers-that-matter/"
           title="Y Combinator coverage of 80,000 Hours"
         >
@@ -479,8 +398,8 @@ const breakpoints = useBreakpoints(breakpointsChakra);
               https://80000hours.org/wp-content/themes/80000hours/assets/img/footer/yc-logo_2x.gif 2x
             "
           />
-        </CLink>
-      </CFlex>
-    </CFlex>
-  </chakra.footer>
+        </a>
+      </div>
+    </div>
+  </footer>
 </template>

@@ -5,13 +5,12 @@ import { useBreakpoints, useThrottleFn, useElementVisibility } from "@vueuse/cor
 import algoliasearch from "algoliasearch";
 import { AisInstantSearch, AisInfiniteHits } from "vue-instantsearch/vue3/es";
 import { onBeforeMount, onMounted, ref, watch, onBeforeUnmount } from "vue";
-// import CurrentRefinements from "~/components/algolia/current-refinements.vue";
-// import Refinements from "~/components/algolia/refinements.vue";
-// import BtnJobsAlert from "~~/src/components/alerts-button.vue";
-// import SearchBox from "~/components/algolia/search-box.vue";
-// import FiltersFooter from "~/components/eightyk/filters-footer.vue";
-// import JobCardSkeleton from "~/components/card/job-card-skeleton.vue";
-// import JobCard from "~/components/card/job-card.vue";
+import CurrentRefinements from "~/components/algolia/current-refinements.vue";
+import Refinements from "~/components/algolia/refinements.vue";
+import SearchBox from "~/components/algolia/search-box.vue";
+import FiltersFooter from "~/components/eightyk/filters-footer.vue";
+import JobCardSkeleton from "~/components/card/job-card-skeleton.vue";
+import JobCard from "~/components/card/job-card.vue";
 import { useComp, useHooks } from "~/utils/structs";
 import { tracking } from "~/utils/tracking";
 import queryToJson from "~/utils/queryToJson";
@@ -19,7 +18,8 @@ import { JobAlgolia } from "~/utils/types";
 import riveted from "~/utils/riveted";
 import { breakpointsChakra } from "../constants";
 import log from "../utils/log";
-// import InternalTrigger from "~/components/internal-trigger.vue";
+import InternalTrigger from "~/components/internal-trigger.vue";
+import Alerts from "../components/alerts.vue";
 
 const breakpoints = useBreakpoints(breakpointsChakra);
 
@@ -236,7 +236,7 @@ const routing = { stateMapping };
                     sendEvent: (x: any) => void,
                   }"
                 >
-                  <!-- <JobCard
+                  <JobCard
                     v-if="state.jobFromUrlQuery.value && !state.queryJson.value"
                     :job="state.jobFromUrlQuery.value"
                     :jobFromURLQuery="true"
@@ -255,8 +255,8 @@ const routing = { stateMapping };
                         }
                       }
                     "
-                  /> -->
-                  <!-- <JobCard
+                  />
+                  <JobCard
                     v-for="job in items"
                     :job="job"
                     :is-hidden="
@@ -273,18 +273,18 @@ const routing = { stateMapping };
                         }
                       }
                     "
-                  /> -->
+                  />
 
                   <div ref="target" v-if="!isLastPage">
-                    <!-- <JobCardSkeleton />
                     <JobCardSkeleton />
-                    <JobCardSkeleton /> -->
+                    <JobCardSkeleton />
+                    <JobCardSkeleton />
                   </div>
                   <!-- this is a hack to trigger refineNext, because useElementVisibility doesn't include a way to trigger a callback -->
-                  <!-- <InternalTrigger
+                  <InternalTrigger
                     v-if="targetIsVisible"
                     :fn="() => throttleFn(refineNext)"
-                  /> -->
+                  />
                 </template>
 
                 <!-- this overrides the 'show more results' button that pops up -->
@@ -301,17 +301,17 @@ const routing = { stateMapping };
           :min-w="comp.filtersW"
           :max-w="comp.filtersW"
         >
-          <!-- <SearchBox :is-show-results-count="true" />
-          <CurrentRefinements /> -->
+          <SearchBox :is-show-results-count="true" />
+          <CurrentRefinements />
 
           <div class="mb-7">
-            <!-- <LazyAlerts
+            <LazyAlerts
               :total-filters-length="totalFiltersLength"
               :query-json="state.queryJson.value"
-            /> -->
+            />
           </div>
           <Refinements :index="state.searchIndex" />
-          <!-- <FiltersFooter /> -->
+          <FiltersFooter />
         </div>
 
         <!-- mobile -->
@@ -326,12 +326,3 @@ const routing = { stateMapping };
     </AisInstantSearch>
   </div>
 </template>
-<!-- 
-<style lang="scss">
-@import "~/styles/chakra-ui.scss";
-
-html,
-html.dark {
-  background: #f4f6f7;
-}
-</style> -->

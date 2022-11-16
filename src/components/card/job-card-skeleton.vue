@@ -4,24 +4,20 @@ import Skeleton from "~/components/chakra/skeleton.vue";
 </script>
 
 <template>
-  <!-- <CBox mb="6" bg="white" pl="6" pt="6" pb="6" pr="5" border-radius="md">
-    <CBox w="100%">
-      <CFlex w="100%">
+  <div class="mb-6 bg-white p-6 pr-5 rounded">
+    <div class="w-full">
+      <div class="flex w-full">
         <Skeleton w="62px" h="62px" />
 
-        <CFlex ml="3" gap="3" justify="space-between" flex="1" direction="column">
+        <div class="flex ml-3 gap-3 justify-between flex-1 flex-col">
           <Skeleton w="350px" h="18px" />
           <Skeleton w="125px" h="18px" />
-          <CFlex justify="space-between" mb="1" w="100%">
+          <div class="flex justify-between mb-1 w-full">
             <Skeleton w="100px" h="18px" />
             <Skeleton w="80px" h="18px" />
-          </CFlex>
-        </CFlex>
-      </CFlex>
-    </CBox>
-  </CBox> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
-
-<!-- <style lang="scss">
-@import "~/styles/chakra-ui.scss";
-</style> -->

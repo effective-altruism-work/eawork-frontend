@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useHead, useRuntimeConfig } from "#app";
 import { ref, onMounted } from "vue";
-// import { CContainer, CFlex, CBox } from "@chakra-ui/vue-next";
 import Menu from "~/components/eightyk/menu.vue";
+import EightykFilter from "~/components/eightyk/eightyk-footer.vue";
 
 const state = {
   config: useRuntimeConfig(),
@@ -63,14 +63,12 @@ useHead({
 
 <template>
   <div class="flex flex-col overflow-x-hidden">
-    <p>yo</p>
     <Menu />
     <div class="bg-[#F4F6F7]">
-      <div class="max-w-7xl px-3 lg:px-4">
+      <div class="max-w-8xl px-3 lg:px-4">
         <NuxtPage />
       </div>
     </div>
-    <!-- 
-    <LazyEightykFooter v-if="show" /> -->
+    <LazyEightykFooter v-if="show" />
   </div>
 </template>

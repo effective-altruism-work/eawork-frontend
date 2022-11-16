@@ -1,17 +1,5 @@
-<script lang="ts">
-// import { CBox } from "@chakra-ui/vue-next";
-// import { vueThemingProps } from "@chakra-ui/vue-utils";
-
-// export default {
-//   props: vueThemingProps,
-//   components: {
-//     CBox,
-//   },
-// };
-</script>
-
 <template>
-  <!-- <CBox class="chakra-skeleton" v-bind="$props" /> -->
+  <div class="chakra-skeleton rounded border-gray-100 bg-gray-300 animate-pulse" />
 </template>
 
 <!-- <style lang="scss" scoped>

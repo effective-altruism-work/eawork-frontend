@@ -1,23 +1,16 @@
 <script setup lang="ts">
-import { CBox, CLink } from "@chakra-ui/vue-next";
-
 const props = defineProps<{
   companyName: string;
 }>();
 </script>
 <template>
-  <CBox position="absolute" bottom="0" left="0">
-    <CBox
-      margin="4"
-      padding="6"
-      background-color="rgba(255, 255, 255, 0.95)"
-      width="350px"
-      border-radius="md"
+  <div class="absolute bottom-0 left-0">
+    <div
+      class="m-4 p-6 opacity-95 w-[350px] rounded shadow"
       shadow="inset 0 0 0 1px #E1E6EA"
     >
       This is one of our
-      <CLink href="https://80000hours.org/job-board/top-orgs/"
-        >top recommended organisations</CLink
+      <a href="https://80000hours.org/job-board/top-orgs/">top recommended organisations</a
       >.<template v-if="props.companyName === 'Alphabet, DeepMind'">
         We're only confident about recommending DeepMind roles working specifically on
         safety, ethics, policy, and security issues.</template
@@ -28,16 +21,16 @@ const props = defineProps<{
       >
       <template v-else-if="props.companyName === 'Malaria Consortium'">
         GiveWell recommend their seasonal malaria chemoprevention program as
-        <CLink href="https://www.givewell.org/charities/top-charities">
-          one of their top-rated charities</CLink
+        <a href="https://www.givewell.org/charities/top-charities">
+          one of their top-rated charities</a
         >.
       </template>
       <template v-else-if="props.companyName === 'Helen Keller International'">
         GiveWell recommend their vitamin A supplementation program as
-        <CLink href="https://www.givewell.org/charities/top-charities">
-          one of their top-rated charities</CLink
+        <a href="https://www.givewell.org/charities/top-charities">
+          one of their top-rated charities</a
         >.
       </template>
-    </CBox>
-  </CBox>
+    </div>
+  </div>
 </template>

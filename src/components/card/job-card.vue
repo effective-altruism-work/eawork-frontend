@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
-import { CFlex, CBox, CButton, CHStack, CLink, CIcon, CText } from "@chakra-ui/vue-next";
 import { useBreakpoints } from "@vueuse/core";
 import { format } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
@@ -137,7 +136,8 @@ function onMouseUp(e) {
 <template>
   <!-- CBox won't cooperate with refs, thus the div wrapper -->
   <div ref="cardRef">
-    <CBox
+    <div
+      class="mb-3 bg-white p-4 lg:p-6 rounded-xl hover:cursor-pointer transition-shadow"
       v-if="!props.isHidden"
       @mousedown="onMouseDown"
       @mouseup="onMouseUp"
@@ -145,99 +145,78 @@ function onMouseUp(e) {
       @focus="state.isHovering.value = true"
       @mouseleave="state.isHovering.value = false"
       @blur="state.isHovering.value = false"
-      mb="3"
-      bg="white"
-      :p="[4, null, 6]"
-      border-radius="12px"
       :_hover="{
-        cursor: 'pointer',
         boxShadow: state.isAccordionOpen.value ? comp.activeShadow : comp.activeShadowBorder,
       }"
       :box-shadow="state.isAccordionOpen.value ? comp.activeShadow : 0"
-      transition="box-shadow 0.2s"
     >
-      <CBox>
-        <CFlex pos="relative">
-          <chakra.img
+      <div>
+        <div class="flex relative">
+          <img
+            class="bg-white rounded"
             v-if="props.job"
             :alt="`${job.company_name} logo`"
             :src="job.company_logo_url"
-            w="60px"
+            width="60"
+            height="60"
             min-w="60px"
-            h="60px"
-            border-radius="4px"
-            bg="white"
             loading="lazy"
           />
 
-          <CFlex ml="3" justify="center" direction="column" gap="3">
-            <CText
-              font-weight="bold"
-              :line-height="[1.3, null, 'none']"
-              :font-size="{ lg: 'xl' }"
-            >
+          <div class="flex ml-3 justify-center flex-col gap-3">
+            <p class="font-bold leading-tight lg:leading-none lg:text-xl">
               <span v-if="props.isMissingAlgoliaContext">{{ job.title }}</span>
               <ais-snippet v-else :hit="job" attribute="title" />
-            </CText>
+            </p>
 
-            <CText
-              :line-height="[1.3, null, 'none']"
-              position="relative"
+            <div
+              class="leadning-tight lg:leading-none relative text-sm lg:text-md"
               :left="job?.company_is_recommended_org ? '-3px' : ''"
-              :font-size="{ base: 'sm', lg: 'md' }"
             >
-              <CBox
+              <div
+                class="relative inline"
                 v-if="job?.company_is_recommended_org"
                 @mouseover="state.isStarHovering.value = true"
                 @focus="state.isStarHovering.value = true"
                 @mouseleave="state.isStarHovering.value = false"
                 @blur="state.isStarHovering.value = false"
-                position="relative"
-                display="inline"
               >
                 <OhVueIcon
                   name="md-starrate-round"
                   scale="1.1"
-                  style="margin-bottom: 1px; color: #9badb6; margin-right: 2px"
+                  class="mb-[1px] mr-0.5 text-[#9badb6]"
                 />
                 <JobHoverText
                   v-if="state.isStarHovering.value"
                   :companyName="job.company_name"
                 />
-              </CBox>
+              </div>
               <!-- huh -->
               <span v-if="props.isMissingAlgoliaContext">{{ job.company_name }}</span>
               <ais-snippet v-else :hit="job" attribute="company_name" />
-            </CText>
-          </CFlex>
+            </div>
+          </div>
 
-          <CIcon
+          <OhVueIcon
+            class="text-gray-400 top-0 right-0 absolute"
             v-show="state.isHovering.value"
             name="chevron-down"
-            pos="absolute"
-            right="0"
-            top="0"
             :transform="state.isAccordionOpen.value ? 'rotate(180deg)' : ''"
-            color="gray.400"
             aria-label="open"
           />
-        </CFlex>
+        </div>
 
         <TransitionCollapseFade :is-visible="!state.isAccordionOpen.value" duration-ms="25">
-          <CFlex
-            :ml="{ lg: '60px' }"
-            :pl="{ lg: 3 }"
-            mt="3"
+          <div
+            class="flex lg:pl-3 lg:ml-[60px] mt-3 items-center text-xs lg:text-sm"
             :justify="comp.isHasLocation ? 'space-between' : 'flex-end'"
-            align="center"
-            :font-size="{ base: 'xs', lg: 'sm' }"
           >
             <JobCardLocationShort :job="props.job" />
 
-            <CText color="#9BADB6">
+            <p class="text=[#9BADB6]">
               {{ timeSincePosting }}
-            </CText>
-          </CFlex>
+            </p>
+          </div>
         </TransitionCollapseFade>
 
         <TransitionCollapseFade
@@ -249,98 +228,89 @@ function onMouseUp(e) {
         </TransitionCollapseFade>
 
         <TransitionCollapseFade :is-visible="state.isAccordionOpen.value" duration-ms="300">
-          <CBox mt="4" font-size="15px">
-            <CFlex
-              mt="3"
+          <div class="mt-4 text-base">
+            <div
+              class="flex mt-3 text-sm items-start lg:items-center"
               :justify="comp.isHasLocation ? 'space-between' : 'flex-end'"
-              :align="{ base: 'flex-start', lg: 'center' }"
-              font-size="sm"
             >
-              <CHStack>
-                <CIcon name="fa-map-marker-alt" fill="#9BADB6" mt="3px" />
-                <CFlex
-                  :direction="{ base: 'column', lg: 'row' }"
-                  :align="{ lg: 'center' }"
-                  :gap="{ base: 'px', lg: 3 }"
-                >
-                  <CFlex
+              <div>
+                <OhVueIcon name="fa-map-marker-alt" fill="#9BADB6" class="mt-[3px]" />
+                <div class="flex flex-col lg:flex-row items-center lg:gap-3">
+                  <div
+                    class="flex items-center gap-3"
                     v-if="job.tags_city.length"
                     v-for="(city, index) in job.tags_city"
                     :key="city"
-                    align="center"
-                    gap="3"
                   >
-                    <CBox
-                      :display="{ base: 'none', lg: 'block' }"
+                    <div
+                      class="hidden lg:block w-[3px] h-[3px] bg-gray-300"
                       v-if="index !== 0"
-                      w="3px"
-                      h="3px"
-                      bg="gray.300"
                     />
 
-                    <CFlex>{{ city }}</CFlex>
-                  </CFlex>
+                    <div class="flex">{{ city }}</div>
+                  </div>
 
-                  <CBox
-                    :display="{ base: 'none', lg: 'block' }"
+                  <div
+                    class="hidden lg:block w-[3px] h-[3px] bg-gray-300"
                     v-if="job.tags_city.length && remotesAndMaybeCountries.length"
-                    w="3px"
-                    h="3px"
-                    bg="gray.300"
                   />
                   <!-- v-if="!job.tags_city.length && countriesWithRemotes.length > 0" -->
 
-                  <CFlex
+                  <div
+                    class="flex"
                     v-if="remotesAndMaybeCountries.length"
                     v-for="(country, index) in remotesAndMaybeCountries"
                     :key="country"
                   >
-                    <CFlex align="center" gap="3" v-if="country !== strings.remoteLiteral">
-                      <CBox
-                        :display="{ base: 'none', lg: 'block' }"
+                    <div
+                      class="flex items-center gap-3"
+                      v-if="country !== strings.remoteLiteral"
+                    >
+                      <div
+                        class="hidden lg:block w-[3px] h-[3px] bg-gray-300"
                         v-if="index !== 0"
-                        w="3px"
-                        h="3px"
-                        bg="gray.300"
                       />
 
-                      <CFlex>{{ country }}</CFlex>
-                    </CFlex>
-                  </CFlex>
-                </CFlex>
-              </CHStack>
+                      <div class="flex">{{ country }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-              <CText color="#9BADB6">
+              <p class="text-[#9BADB6]">
                 {{ timeSincePosting }}
-              </CText>
-            </CFlex>
+              </p>
+            </div>
 
             <JobCardTags :job="props.job" />
 
-            <CBox mt="4">
-              <CText color="gray.400" font-size="sm">DESCRIPTION</CText>
-              <CText mt="2" v-html="job.description_short + ' [...]'" />
-            </CBox>
+            <div class="mt-4" mt="4">
+              <p class="text-gray-400 text-sm">DESCRIPTION</p>
+              <p class="mt-2" v-html="job.description_short + ' [...]'" />
+            </div>
 
-            <CBox mt="4">
-              <CText color="gray.400" font-size="sm">APPLICATIONS CLOSE</CText>
-              <CText mt="2">
+            <div class="mt-4">
+              <p class="text-gray-400 text-sm">APPLICATIONS CLOSE</p>
+              <p class="mt-2">
                 {{
                   job.closes_at
                     ? format(new Date(props.job.closes_at * 1000), "do MMMM yyyy")
                     : "Rolling applications"
                 }}
-              </CText>
-            </CBox>
+              </p>
+            </div>
 
-            <CBox :mt="4 - 1" v-if="job.company_description">
-              <CText color="gray.400" font-size="sm">ABOUT THIS ORGANISATION</CText>
-              <CText mt="2" v-html="job.company_description" />
-            </CBox>
+            <div class="mt-3" v-if="job.company_description">
+              <p class="text-gray-400 text-sm">ABOUT THIS ORGANISATION</p>
+              <p class="mt-2" v-html="job.company_description" />
+            </div>
 
-            <CFlex :mt="job.company_description ? 4 : 3" align="baseline" gap="4">
-              <CText font-size="sm" color="gray.400">LINKS</CText>
-              <CLink
+            <div
+              class="flex items-baseline gap-4"
+              :class="job.company_description ? 'mt-4' : 'mt-3'"
+            >
+              <p class="text-gray-400 text-sm">LINKS</p>
+              <a
                 class="link"
                 :href="props.job.company_url"
                 @click="
@@ -357,8 +327,8 @@ function onMouseUp(e) {
                 is-external
               >
                 Homepage
-              </CLink>
-              <CLink
+              </a>
+              <a
                 class="link"
                 v-if="!!props.job?.company_ea_forum_url"
                 :href="props.job?.company_ea_forum_url"
@@ -376,39 +346,37 @@ function onMouseUp(e) {
                 is-external
               >
                 EA Forum Page
-              </CLink>
-            </CFlex>
+              </a>
+            </div>
 
-            <CFlex :gap="comp.space" mt="4">
-              <CLink
+            <div class="flex mt-4" :gap="comp.space" mt="4">
+              <a
+                class="flex items-center hover:no-underline"
                 @click="
                    (event: MouseEvent) => {
                     event.stopPropagation();
                     tracking.sendJobEvent(props.job, 'url_external clicked');
                   }
                 "
-                class="link"
+                :class="'link'"
                 @auxclick="tracking.sendJobEvent(props.job, 'url_external clicked')"
                 :href="job.url_external"
                 is-external
-                :_hover="{ textDecoration: 'none !important' }"
-                display="flex"
-                align-items="center"
               >
-                <CButton>
+                <button>
                   VIEW JOB DETAILS
                   <OhVueIcon
                     name="ri-external-link-line"
                     scale="1"
                     color="white"
-                    style="margin-left: 5px; margin-bottom: 3px"
+                    class="ml-[5px] mb-[3px]"
                   />
-                </CButton>
-              </CLink>
-            </CFlex>
-          </CBox>
+                </button>
+              </a>
+            </div>
+          </div>
         </TransitionCollapseFade>
-      </CBox>
-    </CBox>
+      </div>
+    </div>
   </div>
 </template>

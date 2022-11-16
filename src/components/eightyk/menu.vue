@@ -5,7 +5,7 @@ import { useBreakpoints } from "@vueuse/core";
 import { ref } from "vue";
 import { Node, NodeCategory, nodesSecondary } from "~/nodes";
 import { OhVueIcon } from "oh-vue-icons";
-// import MenuDesktop from "~/components/eightyk/menu-desktop.vue";
+import MenuDesktop from "~/components/eightyk/menu-desktop.vue";
 // import MenuMobile from "~/components/eightyk/menu-mobile.vue";
 import { breakpointsChakra } from "~~/src/constants";
 
@@ -49,13 +49,13 @@ function onNodeClick(event, node) {
 
 <template>
   <div>
-    <div class="w-full m-auto max-w-7xl">
+    <div class="w-full m-auto max-w-8xl">
       <div
         class="flex items-center flex-col"
         v-if="hooks.breakpoints.greaterOrEqual('xl').value"
       >
-        <div class="flex w-full flex-grow max-w-7xl justify-center py-3 bg-white">
-          <!-- <MenuDesktop /> -->
+        <div class="flex w-full flex-grow max-w-8xl justify-center py-3 bg-white">
+          <MenuDesktop />
         </div>
       </div>
 
@@ -66,7 +66,7 @@ function onNodeClick(event, node) {
       class="flex flex-col items-center py-2 bg-[#EEEEEE]"
       v-if="hooks.breakpoints.greaterOrEqual('xl').value"
     >
-      <div class="flex justify-between w-full max-w-7xl">
+      <div class="flex justify-between w-full max-w-8xl">
         <div class="flex">Home</div>
 
         <div class="flex gap-6">

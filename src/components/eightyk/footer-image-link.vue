@@ -1,20 +1,11 @@
 <script setup lang="ts">
-import { CLink } from "@chakra-ui/vue-next";
-
 const props = defineProps<{ href: string; alt: string; src: string; src2: string }>();
 const { href, alt, src, src2 } = props;
 </script>
 
 <template>
-  <CLink
-    border="2px solid #484e51"
-    display="flex"
-    justify-content="center"
-    align-items="center"
-    border-radius="4px"
-    width="84px"
-    height="84px"
-    mr="10px"
+  <a
+    class="border-2 border-[#484e51] flex justify-center items-center rounded w-[84px] h-[84px] mr-2.5"
     is-external
     :href="href"
   >
@@ -40,5 +31,5 @@ const { href, alt, src, src2 } = props;
       width="84"
       height="84"
     />
-  </CLink>
+  </a>
 </template>

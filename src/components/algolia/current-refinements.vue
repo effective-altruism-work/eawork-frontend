@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { CButton, CFlex, CIcon, CText } from "@chakra-ui/vue-next";
 import { formatDistance } from "date-fns";
+import { OhVueIcon } from "oh-vue-icons";
 import { AisCurrentRefinements } from "vue-instantsearch/vue3/es";
 import { JobAlgolia } from "~~/src/utils/types";
 import labelTag from "../../utils/labelTag";
@@ -84,9 +84,10 @@ function carefulRefine(
     <template
       v-slot="{ items, createURL }: { items: Item[], createURL: (r: Refinement) => void }"
     >
-      <CFlex v-for="(item, i) in items" :key="item.attribute" wrap="wrap" gap="2">
-        <CFlex
-          align-items="center"
+      <div class="flex flex-wrap gap-2" v-for="(item, i) in items" :key="item.attribute">
+        <div
+          class="flex items-center gap-2"
+          :class="refinement.value.length > 20 ? 'flex-wrap' : 'flex-nowrap'"
           v-for="(refinement, j) in item.refinements"
           :key="
             [
@@ -96,32 +97,27 @@ function carefulRefine(
               refinement.operator,
             ].join(':')
           "
-          gap="2"
-          :wrap="refinement.value.length > 20 ? 'wrap' : 'nowrap'"
         >
-          <CButton
+          <button
+            class="text-xs bg-[#E1F0F2] text-eightyk-500"
             v-if="refinement.value !== 'Multiple experience levels'"
             :href="createURL(refinement)"
             @click="() => carefulRefine(item, refinement)"
             variant="outline"
             size="xs"
-            font-weight="normal"
-            bg="#E1F0F2"
-            color="blue.500"
-            font-size="13px"
           >
             {{ format(refinement) }}
-            <CIcon ml="2" mt="0.5" size="2" name="close" />
-          </CButton>
+            <OhVueIcon class="ml-2 mt-0.5" size="2" name="close" />
+          </button>
           <button
+            class="group ml-1 text-color-[#076875]"
             v-if="i == items.length - 1 && j === item.refinements.length - 1"
             @click="() => clearAll(items)"
-            style="color: #076875; margin-left: 4px"
           >
-            <CText :_hover="{ textDecoration: 'underline' }">Clear all filters </CText>
+            <p class="group-hover:underline">Clear all filters</p>
           </button>
-        </CFlex>
-      </CFlex>
+        </div>
+      </div>
     </template>
   </ais-current-refinements>
 </template>
