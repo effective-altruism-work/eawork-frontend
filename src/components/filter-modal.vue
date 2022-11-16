@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { chakra, CFlex, CHeading, CButton, CBox, CText, CSpacer } from "@chakra-ui/vue-next";
 import CurrentRefinements from "~/components/algolia/current-refinements.vue";
 import Refinements from "~/components/algolia/refinements.vue";
 import FiltersFooter from "~/components/eightyk/filters-footer.vue";
@@ -28,67 +27,45 @@ const emit = defineEmits(["showMobile", "hideMobile"]);
     :esc-to-close="true"
     @click-outside="emit('hideMobile')"
   >
-    <CFlex
-      pos="absolute"
-      left="0"
-      bottom="0"
-      w="100vw"
-      h="92vh"
-      gap="6"
-      p="6"
-      pt="7"
-      direction="column"
-      bg="white"
-      border-radius="12px"
-      border-bottom-radius="0"
-      overflow="scroll"
+    <div
+      class="flex absolute left-0 bottom-0 w-screen h-[92vh] gap-6 p-6 pt-7 flex-col bg-white rounded-xl rounded-b-none overflow-scroll"
     >
-      <CFlex justify="space-between" align="center" my="-1">
-        <CHeading size="lg" line-height="none">Filters</CHeading>
-        <CButton
+      <div class="flex justify-between items-center -my-1">
+        <h3 class="text-lg leading-none">Filters</h3>
+        <button
+          class="text-eightyk-500 bg-[#f4f6f7] rounded-full"
           @click="emit('hideMobile')"
           size="sm"
           color-scheme="gray"
-          border-radius="full"
-          color="blue.500"
-          bg="#F4F6F7"
         >
-          <OhVueIcon name="io-close" scale="1" style="position: absolute" />
-        </CButton>
-      </CFlex>
+          <OhVueIcon name="io-close" scale="1" class="absolute" />
+        </button>
+      </div>
 
       <SearchBox :is-show-results-count="true" />
-      <CBox mt="12">
+      <div class="mt-12">
         <CurrentRefinements />
-      </CBox>
-      <CBox mb="7">
+      </div>
+      <div class="mb-7">
         <Alerts
           :total-filters-length="props.totalFiltersLength"
           :query-json="props.queryJson"
         />
-      </CBox>
+      </div>
       <Refinements :index="props.index" />
       <FiltersFooter />
 
-      <CSpacer mt="12" />
-      <CFlex
-        pos="fixed"
-        bottom="0"
-        left="0"
-        w="100vw"
-        h="fit-content"
-        p="4"
-        px="6"
-        justify="center"
-        bg="#F4F6F7"
+      <div class="h-12" />
+      <div
+        class="flex fixed bottom-0 left-0 w-screen h-fit p-4 px-6 justify-center bg-[#f3f6f7]"
       >
-        <CButton @click="emit('hideMobile')" font-weight="normal">
-          <chakra.span mr="2">SHOW RESULTS:</chakra.span>
+        <button @click="emit('hideMobile')" font-weight="normal">
+          <span class="mr-2">SHOW RESULTS:</span>
           <AisStats>
             <template v-slot="{ nbHits }">{{ nbHits }}</template>
           </AisStats>
-        </CButton>
-      </CFlex>
-    </CFlex>
+        </button>
+      </div>
+    </div>
   </VueFinalModal>
 </template>

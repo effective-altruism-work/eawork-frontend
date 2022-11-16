@@ -1,7 +1,4 @@
 <script setup lang="ts">
-// import { CFlex, CBox, CText, CLink } from "@chakra-ui/vue-next";
-import { OhVueIcon } from "oh-vue-icons";
-
 defineProps<{
   path: string;
 }>();

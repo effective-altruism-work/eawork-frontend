@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { CFlex, CBox, CButton, CLink, CHeading, CText, chakra } from "@chakra-ui/vue-next";
 import { onMounted, onUnmounted, ref } from "vue";
 import { nodes, Node, NodeCategory } from "~/nodes";
 import { OhVueIcon } from "oh-vue-icons";

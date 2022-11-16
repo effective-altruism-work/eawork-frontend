@@ -1,5 +1,4 @@
 <script lang="ts">
-// import { CBox, CIcon } from "@chakra-ui/vue-next";
 import { connectSearchBox } from "instantsearch.js/es/connectors";
 import { createWidgetMixin } from "vue-instantsearch/vue3/es";
 
@@ -13,10 +12,6 @@ export default {
     },
   },
 
-  components: {
-    // CBox,
-    // CIcon,
-  },
   data() {
     return {
       timerId: null,

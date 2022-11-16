@@ -1,21 +1,8 @@
 <script setup lang="ts">
-import {
-  CFlex,
-  CBox,
-  CButton,
-  CLink,
-  CIcon,
-  CText,
-  chakra,
-  CIconButton,
-  CDrawer,
-  CDrawerBody,
-  CDrawerOverlay,
-  CDrawerContent,
-} from "@chakra-ui/vue-next";
 import { onMounted, onUnmounted, ref } from "vue";
 import { Node, NodeCategory, nodesAll } from "~/nodes";
 import EightyKLink from "~/components/eightyk/eightyk-link.vue";
+import { OhVueIcon } from "oh-vue-icons";
 
 const state = {
   isOpen: ref(false),
@@ -101,32 +88,35 @@ function isCurrentCategory(category: NodeCategory) {
       </svg>
     </button>
 
-    <CDrawer
+    <div
       size="sm"
       v-model="state.isOpen.value"
       placement="right"
       @keyup.esc="state.isOpen.value = false"
       tabindex="0"
     >
-      <CDrawerOverlay />
-      <CDrawerContent bg="gray.50">
-        <CDrawerBody p="0">
-          <CFlex justify="space-between" align="center" py="1" bg="white">
-            <CText :ml="comp.linkP" font-size="lg">Menu</CText>
-            <CIconButton
+      <!-- <CDrawerOverlay /> -->
+      <div class="bg-gray-50">
+        <div class="p-0">
+          <div class="flex justify-between items-center py-1 bg-white">
+            <p class="ml-5 text-lg">Menu</p>
+            <OhVueIcon
+              class="text-2xl text-gray-900"
               @click="state.isOpen.value = false"
               icon="x"
               variant="ghost"
               size="lg"
-              font-size="2xl"
-              color="gray.900"
               aria-label="close"
             />
-          </CFlex>
+          </div>
 
-          <CBox border-bottom="1px solid" border-color="gray.100">
-            <CBox v-for="node in nodesAll" :key="node.label">
-              <CLink
+          <div class="border-b border-gray-100">
+            <div v-for="node in nodesAll" :key="node.label">
+              <a
+                class="py-3 px-5 border-t border-gray-100 flex items-center text-gray-900 hover:text-gray-900"
+                :class="`${node.isSecondary ? 'font-normal' : 'font-bold'} ${
+                  isCurrentNode(node) ? 'bg-white' : 'bg-initial'
+                }`"
                 :href="node.url"
                 @click="
                   (event) => {
@@ -136,134 +126,91 @@ function isCurrentCategory(category: NodeCategory) {
                     onNodeClick(node, event);
                   }
                 "
-                py="3"
-                :px="comp.linkP"
-                border-top="1px solid"
-                border-color="gray.100"
-                display="flex"
-                align-items="center"
-                color="gray.900"
-                :font-weight="node.isSecondary ? 'normal' : 'bold'"
-                :_hover="{ color: 'initial' }"
-                :bg="isCurrentNode(node) ? 'white' : 'initial'"
               >
                 {{ node.label }}
-                <CIcon
+                <OhVueIcon
                   v-if="node.categories"
                   name="ri-arrow-down-s-fill"
-                  ml="1"
-                  mt="px"
-                  :transform="isCurrentNode(node) ? 'rotate(180deg)' : ''"
-                  font-size="lg"
+                  class="ml-1 text-lg"
+                  :class="isCurrentNode(node) ? 'rotate-180' : ''"
                 />
-              </CLink>
+              </a>
 
-              <CBox
+              <div
+                class="bg-white pb-2"
                 v-if="isCurrentNode(node)"
                 v-for="(category, index) in node.categories"
-                bg="white"
-                pb="2"
               >
-                <CLink
+                <a
+                  class="font-bold px-5 pb-1 flex items-center text-gray-900 text-lg"
+                  :class="`${index ? 'pt-3' : 'pt-2'} ${
+                    category.url ? 'cursor-pointer' : 'hover:text-black'
+                  }`"
                   :href="category.url ? category.url : undefined"
                   @click="(event) => (category.url ? onNodeClick(category, event) : null)"
-                  font-weight="bold"
-                  :px="comp.linkP"
-                  :pt="index ? 3 : 2"
-                  pb="1"
-                  display="flex"
-                  align-items="center"
-                  color="gray.900"
-                  font-size="lg"
-                  :_hover="!category.url && { color: 'black' }"
-                  :cursor="category.url ? 'pointer' : ''"
                 >
                   {{ category.label }}
-                  <CIcon
+                  <OhVueIcon
+                    class="ml-1"
                     v-if="category.children[0]?.children?.length"
                     name="ri-arrow-down-s-fill"
-                    ml="1"
-                    mt="px"
-                    :transform="isCurrentCategory(category) ? 'rotate(180deg)' : ''"
-                    font-size="md"
+                    :class="isCurrentCategory(category) ? 'rotate-180' : ''"
                   />
-                </CLink>
-                <CText ml="5" mb="5" v-if="category?.description" font-size="md">{{
-                  category.description
-                }}</CText>
-                <CLink
-                  v-if="!!category.extension && isCurrentCategory(category)"
-                  font="bold"
-                  ml="5"
-                  display="block"
-                  pb="10px"
-                  :href="category.extension.url"
-                  :_hover="
-                    !category.extension.url ? { color: 'black' } : { color: 'blue.500' }
+                </a>
+                <p class="ml-5 mb-5" v-if="category?.description">
+                  {{ category.description }}
+                </p>
+                <a
+                  class="font-bold ml-5 block pb-2.5"
+                  :class="
+                    category.extension.url ? 'hover:text-eightyk-500' : 'hover:text-black'
                   "
-                  >{{ category.extension.label }}</CLink
+                  v-if="!!category.extension && isCurrentCategory(category)"
+                  :href="category.extension.url"
+                  >{{ category.extension.label }}</a
                 >
-                <CBox
+                <div
+                  class="mx-5 text-gray-900 text-sm"
+                  :class="node.url ? 'py-1' : 'py-2'"
                   v-if="
                     isCurrentCategory(category) || !category.children[0]?.children?.length
                   "
                   v-for="node in category.children"
-                  :mx="comp.linkP"
-                  :py="node.url ? '1' : '2'"
-                  color="gray.900"
-                  font-size="0.90rem"
                 >
-                  <CLink
+                  <a
+                    class="text-gray-900 text-sm"
+                    :class="`${
+                      node.url ? 'cursor-pointer mb-0 text-eightyk-400' : 'mb-0.5 text-black'
+                    } ${node.children.length ? 'font-bold' : ''}`"
                     :href="node.url ? node.url : undefined"
                     @click="(event) => (node.url ? onNodeClick(node, event) : null)"
-                    :font-weight="node?.children?.length ? 'bold' : ''"
-                    :cursor="node.url ? 'pointer' : ''"
-                    :_hover="!node.url ? { color: 'black' } : { color: 'blue.400' }"
-                    :mb="node.url ? '0' : '0.5'"
-                    color="gray.900"
-                    font-size="0.90rem"
                   >
                     {{ node.label }}
-                  </CLink>
-                  <CLink
+                  </a>
+                  <a
+                    class="block text-gray-900 text-sm py-1 pl-2 border-l-2 border-l-gray-300 hover:text-blue-400"
                     v-for="child in node.children"
-                    display="block"
-                    color="gray.900"
-                    font-size="0.90rem"
-                    py="1"
-                    pl="2"
-                    border-left="2px solid rgb(200, 200, 200)"
                     :href="child.url"
-                    :_hover="{ color: 'blue.400' }"
                     >{{ child.label }}
-                  </CLink>
-                  <CLink
-                    py="3"
-                    pl="2"
-                    font="bold"
-                    display="block"
-                    border-left="2px solid rgb(200, 200, 200)"
+                  </a>
+                  <a
+                    class="py-3 pl-2 font-bold block border-l-2 border-l-gray-300"
                     v-if="!!node.extension"
                     :href="node.extension.url"
-                    >{{ node.extension.label }}</CLink
+                    >{{ node.extension.label }}</a
                   >
-                </CBox>
-              </CBox>
-            </CBox>
-          </CBox>
-        </CDrawerBody>
-      </CDrawerContent>
-    </CDrawer>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <CBox
+    <div
+      class="fixed w-screen h-screen left-0 top-0 z-50"
       v-if="state.isOpen.value"
       @click="state.isOpen.value = false"
-      pos="fixed"
-      w="100vw"
-      h="100vh"
-      left="0"
-      top="0"
-      z-index="1399"
     />
   </div>
 </template>

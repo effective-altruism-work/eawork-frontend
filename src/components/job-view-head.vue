@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { CFlex, CBox, CLink, CText } from "@chakra-ui/vue-next";
-import JobCardTags from "~/components/card/job-card-tags.vue";
-import { JobAlgolia } from "~/utils/types";
-import { formatDistance } from "date-fns";
+// import { CFlex, CBox, CLink, CText } from "@chakra-ui/vue-next";
+// import JobCardTags from "~/components/card/job-card-tags.vue";
+// import { JobAlgolia } from "~/utils/types";
+// import { formatDistance } from "date-fns";
 
-const props = defineProps<{ job: JobAlgolia }>();
+// const props = defineProps<{ job: JobAlgolia }>();
 
-const space = 6;
+// const space = 6;
 </script>
 
 <template>
-  <CBox>
+  <!-- <CBox>
     <CFlex>
       <CLink :href="props.job.company_url">
         <chakra.img
@@ -32,7 +32,7 @@ const space = 6;
         <CFlex justify="space-between" pos="relative">
           <CText font-size="20px" font-weight="bold" line-height="1.1">
             {{ props.job.title }}
-          </CText>
+          </CText> -->
 
           <!--          <CButton-->
           <!--            variant="outline"-->
@@ -49,7 +49,7 @@ const space = 6;
           <!--            <CBox w="4px" h="4px" bg="gray.400" />-->
           <!--          </CButton>-->
 
-          <CFlex
+          <!-- <CFlex
             direction="column"
             gap="2"
             align="flex-end"
@@ -157,5 +157,5 @@ const space = 6;
     <JobCardTags :job="props.job" />
 
     <CBox v-if="props.job.description" :mt="space / 2" v-html="props.job.description" />
-  </CBox>
+  </CBox> -->
 </template>

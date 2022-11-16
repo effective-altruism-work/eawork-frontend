@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import { CFormLabel, CBox } from "@chakra-ui/vue-next";
 import { AisNumericMenu } from "vue-instantsearch/vue3/es";
 const props = defineProps<{
   attribute: string;
@@ -9,13 +8,13 @@ const props = defineProps<{
 </script>
 
 <template>
-  <CBox mt="6">
-    <CFormLabel font-size="xl" font-weight="bold" line-height="none">
+  <div class="mt-6">
+    <label class="text-xl font-bold leading-none">
       {{ props.label }}
-    </CFormLabel>
+    </label>
 
     <ais-numeric-menu :attribute="props.attribute" :items="props.items" />
-  </CBox>
+  </div>
 </template>
 
 <!-- <style lang="scss">
@@ -34,4 +33,3 @@ const props = defineProps<{
     }
   }
 } -->
-</style>

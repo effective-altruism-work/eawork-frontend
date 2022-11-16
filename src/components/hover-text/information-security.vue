@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import { CFlex, CBox, CText, CLink } from "@chakra-ui/vue-next";
 import EightykLink from "~/components/eightyk/eightyk-link.vue";
 </script>
 

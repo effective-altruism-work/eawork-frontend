@@ -1,6 +1,6 @@
 <script setup lang="ts">
-// import Menu from "~/components/eightyk/menu.vue";
-// import { CContainer, CFlex, CBox, CIcon, CLink, CHeading, CText } from "@chakra-ui/vue-next";
+import { OhVueIcon } from "oh-vue-icons";
+import Menu from "~/components/eightyk/menu.vue";
 
 const props = defineProps<{
   error: { statusCode: number };
@@ -8,24 +8,23 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div />
-  <!-- <Menu />
-  <CBox overflow="hidden">
-    <CContainer max-w="8xl" :px="[3, null, 4]">
-      <CFlex justify-content="center" align-items="center" h="70vh">
-        <CBox>
-          <CHeading font-size="3xl" v-if="error.statusCode === 404">Page not found</CHeading>
-          <CHeading v-else>An error occurred</CHeading>
-          <CText font-size="xl" mt="2">
+  <Menu />
+  <div class="overflow-hidden">
+    <div class="max-w-8xl px-3 lg:px-4">
+      <div class="flex justify-center items-center h-[70vh]">
+        <div>
+          <h3 class="text-3xl" v-if="error.statusCode === 404">Page not found</h3>
+          <h3 class="text-3xl" v-else>An error occurred</h3>
+          <p class="text-xl mt-2">
             If you would like to report this
             {{ error.statusCode === 404 ? "as an error," : "error," }} you can do so
-            <CLink href="https://80000hours.typeform.com/to/LG2lzrOC"
-              >here <CIcon name="message-square" mb="px" mr="1" /> </CLink
+            <a href="https://80000hours.typeform.com/to/LG2lzrOC"
+              >here <OhVueIcon class="mr-1" name="message-square" /> </a
             >.
-          </CText>
-          <CLink font-size="xl" mt="6" display="block" href="/">Home</CLink>
-        </CBox>
-      </CFlex>
-    </CContainer>
-  </CBox> -->
+          </p>
+          <NuxtLink class="text-xl mt-6 block" path="/">Home</NuxtLink>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>

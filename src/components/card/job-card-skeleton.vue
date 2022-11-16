@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import { CFlex, CBox } from "@chakra-ui/vue-next";
 import Skeleton from "~/components/chakra/skeleton.vue";
 </script>
 

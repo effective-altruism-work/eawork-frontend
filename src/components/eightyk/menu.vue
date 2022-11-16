@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
-// import { CFlex, CBox, CButton, CContainer, CLink, CHeading } from "@chakra-ui/vue-next";
 import { useBreakpoints } from "@vueuse/core";
 import { ref } from "vue";
 import { Node, NodeCategory, nodesSecondary } from "~/nodes";

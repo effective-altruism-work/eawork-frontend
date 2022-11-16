@@ -1,71 +1,44 @@
 <script setup lang="ts">
-import {
-  chakra,
-  CFlex,
-  CHeading,
-  CButton,
-  CVStack,
-  CLink,
-  CBox,
-  CText,
-} from "@chakra-ui/vue-next";
 import { OhVueIcon } from "oh-vue-icons";
-import { breakpointsChakra } from "../constants";
-
-const breakpoints = useBreakpoints(breakpointsChakra);
 
 const emit = defineEmits(["showMobile"]);
 </script>
 
 <template>
-  <CBox>
-    <CVStack :mt="[8, null, null, 14]" :mb="[6, null, null, 14]" :gap="[4, null, null, 3]">
-      <CFlex justify="space-between" align="center">
-        <CHeading line-height="0.8" :font-size="['2.7rem', null, null, '5xl']">
-          Jobs
-        </CHeading>
-      </CFlex>
-      <CText font-size="lg"
-        >Handpicked to help you tackle the
+  <div>
+    <div class="mt-8 lg:mt-14 mb-6 lg:mb-14 gap-4 lg:gap-3">
+      <div class="flex justify-between items-center">
+        <h3 class="leading-none text-3xl lg:text-5xl">Jobs</h3>
+      </div>
+      <p class="text-lg">
+        Handpicked to help you tackle the
         <EightykLink path="/problem-profiles/"> world’s most pressing problems </EightykLink>
         with your career.
-      </CText>
-    </CVStack>
+      </p>
+    </div>
 
-    <CFlex
-      gap="7"
-      :mt="{ lg: -2 }"
-      :mb="{ base: 8, lg: 6 }"
-      :font-size="{ base: 'sm', md: 'md' }"
-      align="center"
-    >
-      <CLink
-        display="flex"
-        align-items="center"
+    <div class="flex gap-7 lg:-mt-2 text-sm lg:text-base items-center">
+      <a
+        class="flex items-center text-gray-400 underline"
         href="https://80000hours.org/job-board/top-orgs/"
-        text-decoration="underline"
-        color="gray.400"
       >
-        <OhVueIcon name="md-starrate-round" scale="1.1" style="margin-bottom: 1px" />
-        <chakra.span ml="1">Top recommended organisations</chakra.span>
-      </CLink>
-      <CLink
-        display="flex"
-        align-items="center"
+        <OhVueIcon name="md-starrate-round" scale="1.1" class="mb-[1px]" />
+        <span class="ml-1">Top recommended organisations</span>
+      </a>
+      <a
+        class="flex items-center underline text-gray-400"
         href="https://80000hours.org/job-board/faq/"
-        text-decoration="underline"
-        color="gray.400"
       >
-        <OhVueIcon name="bi-question-circle-fill" scale="1" style="margin-right: 4px" />
-        <chakra.span ml="px">FAQ</chakra.span>
-      </CLink>
-    </CFlex>
-    <CFlex v-if="breakpoints.smaller('lg').value" justify-content="center" mb="4">
-      <CButton width="100%" @click="emit('showMobile')">
+        <OhVueIcon name="bi-question-circle-fill" scale="1" class="mr-1" />
+        <span>FAQ</span>
+      </a>
+    </div>
+    <div class="flex justify-center mb-4 lg:hidden">
+      <button class="w-full" @click="emit('showMobile')">
         <OhVueIcon name="md-filterlist-round" scale="1.1" style="margin-bottom: 1px" />
-        <chakra.span ml="2">Filters and alerts</chakra.span>
-      </CButton>
-    </CFlex>
+        <span class="ml-2">Filters and alerts</span>
+      </button>
+    </div>
     <!-- <AisInstantSearch
       show-loading-indicator
       :routing="routing"
@@ -75,5 +48,5 @@ const emit = defineEmits(["showMobile"]);
     >
       <CurrentRefinements v-if="breakpoints.smaller('lg').value" />
     </AisInstantSearch> -->
-  </CBox>
+  </div>
 </template>

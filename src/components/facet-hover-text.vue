@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import { CBox, CLink } from "@chakra-ui/vue-next";
 import HoverTextInformationSecurity from "~/components/hover-text/information-security.vue";
 import HoverTextOtherPolicy from "~/components/hover-text/other-policy.vue";
 

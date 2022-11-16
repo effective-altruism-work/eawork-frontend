@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useHead, useRuntimeConfig, useRoute, useRouter } from "#app";
-// import { chakra, CFlex, CVStack, CLink, CBox, CText } from "@chakra-ui/vue-next";
 import { useBreakpoints, useThrottleFn, useElementVisibility } from "@vueuse/core";
 import algoliasearch from "algoliasearch";
 import { AisInstantSearch, AisInfiniteHits } from "vue-instantsearch/vue3/es";

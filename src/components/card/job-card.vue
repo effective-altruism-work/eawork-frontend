@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import { useRuntimeConfig } from "#app";
-import { useBreakpoints } from "@vueuse/core";
 import { format } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
 import { ref, onMounted, computed } from "vue";
 import JobCardLocationShort from "~/components/card/job-card-location-short.vue";
 import JobCardTags from "~/components/card/job-card-tags.vue";
-// import JobView from "~/components/job-view.vue";
-import { breakpointsChakra, strings } from "~/constants";
+import { strings } from "~/constants";
 // import { theme } from "~/styles/theme";
 import { useComp } from "~/utils/structs";
 import { JobAlgolia } from "~/utils/types";
@@ -31,11 +28,6 @@ const emit = defineEmits<{
   (event: "cardExpanded"): void;
   (event: "cardCollapsed"): void;
 }>();
-
-const hooks = {
-  breakpoints: useBreakpoints(breakpointsChakra),
-  config: useRuntimeConfig(),
-};
 
 const state = {
   isShowModal: ref(false),
@@ -134,7 +126,6 @@ function onMouseUp(e) {
 </script>
 
 <template>
-  <!-- CBox won't cooperate with refs, thus the div wrapper -->
   <div ref="cardRef">
     <div
       class="mb-3 bg-white p-4 lg:p-6 rounded-xl hover:cursor-pointer transition-shadow"
@@ -222,9 +213,9 @@ function onMouseUp(e) {
         <TransitionCollapseFade
           :is-visible="!state.isAccordionOpen.value && props.isHasTextQuery"
         >
-          <CBox :mt="comp.space / 2" font-size="15px">
+          <div class="mt-3">
             <ais-snippet :hit="job" attribute="description_for_search" />
-          </CBox>
+          </div>
         </TransitionCollapseFade>
 
         <TransitionCollapseFade :is-visible="state.isAccordionOpen.value" duration-ms="300">
