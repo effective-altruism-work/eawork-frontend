@@ -54,7 +54,13 @@ export default {
 
 <template>
   <!-- <CBox position="relative" display="flex" align-items="center"> -->
-  <input id="debounced-box" type="search" placeholder="Keywords" v-model="query" />
+  <input
+    id="debounced-box"
+    type="search"
+    placeholder="Keywords"
+    class="w-full text-gray-900 pl-12 p-4 rounded-xl bg-[#e8ecee] placeholder-[#3a4142] hover:shadow hover:bg-[#eef2f5] active:shadow focus:shadow active:bg-gray-50 focus:bg-gray-50 outline-none"
+    v-model="query"
+  />
   <!-- <CIcon id="icon" w="6" h="6" name="search" color="grey" /> -->
   <!-- </CBox> -->
 </template>

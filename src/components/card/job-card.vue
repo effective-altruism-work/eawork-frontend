@@ -199,12 +199,12 @@ function onMouseUp(e) {
 
         <TransitionCollapseFade :is-visible="!state.isAccordionOpen.value" duration-ms="25">
           <div
-            class="flex lg:pl-3 lg:ml-[60px] mt-3 items-center text-xs lg:text-sm"
+            class="flex lg:pl-3 lg:ml-[60px] justify-between mt-3 items-center text-xs lg:text-sm"
             :justify="comp.isHasLocation ? 'space-between' : 'flex-end'"
           >
             <JobCardLocationShort :job="props.job" />
 
-            <p class="text=[#9BADB6]">
+            <p class="text-[#9BADB6]">
               {{ timeSincePosting }}
             </p>
           </div>

@@ -16,7 +16,7 @@ const props = defineProps<{
     left="12"
   >
     <div
-      class="m-4 p-6 opacity-95 rounded-md text-sm w-64 shadow text-black"
+      class="m-4 p-6 opacity-95 rounded-md text-sm w-64 shadow text-black bg-white"
       shadow="inset 0 0 0 1px #E1E6EA"
     >
       <HoverTextInformationSecurity v-if="area === 'Information security'" />

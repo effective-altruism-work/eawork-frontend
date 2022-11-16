@@ -196,10 +196,10 @@ const routing = { stateMapping };
 
 <template>
   <div>
-    <!-- <IndexHeader
+    <IndexHeader
       :filter-count="totalFiltersLength"
       @show-mobile="() => (state.isShowMobileFilters.value = true)"
-    /> -->
+    />
     <AisInstantSearch
       show-loading-indicator
       :routing="routing"
@@ -207,7 +207,9 @@ const routing = { stateMapping };
       :search-function="searchFunction"
       :index-name="hooks.config.public.algoliaJobsIndex"
     >
-      <!-- <CurrentRefinements v-if="breakpoints.smaller('lg').value" /> -->
+      <div class="lg:hidden">
+        <CurrentRefinements />
+      </div>
       <div class="flex mb-24">
         <div class="flex flex-col min-w-full lg:min-w-[70%] xl:min-w-[74%]">
           <div class="flex justify-end gap-6">

@@ -7,9 +7,9 @@ const emit = defineEmits(["showModal"]);
 </script>
 
 <template>
-  <button @click="emit('showModal')">
+  <button class="flex items-center h-10 px-4 rounded-md" @click="emit('showModal')">
     <OhVueIcon name="md-addalert-round" scale="1" color="white" />
-    <p class="ml-2">
+    <p class="ml-2 text-white">
       <span>Set up alerts</span>
       <span v-if="filtered"> for this filter</span>
     </p>

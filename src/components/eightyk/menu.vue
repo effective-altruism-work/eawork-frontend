@@ -5,7 +5,7 @@ import { ref } from "vue";
 import { Node, NodeCategory, nodesSecondary } from "~/nodes";
 import { OhVueIcon } from "oh-vue-icons";
 import MenuDesktop from "~/components/eightyk/menu-desktop.vue";
-// import MenuMobile from "~/components/eightyk/menu-mobile.vue";
+import MenuMobile from "~/components/eightyk/menu-mobile.vue";
 import { breakpointsChakra } from "~~/src/constants";
 
 const hooks = {
@@ -47,34 +47,31 @@ function onNodeClick(event, node) {
 </script>
 
 <template>
-  <div>
-    <div class="w-full m-auto max-w-8xl">
+  <div class="bg-white">
+    <div class="w-full m-auto px-4 max-w-8xl">
       <div
         class="flex items-center flex-col"
         v-if="hooks.breakpoints.greaterOrEqual('xl').value"
       >
-        <div class="flex w-full flex-grow max-w-8xl justify-center py-3 bg-white">
+        <div class="flex w-full flex-grow max-w-8xl mx-auto justify-center py-3 bg-white">
           <MenuDesktop />
         </div>
       </div>
 
-      <!-- <MenuMobile v-else /> -->
+      <MenuMobile v-else />
     </div>
 
-    <div
-      class="flex flex-col items-center py-2 bg-[#EEEEEE]"
-      v-if="hooks.breakpoints.greaterOrEqual('xl').value"
-    >
+    <div class="hidden xl:flex flex-col items-center py-2 bg-[#EEEEEE]">
       <div class="flex justify-between w-full max-w-8xl">
         <div class="flex">Home</div>
 
         <div class="flex gap-6">
           <div class="relative" v-for="node in nodesSecondary" :key="node.label">
             <NuxtLink :href="node.url" @click="(event) => onNodeClick(event, node)">
-              <CButton
+              <button
+                class="ml-4 bg-inherit"
+                :class="isCurrentNode(node) ? 'text-eightyk-500' : 'text-black-50'"
                 variant="link"
-                :ml="comp.spaces.md"
-                :color="isCurrentNode(node) ? 'blue.500' : comp.black50"
               >
                 {{ node.label }}
                 <OhVueIcon
@@ -83,7 +80,7 @@ function onNodeClick(event, node) {
                   scale="1"
                   :color="isCurrentNode(node) ? 'blue.500' : comp.black50"
                 />
-              </CButton>
+              </button>
             </NuxtLink>
 
             <div
@@ -96,7 +93,7 @@ function onNodeClick(event, node) {
                   v-for="category in node.categories"
                   :key="category.label"
                 >
-                  <h4 class="font-sm whitespace-nowrap">{{ category.label }}</h4>
+                  <h4 class="font-sm whitespace-nowrap font-bold">{{ category.label }}</h4>
                   <NuxtLink
                     class="whitespace-nowrap"
                     v-for="catNode in category.children"

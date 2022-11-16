@@ -166,7 +166,7 @@ function carefulRefine(
         }"
       >
         <input
-          class="mb-1 rounded-md bg-white"
+          class="mb-1 rounded bg-white w-full border h-[38px] px-4"
           v-if="props.searchable"
           :value="inputVal"
           @input="

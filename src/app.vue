@@ -65,10 +65,14 @@ useHead({
   <div class="flex flex-col overflow-x-hidden">
     <Menu />
     <div class="bg-[#F4F6F7]">
-      <div class="max-w-8xl px-3 lg:px-4">
+      <div class="max-w-8xl mx-auto px-3 lg:px-4">
         <NuxtPage />
       </div>
     </div>
     <LazyEightykFooter v-if="show" />
   </div>
 </template>
+
+<style lang="scss">
+@import "~/styles/app.css";
+</style>

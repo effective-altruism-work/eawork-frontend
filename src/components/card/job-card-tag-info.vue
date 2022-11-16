@@ -18,9 +18,9 @@ const props = defineProps<{
       position="relative"
     />
 
-    <div class="z-10 bottom-2 left-0 absolute" v-if="isHovering">
+    <div class="z-10 bottom-2 group-hover:oaewihweoihgw left-0 absolute" v-if="isHovering">
       <div
-        class="m-4 p-6 opacity-95 rounded text-sm w-[400px] shadow text-black"
+        class="m-4 p-6 opacity-95 rounded text-sm w-[400px] shadow text-black bg-white"
         background-color="rgba(255, 255, 255, 0.95)"
         shadow="inset 0 0 0 1px #E1E6EA"
       >

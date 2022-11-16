@@ -18,13 +18,13 @@ const props = defineProps<{
 </script>
 
 <template>
-  <li class="relative mt-1" v-for="item in props.items" :key="item.value">
+  <li class="relative mt-2" v-for="item in props.items" :key="item.value">
     <Checkbox
       :model-value="item.isRefined"
       @update:model-value="() => props.refine(item.value)"
     >
-      <div class="mt-1">
-        <p class="inline hover:text-blue-500">
+      <div class="flex ml-2">
+        <p class="inline text-base hover:text-eightyk-500">
           <ais-highlight
             v-if="props.searchable && item.value != 'is_recommended_org'"
             attribute="item"
@@ -32,7 +32,7 @@ const props = defineProps<{
           />
           <span v-else>{{ labelTag(item.label) }}</span>
         </p>
-        <span class="group">
+        <span class="inline group">
           <OhVueIcon
             class="hidden group-hover:block scale-75 ml-1 text-[#aaaaaa] opacity-60 relative"
             name="io-information-circle"
@@ -43,7 +43,9 @@ const props = defineProps<{
             :area="item.value"
           />
         </span>
-        <Badge class="ml-2 mt-0 py-0.5 px-1 text-xs text-gray-400 rounded bg-white">
+        <Badge
+          class="ml-2 mt-0 flex items-center px-1 text-xs text-gray-400 rounded bg-white"
+        >
           {{ item.count.toLocaleString() }}
         </Badge>
       </div>

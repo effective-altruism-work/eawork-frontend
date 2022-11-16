@@ -8,16 +8,16 @@ const emit = defineEmits(["showMobile"]);
   <div>
     <div class="mt-8 lg:mt-14 mb-6 lg:mb-14 gap-4 lg:gap-3">
       <div class="flex justify-between items-center">
-        <h3 class="leading-none text-3xl lg:text-5xl">Jobs</h3>
+        <h3 class="leading-none text-3xl font-bold lg:text-5xl">Jobs</h3>
       </div>
-      <p class="text-lg">
+      <p class="text-lg mt-2">
         Handpicked to help you tackle the
         <EightykLink path="/problem-profiles/"> world’s most pressing problems </EightykLink>
         with your career.
       </p>
     </div>
 
-    <div class="flex gap-7 lg:-mt-2 text-sm lg:text-base items-center">
+    <div class="flex gap-7 lg:-mt-2 mb-6 text-sm lg:text-base items-center">
       <a
         class="flex items-center text-gray-400 underline"
         href="https://80000hours.org/job-board/top-orgs/"

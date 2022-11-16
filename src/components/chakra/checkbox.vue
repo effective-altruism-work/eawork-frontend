@@ -26,32 +26,28 @@ const value = computed({
     :_hover="{}"
   >
     <input
-      class="border-0 h-[1px] w-[1px] m-[-1px] p-0 overflow-hidden whitespace-nowrap absolute"
+      class="border-0 h-[1px] w-[1px] m-[-1px] p-0 overflow-hidden whitespace-nowrap absolute invisible"
       type="checkbox"
       v-model="value"
       :id="state.id.value"
     />
 
-    <CFlex
+    <div
       class="group-hover:border-blue-100 self-start mt-1 w-4 border-2 border-inherit rounded-sm inline-flex items-center justify-center align-top select-none shrink-0 bg-white"
       :class="{ 'bg-eightyk-500 border-eightyk-500 text-white': value }"
     >
       <div class="flex items-center h-full w-full justify-center">
         <svg
-          viewBox="0 0 12 10"
-          style="
-            fill: none;
-            stroke-width: 2;
-            stroke: currentColor;
-            stroke-dasharray: 16;
-            opacity: 1;
-            stroke-dashoffset: 0;
-          "
+          viewBox="0 0 12 12"
+          stroke-dasharray="16"
+          stroke-dashoffset="0"
+          class="fill-none stroke-2 opacity-100 stroke-current"
+          style=""
         >
-          <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+          <polyline class="stroke-white" points="1.5 6 4.5 9 10.5 1"></polyline>
         </svg>
       </div>
-    </CFlex>
+    </div>
 
     <span class="margin-left-0.5 select-none">
       <slot></slot>

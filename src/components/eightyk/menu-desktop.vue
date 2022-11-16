@@ -66,18 +66,18 @@ function onNodeClick(event, node) {
         </EightyKLink>
         <div class="flex">
           <div class="z-10" v-for="node in nodes" :key="node.label">
-            <a :href="node.url" @click="(event) => onNodeClick(event, node)">
+            <a class="cursor-pointer" :href="node.url" @click="(event) => onNodeClick(event, node)">
               <button
-                class="ml-6 font-bold"
+                class="ml-6 font-bold bg-inherit"
                 variant="link"
-                :class="isCurrentNode(node) ? 'text-blue-500' : 'text-black-50'"
+                :class="isCurrentNode(node) ? 'text-eightyk-500' : 'text-black-50'"
               >
                 {{ node.label }}
                 <OhVueIcon
                   v-if="node.categories"
                   name="ri-arrow-down-s-fill"
                   scale="1"
-                  :color="isCurrentNode(node) ? 'blue.500' : comp.black50"
+                  :class="isCurrentNode(node) ? 'text-eightyk-500' : 'text-black-50'"
                 />
               </button>
             </a>
@@ -98,7 +98,7 @@ function onNodeClick(event, node) {
                     category === state.nodeCategoryActive.value ? 'bg-white' : 'bg-initial'
                   "
                 >
-                  <h2 class="text-sm">{{ category.label }}</h2>
+                  <h2 class="font-bold">{{ category.label }}</h2>
                   <p>{{ category.description }}</p>
                 </a>
               </div>
@@ -116,9 +116,9 @@ function onNodeClick(event, node) {
                     v-for="childCategory in category.children"
                     :key="childCategory.label"
                   >
-                    <h2 class="text-sm mt-4 mb-1">{{ childCategory.label }}</h2>
+                    <h2 class="mt-4 mb-1 font-bold">{{ childCategory.label }}</h2>
                     <a
-                      class="text-gray-900 mb-1"
+                      class="text-gray-900 mb-1 cursor-pointer"
                       v-for="childNode in childCategory.children"
                       :key="childNode.label"
                       :href="childNode.url"
@@ -158,8 +158,9 @@ function onNodeClick(event, node) {
                   v-for="category in node.categories"
                   :key="category.label"
                 >
-                  <h2 class="text-sm">{{ category.label }}</h2>
+                  <h2 class="font-bold">{{ category.label }}</h2>
                   <a
+                    class="cursor-pointer"
                     v-for="catNode in category.children"
                     :key="catNode.url"
                     :href="catNode.url"

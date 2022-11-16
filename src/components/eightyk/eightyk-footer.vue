@@ -16,13 +16,7 @@ import EightyKLink from "./eightyk-link.vue";
           <div class="bg-gray-mid p-4 m-2 lg:m-0 rounded-lg w-full mb-4">
             <div class="flex w-full flex-col lg:flex-row justify-between">
               <div class="pr-0 lg:pr-12 w-full lg:w-1/3">
-                <h3
-                  class="lg:text-lg text-gray-light"
-                  :font-size="{ base: 'md', lg: 'lg' }"
-                  color="light-gray"
-                >
-                  Our research
-                </h3>
+                <h3 class="lg:text-lg text-gray-light font-bold">Our research</h3>
                 <ul class="w-full text-gray-lightest">
                   <li>
                     <FooterBoxLink href="/key-ideas/">Overview: Key ideas</FooterBoxLink>
@@ -52,7 +46,7 @@ import EightyKLink from "./eightyk-link.vue";
                 </ul>
               </div>
               <div class="w-full lg:w-1/3 pr-0 lg:pr-12">
-                <h3 class="mt-4 lg:mt-0 lg:text-lg text-gray-light">Take action</h3>
+                <h3 class="mt-4 lg:mt-0 lg:text-lg text-gray-light font-bold">Take action</h3>
                 <ul class="w-full text-gray-lightest">
                   <li>
                     <FooterBoxLink href="/career-planning">Plan your career</FooterBoxLink>
@@ -67,7 +61,7 @@ import EightyKLink from "./eightyk-link.vue";
                     <FooterBoxLink href="/community">Join our community</FooterBoxLink>
                   </li>
                 </ul>
-                <h3 class="mt-4 lg:mt-0 lg:text-lg text-gray-light">Follow us</h3>
+                <h3 class="mt-4 lg:mt-0 lg:text-lg text-gray-light font-bold">Follow us</h3>
                 <ul class="w-full text-gray-lightest">
                   <li>
                     <FooterBoxLink href="/podcast">Subscribe to our podcast</FooterBoxLink>
@@ -100,7 +94,7 @@ import EightyKLink from "./eightyk-link.vue";
                 </ul>
               </div>
               <div class="lg:pr-12 w-full lg:w-1/3">
-                <h3 class="mt-4 lg:mt-0 lg:text-lg text-gray-light">About us</h3>
+                <h3 class="mt-4 lg:mt-0 lg:text-lg text-gray-light font-bold">About us</h3>
                 <ul class="text-gray-lightest">
                   <li><FooterBoxLink href="/about">Why 80,000 Hours?</FooterBoxLink></li>
                   <li>

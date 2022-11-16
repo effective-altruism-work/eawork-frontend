@@ -88,13 +88,8 @@ function isCurrentCategory(category: NodeCategory) {
       </svg>
     </button>
 
-    <div
-      size="sm"
-      v-model="state.isOpen.value"
-      placement="right"
-      @keyup.esc="state.isOpen.value = false"
-      tabindex="0"
-    >
+    <!-- v-model="state.isOpen.value" -->
+    <div size="sm" placement="right" @keyup.esc="state.isOpen.value = false" tabindex="0">
       <!-- <CDrawerOverlay /> -->
       <div class="bg-gray-50">
         <div class="p-0">
@@ -188,7 +183,7 @@ function isCurrentCategory(category: NodeCategory) {
                     {{ node.label }}
                   </a>
                   <a
-                    class="block text-gray-900 text-sm py-1 pl-2 border-l-2 border-l-gray-300 hover:text-blue-400"
+                    class="block text-gray-900 text-sm py-1 pl-2 border-l-2 border-l-gray-300 hover:text-eightyk-400"
                     v-for="child in node.children"
                     :href="child.url"
                     >{{ child.label }}
