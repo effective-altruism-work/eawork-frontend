@@ -5,7 +5,12 @@ import RefinementListFacets from "~/components/algolia/refinement-list-facets.vu
 import { TagDjango, TagTypeName, AlgoliaFilterItem } from "~/utils/types";
 // import { chakra } from "@chakra-ui/vue-next";
 import * as Sentry from "@sentry/vue";
-import { xRiskProblemAreas, acrossEAProblemAreas, otherProblemAreas } from "~/constants";
+import {
+  xRiskProblemAreas,
+  acrossEAProblemAreas,
+  otherProblemAreas,
+  allProblemAreas,
+} from "~/constants";
 import EightykLink from "../eightyk/eightyk-link.vue";
 import { AisRefinementList } from "vue-instantsearch/vue3/es";
 
@@ -77,29 +82,32 @@ function morphFacetValues(
     return locationedItems.slice(0, 8);
   }
 
-  if (section) {
-    if (section === "x-risk") {
-      const ind = filteredItems.findIndex((i) => i.value === "Other policy-focused");
-
-      if (ind !== -1) {
-        filteredItems.push(filteredItems.splice(ind, 1)[0]);
-      }
-
-      return filteredItems.filter((item) => {
-        return xRiskProblemAreas.includes(item.value as any);
-      });
-    }
-
-    if (section === "across") {
-      return filteredItems.filter((item) =>
-        acrossEAProblemAreas.includes(item.value as any),
-      );
-    }
-
-    if (section === "other") {
-      return filteredItems.filter((item) => otherProblemAreas.includes(item.value as any));
-    }
+  if (props.attribute === "tags_area") {
+    return filteredItems.filter((item) => allProblemAreas.includes(item.value as any));
   }
+  // if (section) {
+  //   if (section === "x-risk") {
+  //     const ind = filteredItems.findIndex((i) => i.value === "Other policy-focused");
+
+  //     if (ind !== -1) {
+  //       filteredItems.push(filteredItems.splice(ind, 1)[0]);
+  //     }
+
+  //     return filteredItems.filter((item) => {
+  //       return xRiskProblemAreas.includes(item.value as any);
+  //     });
+  //   }
+
+  //   if (section === "across") {
+  //     return filteredItems.filter((item) =>
+  //       acrossEAProblemAreas.includes(item.value as any),
+  //     );
+  //   }
+
+  //   if (section === "other") {
+  //     return filteredItems.filter((item) => otherProblemAreas.includes(item.value as any));
+  //   }
+  // }
 
   return filteredItems.slice(0, props.limit || 1000);
 }
@@ -174,7 +182,8 @@ function carefulRefine(
         />
 
         <!-- MAIN. Non problem areas. -->
-        <ul v-if="props.attribute !== 'tags_area'">
+        <!-- <chakra.ul v-if="props.attribute !== 'tags_area'" mt="px"> -->
+        <ul>
           <li v-if="isFromSearch && !items.length">No results.</li>
           <RefinementListFacets
             :attribute="props.attribute"
@@ -190,10 +199,10 @@ function carefulRefine(
         </ul>
 
         <!-- problem areas -->
-        <div v-else>
-          <p class="mt-3 font-bold text-gray-500">
+        <!-- <CBox v-else>
+          <CText mt="3" font-weight="bold" color="gray.500" font-size="15px">
             Reducing
-            <!-- <EightykLink
+            <EightykLink
               text-decoration="underline"
               text-decoration-thickness="1px"
               text-underline-offset="0.11em"
@@ -201,11 +210,11 @@ function carefulRefine(
               path="/articles/existential-risks"
               >existential risks</EightykLink
             > -->
-          </p>
+        <!-- </p>
 
           <ul mt="px">
-            <li v-if="isFromSearch && !items.length">No results.</li>
-            <!-- <RefinementListFacets
+            <li v-if="isFromSearch && !items.length">No results.</li> -->
+        <!-- <RefinementListFacets
               :attribute="props.attribute"
               :items="morphFacetValues(items, 'x-risk')"
               :refine="
@@ -216,7 +225,7 @@ function carefulRefine(
               :searchable="props.searchable"
               :count-bg="props.countBg"
             /> -->
-          </ul>
+        <!-- </ul>
 
           <div v-if="props.attribute === 'tags_area'">
             <p class="mt-3 font-bold text-gray-500">Work across areas</p>
@@ -240,8 +249,8 @@ function carefulRefine(
             <p class="mt-3 font-bold text-gray-500">Other important problems</p>
 
             <ul class="mt-[1px]">
-              <li v-if="isFromSearch && !items.length">No results.</li>
-              <!-- <RefinementListFacets
+              <li v-if="isFromSearch && !items.length">No results.</li> -->
+        <!-- <RefinementListFacets
                 :items="morphFacetValues(items, 'other')"
                 :refine="
                   (currItem) => {
@@ -251,13 +260,13 @@ function carefulRefine(
                 :searchable="props.searchable"
                 :count-bg="props.countBg"
               /> -->
-            </ul>
-          </div>
+        <!-- </ul>
+          </div> -->
 
-          <!-- <CButton size="sm" v-if="canToggleShowMore" @click="toggleShowMore">
+        <!-- <CButton size="sm" v-if="canToggleShowMore" @click="toggleShowMore">
             {{ !isShowingMore ? "Show more" : "Show less" }}
-          </CButton> -->
-        </div>
+          </CButton>
+        </CBox> -->
       </template>
     </AisRefinementList>
   </div>
