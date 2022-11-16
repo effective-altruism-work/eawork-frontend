@@ -5,7 +5,12 @@ import RefinementListFacets from "~/components/algolia/refinement-list-facets.vu
 import { TagDjango, TagTypeName, AlgoliaFilterItem } from "~/utils/types";
 import { chakra } from "@chakra-ui/vue-next";
 import * as Sentry from "@sentry/vue";
-import { xRiskProblemAreas, acrossEAProblemAreas, otherProblemAreas } from "~/constants";
+import {
+  xRiskProblemAreas,
+  acrossEAProblemAreas,
+  otherProblemAreas,
+  allProblemAreas,
+} from "~/constants";
 import EightykLink from "../eightyk/eightyk-link.vue";
 import { AisRefinementList } from "vue-instantsearch/vue3/es";
 
@@ -82,6 +87,8 @@ function morphFacetValues(
     if (ind !== -1) {
       filteredItems.push(filteredItems.splice(ind, 1)[0]);
     }
+
+    return filteredItems.filter((item) => allProblemAreas.includes(item.value as any));
   }
   // if (section) {
   //   if (section === "x-risk") {
