@@ -23,7 +23,6 @@ const value = computed({
   <label
     class="group align-top cursor-pointer inline-flex items-center relative"
     :for="state.id.value"
-    :_hover="{}"
   >
     <input
       class="border-0 h-[1px] w-[1px] m-[-1px] p-0 overflow-hidden whitespace-nowrap absolute invisible"

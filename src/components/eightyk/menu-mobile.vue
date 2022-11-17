@@ -69,7 +69,12 @@ function isCurrentCategory(category: NodeCategory) {
     <EightyKLink name="Home" path="/">
       <img alt="80,000 Hours Logo" width="55" height="38.19" src="/80k-logo.png" />
     </EightyKLink>
-    <button class="w-10 h-10 -mx-3" @click="state.isOpen.value = true" name="Menu Toggle">
+    <button
+      class="w-10 h-10 -mx-3"
+      @click="state.isOpen.value = true"
+      name="Menu Toggle"
+      aria-label="Menu Toggle"
+    >
       <svg width="25" height="30" viewBox="0 0 512 512" fill="currentColor">
         <path
           fill="none"
