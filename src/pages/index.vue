@@ -211,7 +211,7 @@ const routing = { stateMapping };
         <CurrentRefinements />
       </div>
       <div class="flex mb-24">
-        <div class="flex flex-col min-w-full lg:min-w-[70%] xl:min-w-[74%]">
+        <div class="flex flex-col min-w-full lg:min-w-[70%] xl:min-w-[75%]">
           <div class="flex justify-end gap-6">
             <!--<NuxtLink :to="urls.jobs.post">-->
             <!--  <CButton color-scheme="blue" variant="outline">-->
@@ -298,7 +298,7 @@ const routing = { stateMapping };
         </div>
 
         <div
-          class="lg:flex flex-col lg:w-[30%] xl:w-1/4 xl sticky pl-10"
+          class="lg:flex flex-col lg:min-w-[30%] xl:min-w-[25%] xl:max-w-[25%] sticky pl-10"
           :min-w="comp.filtersW"
           :max-w="comp.filtersW"
         >

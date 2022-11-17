@@ -9,8 +9,8 @@ const props = defineProps<{ job: JobAlgolia }>();
   <div>
     <div class="flex w-full gap-3 mt-3 flex-wrap">
       <JobCardTag
-        bg="#F3FAF0"
-        color="#466E35"
+        bg="bg-[#F3FAF0]"
+        color="text-[#466E35]"
         v-for="area in props.job.tags_area"
         :key="area"
         :tag="area"
@@ -19,8 +19,8 @@ const props = defineProps<{ job: JobAlgolia }>();
       <JobCardTag
         v-for="exp in props.job.tags_exp_required"
         :key="exp"
-        bg="#EEF1FE"
-        color="#202C58"
+        bg="bg-[#EEF1FE]"
+        color="text-[#202C58]"
         :tag="exp"
       >
       </JobCardTag>
@@ -30,8 +30,8 @@ const props = defineProps<{ job: JobAlgolia }>();
       <JobCardTag
         v-for="skill in props.job.tags_skill"
         :key="skill"
-        bg="gray.50"
-        color="blue.900"
+        bg="bg-gray-50"
+        color="text-blue-900"
         :tag="skill"
       />
     </div>

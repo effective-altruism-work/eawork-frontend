@@ -9,6 +9,7 @@ import { tracking } from "~/utils/tracking";
 import * as Sentry from "@sentry/vue";
 import emailIsValid from "~/utils/emailIsValid";
 import labelTag from "~/utils/labelTag";
+import KButton from "./generics/kButton.vue";
 const { captureEvent } = Sentry;
 
 const props = defineProps<{
@@ -188,7 +189,7 @@ function replacer(s: string): string {
           you can unsubscribe at any time
         </p>
 
-        <button
+        <KButton
           class="max-w-fit self-end text-lg"
           :class="
             state.email.value
@@ -200,7 +201,7 @@ function replacer(s: string): string {
           :disabled="!state.email.value"
         >
           Subscribe
-        </button>
+        </KButton>
       </div>
 
       <p class="text-green-500" v-if="state.fsm.value === 'success'">Subscribed!</p>

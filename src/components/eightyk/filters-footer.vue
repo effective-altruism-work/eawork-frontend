@@ -25,7 +25,7 @@ const hooks = {
       <p class="ml-2">Give us feedback</p>
     </a>
 
-    <div class="mt-1 rounded-lg py-5 px-6 gap-1" :bg="props.careerConsultancyBg ?? 'white'">
+    <div class="mt-1 bg-white rounded-lg py-5 px-6 gap-1" :bg="props.careerConsultancyBg ?? 'white'">
       <p>
         Talk with our team for free if you are interested in working on one of our top
         problem areas

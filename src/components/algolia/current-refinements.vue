@@ -99,15 +99,14 @@ function carefulRefine(
           "
         >
           <button
-            class="text-xs bg-[#E1F0F2] text-eightyk-500"
+            class="text-xs bg-[#E1F0F2] px-2 border border-eightyk-500 h-[22px] text-eightyk-500"
             v-if="refinement.value !== 'Multiple experience levels'"
             :href="createURL(refinement)"
             @click="() => carefulRefine(item, refinement)"
             variant="outline"
-            size="xs"
           >
             {{ format(refinement) }}
-            <OhVueIcon class="ml-2 mt-0.5" size="2" name="close" />
+            <OhVueIcon class="ml-2 mt-0.5" size="2" name="fe-close" />
           </button>
           <button
             class="group ml-1 text-color-[#076875]"
@@ -126,8 +125,8 @@ function carefulRefine(
 .ais-CurrentRefinements {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
-  margin-bottom: var(--space-6);
+  gap: 8px;
+  margin-bottom: 24px;
 
   &.ais-CurrentRefinements--noRefinement {
     margin-bottom: 0;

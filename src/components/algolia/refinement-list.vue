@@ -141,7 +141,7 @@ function carefulRefine(
 
 <template>
   <div :style="props.mt ? `margin-top: ${props.mt * 4}px` : 'margin-top: 24px'">
-    <label class="text-xl mb-3 font-bold leading-none">
+    <label class="text-xl pb-3 block font-bold leading-none">
       {{ props.label }}
     </label>
 

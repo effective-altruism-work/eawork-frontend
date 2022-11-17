@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useBreakpoints } from "@vueuse/core";
+import { useBreakpoints, breakpointsTailwind } from "@vueuse/core";
 import { ref, computed } from "vue";
 import { breakpointsChakra } from "~~/src/constants";
 import urlWrap from "~~/src/utils/urlWrap";
@@ -12,7 +12,7 @@ const props = defineProps<{
   color: string;
 }>();
 
-const breakpoints = useBreakpoints(breakpointsChakra);
+const breakpoints = useBreakpoints(breakpointsTailwind);
 
 const isHovering = ref(false);
 
@@ -60,15 +60,15 @@ function handleClick() {
 <template>
   <div
     class="flex flex-col gap-3 px-2 text-sm rounded relative"
+    :class="props.bg"
     @mouseover="isHovering = true"
     @focus="isHovering = true"
     @mouseleave="isHovering = false"
     @blur="isHovering = false"
-    :bg="props.bg"
   >
     <a
       class="flex items-center"
-      :color="props.color"
+      :class="props.color"
       is-external
       @click="handleClick"
       target="_blank"

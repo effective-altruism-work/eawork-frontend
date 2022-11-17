@@ -23,7 +23,7 @@ const props = defineProps<{
       :model-value="item.isRefined"
       @update:model-value="() => props.refine(item.value)"
     >
-      <div class="flex ml-2">
+      <div class="ml-2">
         <p class="inline text-base hover:text-eightyk-500">
           <ais-highlight
             v-if="props.searchable && item.value != 'is_recommended_org'"
@@ -32,19 +32,15 @@ const props = defineProps<{
           />
           <span v-else>{{ labelTag(item.label) }}</span>
         </p>
-        <span class="inline group">
+        <span v-if="item?.hover" class="inline group">
           <OhVueIcon
-            class="hidden group-hover:block scale-75 ml-1 text-[#aaaaaa] opacity-60 relative"
+            class="scale-75 ml-1 text-[#aaaaaa] opacity-60 relative"
             name="io-information-circle"
           />
-          <FacetHoverText
-            class="hidden group-hover:block"
-            v-if="item?.hover"
-            :area="item.value"
-          />
+          <FacetHoverText class="hidden group-hover:block" :area="item.value" />
         </span>
         <Badge
-          class="ml-2 mt-0 flex items-center px-1 text-xs text-gray-400 rounded bg-white"
+          class="ml-2 mt-0 inline items-center px-1 text-xs text-gray-400 rounded bg-white"
         >
           {{ item.count.toLocaleString() }}
         </Badge>

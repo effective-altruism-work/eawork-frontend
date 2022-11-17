@@ -12,6 +12,7 @@ import { tracking } from "~/utils/tracking";
 import relativePostingTime from "~/utils/relativePostingTime";
 import JobHoverText from "~/components/job-hover-text.vue";
 import { AisSnippet } from "vue-instantsearch/vue3/es";
+import KButton from "~/components/generics/kButton.vue";
 
 const props = defineProps<{
   job: JobAlgolia;
@@ -221,10 +222,10 @@ function onMouseUp(e) {
         <TransitionCollapseFade :is-visible="state.isAccordionOpen.value" duration-ms="300">
           <div class="mt-4 text-base">
             <div
-              class="flex mt-3 text-sm items-start lg:items-center"
+              class="flex mt-3 text-sm items-start lg:items-center w-full justify-between"
               :justify="comp.isHasLocation ? 'space-between' : 'flex-end'"
             >
-              <div>
+              <div class="flex items-center">
                 <OhVueIcon name="fa-map-marker-alt" fill="#9BADB6" class="mt-[3px]" />
                 <div class="flex flex-col lg:flex-row items-center lg:gap-3">
                   <div
@@ -354,7 +355,7 @@ function onMouseUp(e) {
                 :href="job.url_external"
                 is-external
               >
-                <button>
+                <KButton>
                   VIEW JOB DETAILS
                   <OhVueIcon
                     name="ri-external-link-line"
@@ -362,7 +363,7 @@ function onMouseUp(e) {
                     color="white"
                     class="ml-[5px] mb-[3px]"
                   />
-                </button>
+                </KButton>
               </a>
             </div>
           </div>
