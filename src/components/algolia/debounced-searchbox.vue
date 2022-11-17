@@ -1,5 +1,6 @@
 <script lang="ts">
 import { connectSearchBox } from "instantsearch.js/es/connectors";
+import { OhVueIcon } from "oh-vue-icons";
 import { createWidgetMixin } from "vue-instantsearch/vue3/es";
 
 export default {
@@ -11,7 +12,6 @@ export default {
       required: false,
     },
   },
-
   data() {
     return {
       timerId: null,
@@ -27,7 +27,6 @@ export default {
       }
     }
   },
-
   destroyed() {
     if (this.timerId) {
       clearTimeout(this.timerId);
@@ -49,59 +48,25 @@ export default {
       },
     },
   },
+  components: { OhVueIcon },
 };
 </script>
 
 <template>
-  <!-- <CBox position="relative" display="flex" align-items="center"> -->
-  <input
-    id="debounced-box"
-    type="search"
-    placeholder="Keywords"
-    class="w-full text-gray-900 pl-12 p-4 rounded-xl bg-[#e8ecee] placeholder-[#3a4142] hover:shadow hover:bg-[#eef2f5] active:shadow focus:shadow active:bg-gray-50 focus:bg-gray-50 outline-none"
-    v-model="query"
-  />
-  <!-- <CIcon id="icon" w="6" h="6" name="search" color="grey" /> -->
-  <!-- </CBox> -->
+  <div class="relative flex items-center">
+    <input
+      type="search"
+      placeholder="Keywords"
+      class="w-full text-gray-900 pl-12 p-4 h-14 rounded-xl bg-[#e8ecee] placeholder-[#3a4142] hover:border-2 hover:bg-[#eef2f5] active:border-2 focus:border-2 active:bg-gray-50 focus:bg-gray-50 outline-none"
+      v-model="query"
+    />
+    <OhVueIcon
+      id="icon"
+      class="absolute self-center left-4 mt-[1px]"
+      w="6"
+      h="6"
+      name="io-search"
+      color="grey"
+    />
+  </div>
 </template>
-<!-- 
-<style lang="scss">
-// @import "~/styles/chakra-ui.scss";
-
-#debounced-box {
-  width: 100%;
-  padding: var(--space-4);
-  padding-left: var(--space-12);
-  color: var(--colors-gray-900);
-  border-radius: 12px;
-  background: #e8ecee;
-  transition: 0.2s all;
-
-  &::placeholder {
-    color: #3a4142;
-  }
-  &:hover {
-    box-shadow: inset 0 0 0 1px #dae0e8 !important;
-    background: #eef2f5;
-  }
-  &:active,
-  &:focus {
-    outline: none;
-    box-shadow: inset 0 0 0 1px var(--colors-gray-300) !important;
-    background: var(--colors-gray-50);
-  }
-  &:active,
-  &:focus {
-    &::placeholder {
-      color: var(--colors-gray-500);
-    }
-  }
-}
-
-#icon {
-  position: absolute;
-  align-self: center;
-  left: var(--space-4);
-  margin-top: 1px;
-}
-</style> -->
