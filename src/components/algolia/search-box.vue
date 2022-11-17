@@ -22,7 +22,7 @@ const props = defineProps<{
         <form class="flex w-full">
           <span :class="!isSearchStalled ? 'hidden' : ''">Loading...</span>
           <AlgoliaDebouncedSearchbox
-            :value="currentRefinment"
+            :value="currentRefinement"
             @inpt="refine($event.currentTarget.value)"
             :delay="300"
           />
