@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { OhVueIcon } from "oh-vue-icons";
+import KButton from "./generics/kButton.vue";
 
 const emit = defineEmits(["showMobile"]);
 </script>
@@ -34,10 +35,10 @@ const emit = defineEmits(["showMobile"]);
       </a>
     </div>
     <div class="flex justify-center mb-4 lg:hidden">
-      <button class="w-full" @click="emit('showMobile')">
+      <KButton class="w-full flex justify-center" @click="emit('showMobile')">
         <OhVueIcon name="md-filterlist-round" scale="1.1" style="margin-bottom: 1px" />
         <span class="ml-2">Filters and alerts</span>
-      </button>
+      </KButton>
     </div>
     <!-- <AisInstantSearch
       show-loading-indicator
