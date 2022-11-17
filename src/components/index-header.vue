@@ -8,7 +8,7 @@ const emit = defineEmits(["showMobile"]);
 <template>
   <div>
     <div class="mt-8 lg:mt-14 mb-6 lg:mb-14 gap-4 lg:gap-3 flex flex-col">
-      <h3 class="leading-[38.4px] lg:leading-[38.4px] text-3xl font-bold lg:text-5xl">
+      <h3 class="leading-[38.4px] lg:leading-[38.4px] text-[44px] font-bold lg:text-5xl">
         Jobs
       </h3>
       <p class="text-lg mt-2">

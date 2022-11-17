@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useHead, useRuntimeConfig, useRoute, useRouter } from "#app";
-import { useBreakpoints, useThrottleFn, useElementVisibility } from "@vueuse/core";
+import { useThrottleFn, useElementVisibility } from "@vueuse/core";
 import algoliasearch from "algoliasearch";
 import { AisInstantSearch, AisInfiniteHits } from "vue-instantsearch/vue3/es";
 import { onBeforeMount, onMounted, ref, watch, onBeforeUnmount } from "vue";
@@ -15,7 +15,6 @@ import { tracking } from "~/utils/tracking";
 import queryToJson from "~/utils/queryToJson";
 import { JobAlgolia } from "~/utils/types";
 import riveted from "~/utils/riveted";
-import { breakpointsChakra } from "../constants";
 import log from "../utils/log";
 import InternalTrigger from "~/components/internal-trigger.vue";
 import Alerts from "../components/alerts.vue";
@@ -23,7 +22,6 @@ import Alerts from "../components/alerts.vue";
 const hooks = useHooks(() => {
   const config = useRuntimeConfig();
   return {
-    breakpoints: useBreakpoints(breakpointsChakra),
     config,
     searchClient: algoliasearch(
       config.public.algoliaApplicationId,
@@ -309,13 +307,13 @@ const routing = { stateMapping };
         </div>
 
         <!-- mobile -->
-        <!-- <LazyFilterModal
+        <LazyFilterModal
           :total-filters-length="totalFiltersLength"
           :index="state.searchIndex"
           :is-show-mobile-filters="state.isShowMobileFilters.value"
           :query-json="state.queryJson.value"
           @hide-mobile="() => (state.isShowMobileFilters.value = false)"
-        /> -->
+        />
       </div>
     </AisInstantSearch>
   </div>

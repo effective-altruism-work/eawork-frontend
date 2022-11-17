@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { TagDjango, TagTypeName } from "~/utils/types";
-import { CText, CBadge, chakra } from "@chakra-ui/vue-next";
 import { AisToggleRefinement } from "vue-instantsearch/vue3/es";
-import Checkbox from "../chakra/checkbox.vue";
+import Checkbox from "../generics/checkbox.vue";
 const props = defineProps<{
   label: string;
   attribute: string | TagTypeName;

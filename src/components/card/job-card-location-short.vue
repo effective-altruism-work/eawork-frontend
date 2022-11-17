@@ -53,7 +53,7 @@ const comp = useComp(() => {
 
     <div class="flex text-[#9BADB6] flex-nowrap items-center w-full line-clamp-1">
       <div class="inline-flex items-center" v-if="props.job.tags_city.length">
-        <p class="inline" v-for="(city, index) of comp.cities" :key="city">
+        <p class="inline whitespace-nowrap line-clamp-1" v-for="(city, index) of comp.cities" :key="city">
           <span class="inline mx-2" v-if="index">▪</span>
           {{ city }}
         </p>

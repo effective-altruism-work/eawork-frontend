@@ -2,14 +2,8 @@
 import { onMounted, ref } from "vue";
 import RefinementListFacets from "~/components/algolia/refinement-list-facets.vue";
 import { TagDjango, TagTypeName, AlgoliaFilterItem } from "~/utils/types";
-// import { chakra } from "@chakra-ui/vue-next";
 import * as Sentry from "@sentry/vue";
-import {
-  xRiskProblemAreas,
-  acrossEAProblemAreas,
-  otherProblemAreas,
-  allProblemAreas,
-} from "~/constants";
+import { allProblemAreas } from "~/constants";
 import EightykLink from "../eightyk/eightyk-link.vue";
 import { AisRefinementList } from "vue-instantsearch/vue3/es";
 
@@ -181,7 +175,7 @@ function carefulRefine(
         />
 
         <!-- MAIN. Non problem areas. -->
-        <!-- <chakra.ul v-if="props.attribute !== 'tags_area'" mt="px"> -->
+        <!-- <ul v-if="props.attribute !== 'tags_area'" mt="px"> -->
         <ul>
           <li v-if="isFromSearch && !items.length">No results.</li>
           <RefinementListFacets

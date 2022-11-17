@@ -1,9 +1,7 @@
-<script setup lang="ts">
-// import { CHeading, CText } from "@chakra-ui/vue-next";
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <div/>
+  <div />
   <!-- <CHeading>Privacy Policy</CHeading>
   <CText>Provided as it is.</CText> -->
 </template>

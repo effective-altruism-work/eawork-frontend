@@ -7,4 +7,4 @@
 
 ### Stack
 
-VueJS 3, Nuxt 3, Chakra UI (vue-next), Algolia, TypeScript, Vercel
+VueJS 3, Nuxt 3, Tailwind, Algolia, TypeScript, Vercel

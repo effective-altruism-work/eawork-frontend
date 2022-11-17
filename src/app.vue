@@ -73,6 +73,6 @@ useHead({
   </div>
 </template>
 
-<style lang="scss">
+<style>
 @import "~/styles/app.css";
 </style>

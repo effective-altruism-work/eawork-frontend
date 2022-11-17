@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { useBreakpoints, breakpointsTailwind } from "@vueuse/core";
 import { ref, computed } from "vue";
-import { breakpointsChakra } from "~~/src/constants";
 import urlWrap from "~~/src/utils/urlWrap";
 import labelTag from "~/utils/labelTag";
 import JobCardTagInfo from "./job-card-tag-info.vue";
@@ -12,15 +11,15 @@ const props = defineProps<{
   color: string;
 }>();
 
-const breakpoints = useBreakpoints(breakpointsTailwind);
+// const breakpoints = useBreakpoints(breakpo);
 
 const isHovering = ref(false);
 
 const linkArea = computed(() => {
   // do not link on mobile.
-  if (breakpoints.smaller("lg").value) {
-    return null;
-  }
+  // if (breakpoints.smaller("lg").value) {
+  //   return null;
+  // }
 
   switch (props.tag) {
     case "Other (pressing)":
@@ -49,12 +48,6 @@ const linkArea = computed(() => {
       return null;
   }
 });
-
-function handleClick() {
-  if (linkArea.value) {
-    return;
-  }
-}
 </script>
 
 <template>
@@ -66,15 +59,22 @@ function handleClick() {
     @mouseleave="isHovering = false"
     @blur="isHovering = false"
   >
+    <div class="flex lg:hidden items-center" :class="props.color">
+      {{ labelTag(tag) }}
+      <JobCardTagInfo
+        :isHovering="isHovering"
+        v-if="tag === 'Other policy-focused' || tag === 'Information security'"
+        :area="tag"
+      />
+    </div>
+
     <a
-      class="flex items-center"
-      :class="props.color"
+      class="hidden lg:flex items-center"
+      :class="`${props.color} ${linkArea ? 'hover:text-black' : 'hover:text-current'}`"
       is-external
-      @click="handleClick"
       target="_blank"
       rel="noopener noreferrer"
       :href="linkArea"
-      :_hover="linkArea ? { color: 'black' } : null"
     >
       {{ labelTag(tag) }}
       <JobCardTagInfo

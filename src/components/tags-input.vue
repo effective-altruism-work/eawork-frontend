@@ -1,6 +1,5 @@
 <!-- <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
-import { CBox, CFormLabel } from "@chakra-ui/vue-next";
 import algoliasearch, { SearchClient } from "algoliasearch";
 import { onMounted, ref, watch } from "vue";
 import "@formkit/themes/genesis";
@@ -9,7 +8,6 @@ import { debounce } from "vue-debounce";
 import { theme } from "~/styles/theme";
 import { useStateVar } from "~/utils/structs";
 import { Tag, TagTypeName } from "~/utils/types";
-import FormHelperText from "~/components/chakra/form-helper-text.vue";
 
 const props = defineProps<{
   typeLabel: string;

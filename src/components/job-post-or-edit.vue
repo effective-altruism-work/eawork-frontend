@@ -1,13 +1,6 @@
 <!-- <script setup lang="ts">
 import { useRuntimeConfig } from "#app";
-import {
-  CBox,
-  CFlex,
-  CFormLabel,
-  CAlert,
-  CAlertIcon,
-  CAlertDescription,
-} from "@chakra-ui/vue-next";
+
 import { FormKitNode } from "@formkit/core";
 import { FormKit } from "@formkit/vue";
 import algoliasearch from "algoliasearch";

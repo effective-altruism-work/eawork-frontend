@@ -126,8 +126,7 @@ function replacer(s: string): string {
   >
     <!-- max-h="fit-content" -->
     <div
-      class="flex absolute top-12 right-0 left-0 max-w-[390px] m-auto max-h-fit gap-2 p-2 flex-col bg-white"
-      :class="totalFiltersLength > 8 ? 'top-8' : 'top-11'"
+      class="flex absolute inset-0 max-w-[390px] m-auto bottom-1/3 max-h-fit gap-6 p-6 flex-col bg-white"
     >
       <div class="flex justify-between">
         <p class="w-fit text-lg" v-if="props.queryJson">
@@ -155,7 +154,7 @@ function replacer(s: string): string {
             ? 'lg:text-xs'
             : totalFiltersLength > 8
             ? 'lg:text-sm'
-            : 'lg:text-md'
+            : 'lg:text-base'
         "
       >
         <p v-if="props.queryJson.query">Query: {{ props.queryJson.query }}</p>
@@ -176,7 +175,7 @@ function replacer(s: string): string {
       </div>
 
       <input
-        class="text-base"
+        class="text-base border h-10 px-4 rounded-sm focus:outline-eightyk-500"
         v-model="state.email.value"
         type="email"
         name="email"

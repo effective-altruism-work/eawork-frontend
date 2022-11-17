@@ -92,9 +92,7 @@ function isCurrentCategory(category: NodeCategory) {
     <Transition name="slide">
       <div
         v-if="state.isOpen.value"
-        size="sm"
-        class="fixed h-screen w-[448px] bg-white z-50 right-0 top-0"
-        placement="right"
+        class="fixed h-screen max-w-full w-[448px] bg-white z-50 right-0 top-0"
         @keyup.esc="state.isOpen.value = false"
         tabindex="0"
       >

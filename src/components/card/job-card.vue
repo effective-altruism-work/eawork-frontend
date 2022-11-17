@@ -134,7 +134,7 @@ function onMouseUp(e) {
       <div>
         <div class="flex relative">
           <img
-            class="bg-white rounded"
+            class="bg-white rounded object-contain"
             v-if="props.job"
             :alt="`${job.company_name} logo`"
             :src="job.company_logo_url"
@@ -151,7 +151,7 @@ function onMouseUp(e) {
             </p>
 
             <div
-              class="leadning-tight lg:leading-none relative text-sm lg:text-md"
+              class="leading-tight lg:leading-none relative text-sm lg:text-md"
               :style="job?.company_is_recommended_org ? 'left: -3px' : ''"
             >
               <div
@@ -173,10 +173,12 @@ function onMouseUp(e) {
                 />
               </div>
               <!-- huh -->
-              <span class="text-lg" v-if="props.isMissingAlgoliaContext">{{
+              <span class="text-sm lg:text-lg" v-if="props.isMissingAlgoliaContext">{{
                 job.company_name
               }}</span>
-              <ais-snippet class="text-base" v-else :hit="job" attribute="company_name" />
+              <span v-else class="text-sm lg:text-lg">
+                <ais-snippet :hit="job" attribute="company_name" />
+              </span>
             </div>
           </div>
 
@@ -219,9 +221,9 @@ function onMouseUp(e) {
                 <OhVueIcon
                   name="fa-map-marker-alt"
                   fill="#9BADB6"
-                  class="mr-[3px] scale-75"
+                  class="mr-[3px] scale-75 self-start"
                 />
-                <div class="flex flex-col lg:flex-row items-center lg:gap-3">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:gap-3">
                   <div
                     class="flex items-center gap-3"
                     v-if="job.tags_city.length"
@@ -293,7 +295,7 @@ function onMouseUp(e) {
 
             <div
               class="flex items-baseline gap-4"
-              :class="job.company_description ? 'mt-4' : 'mt-3'"
+              :class="job.company_description ? 'mt-0' : 'mt-3'"
             >
               <p class="text-gray-400 text-sm">LINKS</p>
               <a
@@ -337,7 +339,7 @@ function onMouseUp(e) {
               </a>
             </div>
 
-            <div class="flex mt-4" :gap="comp.space" mt="4">
+            <div class="flex" :gap="comp.space">
               <a
                 class="link flex items-center hover:no-underline"
                 @click="

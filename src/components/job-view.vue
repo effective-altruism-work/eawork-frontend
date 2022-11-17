@@ -1,6 +1,5 @@
 <script setup lang="ts">
 // import { useRuntimeConfig } from "#app";
-// import { CFlex, CBox, CButton, CLink, CSpinner } from "@chakra-ui/vue-next";
 // import algoliasearch from "algoliasearch";
 // import { OhVueIcon } from "oh-vue-icons";
 // import { onMounted, onUpdated, ref } from "vue";

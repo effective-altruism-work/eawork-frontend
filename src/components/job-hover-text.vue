@@ -6,7 +6,7 @@ const props = defineProps<{
 <template>
   <div class="absolute bottom-0 left-0">
     <div
-      class="m-4 p-6 opacity-95 bg-white w-[350px] rounded shadow"
+      class="m-4 p-6 text-base leading-snug opacity-95 bg-white w-[350px] rounded shadow"
       shadow="inset 0 0 0 1px #E1E6EA"
     >
       This is one of our
@@ -43,7 +43,7 @@ const props = defineProps<{
         Disclaimer:
         <em
           >Open Philanthropy is 80,000 Hours'
-          <a href="https://80000hours.org/about/donors/">larget funder</a>.
+          <a href="https://80000hours.org/about/donors/">largest funder</a>.
         </em>
       </template>
       <template v-else-if="props.companyName === 'Berkeley Existential Risk Initiative'">

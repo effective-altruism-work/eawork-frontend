@@ -31,9 +31,9 @@ const emit = defineEmits(["showMobile", "hideMobile"]);
       class="flex absolute left-0 bottom-0 w-screen h-[92vh] gap-6 p-6 pt-7 flex-col bg-white rounded-xl rounded-b-none overflow-scroll"
     >
       <div class="flex justify-between items-center -my-1">
-        <h3 class="text-lg leading-none">Filters</h3>
+        <h3 class="text-3xl font-bold leading-none">Filters</h3>
         <button
-          class="text-eightyk-500 bg-[#f4f6f7] rounded-full"
+          class="text-eightyk-500 bg-gray-lightest flex justify-center items-center w-8 h-8 rounded-full"
           @click="emit('hideMobile')"
           size="sm"
           color-scheme="gray"
@@ -42,11 +42,13 @@ const emit = defineEmits(["showMobile", "hideMobile"]);
         </button>
       </div>
 
-      <SearchBox :is-show-results-count="true" />
-      <div class="mt-12">
+      <div class="w-full">
+        <SearchBox :is-show-results-count="true" />
+      </div>
+      <div class="mt-4">
         <CurrentRefinements />
       </div>
-      <div class="mb-7">
+      <div>
         <Alerts
           :total-filters-length="props.totalFiltersLength"
           :query-json="props.queryJson"
@@ -59,12 +61,12 @@ const emit = defineEmits(["showMobile", "hideMobile"]);
       <div
         class="flex fixed bottom-0 left-0 w-screen h-fit p-4 px-6 justify-center bg-[#f3f6f7]"
       >
-        <button @click="emit('hideMobile')" font-weight="normal">
+        <GenericsKButton class="flex" @click="emit('hideMobile')">
           <span class="mr-2">SHOW RESULTS:</span>
           <AisStats>
             <template v-slot="{ nbHits }">{{ nbHits }}</template>
           </AisStats>
-        </button>
+        </GenericsKButton>
       </div>
     </div>
   </VueFinalModal>

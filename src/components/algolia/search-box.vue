@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import { CBox, CText, CFlex, CIcon } from "@chakra-ui/vue-next";
 // import AlgoliaLogo from "~/components/algolia/algolia-logo.vue";
 import { OhVueIcon } from "oh-vue-icons";
 import { AisSearchBox, AisStats } from "vue-instantsearch/vue3/es";
@@ -11,11 +10,8 @@ const props = defineProps<{
 
 <template>
   <div
-    class="min-h-10 relative container"
+    class="min-h-[10] w-full relative"
     :class="props.isShowResultsCount ? 'mb-0' : 'mb-6'"
-    min-h="40px"
-    pos="relative"
-    :mb="props.isShowResultsCount ? 0 : 6"
   >
     <AisSearchBox placeholder="Keywords">
       <AlgoliaDebouncedSearchbox :delay="300" />
@@ -45,50 +41,3 @@ const props = defineProps<{
     </AisStats>
   </div>
 </template>
-
-<style lang="scss">
-.algolia-search-box-main {
-  position: relative;
-  .ais-SearchBox {
-    .ais-SearchBox-form {
-      display: flex;
-      .ais-SearchBox-input {
-        width: 100%;
-        padding: var(--space-4);
-        padding-left: var(--space-12);
-        color: var(--colors-gray-900);
-        border-radius: 12px;
-        background: #e8ecee;
-        transition: 0.2s all;
-        &::placeholder {
-          color: #3a4142;
-        }
-        &:hover {
-          box-shadow: inset 0 0 0 1px #dae0e8 !important;
-          background: #eef2f5;
-        }
-        &:active,
-        &:focus {
-          outline: none;
-          box-shadow: inset 0 0 0 1px var(--colors-gray-300) !important;
-          background: var(--colors-gray-50);
-        }
-        &:active,
-        &:focus {
-          &::placeholder {
-            color: var(--colors-gray-500);
-          }
-        }
-      }
-      .ais-SearchBox-submit {
-        position: absolute;
-        align-self: center;
-        left: var(--space-4);
-      }
-      .ais-SearchBox-reset {
-        display: none;
-      }
-    }
-  }
-}
-</style>

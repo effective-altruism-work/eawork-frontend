@@ -32,7 +32,6 @@
     "vue-instantsearch": "^4.4.2"
   },
   "devDependencies": {
-    "//": "bug peer dep for @chakra-ui/vue-next",
     "@babel/core": "^7.18.13",
     "@nuxt/kit": "^3.0.0-rc.10",
     "@nuxtjs/tailwindcss": "^6.1.3",

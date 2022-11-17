@@ -1,5 +1,4 @@
 <!-- <script lang="ts" setup>
-import { CFlex, CBox, CButton, CText } from "@chakra-ui/vue-next";
 import { formatDistance } from "date-fns";
 import { ref } from "vue";
 import JobCommentForm from "~/components/job-comment-form.vue";

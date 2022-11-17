@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Checkbox from "~/components/chakra/checkbox.vue";
+import Checkbox from "~/components/generics/checkbox.vue";
 import FacetHoverText from "~/components/facet-hover-text.vue";
 import { AlgoliaFilterItem } from "~/utils/types";
 import { OhVueIcon } from "oh-vue-icons";

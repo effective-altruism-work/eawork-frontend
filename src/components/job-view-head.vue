@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import { CFlex, CBox, CLink, CText } from "@chakra-ui/vue-next";
 // import JobCardTags from "~/components/card/job-card-tags.vue";
 // import { JobAlgolia } from "~/utils/types";
 // import { formatDistance } from "date-fns";
@@ -13,7 +12,7 @@
   <!-- <CBox>
     <CFlex>
       <CLink :href="props.job.company_url">
-        <chakra.img
+        <img
           :src="props.job.company_logo_url"
           w="80px"
           max-w="fit-content"

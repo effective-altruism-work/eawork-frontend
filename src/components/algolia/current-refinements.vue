@@ -99,14 +99,14 @@ function carefulRefine(
           "
         >
           <button
-            class="text-[13px] bg-[#E1F0F2] px-2 border border-eightyk-500 h-[22px] text-eightyk-500"
+            class="text-[13px] bg-[#E1F0F2] px-2 border border-eightyk-500 h-[22px] text-eightyk-500 rounded"
             v-if="refinement.value !== 'Multiple experience levels'"
             :href="createURL(refinement)"
             @click="() => carefulRefine(item, refinement)"
             variant="outline"
           >
             {{ format(refinement) }}
-            <OhVueIcon class="ml-2 mt-0.5" size="2" name="fe-close" />
+            <OhVueIcon class="ml-2 relative top-[1px]" scale="0.75"  name="io-close" />
           </button>
           <button
             class="group ml-1 text-eightyk-700"
