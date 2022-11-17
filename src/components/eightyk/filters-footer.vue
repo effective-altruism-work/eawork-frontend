@@ -21,7 +21,7 @@ const hooks = {
       <p class="ml-2">View all roles in a spreadsheet</p>
     </a>
     <a class="flex items-center" href="https://80000hours.typeform.com/to/LG2lzrOC">
-      <OhVueIcon class="w-4 relative left-0.5" name="ri-chat-4-line" />
+      <OhVueIcon class="w-4 relative left-0.5" name="md-chatbubbleoutline-round" />
       <p class="ml-2">Give us feedback</p>
     </a>
 

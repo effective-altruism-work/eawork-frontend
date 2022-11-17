@@ -40,7 +40,7 @@ const props = defineProps<{
           <FacetHoverText class="hidden group-hover:block" :area="item.value" />
         </span>
         <Badge
-          class="ml-2 mt-0 inline items-center px-1 text-xs text-gray-400 rounded bg-white"
+          class="ml-2 mt-0 inline items-center py-0.5  h-[22px] leading-normal px-1 text-xs text-gray-400 rounded bg-white"
         >
           {{ item.count.toLocaleString() }}
         </Badge>

@@ -20,8 +20,8 @@ import {
   IoMenu,
   MdAddalertRound,
   IoSearch,
-  RiChat4Line,
   RiShareBoxFill,
+  MdChatbubbleoutlineRound,
 } from "oh-vue-icons/icons";
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -45,7 +45,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     IoMenu,
     MdAddalertRound,
     IoSearch,
-    RiChat4Line,
     RiShareBoxFill,
+    MdChatbubbleoutlineRound,
   );
 });
