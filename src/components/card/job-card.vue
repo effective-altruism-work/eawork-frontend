@@ -109,10 +109,7 @@ function onMouseUp(e) {
 
   // don't change card state if user is clicking a link
   // brittle
-  if (
-    e.target.classList.contains("chakra-button") ||
-    e.target.classList.contains("chakra-link")
-  ) {
+  if (e.target.classList.contains("button") || e.target.classList.contains("link")) {
     return;
   }
 
@@ -309,7 +306,7 @@ function onMouseUp(e) {
             >
               <p class="text-gray-400 text-sm">LINKS</p>
               <a
-                class="link"
+                class="link p-[15px]"
                 :href="props.job.company_url"
                 @click="
                   (event: MouseEvent) => {
@@ -322,12 +319,13 @@ function onMouseUp(e) {
                     tracking.sendJobEvent(props.job, 'company_url clicked');
                   }
                 "
-                is-external
+                target="_blank"
+                rel="noreferrer"
               >
                 Homepage
               </a>
               <a
-                class="link"
+                class="link p-[15px]"
                 v-if="!!props.job?.company_ea_forum_url"
                 :href="props.job?.company_ea_forum_url"
                 @click="
@@ -341,7 +339,8 @@ function onMouseUp(e) {
                     await tracking.sendJobEvent(props.job, 'company_ea_forum_url clicked');
                   }
                 "
-                is-external
+                target="_blank"
+                rel="noreferrer"
               >
                 EA Forum Page
               </a>
@@ -349,17 +348,16 @@ function onMouseUp(e) {
 
             <div class="flex mt-4" :gap="comp.space" mt="4">
               <a
-                class="flex items-center hover:no-underline"
+                class="link flex items-center hover:no-underline"
                 @click="
                    (event: MouseEvent) => {
                     event.stopPropagation();
                     tracking.sendJobEvent(props.job, 'url_external clicked');
                   }
                 "
-                :class="'link'"
                 @auxclick="tracking.sendJobEvent(props.job, 'url_external clicked')"
                 :href="job.url_external"
-                is-external
+                target="_blank"
               >
                 <KButton>
                   VIEW JOB DETAILS
