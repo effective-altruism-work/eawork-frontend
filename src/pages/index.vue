@@ -290,8 +290,6 @@ const routing = { stateMapping };
 
         <div
           class="lg:flex flex-col lg:min-w-[30%] lg:max-w-[30%] xl:min-w-[26%] xl:max-w-[26%] sticky pl-10"
-          :min-w="comp.filtersW"
-          :max-w="comp.filtersW"
         >
           <SearchBox :is-show-results-count="true" />
           <CurrentRefinements />

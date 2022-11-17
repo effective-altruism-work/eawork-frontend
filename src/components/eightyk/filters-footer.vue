@@ -34,7 +34,7 @@ const hooks = {
         problem areas
       </p>
       <a
-        class="font-bold mt-2 block text-eightyk-400 text-sm"
+        class="font-bold mt-3 block text-eightyk-400 text-sm"
         href="https://80000hours.org/speak-with-us/?int_campaign=job_board"
       >
         SPEAK WITH US

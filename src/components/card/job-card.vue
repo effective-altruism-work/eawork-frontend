@@ -192,8 +192,8 @@ function onMouseUp(e) {
 
         <TransitionCollapseFade :is-visible="!state.isAccordionOpen.value" duration-ms="25">
           <div
-            class="flex lg:pl-3 lg:ml-[60px] justify-between mt-3 items-center text-xs lg:text-sm"
-            :justify="comp.isHasLocation ? 'space-between' : 'flex-end'"
+            class="flex lg:pl-3 lg:ml-[60px] mt-3 items-center text-xs lg:text-sm"
+            :class="comp.isHasLocation ? 'justify-between' : 'justify-end'"
           >
             <JobCardLocationShort :job="props.job" />
 
@@ -295,11 +295,11 @@ function onMouseUp(e) {
 
             <div
               class="flex items-baseline gap-4"
-              :class="job.company_description ? 'mt-0' : 'mt-3'"
+              :class="job.company_description ? 'mt-4' : 'mt-3'"
             >
               <p class="text-gray-400 text-sm">LINKS</p>
               <a
-                class="link p-[15px]"
+                class="link text-[15px]"
                 :href="props.job.company_url"
                 @click="
                   (event: MouseEvent) => {
@@ -318,7 +318,7 @@ function onMouseUp(e) {
                 Homepage
               </a>
               <a
-                class="link p-[15px]"
+                class="link text-[15px]"
                 v-if="!!props.job?.company_ea_forum_url"
                 :href="props.job?.company_ea_forum_url"
                 @click="
@@ -339,7 +339,7 @@ function onMouseUp(e) {
               </a>
             </div>
 
-            <div class="flex" :gap="comp.space">
+            <div class="flex mt-4 gap-4">
               <a
                 class="link flex items-center hover:no-underline"
                 @click="
