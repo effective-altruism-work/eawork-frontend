@@ -173,10 +173,10 @@ function onMouseUp(e) {
                 />
               </div>
               <!-- huh -->
-              <span class="text-sm lg:text-lg" v-if="props.isMissingAlgoliaContext">{{
+              <span class="text-sm lg:text-base" v-if="props.isMissingAlgoliaContext">{{
                 job.company_name
               }}</span>
-              <span v-else class="text-sm lg:text-lg">
+              <span v-else class="text-sm lg:text-base">
                 <ais-snippet :hit="job" attribute="company_name" />
               </span>
             </div>

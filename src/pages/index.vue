@@ -296,7 +296,7 @@ const routing = { stateMapping };
           <SearchBox :is-show-results-count="true" />
           <CurrentRefinements />
 
-          <div class="mb-7">
+          <div class="mb-1">
             <LazyAlerts
               :total-filters-length="totalFiltersLength"
               :query-json="state.queryJson.value"

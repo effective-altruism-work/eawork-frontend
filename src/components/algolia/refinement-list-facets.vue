@@ -18,7 +18,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <li class="relative mt-2" v-for="item in props.items" :key="item.value">
+  <li class="relative mt-1" v-for="item in props.items" :key="item.value">
     <Checkbox
       :model-value="item.isRefined"
       @update:model-value="() => props.refine(item.value)"
