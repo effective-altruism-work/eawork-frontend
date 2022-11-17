@@ -59,7 +59,7 @@ function handleClick() {
 
 <template>
   <div
-    class="flex flex-col gap-3 px-2 text-sm rounded relative"
+    class="flex flex-col gap-3 px-2 group text-sm rounded relative"
     :class="props.bg"
     @mouseover="isHovering = true"
     @focus="isHovering = true"

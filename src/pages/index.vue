@@ -222,78 +222,73 @@ const routing = { stateMapping };
           </div>
 
           <div>
-            <div>
-              <AisInfiniteHits>
-                <template
-                  v-slot="{
-                    items,
-                    refineNext,
-                    isLastPage,
-                  }: {
-                    items: JobAlgolia[],
-                    refinePrevious: () => void,
-                    refineNext: () => void,
-                    isLastPage: boolean,
-                    sendEvent: (x: any) => void,
-                  }"
-                >
-                  <JobCard
-                    v-if="state.jobFromUrlQuery.value && !state.queryJson.value"
-                    :job="state.jobFromUrlQuery.value"
-                    :jobFromURLQuery="true"
-                    :is-expanded="true"
-                    :is-missing-algolia-context="true"
-                    @card-expanded="
-                      state.jobPkCurrent.value = state.jobFromUrlQuery.value?.post_pk
-                    "
-                    @card-collapsed="
-                      () => {
-                        if (
-                          Number(state.jobPkCurrent.value) ===
-                          state.jobFromUrlQuery.value?.post_pk
-                        ) {
-                          state.jobPkCurrent.value = null;
-                        }
+            <AisInfiniteHits>
+              <template
+                v-slot="{
+                  items,
+                  refineNext,
+                  isLastPage,
+                }: {
+                  items: JobAlgolia[],
+                  refinePrevious: () => void,
+                  refineNext: () => void,
+                  isLastPage: boolean,
+                  sendEvent: (x: any) => void,
+                }"
+              >
+                <JobCard
+                  v-if="state.jobFromUrlQuery.value && !state.queryJson.value"
+                  :job="state.jobFromUrlQuery.value"
+                  :jobFromURLQuery="true"
+                  :is-expanded="true"
+                  :is-missing-algolia-context="true"
+                  @card-expanded="
+                    state.jobPkCurrent.value = state.jobFromUrlQuery.value?.post_pk
+                  "
+                  @card-collapsed="
+                    () => {
+                      if (
+                        Number(state.jobPkCurrent.value) ===
+                        state.jobFromUrlQuery.value?.post_pk
+                      ) {
+                        state.jobPkCurrent.value = null;
                       }
-                    "
-                  />
-                  <JobCard
-                    v-for="job in items"
-                    :job="job"
-                    :is-hidden="
-                      job.post_pk === state.jobFromUrlQuery?.value?.post_pk &&
-                      !state.queryJson.value
-                    "
-                    :is-has-text-query="Boolean(state.queryJson.value?.query)"
-                    :key="job.post_pk"
-                    @card-expanded="state.jobPkCurrent.value = job.post_pk"
-                    @card-collapsed="
-                      () => {
-                        if (state.jobPkCurrent.value === job.post_pk) {
-                          state.jobPkCurrent.value = null;
-                        }
+                    }
+                  "
+                />
+                <JobCard
+                  v-for="job in items"
+                  :job="job"
+                  :is-hidden="
+                    job.post_pk === state.jobFromUrlQuery?.value?.post_pk &&
+                    !state.queryJson.value
+                  "
+                  :is-has-text-query="Boolean(state.queryJson.value?.query)"
+                  :key="job.post_pk"
+                  @card-expanded="state.jobPkCurrent.value = job.post_pk"
+                  @card-collapsed="
+                    () => {
+                      if (state.jobPkCurrent.value === job.post_pk) {
+                        state.jobPkCurrent.value = null;
                       }
-                    "
-                  />
+                    }
+                  "
+                />
 
-                  <div ref="target" v-if="!isLastPage">
-                    <JobCardSkeleton />
-                    <JobCardSkeleton />
-                    <JobCardSkeleton />
-                  </div>
-                  <!-- this is a hack to trigger refineNext, because useElementVisibility doesn't include a way to trigger a callback -->
-                  <InternalTrigger
-                    v-if="targetIsVisible"
-                    :fn="() => throttleFn(refineNext)"
-                  />
-                </template>
+                <div ref="target" v-if="!isLastPage">
+                  <JobCardSkeleton />
+                  <JobCardSkeleton />
+                  <JobCardSkeleton />
+                </div>
+                <!-- this is a hack to trigger refineNext, because useElementVisibility doesn't include a way to trigger a callback -->
+                <InternalTrigger v-if="targetIsVisible" :fn="() => throttleFn(refineNext)" />
+              </template>
 
-                <!-- this overrides the 'show more results' button that pops up -->
-                <template v-slot:loadMore="{ page, isLastPage, refineNext }"
-                  ><span
-                /></template>
-              </AisInfiniteHits>
-            </div>
+              <!-- this overrides the 'show more results' button that pops up -->
+              <template v-slot:loadMore="{ page, isLastPage, refineNext }"
+                ><span
+              /></template>
+            </AisInfiniteHits>
           </div>
         </div>
 

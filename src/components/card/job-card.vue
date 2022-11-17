@@ -34,7 +34,6 @@ const state = {
   isShowModal: ref(false),
   isAccordionOpen: ref(props.isExpanded ?? false),
   isAccordionOpening: ref(props.isExpanded ?? false),
-  isHovering: ref(false),
   isStarHovering: ref(false),
   coordinates: ref({ x: null, y: null }),
 };
@@ -126,18 +125,11 @@ function onMouseUp(e) {
 <template>
   <div ref="cardRef">
     <div
-      class="mb-3 bg-white p-4 lg:p-6 rounded-xl hover:cursor-pointer transition-shadow"
+      class="mb-3 bg-white p-4 group lg:p-6 rounded-xl hover:cursor-pointer outline-gray-200"
+      :class="state.isAccordionOpen.value ? 'outline' : 'hover:outline'"
       v-if="!props.isHidden"
       @mousedown="onMouseDown"
       @mouseup="onMouseUp"
-      @mouseover="state.isHovering.value = true"
-      @focus="state.isHovering.value = true"
-      @mouseleave="state.isHovering.value = false"
-      @blur="state.isHovering.value = false"
-      :_hover="{
-        boxShadow: state.isAccordionOpen.value ? comp.activeShadow : comp.activeShadowBorder,
-      }"
-      :box-shadow="state.isAccordionOpen.value ? comp.activeShadow : 0"
     >
       <div>
         <div class="flex relative">
@@ -189,10 +181,9 @@ function onMouseUp(e) {
           </div>
 
           <OhVueIcon
-            class="text-gray-400 top-0 right-0 absolute"
-            v-show="state.isHovering.value"
-            name="chevron-down"
-            :transform="state.isAccordionOpen.value ? 'rotate(180deg)' : ''"
+            class="text-gray-400 hidden group-hover:block top-0 right-0 absolute scale-90"
+            name="hi-chevron-down"
+            :class="state.isAccordionOpen.value ? 'rotate-180' : ''"
             aria-label="open"
           />
         </div>
