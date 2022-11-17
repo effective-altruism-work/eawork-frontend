@@ -70,12 +70,7 @@ function isCurrentCategory(category: NodeCategory) {
       <img alt="80,000 Hours Logo" width="55" height="38.19" src="/80k-logo.png" />
     </EightyKLink>
 
-    <button
-      class="px-0 w-fit -mx-3"
-      @click="state.isOpen.value = true"
-      variant="none"
-      name="Menu Toggle"
-    >
+    <button class="w-10 h-10 -mx-3" @click="state.isOpen.value = true" name="Menu Toggle">
       <svg width="25" height="30" viewBox="0 0 512 512" fill="currentColor">
         <path
           fill="none"
@@ -89,20 +84,33 @@ function isCurrentCategory(category: NodeCategory) {
     </button>
 
     <!-- v-model="state.isOpen.value" -->
-    <div size="sm" placement="right" @keyup.esc="state.isOpen.value = false" tabindex="0">
+    <!-- drawer -->
+    <div
+      class="fixed w-screen h-screen bg-gray-500 opacity-80 left-0 top-0 z-40"
+      v-if="state.isOpen.value"
+      @click="state.isOpen.value = false"
+    />
+    <div
+      v-if="state.isOpen.value"
+      size="sm"
+      class="fixed h-screen w-[448px] bg-white z-50 right-0 top-0"
+      placement="right"
+      @keyup.esc="state.isOpen.value = false"
+      tabindex="0"
+    >
       <!-- <CDrawerOverlay /> -->
       <div class="bg-gray-50">
         <div class="p-0">
-          <div class="flex justify-between items-center py-1 bg-white">
+          <div class="flex justify-between items-center py-1 bg-white h-14">
             <p class="ml-5 text-lg">Menu</p>
-            <OhVueIcon
-              class="text-2xl text-gray-900"
-              @click="state.isOpen.value = false"
-              icon="x"
-              variant="ghost"
-              size="lg"
-              aria-label="close"
-            />
+            <div class="w-12 h-12 flex justify-center items-center">
+              <OhVueIcon
+                class="text-2xl text-gray-900 scale-125"
+                @click="state.isOpen.value = false"
+                name="io-close"
+                aria-label="close"
+              />
+            </div>
           </div>
 
           <div class="border-b border-gray-100">
@@ -201,24 +209,5 @@ function isCurrentCategory(category: NodeCategory) {
         </div>
       </div>
     </div>
-
-    <div
-      class="fixed w-screen h-screen left-0 top-0 z-50"
-      v-if="state.isOpen.value"
-      @click="state.isOpen.value = false"
-    />
   </div>
 </template>
-
-<style lang="scss">
-// chakra drawer is broken, revisit one they fix it
-.chakra-modal__content-container {
-  width: 0;
-  height: 0;
-  section {
-    z-index: 1400;
-  }
-}
-.chakra-modal__overlay {
-}
-</style>

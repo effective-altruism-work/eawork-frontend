@@ -51,7 +51,7 @@ const comp = useComp(() => {
   >
     <OhVueIcon name="fa-map-marker-alt" scale="0.75" color="#9BADB6" class="mb-[1px]" />
 
-    <div class="flex text-[#9BADB6] flex-nowrap items-center w-full">
+    <div class="flex text-[#9BADB6] flex-nowrap items-center w-full line-clamp-1">
       <div class="inline-flex items-center" v-if="props.job.tags_city.length">
         <p class="inline" v-for="(city, index) of comp.cities" :key="city">
           <span class="inline mx-2" v-if="index">▪</span>
