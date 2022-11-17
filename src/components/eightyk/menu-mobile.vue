@@ -10,14 +10,6 @@ const state = {
   nodeCategoryActive: ref<NodeCategory>(null),
 };
 
-const comp = {
-  spaces: {
-    sm: 2,
-    md: 4,
-  },
-  linkP: 5,
-};
-
 onMounted(() => {
   window.addEventListener("keyup", onKeyUp);
 });

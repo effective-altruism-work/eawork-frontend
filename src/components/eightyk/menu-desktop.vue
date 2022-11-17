@@ -9,15 +9,6 @@ const state = {
   nodeCategoryActive: ref<NodeCategory>(null),
 };
 
-const comp = {
-  spaces: {
-    sm: 2,
-    md: 4,
-    lg: 6,
-  },
-  black50: "#2a2e30",
-};
-
 function getCategoryDisplay(category: NodeCategory): boolean {
   // must be in <script> due to the vue templating bug
   // flex, none

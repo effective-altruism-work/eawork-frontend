@@ -18,15 +18,6 @@ const state = {
   nodeCategoryActive: ref<NodeCategory>(null),
 };
 
-const comp = {
-  spaces: {
-    sm: 2,
-    md: 4,
-    lg: 6,
-  },
-  black50: "#2a2e30",
-};
-
 function isCurrentNode(node: Node) {
   return state.nodeOpened.value?.label === node.label && node.categories;
 }
