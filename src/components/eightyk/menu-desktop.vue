@@ -67,12 +67,12 @@ function onNodeClick(event, node) {
         <div class="flex">
           <div class="z-10" v-for="node in nodes" :key="node.label">
             <a
-              class="cursor-pointer"
+              class="cursor-pointer group"
               :href="node.url"
               @click="(event) => onNodeClick(event, node)"
             >
               <button
-                class="ml-6 font-bold bg-inherit"
+                class="ml-6 font-bold bg-inherit group-hover:underline"
                 variant="link"
                 :class="isCurrentNode(node) ? 'text-eightyk-500' : 'text-black-50'"
               >
@@ -178,11 +178,5 @@ function onNodeClick(event, node) {
         </div>
       </div>
     </div>
-
-    <div
-      class="absolute w-full h-full inset-0 z-10"
-      v-if="state.nodeOpened.value"
-      @click="state.nodeOpened.value = null"
-    />
   </div>
 </template>

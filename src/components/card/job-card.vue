@@ -85,7 +85,6 @@ const comp = useComp(() => {
     : "";
 
   return {
-    space: 6,
     activeShadowBorder,
     remoteLocation,
     activeShadow: `0 8px 24px 0 #9badb629, ${activeShadowBorder}`,

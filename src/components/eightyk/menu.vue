@@ -67,9 +67,13 @@ function onNodeClick(event, node) {
 
         <div class="flex gap-6">
           <div class="relative" v-for="node in nodesSecondary" :key="node.label">
-            <NuxtLink :href="node.url" @click="(event) => onNodeClick(event, node)">
+            <NuxtLink
+              class="group"
+              :href="node.url"
+              @click="(event) => onNodeClick(event, node)"
+            >
               <button
-                class="ml-4 bg-inherit"
+                class="ml-4 bg-inherit group-hover:underline"
                 :class="isCurrentNode(node) ? 'text-eightyk-500' : 'text-black-50'"
                 variant="link"
               >

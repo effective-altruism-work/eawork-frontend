@@ -18,12 +18,12 @@ const props = defineProps<{
 </script>
 
 <template>
-  <li class="relative mt-1" v-for="item in props.items" :key="item.value">
+  <li class="relative mt-1 h-[25px]" v-for="item in props.items" :key="item.value">
     <Checkbox
       :model-value="item.isRefined"
       @update:model-value="() => props.refine(item.value)"
     >
-      <div class="ml-2">
+      <div class="ml-2.5">
         <p class="inline text-base hover:text-eightyk-500">
           <ais-highlight
             v-if="props.searchable && item.value != 'is_recommended_org'"
