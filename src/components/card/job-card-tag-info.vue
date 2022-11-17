@@ -11,11 +11,7 @@ const props = defineProps<{
   <div class="w-4 h-4" w="4" h="4">
     <OhVueIcon
       name="io-information-circle"
-      scale="0.8"
-      top="-1.5px"
-      ml="0.5"
-      style="opacity: 0.6"
-      position="relative"
+      class="ml-0.5 relative opacity-60 -top-0.5 scale-75"
     />
 
     <div class="z-10 bottom-2 left-0 absolute" v-if="isHovering">

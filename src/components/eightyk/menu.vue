@@ -62,7 +62,7 @@ function onNodeClick(event, node) {
     </div>
 
     <div class="hidden xl:flex flex-col items-center py-2 bg-[#EEEEEE]">
-      <div class="flex justify-between w-full max-w-8xl">
+      <div class="flex justify-between w-full px-4 max-w-8xl">
         <div class="flex">Home</div>
 
         <div class="flex gap-6">
@@ -73,12 +73,12 @@ function onNodeClick(event, node) {
                 :class="isCurrentNode(node) ? 'text-eightyk-500' : 'text-black-50'"
                 variant="link"
               >
-                {{ node.label }}
-                <OhVueIcon
+                {{ node.label
+                }}<OhVueIcon
                   v-if="node.categories"
                   name="ri-arrow-down-s-fill"
                   scale="1"
-                  :color="isCurrentNode(node) ? 'blue.500' : comp.black50"
+                  :class="isCurrentNode(node) ? 'text-eightyk-blue' : 'text-black-50'"
                 />
               </button>
             </NuxtLink>

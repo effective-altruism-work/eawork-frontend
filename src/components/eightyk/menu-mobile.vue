@@ -122,8 +122,8 @@ function isCurrentCategory(category: NodeCategory) {
                   }
                 "
               >
-                {{ node.label }}
-                <OhVueIcon
+                {{ node.label
+                }}<OhVueIcon
                   v-if="node.categories"
                   name="ri-arrow-down-s-fill"
                   class="ml-1 text-lg"
@@ -144,8 +144,8 @@ function isCurrentCategory(category: NodeCategory) {
                   :href="category.url ? category.url : undefined"
                   @click="(event) => (category.url ? onNodeClick(category, event) : null)"
                 >
-                  {{ category.label }}
-                  <OhVueIcon
+                  {{ category.label
+                  }}<OhVueIcon
                     class="ml-1"
                     v-if="category.children[0]?.children?.length"
                     name="ri-arrow-down-s-fill"

@@ -5,10 +5,10 @@ const { href, external } = props;
 </script>
 
 <template>
-  <a class="text-lightest-gray hover:underline" v-if="external" is-external :href="href"
+  <a class="text-gray-lightest hover:underline" v-if="external" is-external :href="href"
     ><slot
   /></a>
-  <EightyKLink v-else :class="'text-lightest-gray hover:underline'" :path="href"
+  <EightyKLink v-else :class="'text-gray-lightest hover:underline'" :path="href"
     ><slot
   /></EightyKLink>
 </template>

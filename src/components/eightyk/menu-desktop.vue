@@ -66,14 +66,18 @@ function onNodeClick(event, node) {
         </EightyKLink>
         <div class="flex">
           <div class="z-10" v-for="node in nodes" :key="node.label">
-            <a class="cursor-pointer" :href="node.url" @click="(event) => onNodeClick(event, node)">
+            <a
+              class="cursor-pointer"
+              :href="node.url"
+              @click="(event) => onNodeClick(event, node)"
+            >
               <button
                 class="ml-6 font-bold bg-inherit"
                 variant="link"
                 :class="isCurrentNode(node) ? 'text-eightyk-500' : 'text-black-50'"
               >
-                {{ node.label }}
-                <OhVueIcon
+                {{ node.label
+                }}<OhVueIcon
                   v-if="node.categories"
                   name="ri-arrow-down-s-fill"
                   scale="1"

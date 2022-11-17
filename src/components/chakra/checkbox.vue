@@ -33,7 +33,7 @@ const value = computed({
     />
 
     <div
-      class="group-hover:border-blue-100 self-start mt-1 w-4 border-2 border-inherit rounded-sm inline-flex items-center justify-center align-top select-none shrink-0 bg-white"
+      class="self-start mt-1 w-4 border-2 rounded-sm inline-flex items-center justify-center align-top select-none shrink-0 bg-white"
       :class="{ 'bg-eightyk-500 border-eightyk-500 text-white': value }"
     >
       <div class="flex items-center h-full w-full justify-center">

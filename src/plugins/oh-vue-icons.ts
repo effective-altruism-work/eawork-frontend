@@ -19,6 +19,9 @@ import {
   IoClose,
   IoMenu,
   MdAddalertRound,
+  IoSearch,
+  BiChatLeft,
+  BiBoxArrowUpRight,
 } from "oh-vue-icons/icons";
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -41,5 +44,8 @@ export default defineNuxtPlugin((nuxtApp) => {
     IoClose,
     IoMenu,
     MdAddalertRound,
+    IoSearch,
+    BiChatLeft,
+    BiBoxArrowUpRight,
   );
 });

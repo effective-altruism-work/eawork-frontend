@@ -28,7 +28,7 @@ const props = defineProps<{
           />
           <OhVueIcon
             class="w-6 h-6 absolute left-4 self-center"
-            name="search"
+            name="io-search"
             color="grey"
           />
         </form>

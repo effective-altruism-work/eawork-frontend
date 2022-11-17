@@ -163,7 +163,7 @@ function onMouseUp(e) {
 
             <div
               class="leadning-tight lg:leading-none relative text-sm lg:text-md"
-              :left="job?.company_is_recommended_org ? '-3px' : ''"
+              :style="job?.company_is_recommended_org ? 'left: -3px' : ''"
             >
               <div
                 class="relative inline"
@@ -184,8 +184,10 @@ function onMouseUp(e) {
                 />
               </div>
               <!-- huh -->
-              <span v-if="props.isMissingAlgoliaContext">{{ job.company_name }}</span>
-              <ais-snippet v-else :hit="job" attribute="company_name" />
+              <span class="text-lg" v-if="props.isMissingAlgoliaContext">{{
+                job.company_name
+              }}</span>
+              <ais-snippet class="text-base" v-else :hit="job" attribute="company_name" />
             </div>
           </div>
 
@@ -226,7 +228,11 @@ function onMouseUp(e) {
               :justify="comp.isHasLocation ? 'space-between' : 'flex-end'"
             >
               <div class="flex items-center">
-                <OhVueIcon name="fa-map-marker-alt" fill="#9BADB6" class="mt-[3px]" />
+                <OhVueIcon
+                  name="fa-map-marker-alt"
+                  fill="#9BADB6"
+                  class="mr-[3px] scale-75"
+                />
                 <div class="flex flex-col lg:flex-row items-center lg:gap-3">
                   <div
                     class="flex items-center gap-3"
@@ -276,12 +282,12 @@ function onMouseUp(e) {
 
             <JobCardTags :job="props.job" />
 
-            <div class="mt-4" mt="4">
+            <div class="mt-4 text-[15px] leading-[22.5px]" mt="4">
               <p class="text-gray-400 text-sm">DESCRIPTION</p>
               <p class="mt-2" v-html="job.description_short + ' [...]'" />
             </div>
 
-            <div class="mt-4">
+            <div class="mt-4 text-[15px] leading-[22.5px]">
               <p class="text-gray-400 text-sm">APPLICATIONS CLOSE</p>
               <p class="mt-2">
                 {{
@@ -292,7 +298,7 @@ function onMouseUp(e) {
               </p>
             </div>
 
-            <div class="mt-3" v-if="job.company_description">
+            <div class="mt-3 text-[15px] leading-[22.5px]" v-if="job.company_description">
               <p class="text-gray-400 text-sm">ABOUT THIS ORGANISATION</p>
               <p class="mt-2" v-html="job.company_description" />
             </div>
