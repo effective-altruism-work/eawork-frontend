@@ -2,7 +2,7 @@
 import { useHead, useRuntimeConfig } from "#app";
 import { ref, onMounted } from "vue";
 import Menu from "~/components/eightyk/menu.vue";
-import EightykFilter from "~/components/eightyk/eightyk-footer.vue";
+import EightykFooter from "~/components/eightyk/eightyk-footer.vue";
 
 const state = {
   config: useRuntimeConfig(),

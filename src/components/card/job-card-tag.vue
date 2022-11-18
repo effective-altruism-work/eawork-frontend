@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { useBreakpoints, breakpointsTailwind } from "@vueuse/core";
 import { ref, computed } from "vue";
 import urlWrap from "~~/src/utils/urlWrap";
 import labelTag from "~/utils/labelTag";
@@ -10,8 +9,6 @@ const props = defineProps<{
   bg: string;
   color: string;
 }>();
-
-// const breakpoints = useBreakpoints(breakpo);
 
 const isHovering = ref(false);
 

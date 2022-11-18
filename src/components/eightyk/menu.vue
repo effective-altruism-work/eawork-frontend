@@ -1,17 +1,9 @@
 <script setup lang="ts">
-import { useRuntimeConfig } from "#app";
-import { useBreakpoints } from "@vueuse/core";
 import { ref } from "vue";
 import { Node, NodeCategory, nodesSecondary } from "~/nodes";
 import { OhVueIcon } from "oh-vue-icons";
 import MenuDesktop from "~/components/eightyk/menu-desktop.vue";
 import MenuMobile from "~/components/eightyk/menu-mobile.vue";
-import { breakpointsChakra } from "~~/src/constants";
-
-const hooks = {
-  breakpoints: useBreakpoints(breakpointsChakra),
-  config: useRuntimeConfig(),
-};
 
 const state = {
   nodeOpened: ref<Node>(null),
@@ -40,16 +32,15 @@ function onNodeClick(event, node) {
 <template>
   <div class="bg-white">
     <div class="w-full m-auto px-4 max-w-8xl">
-      <div
-        class="flex items-center flex-col"
-        v-if="hooks.breakpoints.greaterOrEqual('xl').value"
-      >
+      <div class="hidden xl:flex items-center flex-col">
         <div class="flex w-full flex-grow max-w-8xl mx-auto justify-center py-3 bg-white">
           <MenuDesktop />
         </div>
       </div>
 
-      <MenuMobile v-else />
+      <div class="block xl:hidden">
+        <MenuMobile />
+      </div>
     </div>
 
     <div class="hidden xl:flex flex-col items-center py-2 bg-[#EEEEEE]">

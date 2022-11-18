@@ -11,9 +11,6 @@ body {
   position: relative;
 }
 
-@import url("https://p.typekit.net/p.css?s=1&k=ymt1nvo&ht=tk&f=139.173.175.176.2009&a=7118829&app=typekit&e=css");
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
-
 @font-face {
   font-family: "proxima-nova";
   src: url("https://use.typekit.net/af/925423/00000000000000003b9b038f/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3")
