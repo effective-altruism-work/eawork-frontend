@@ -19,6 +19,8 @@ export default {
     };
   },
   created() {
+    console.log("create");
+
     // this is a little untethered from index state, so we have to shimmy this in.
     const url = new URL(window.location.href);
     for (const [key, val] of url.searchParams.entries()) {
@@ -28,6 +30,7 @@ export default {
     }
   },
   destroyed() {
+    console.log("destroy");
     if (this.timerId) {
       clearTimeout(this.timerId);
     }
@@ -35,9 +38,11 @@ export default {
   computed: {
     query: {
       get() {
+        console.log(this.localQuery);
         return this.localQuery;
       },
       set(val) {
+        console.log(val);
         this.localQuery = val;
         if (this.timerId) {
           clearTimeout(this.timerId);

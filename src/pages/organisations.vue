@@ -45,18 +45,22 @@ interface RouteState {
 }
 
 function stateToRoute(uiState: { [indexId: string]: RouteState }): RouteState {
+  console.log({ uiState });
   const indexUiState: RouteState = uiState[hooks.config.public.algoliaCompaniesIndex];
+
   return {
     query: indexUiState.query,
     refinementList: indexUiState.refinementList,
     ...(state.orgPkCurrent.value
       ? { orgPk: String(state.orgPkCurrent.value) }
       : { orgPk: undefined }),
-    ...state.otherParams, // don't lose our other params
+    ...state.otherParams.value, // don't lose our other params
   };
 }
 
 function routeToState(routeState: RouteState): { [indexId: string]: RouteState } {
+  console.log({ routeState });
+
   let refinementList = routeState?.refinementList;
 
   // side effect
@@ -83,6 +87,7 @@ function searchFunction(helper: {
     };
   };
 }) {
+  console.log("helper state", helper.state);
   state.queryJson.value = queryToJson(helper.state);
   helper.search();
 }
@@ -118,35 +123,16 @@ const totalFiltersLength = computed(() => {
         :search-function="searchFunction"
         :index-name="hooks.config.public.algoliaCompaniesIndex"
       >
-        <AisConfigure :hits-per-page.camel="1000" />
         <div class="lg:hidden">
           <!-- <CurrentRefinements /> -->
         </div>
         <div class="flex mb-24">
           <div class="flex flex-col">
-            <div class="flex justify-end gap-6">
-              <!--<NuxtLink :to="urls.jobs.post">-->
-              <!--  <CButton color-scheme="blue" variant="outline">-->
-              <!--    <OhVueIcon name="hi-solid-plus" scale="1" color="var(&#45;&#45;colors-blue-600)" />-->
-              <!--    <CText ml="2">Post Job</CText>-->
-              <!--  </CButton>-->
-              <!--</NuxtLink>-->
-            </div>
-
             <div>
-              <AisInfiniteHits
-                :transform-items="
-                (items: OrgAlgolia[]) => {
-                  log(items.length)
-                  return items.filter((i) => i.is_top_recommended_org);
-                }
-              "
-              >
+              <AisInfiniteHits>
                 <template
                   v-slot="{
                     items,
-                    refineNext,
-                    isLastPage,
                   }: {
                     items: OrgAlgolia[],
                     refinePrevious: () => void,
@@ -156,7 +142,7 @@ const totalFiltersLength = computed(() => {
                   }"
                 >
                   <OrgCard
-                    v-for="org in items"
+                    v-for="org in items.filter((x) => x.is_top_recommended_org)"
                     :org="org"
                     :is-hidden="
                       org.objectID === state.orgFromUrlQuery?.value?.objectID &&
@@ -203,7 +189,7 @@ const totalFiltersLength = computed(() => {
           <FiltersFooter />
         </div> -->
 
-          <!-- mobile -->
+          <!-- filters and search -->
           <LazyOrganisationsModal
             :total-filters-length="totalFiltersLength"
             :index="state.searchIndex"

@@ -44,7 +44,7 @@ const emit = defineEmits(["showMobile", "hideMobile"]);
       </div>
 
       <div class="w-full">
-        <SearchBox :is-show-results-count="true" />
+        <SearchBox :is-show-results-count="false" />
       </div>
       <div class="mt-4">
         <CurrentRefinements />
