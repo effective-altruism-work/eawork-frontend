@@ -5,7 +5,12 @@ import RefinementListFacets from "~/components/algolia/refinement-list-facets.vu
 import { TagDjango, TagTypeName, AlgoliaFilterItem } from "~/utils/types";
 import { chakra } from "@chakra-ui/vue-next";
 import * as Sentry from "@sentry/vue";
-import { xRiskProblemAreas, acrossEAProblemAreas, otherProblemAreas } from "~/constants";
+import {
+  xRiskProblemAreas,
+  acrossEAProblemAreas,
+  otherProblemAreas,
+  allProblemAreas,
+} from "~/constants";
 import EightykLink from "../eightyk/eightyk-link.vue";
 import { AisRefinementList } from "vue-instantsearch/vue3/es";
 
