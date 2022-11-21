@@ -83,7 +83,10 @@ function morphFacetValues(
   }
 
   if (props.attribute === "tags_area") {
-    return filteredItems.filter((item) => allProblemAreas.includes(item.value as any));
+    const ind = filteredItems.findIndex((i) => i.value === "Other policy-focused");
+    if (ind !== -1) {
+      filteredItems.push(filteredItems.splice(ind, 1)[0]);
+    }
   }
   // if (section) {
   //   if (section === "x-risk") {

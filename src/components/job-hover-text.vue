@@ -53,7 +53,7 @@ const props = defineProps<{
         <em
           >Open Philanthropy is 80,000 Hours'
           <a style="color: #0aa9bf" href="https://80000hours.org/about/donors/"
-            >larget funder</a
+            >largest funder</a
           >.
         </em>
       </template>
