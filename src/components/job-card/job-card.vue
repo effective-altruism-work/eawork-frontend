@@ -2,8 +2,8 @@
 import { format } from "date-fns";
 import { OhVueIcon } from "oh-vue-icons";
 import { ref, onMounted, computed } from "vue";
-import JobCardLocationShort from "~/components/card/job-card-location-short.vue";
-import JobCardTags from "~/components/card/job-card-tags.vue";
+import JobCardLocationShort from "~/components/job-card/job-card-location-short.vue";
+import JobCardTags from "~/components/job-card/job-card-tags.vue";
 import { strings } from "~/constants";
 // import { theme } from "~/styles/theme";
 import { useComp } from "~/utils/structs";

@@ -16,6 +16,8 @@ onMounted(() => {
   }, 10);
 });
 
+const route = useRoute();
+
 useHead({
   htmlAttrs: { lang: "en" },
   titleTemplate: (titleChunk) =>
@@ -66,6 +68,20 @@ useHead({
     <Menu />
     <div class="bg-[#F4F6F7]">
       <div class="max-w-8xl mx-auto px-3 lg:px-4">
+        <!-- <div class="absolute left-4">
+          <NuxtLink
+            class="block"
+            :class="$route.path === '/' ? 'text-black-50' : 'text-gray-light'"
+            to="/"
+            >• Jobs</NuxtLink
+          >
+          <NuxtLink
+            class="block"
+            :class="$route.path === '/organisations' ? 'text-black-50' : 'text-gray-light'"
+            to="/organisations"
+            >• Organisations</NuxtLink
+          >
+        </div> -->
         <NuxtPage />
       </div>
     </div>

@@ -1,15 +1,12 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { OhVueIcon } from "oh-vue-icons";
-import KButton from "./generics/kButton.vue";
-
-const emit = defineEmits(["showMobile"]);
+import KButton from "../generics/kButton.vue";
 </script>
-
 <template>
   <div>
     <div class="mt-8 lg:mt-14 mb-6 lg:mb-14 gap-4 lg:gap-3 flex flex-col">
       <h3 class="leading-[38.4px] lg:leading-[38.4px] text-[44px] font-bold lg:text-5xl">
-        Jobs
+        Organisations
       </h3>
       <p class="text-lg mt-2">
         Handpicked to help you tackle the
@@ -19,9 +16,9 @@ const emit = defineEmits(["showMobile"]);
     </div>
 
     <div class="flex gap-7 lg:-mt-2 mb-6 text-sm lg:text-base items-center">
-      <NuxtLink class="flex items-center text-gray-400 underline" to="/organisations">
+      <NuxtLink class="flex items-center text-gray-400 underline" to="/">
         <OhVueIcon name="md-starrate-round" scale="1.1" class="mb-[1px]" />
-        <span class="ml-1">Top recommended organisations</span>
+        <span class="ml-1">Jobs</span>
       </NuxtLink>
       <a
         class="flex items-center underline text-gray-400"

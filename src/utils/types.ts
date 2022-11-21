@@ -20,6 +20,22 @@ export type TagDjango = { pk?: number; name: string; count?: number; is_featured
 
 export type AlgoliaTagFields = { [Property in keyof TagTypeName]: string[] };
 
+export interface OrgAlgolia {
+  objectID: string;
+  name: string;
+  is_top_recommended_org: boolean;
+  description: string;
+  url: string;
+  logo_url: string;
+  career_page_url: string;
+  linkedin_url: string;
+  facebook_url: string;
+  forum_url: string;
+  locations: string[];
+  problem_areas: string[];
+  posts: { pk: number; title: string }[];
+}
+
 export interface JobAlgolia {
   objectID: string;
   post_pk: number;

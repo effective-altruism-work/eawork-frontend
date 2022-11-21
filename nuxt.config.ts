@@ -16,6 +16,7 @@ export default defineNuxtConfig({
       algoliaApplicationId: "S2T38ZKE0P",
       algoliaApiKey: "b0e9cd27b37d64ac5bbb0b0671e1e84b",
       algoliaTagsIndex: "tags_prod",
+      algoliaCompaniesIndex: "companies_prod",
       algoliaJobsIndex: "jobs_prod",
       segmentId: "",
     },
