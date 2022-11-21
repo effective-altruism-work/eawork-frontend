@@ -21,11 +21,12 @@ function handleClick() {
 
 <template>
   <button
-    class="bg-white p-4 group w-[48%] lg:p-6 rounded-xl hover:cursor-pointer outline-gray-200 items-start justify-between flex flex-col"
+    :disabled="!org.posts.length"
+    class="bg-white mb-4 w-full p-4 group lg:p-6 rounded-xl hover:cursor-pointer outline-gray-200 items-start justify-between flex flex-col"
     :class="isOpen ? 'outline' : 'hover:outline'"
     @click="handleClick"
   >
-    <div>
+    <div class="w-full">
       <div class="flex relative w-full">
         <img
           class="bg-white rounded object-contain"
@@ -44,40 +45,19 @@ function handleClick() {
             <!-- <span v-if="props.isMissingAlgoliaContext">{{ org.name }}</span>
           <AisSnippet v-else :hit="org" attribute="name" /> -->
           </p>
-
-          <div
-            class="leading-tight lg:leading-none relative text-sm lg:text-md"
-            :style="org?.is_top_recommended_org ? 'left: -3px' : ''"
-          >
-            <!-- <div
-            class="relative inline"
-            v-if="org?.company_is_recommended_org"
-            @mouseover="state.isStarHovering.value = true"
-            @focus="state.isStarHovering.value = true"
-            @mouseleave="state.isStarHovering.value = false"
-            @blur="state.isStarHovering.value = false"
-          >
-            <OhVueIcon
-              name="md-starrate-round"
-              scale="1.1"
-              class="mb-[1px] mr-0.5 text-[#9badb6]"
+          <div class="w-fit">
+            <JobCardTag
+              v-for="area in org.problem_areas"
+              bg="bg-[#F3FAF0]"
+              color="text-[#466E35]"
+              :key="area"
+              :tag="area"
             />
-            <JobHoverText
-              v-if="state.isStarHovering.value"
-              :companyName="job.company_name"
-            />
-          </div> -->
-
-            <span class="text-sm lg:text-base" v-if="props.isMissingAlgoliaContext">{{
-              org.name
-            }}</span>
-            <span v-else class="text-sm lg:text-base">
-              <ais-snippet :hit="org" attribute="name" />
-            </span>
           </div>
         </div>
 
         <OhVueIcon
+          v-if="org.posts.length"
           class="text-gray-400 hidden group-hover:block top-0 right-0 absolute scale-90"
           name="hi-chevron-down"
           :class="isOpen ? 'rotate-180' : ''"
@@ -118,10 +98,14 @@ function handleClick() {
         </div>
       </div>
     </div>
+    <TransitionCollapseFade class="mt-4" :is-visible="isOpen" duration-ms="300">
+      <h6 class="text-gray-400 text-lg text-left mb-1">Roles</h6>
+      <NuxtLink class="text-left" v-for="post in org.posts" :to="`/?jobPk=${post.pk}`">
+        <p class="text-eightyk-500">• {{ post.title }}</p>
+      </NuxtLink>
+    </TransitionCollapseFade>
     <div v-if="org.posts.length" class="flex mt-4 w-full text-eightyk-500 justify-end">
-      <button @click="handleClick">
-        {{ isOpen ? "Hide" : "View" }} {{ org.posts.length }} active listings
-      </button>
+      <button>{{ isOpen ? "Hide" : "View" }} {{ org.posts.length }} active listings</button>
     </div>
   </button>
 </template>

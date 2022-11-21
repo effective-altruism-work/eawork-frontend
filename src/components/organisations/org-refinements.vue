@@ -9,29 +9,6 @@ const props = defineProps<{
   index: SearchIndex;
   // searchClient: SearchClient;
 }>();
-
-const orgCount = ref(0);
-const cityCount = ref(0);
-const countryCount = ref(0);
-const initialFacets = reactive<{ [key: string]: string[] }>({});
-
-onMounted(async () => {
-  const res = await props.index.search("", {
-    facets: ["tags_country", "tags_city", "org_data"],
-  });
-
-  const { org_data, tags_city, tags_country }: { [key: string]: { [key: string]: number } } =
-    res.facets;
-
-  orgCount.value = Object.keys(org_data).length;
-  cityCount.value = Object.keys(tags_city).length;
-  countryCount.value = Object.keys(tags_country).length;
-
-  for (const facetName in res.facets) {
-    const list = Object.keys(res.facets[facetName]);
-    initialFacets[facetName] = list;
-  }
-});
 </script>
 
 <template>

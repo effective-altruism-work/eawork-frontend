@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { AisInstantSearch, AisInfiniteHits } from "vue-instantsearch/vue3/es";
+import { AisInstantSearch, AisInfiniteHits, AisConfigure } from "vue-instantsearch/vue3/es";
 import algoliasearch from "algoliasearch";
 import { useHooks } from "../utils/structs";
 import { OrgAlgolia } from "../utils/types";
 import { useThrottleFn } from "@vueuse/shared";
-import { useElementVisibility } from "@vueuse/core";
 import queryToJson from "../utils/queryToJson";
 import OrgCard from "~/components/organisations/org-card.vue";
 import OrgHeader from "~/components/organisations/header.vue";
@@ -12,6 +11,8 @@ import SearchBox from "../components/algolia/search-box.vue";
 import CurrentRefinements from "../components/algolia/current-refinements.vue";
 import FiltersFooter from "../components/eightyk/filters-footer.vue";
 import OrgRefinements from "~/components/organisations/org-refinements.vue";
+import log from "../utils/log";
+
 useHead({
   title: "Job board | Organisations",
 });
@@ -34,7 +35,7 @@ const state = {
   orgPkCurrent: ref<string | null>(null),
   orgFromUrlQuery: ref<OrgAlgolia | null>(null),
   otherParams: ref(null),
-  isShowMobileFilters: ref(false),
+  isShowModalFilters: ref(false),
 };
 
 interface RouteState {
@@ -89,10 +90,6 @@ function searchFunction(helper: {
 const stateMapping = { stateToRoute, routeToState };
 const routing = { stateMapping };
 
-const throttleFn = useThrottleFn((fn: () => void) => {
-  fn();
-}, 1000);
-
 const totalFiltersLength = computed(() => {
   let tL = 0;
 
@@ -108,75 +105,62 @@ const totalFiltersLength = computed(() => {
 
   return tL;
 });
-
-const target = ref<HTMLDivElement>(null);
-const targetIsVisible = useElementVisibility(target);
 </script>
 
 <template>
-  <div>
-    <OrgHeader />
-    <AisInstantSearch
-      show-loading-indicator
-      :routing="routing"
-      :search-client="hooks.searchClient"
-      :search-function="searchFunction"
-      :index-name="hooks.config.public.algoliaCompaniesIndex"
-    >
-      <div class="lg:hidden">
-        <!-- <CurrentRefinements /> -->
-      </div>
-      <div class="flex mb-24">
-        <div class="flex flex-col min-w-full lg:min-w-[70%] xl:min-w-[74%]">
-          <div class="flex justify-end gap-6">
-            <!--<NuxtLink :to="urls.jobs.post">-->
-            <!--  <CButton color-scheme="blue" variant="outline">-->
-            <!--    <OhVueIcon name="hi-solid-plus" scale="1" color="var(&#45;&#45;colors-blue-600)" />-->
-            <!--    <CText ml="2">Post Job</CText>-->
-            <!--  </CButton>-->
-            <!--</NuxtLink>-->
-          </div>
+  <div class="flex justify-center">
+    <div class="max-w-2xl">
+      <OrgHeader @show-modal="() => (state.isShowModalFilters.value = true)" />
+      <AisInstantSearch
+        show-loading-indicator
+        :routing="routing"
+        :search-client="hooks.searchClient"
+        :search-function="searchFunction"
+        :index-name="hooks.config.public.algoliaCompaniesIndex"
+      >
+        <AisConfigure :hits-per-page.camel="1000" />
+        <div class="lg:hidden">
+          <!-- <CurrentRefinements /> -->
+        </div>
+        <div class="flex mb-24">
+          <div class="flex flex-col">
+            <div class="flex justify-end gap-6">
+              <!--<NuxtLink :to="urls.jobs.post">-->
+              <!--  <CButton color-scheme="blue" variant="outline">-->
+              <!--    <OhVueIcon name="hi-solid-plus" scale="1" color="var(&#45;&#45;colors-blue-600)" />-->
+              <!--    <CText ml="2">Post Job</CText>-->
+              <!--  </CButton>-->
+              <!--</NuxtLink>-->
+            </div>
 
-          <div>
-            <AisInfiniteHits>
-              <template
-                v-slot="{
-                  items,
-                  refineNext,
-                  isLastPage,
-                }: {
-                  items: OrgAlgolia[],
-                  refinePrevious: () => void,
-                  refineNext: () => void,
-                  isLastPage: boolean,
-                  sendEvent: (x: any) => void,
-                }"
+            <div>
+              <AisInfiniteHits
+                :transform-items="
+                (items: OrgAlgolia[]) => {
+                  log(items.length)
+                  return items.filter((i) => i.is_top_recommended_org);
+                }
+              "
               >
-                <div
-                  class="flex flex-wrap gap-2 flex-col"
-                  :style="`height: ${290 * (items.length / 2)}px`"
+                <template
+                  v-slot="{
+                    items,
+                    refineNext,
+                    isLastPage,
+                  }: {
+                    items: OrgAlgolia[],
+                    refinePrevious: () => void,
+                    refineNext: () => void,
+                    isLastPage: boolean,
+                    sendEvent: (x: any) => void,
+                  }"
                 >
                   <OrgCard
-                    v-if="state.orgFromUrlQuery.value && !state.queryJson.value"
-                    :org="state.orgFromUrlQuery.value"
-                    :orgFromUrlQuery="true"
-                    :is-expanded="true"
-                    :is-missing-algolia-context="true"
-                    @card-expanded="
-                      state.orgPkCurrent.value = state.orgFromUrlQuery.value?.objectID
-                    "
-                    @card-collapsed="
-                      () => {
-                        if (
-                          state.orgPkCurrent.value === state.orgFromUrlQuery.value?.objectID
-                        ) {
-                          state.orgPkCurrent.value = null;
-                        }
-                      }
-                    "
-                  />
-                  <OrgCard
-                    v-for="org in items.map((o) => ({ ...o, locations: ['Oxford, UK'] }))"
+                    v-for="org in items.map((o) => ({
+                      ...o,
+                      locations: ['Oxford, UK'],
+                      problem_areas: ['x-risk'],
+                    }))"
                     :org="org"
                     :is-hidden="
                       org.objectID === state.orgFromUrlQuery?.value?.objectID &&
@@ -193,28 +177,23 @@ const targetIsVisible = useElementVisibility(target);
                       }
                     "
                   />
-                </div>
+                </template>
 
-                <!-- <div ref="target" v-if="!isLastPage">
-                  <JobCardSkeleton />
-                  <JobCardSkeleton />
-                  <JobCardSkeleton />
-                </div> -->
-                <!-- this is a hack to trigger refineNext, because useElementVisibility doesn't include a way to trigger a callback -->
-                <InternalTrigger v-if="targetIsVisible" :fn="() => throttleFn(refineNext)" />
-              </template>
-
-              <!-- this overrides the 'show more results' button that pops up -->
-              <template v-slot:loadMore="{ page, isLastPage, refineNext }"
-                ><span
-              /></template>
-            </AisInfiniteHits>
+                <!-- this overrides the 'show more results' button that pops up -->
+                <template v-slot:loadMore="{ page, isLastPage, refineNext }"
+                  ><span
+                /></template>
+              </AisInfiniteHits>
+            </div>
           </div>
-        </div>
 
-        <div
+          <!-- <div
           class="lg:flex flex-col lg:min-w-[30%] lg:max-w-[30%] xl:min-w-[26%] xl:max-w-[26%] sticky pl-10"
         >
+          <NuxtLink class="flex items-center text-xl text-eightyk-400 font-bold mb-4" to="/">
+            <OhVueIcon name="md-starrate-round" scale="1.1" class="mb-[1px]" />
+            <span class="ml-1">See all jobs</span>
+          </NuxtLink>
           <SearchBox :is-show-results-count="true" />
           <CurrentRefinements />
 
@@ -224,19 +203,20 @@ const targetIsVisible = useElementVisibility(target);
               :query-json="state.queryJson.value"
             />
           </div>
-          <!-- <OrgRefinements :index="state.searchIndex" /> -->
+          <OrgRefinements :index="state.searchIndex" />
           <FiltersFooter />
-        </div>
+        </div> -->
 
-        <!-- mobile -->
-        <!-- <LazyFilterModal
-          :total-filters-length="totalFiltersLength"
-          :index="state.searchIndex"
-          :is-show-mobile-filters="state.isShowMobileFilters.value"
-          :query-json="state.queryJson.value"
-          @hide-mobile="() => (state.isShowMobileFilters.value = false)"
-        /> -->
-      </div>
-    </AisInstantSearch>
+          <!-- mobile -->
+          <LazyOrganisationsModal
+            :total-filters-length="totalFiltersLength"
+            :index="state.searchIndex"
+            :is-show-mobile-filters="state.isShowModalFilters.value"
+            :query-json="state.queryJson.value"
+            @hide-mobile="() => (state.isShowModalFilters.value = false)"
+          />
+        </div>
+      </AisInstantSearch>
+    </div>
   </div>
 </template>

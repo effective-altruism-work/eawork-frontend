@@ -12,7 +12,9 @@ export const tagTypes = [
   "tags_generic",
 ] as const;
 
-export type TagTypeName = typeof tagTypes[number];
+export const orgTagTypes = ["is_top_recommended_org"] as const;
+
+export type TagTypeName = typeof tagTypes[number] | typeof orgTagTypes[number];
 
 export type Tag = { pk?: number; text: string; count?: number; is_featured?: boolean };
 
