@@ -2,13 +2,16 @@
 import { AisInstantSearch, AisInfiniteHits } from "vue-instantsearch/vue3/es";
 import algoliasearch from "algoliasearch";
 import { useHooks } from "../utils/structs";
-import { JobAlgolia, OrgAlgolia } from "../utils/types";
+import { OrgAlgolia } from "../utils/types";
 import { useThrottleFn } from "@vueuse/shared";
 import { useElementVisibility } from "@vueuse/core";
 import queryToJson from "../utils/queryToJson";
 import OrgCard from "~/components/organisations/org-card.vue";
 import OrgHeader from "~/components/organisations/header.vue";
-
+import SearchBox from "../components/algolia/search-box.vue";
+import CurrentRefinements from "../components/algolia/current-refinements.vue";
+import FiltersFooter from "../components/eightyk/filters-footer.vue";
+import OrgRefinements from "~/components/organisations/org-refinements.vue";
 useHead({
   title: "Job board | Organisations",
 });
@@ -25,7 +28,7 @@ const hooks = useHooks(() => {
 });
 
 const state = {
-  searchIndex: hooks.searchClient.initIndex(hooks.config.public.algoliaJobsIndex),
+  searchIndex: hooks.searchClient.initIndex(hooks.config.public.algoliaCompaniesIndex),
   queryJson: ref<null | { query: string; facetFilters: string[][] }>(null),
 
   orgPkCurrent: ref<string | null>(null),
@@ -41,13 +44,13 @@ interface RouteState {
 }
 
 function stateToRoute(uiState: { [indexId: string]: RouteState }): RouteState {
-  const indexUiState: RouteState = uiState[hooks.config.public.algoliaJobsIndex];
+  const indexUiState: RouteState = uiState[hooks.config.public.algoliaCompaniesIndex];
   return {
     query: indexUiState.query,
     refinementList: indexUiState.refinementList,
     ...(state.orgPkCurrent.value
-      ? { jobPk: String(state.orgPkCurrent.value) }
-      : { jobPk: undefined }),
+      ? { orgPk: String(state.orgPkCurrent.value) }
+      : { orgPk: undefined }),
     ...state.otherParams, // don't lose our other params
   };
 }
@@ -61,7 +64,7 @@ function routeToState(routeState: RouteState): { [indexId: string]: RouteState }
   }
 
   return {
-    [hooks.config.public.algoliaJobsIndex]: {
+    [hooks.config.public.algoliaCompaniesIndex]: {
       query: routeState.query,
       refinementList: refinementList,
       orgPk: routeState.orgPk,
@@ -142,50 +145,55 @@ const targetIsVisible = useElementVisibility(target);
                   refineNext,
                   isLastPage,
                 }: {
-                  items: JobAlgolia[],
+                  items: OrgAlgolia[],
                   refinePrevious: () => void,
                   refineNext: () => void,
                   isLastPage: boolean,
                   sendEvent: (x: any) => void,
                 }"
               >
-                <OrgCard
-                  v-if="state.orgFromUrlQuery.value && !state.queryJson.value"
-                  :org="state.orgFromUrlQuery.value"
-                  :orgFromUrlQuery="true"
-                  :is-expanded="true"
-                  :is-missing-algolia-context="true"
-                  @card-expanded="
-                    state.orgPkCurrent.value = state.orgFromUrlQuery.value?.objectID
-                  "
-                  @card-collapsed="
-                    () => {
-                      if (
-                        state.orgPkCurrent.value === state.orgFromUrlQuery.value?.objectID
-                      ) {
-                        state.orgPkCurrent.value = null;
+                <div
+                  class="flex flex-wrap gap-2 flex-col"
+                  :style="`height: ${290 * (items.length / 2)}px`"
+                >
+                  <OrgCard
+                    v-if="state.orgFromUrlQuery.value && !state.queryJson.value"
+                    :org="state.orgFromUrlQuery.value"
+                    :orgFromUrlQuery="true"
+                    :is-expanded="true"
+                    :is-missing-algolia-context="true"
+                    @card-expanded="
+                      state.orgPkCurrent.value = state.orgFromUrlQuery.value?.objectID
+                    "
+                    @card-collapsed="
+                      () => {
+                        if (
+                          state.orgPkCurrent.value === state.orgFromUrlQuery.value?.objectID
+                        ) {
+                          state.orgPkCurrent.value = null;
+                        }
                       }
-                    }
-                  "
-                />
-                <OrgCard
-                  v-for="job in items"
-                  :job="job"
-                  :is-hidden="
-                    job.objectID === state.orgFromUrlQuery?.value?.objectID &&
-                    !state.queryJson.value
-                  "
-                  :is-has-text-query="Boolean(state.queryJson.value?.query)"
-                  :key="job.post_pk"
-                  @card-expanded="state.orgPkCurrent.value = job.objectID"
-                  @card-collapsed="
-                    () => {
-                      if (state.orgPkCurrent.value === job.objectID) {
-                        state.orgPkCurrent.value = null;
+                    "
+                  />
+                  <OrgCard
+                    v-for="org in items.map((o) => ({ ...o, locations: ['Oxford, UK'] }))"
+                    :org="org"
+                    :is-hidden="
+                      org.objectID === state.orgFromUrlQuery?.value?.objectID &&
+                      !state.queryJson.value
+                    "
+                    :is-has-text-query="Boolean(state.queryJson.value?.query)"
+                    :key="org.objectID"
+                    @card-expanded="state.orgPkCurrent.value = org.objectID"
+                    @card-collapsed="
+                      () => {
+                        if (state.orgPkCurrent.value === org.objectID) {
+                          state.orgPkCurrent.value = null;
+                        }
                       }
-                    }
-                  "
-                />
+                    "
+                  />
+                </div>
 
                 <!-- <div ref="target" v-if="!isLastPage">
                   <JobCardSkeleton />
@@ -204,7 +212,7 @@ const targetIsVisible = useElementVisibility(target);
           </div>
         </div>
 
-        <!-- <div
+        <div
           class="lg:flex flex-col lg:min-w-[30%] lg:max-w-[30%] xl:min-w-[26%] xl:max-w-[26%] sticky pl-10"
         >
           <SearchBox :is-show-results-count="true" />
@@ -216,9 +224,9 @@ const targetIsVisible = useElementVisibility(target);
               :query-json="state.queryJson.value"
             />
           </div>
-          <Refinements :index="state.searchIndex" />
+          <!-- <OrgRefinements :index="state.searchIndex" /> -->
           <FiltersFooter />
-        </div> -->
+        </div>
 
         <!-- mobile -->
         <!-- <LazyFilterModal
