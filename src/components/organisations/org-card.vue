@@ -47,7 +47,7 @@ function handleClick() {
           </p>
           <div class="w-fit">
             <JobCardTag
-              v-for="area in org.problem_areas"
+              v-for="area in org?.problem_areas"
               bg="bg-[#F3FAF0]"
               color="text-[#466E35]"
               :key="area"
@@ -66,8 +66,10 @@ function handleClick() {
       </div>
       <div class="mt-4 text-base">
         <div
+          id="location-container"
+          v-if="org?.locations?.length"
           class="flex text-sm items-start w-full justify-between"
-          :justify="org.locations.length ? 'space-between' : 'flex-end'"
+          :justify="org?.locations?.length ? 'space-between' : 'flex-end'"
         >
           <div class="flex items-center">
             <OhVueIcon
@@ -78,7 +80,6 @@ function handleClick() {
             <div class="flex flex-col lg:flex-row lg:items-center lg:gap-3">
               <div
                 class="flex items-center gap-3"
-                v-if="org.locations.length"
                 v-for="(location, index) in org.locations"
                 :key="location"
               >

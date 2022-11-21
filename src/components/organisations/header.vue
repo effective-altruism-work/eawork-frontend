@@ -45,9 +45,11 @@ const emit = defineEmits(["showModal"]);
             >
               <AisStats>
                 <template v-slot="{ nbHits: orgHits }">
-                  <NuxtLink to="/"
-                    >See all {{ jobHits }} jobs from {{ orgHits }} organisations</NuxtLink
-                  >
+                  <div class="text-right w-full mb-4">
+                    <NuxtLink to="/"
+                      >See all {{ jobHits }} jobs from {{ orgHits }} organisations</NuxtLink
+                    >
+                  </div>
                 </template>
               </AisStats>
             </AisInstantSearch>

@@ -156,11 +156,7 @@ const totalFiltersLength = computed(() => {
                   }"
                 >
                   <OrgCard
-                    v-for="org in items.map((o) => ({
-                      ...o,
-                      locations: ['Oxford, UK'],
-                      problem_areas: ['x-risk'],
-                    }))"
+                    v-for="org in items"
                     :org="org"
                     :is-hidden="
                       org.objectID === state.orgFromUrlQuery?.value?.objectID &&

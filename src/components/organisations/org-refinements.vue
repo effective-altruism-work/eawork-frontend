@@ -13,12 +13,12 @@ const props = defineProps<{
 
 <template>
   <div>
-    <RefinementList
+    <!-- <RefinementList
       attribute="is_top_recommended_org"
       :count-bg="props.countBg"
       label="Top Recommended"
       :mt="0"
-    />
+    /> -->
     <!-- <RefinementList
       attribute="tags_location_80k"
       :amount="countryCount"
