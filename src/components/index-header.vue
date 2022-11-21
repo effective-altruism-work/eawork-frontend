@@ -19,10 +19,17 @@ const emit = defineEmits(["showMobile"]);
     </div>
 
     <div class="flex gap-7 lg:-mt-2 mb-6 text-sm lg:text-base items-center">
-      <NuxtLink class="flex items-center text-gray-400 underline" to="/organisations">
+      <!-- <NuxtLink class="flex items-center text-gray-400 underline" to="/organisations">
         <OhVueIcon name="md-starrate-round" scale="1.1" class="mb-[1px]" />
         <span class="ml-1">Top recommended organisations</span>
-      </NuxtLink>
+      </NuxtLink> -->
+      <a
+        href="https://80000hours.org/job-board/top-orgs/"
+        class="flex items-center text-gray-400 underline"
+      >
+        <OhVueIcon name="md-starrate-round" scale="1.1" class="mb-[1px]" />
+        <span class="ml-1">Top recommended organisations</span>
+      </a>
       <a
         class="flex items-center underline text-gray-400"
         href="https://80000hours.org/job-board/faq/"
